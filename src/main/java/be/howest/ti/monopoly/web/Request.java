@@ -55,4 +55,8 @@ public class Request {
         return Objects.equals(expectedGameId, user.getGameId()) &&
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
+
+    public int getTilePosition() {
+        return params.pathParameter("tileId").getInteger();
+    }
 }

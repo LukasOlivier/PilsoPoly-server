@@ -8,4 +8,6 @@ public interface IService {
     String getVersion();
 
     List<Tile> getTiles();
+
+    Tile getTile(int position);
 }

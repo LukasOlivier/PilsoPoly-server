@@ -16,4 +16,9 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Tile getTile(int position) {
+        throw new UnsupportedOperationException();
+    }
+
 }
