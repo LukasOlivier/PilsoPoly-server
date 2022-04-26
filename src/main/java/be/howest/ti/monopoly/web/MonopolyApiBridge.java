@@ -21,6 +21,7 @@ import io.vertx.ext.web.openapi.RouterBuilder;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -144,10 +145,17 @@ public class MonopolyApiBridge {
     }
 
     private void createGame(RoutingContext ctx) {
+        // Idee voor later, maak de game aan met de request -> new Game(request)
+        // dus pas de constructor aan, zodanig dat de empty body test ook kan daar gebeuren
         Request request = Request.from(ctx);
         int numberOfPlayers = request.getNumberOfPlayersForNewGame();
         String id = request.getPrefixForNewGame();
-        Response.sendJsonResponse(ctx, 200, new Game(numberOfPlayers, id));
+        try {
+            Response.sendJsonResponse(ctx, 200, new Game(numberOfPlayers, id));
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+
     }
 
     private void getGames(RoutingContext ctx) {
