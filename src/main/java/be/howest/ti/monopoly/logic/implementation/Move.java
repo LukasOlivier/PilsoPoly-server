@@ -10,4 +10,16 @@ public class Move {
         this.description = description;
         this.actionType = actionType;
     }
+
+    public String getTile() {
+        return tile;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
 }

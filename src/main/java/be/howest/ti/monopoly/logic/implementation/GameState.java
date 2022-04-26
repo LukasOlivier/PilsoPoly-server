@@ -10,7 +10,7 @@ public class GameState {
     private int directSale;
     private int availableHouses;
     private int availableHotels;
-    private List<turn> turns = new ArrayList<>();
+    private List<Turn> turns = new ArrayList<>();
     private boolean canroll;
     private boolean ended;
     private String currentPlayer;
@@ -56,7 +56,7 @@ public class GameState {
         return availableHotels;
     }
 
-    public List<turn> getTurns() {
+    public List<Turn> getTurns() {
         return turns;
     }
 
@@ -82,7 +82,7 @@ public class GameState {
     }
 
     // na elke roll komt de mmove hier terecht
-    public void addTurns(turn newTurn){
+    public void addTurns(Turn newTurn){
         turns.add(newTurn);
     }
 }

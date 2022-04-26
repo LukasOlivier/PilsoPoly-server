@@ -8,7 +8,8 @@ class MoveTest {
 
     @Test
     void testMove(){
-
+        Move testMove = new Move("Med", "you can buy this propertie", "buy");
+        assertEquals("buy", testMove.getActionType());
     }
 
 }
