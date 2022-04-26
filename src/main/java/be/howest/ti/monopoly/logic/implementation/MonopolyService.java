@@ -74,7 +74,10 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     public GameState getGameState(){
-
+        GameState dummyGame = new GameState(2);
+        dummyGame.addPlayers("Robin", "glass");
+        dummyGame.addPlayers("Sibren", "beer");
+        return dummyGame;
     }
 
 }

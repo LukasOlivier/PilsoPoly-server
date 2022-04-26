@@ -76,10 +76,12 @@ public class GameState {
         return winner;
     }
 
+    // iedere keer dat player join request word gestuurd zal deze functie de player toe voegen
     public void addPlayers(String name, String icon){
         players.add(new Player(name, icon));
     }
 
+    // na elke roll komt de mmove hier terecht
     public void addTurns(turn newTurn){
         turns.add(newTurn);
     }
