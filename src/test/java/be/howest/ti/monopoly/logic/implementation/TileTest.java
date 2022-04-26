@@ -22,8 +22,8 @@ class TileTest {
 
     @Test
     public void testRailroadTile() {
-        RailroadTile railroadTile = new RailroadTile("Pennsylvania RR", 15, "railroad", "Pennsylvania_RR",100, 25, 4, "BLACK");
-        assertEquals("Pennsylvania RR", railroadTile.getName());
-        assertEquals(15, railroadTile.getPosition());
+        RailroadTile railroadTile = new RailroadTile("Reading RR", 5, "railroad", "Reading_RR", 200, 100, 25, 4, "BLACK");
+        assertEquals("Reading RR", railroadTile.getName());
+        assertEquals(5, railroadTile.getPosition());
     }
 }

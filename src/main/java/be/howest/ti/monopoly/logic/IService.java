@@ -10,4 +10,5 @@ public interface IService {
     List<Tile> getTiles();
 
     Tile getTile(int position);
+    Tile getTile(String tileName);
 }

@@ -59,4 +59,12 @@ public class Request {
     public int getTilePosition() {
         return params.pathParameter("tileId").getInteger();
     }
+
+    public boolean hasTilePosition() {
+        return params.pathParameter("tileId").isNumber();
+    }
+
+    public String getTileName() {
+        return params.pathParameter("tileId").getString();
+    }
 }

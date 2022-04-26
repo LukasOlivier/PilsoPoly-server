@@ -68,4 +68,15 @@ public class MonopolyService extends ServiceAdapter {
         }
         throw new MonopolyResourceNotFoundException("No such tile");
     }
+
+    @Override
+    public Tile getTile(String tileName) {
+        for (Tile tile : getTiles()) {
+            if (tile.getName().equals(tileName)) {
+                return tile;
+            }
+        }
+        throw new MonopolyResourceNotFoundException("No such tile");
+    }
+
 }

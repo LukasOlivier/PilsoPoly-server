@@ -54,21 +54,33 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
 
     @Test
     void getTileByName(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            @Override
+            public Tile getTile(String name) {
+                return new Tile("Go", 0, "Go", "Go");
+            }
+        });
         get(
                 testContext,
-                "/tiles/something",
+                "/tiles/Go",
                 null,
-                response -> assertNotYetImplemented(response, "getTile")
+                response -> assertOkResponse(response)
         );
     }
 
     @Test
     void getTileById(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            @Override
+            public Tile getTile(int position) {
+                return new Tile("Go", 0, "Go", "Go");
+            }
+        });
         get(
                 testContext,
-                "/tiles/100",
+                "/tiles/0",
                 null,
-                response -> assertNotYetImplemented(response, "getTile")
+                response -> assertOkResponse(response)
         );
     }
 
