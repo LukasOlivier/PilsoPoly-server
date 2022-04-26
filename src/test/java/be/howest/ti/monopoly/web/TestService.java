@@ -20,10 +20,17 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<String > getCommunityCards() {return delegate.getCommunityCards();}
+    public List<String > getCommunityCards() {
+        return delegate.getCommunityCards();
+    }
 
     public List<Tile> getTiles() {
         return delegate.getTiles();
+    }
+
+    @Override
+    public List<String> getChanceCards() {
+        return delegate.getChanceCards();
     }
 
 }
