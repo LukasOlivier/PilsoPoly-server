@@ -3,6 +3,8 @@ package be.howest.ti.monopoly.web;
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 
+import java.util.List;
+
 
 public class TestService implements IService {
 
@@ -16,4 +18,7 @@ public class TestService implements IService {
     public String getVersion() {
         return delegate.getVersion();
     }
+
+    @Override
+    public List<String > getCommunityCards() {return delegate.getCommunityCards();}
 }

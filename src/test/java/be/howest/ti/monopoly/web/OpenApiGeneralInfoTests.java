@@ -80,7 +80,7 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
                 testContext,
                 "/community-chest",
                 null,
-                response -> assertNotYetImplemented(response, "getCommunityChest")
+                response -> assertOkResponse(response)
         );
     }
 
