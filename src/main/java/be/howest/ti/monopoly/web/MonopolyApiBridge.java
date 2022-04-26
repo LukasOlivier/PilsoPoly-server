@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.web;
 
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
@@ -18,6 +19,7 @@ import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -142,7 +144,10 @@ public class MonopolyApiBridge {
     }
 
     private void createGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("createGame");
+        Request request = Request.from(ctx);
+        int numberOfPlayers = request.getNumberOfPlayersForNewGame();
+        String id = request.getPrefixForNewGame();
+        Response.sendJsonResponse(ctx, 200, new Game(numberOfPlayers, id));
     }
 
     private void getGames(RoutingContext ctx) {
