@@ -2,9 +2,8 @@ package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.GameState;
 import be.howest.ti.monopoly.logic.implementation.Tile;
-
-import java.util.List;
 
 import java.util.List;
 
@@ -28,5 +27,8 @@ public class TestService implements IService {
     public List<Tile> getTiles() {
         return delegate.getTiles();
     }
+
+    @Override
+    public GameState getGameState() {return delegate.getGameState();}
 
 }

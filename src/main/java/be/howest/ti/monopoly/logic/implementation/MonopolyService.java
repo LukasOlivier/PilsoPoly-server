@@ -72,4 +72,9 @@ public class MonopolyService extends ServiceAdapter {
                 new StreetTile("Boardwalk", 39, "street", "Boardwalk", 400, 200, 50, 200, 600, 1400, 1700, 2000, 200, "DARKBLUE", 2, "DARKBLUE")
         );
     }
+
+    public GameState getGameState(){
+
+    }
+
 }
