@@ -122,7 +122,7 @@ public class MonopolyApiBridge {
     }
 
     private void getTiles(RoutingContext ctx) {
-        throw new NotYetImplementedException("getTiles");
+        Response.sendJsonResponse(ctx, 200, service.getTiles());
     }
 
     private void getTile(RoutingContext ctx) {
