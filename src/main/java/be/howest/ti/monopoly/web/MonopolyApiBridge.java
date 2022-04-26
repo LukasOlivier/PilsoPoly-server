@@ -134,7 +134,7 @@ public class MonopolyApiBridge {
     }
 
     private void getCommunityChest(RoutingContext ctx) {
-        throw new NotYetImplementedException("getCommunityChest");
+        Response.sendJsonResponse(ctx, 200, service.getCommunityCards());
     }
 
     private void clearGameList(RoutingContext ctx) {
