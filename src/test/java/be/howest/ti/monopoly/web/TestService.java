@@ -6,9 +6,6 @@ import be.howest.ti.monopoly.logic.implementation.Tile;
 
 import java.util.List;
 
-import java.util.List;
-
-
 public class TestService implements IService {
 
     IService delegate = new ServiceAdapter();
