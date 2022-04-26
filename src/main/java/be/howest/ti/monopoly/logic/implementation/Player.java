@@ -11,7 +11,7 @@ public class Player {
     private boolean bankrupt;
     private int getOutOfJailFreeCards;
     private final String taxSystem = "ESTIMATE";
-    private List<PlayerPropertie> properties = new ArrayList<>();
+    private List<PlayerProperty> properties = new ArrayList<>();
     private int debt;
     private final String icon;
 
@@ -30,7 +30,7 @@ public class Player {
         this(name,"Go",false, 1500, false, 0, 0, icon);
     }
 
-    public void addProperties(PlayerPropertie newProperty){
+    public void addProperties(PlayerProperty newProperty){
         properties.add(newProperty);
     }
 
@@ -62,7 +62,7 @@ public class Player {
         return taxSystem;
     }
 
-    public List<PlayerPropertie> getProperties() {
+    public List<PlayerProperty> getProperties() {
         return properties;
     }
 
