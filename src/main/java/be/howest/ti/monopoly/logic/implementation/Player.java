@@ -13,8 +13,9 @@ public class Player {
     private final String taxSystem = "ESTIMATE";
     private List<PlayerPropertie> properties = new ArrayList<>();
     private int debt;
+    private final String icon;
 
-    public Player(String name, String currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt) {
+    public Player(String name, String currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt ,String icon) {
         this.name = name;
         this.currentTile = currentTile;
         this.jailed = jailed;
@@ -22,10 +23,11 @@ public class Player {
         this.bankrupt = bankrupt;
         this.getOutOfJailFreeCards = getOutOfJailFreeCards;
         this.debt = debt;
+        this.icon = icon;
     }
 
-    public Player(String name) {
-        this(name,"Go",false, 1500, false, 0, 0);
+    public Player(String name, String icon) {
+        this(name,"Go",false, 1500, false, 0, 0, icon);
     }
 
     public void addProperties(PlayerPropertie newProperty){
