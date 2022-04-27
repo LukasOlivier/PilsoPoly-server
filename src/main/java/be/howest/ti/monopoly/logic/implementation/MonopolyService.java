@@ -73,11 +73,5 @@ public class MonopolyService extends ServiceAdapter {
         );
     }
 
-    public DummyGame getDummyGame(){
-        DummyGame dummyGame = new DummyGame(2);
-        dummyGame.addPlayers("Robin", "glass");
-        dummyGame.addPlayers("Sibren", "beer");
-        return dummyGame;
-    }
 
 }

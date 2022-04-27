@@ -1,7 +1,6 @@
 package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
-import be.howest.ti.monopoly.logic.implementation.DummyGame;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
 
