@@ -1,5 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.web.Request;
+
 import java.util.LinkedList;
 
 public class Game {
@@ -9,11 +11,17 @@ public class Game {
     private LinkedList players;
     private String id;
 
-    public Game(int numberOfPlayers, String id) {
-        setNumberOfPlayers(numberOfPlayers);
+
+
+    public Game(Request request) {
+        if (request == null) {
+            throw new IllegalArgumentException();
+        }
+        setNumberOfPlayers(request.getNumberOfPlayersForNewGame());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = id;
+        this.id = request.getPrefixForNewGame();
+
     }
 
     public void setId(String id) {

@@ -148,10 +148,8 @@ public class MonopolyApiBridge {
         // Idee voor later, maak de game aan met de request -> new Game(request)
         // dus pas de constructor aan, zodanig dat de empty body test ook kan daar gebeuren
         Request request = Request.from(ctx);
-        int numberOfPlayers = request.getNumberOfPlayersForNewGame();
-        String id = request.getPrefixForNewGame();
         try {
-            Response.sendJsonResponse(ctx, 200, new Game(numberOfPlayers, id));
+            Response.sendJsonResponse(ctx, 200, new Game(request));
         } catch (IllegalArgumentException e) {
             return;
         }
