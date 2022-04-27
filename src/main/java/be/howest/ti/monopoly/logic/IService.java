@@ -11,4 +11,8 @@ public interface IService {
     List<Tile> getTiles();
     Game getGame();
     Game getDummyGame();
+    List<String> getChanceCards();
+    Tile getTile(int position);
+    Tile getTile(String tileName);
+
 }
