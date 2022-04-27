@@ -3,7 +3,8 @@ package be.howest.ti.monopoly.logic.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameState {
+public class DummyGame {
+    private String prefix;
     private int numberOfPlayers;
     private List<Player> players = new ArrayList<>();
     private boolean started;
@@ -16,7 +17,7 @@ public class GameState {
     private String currentPlayer;
     private String winner;
 
-    public GameState(int numberOfPlayers, boolean started, int directSale, int availableHouses, int availableHotels, boolean canroll, boolean ended,  String winner) {
+    public DummyGame(int numberOfPlayers, boolean started, int directSale, int availableHouses, int availableHotels, boolean canroll, boolean ended, String winner) {
         this.numberOfPlayers = numberOfPlayers;
         this.started = started;
         this.directSale = directSale;
@@ -28,7 +29,7 @@ public class GameState {
         this.winner = winner;
     }
 
-    public GameState(int numberOfPlayers) {
+    public DummyGame(int numberOfPlayers) {
         this(numberOfPlayers, false, 0, 31, 12, true, false, null);
     }
 
