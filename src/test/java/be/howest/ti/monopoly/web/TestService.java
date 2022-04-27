@@ -27,10 +27,20 @@ public class TestService implements IService {
     public List<Tile> getTiles() {
         return delegate.getTiles();
     }
+    @Override
+    public Tile getTile(int position) {
+        return delegate.getTile(position);
+    }
 
     @Override
+<<<<<<< HEAD
     public List<String> getChanceCards() {
         return delegate.getChanceCards();
     }
 
+=======
+    public Tile getTile(String tileName) {
+        return delegate.getTile(tileName);
+    }
+>>>>>>> ac2b6408e88feb1ca2176757539c8c748fe55033
 }

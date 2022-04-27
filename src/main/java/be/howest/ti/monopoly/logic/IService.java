@@ -8,4 +8,6 @@ public interface IService {
     List<String > getCommunityCards();
     List<Tile> getTiles();
     List<String> getChanceCards();
+    Tile getTile(int position);
+    Tile getTile(String tileName);
 }

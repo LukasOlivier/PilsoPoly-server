@@ -20,6 +20,13 @@ public class ServiceAdapter implements IService {
 
     @Override
     public List<String> getChanceCards() {
+
+    public Tile getTile(int position) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Tile getTile(String tileName) {
         throw new UnsupportedOperationException();
     }
 }
