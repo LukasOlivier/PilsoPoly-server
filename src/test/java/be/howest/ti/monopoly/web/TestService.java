@@ -6,9 +6,6 @@ import be.howest.ti.monopoly.logic.implementation.Tile;
 
 import java.util.List;
 
-import java.util.List;
-
-
 public class TestService implements IService {
 
     IService delegate = new ServiceAdapter();
@@ -23,7 +20,9 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<String > getCommunityCards() {return delegate.getCommunityCards();}
+    public List<String > getCommunityCards() {
+        return delegate.getCommunityCards();
+    }
 
     public List<Tile> getTiles() {
         return delegate.getTiles();
@@ -34,7 +33,14 @@ public class TestService implements IService {
     }
 
     @Override
+<<<<<<< HEAD
+    public List<String> getChanceCards() {
+        return delegate.getChanceCards();
+    }
+
+=======
     public Tile getTile(String tileName) {
         return delegate.getTile(tileName);
     }
+>>>>>>> ac2b6408e88feb1ca2176757539c8c748fe55033
 }

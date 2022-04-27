@@ -7,6 +7,7 @@ public interface IService {
     String getVersion();
     List<String > getCommunityCards();
     List<Tile> getTiles();
+    List<String> getChanceCards();
     Tile getTile(int position);
     Tile getTile(String tileName);
 }
