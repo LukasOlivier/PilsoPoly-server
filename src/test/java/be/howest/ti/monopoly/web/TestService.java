@@ -32,6 +32,6 @@ public class TestService implements IService {
     public Game getGame() {return delegate.getGame();}
 
     @Override
-    public Game CreateDummyGame() {return delegate.CreateDummyGame();}
+    public Game getDummyGame() {return delegate.getDummyGame();}
 
 }

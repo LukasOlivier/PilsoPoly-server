@@ -80,7 +80,7 @@ public class MonopolyService extends ServiceAdapter {
         );
     }
 
-    public Game CreateDummyGame(){
+    public Game getDummyGame(){
         return new Game();
     }
 
