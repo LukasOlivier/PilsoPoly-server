@@ -22,23 +22,18 @@ public class Game {
     private String winner;
 
     // This is to create a dummy game
-    public Game (){
-        this.numberOfPlayers = 4;
-        this.id = "Dummy";
+    public Game(int numberOfPlayers, boolean started, String id, String directSale, int availableHouses, int availableHotels, boolean canroll, boolean ended, String currentPlayer, String winner) {
+        this.numberOfPlayers = numberOfPlayers;
+        this.started = started;
+        this.id = id;
         this.players = new LinkedList<>();
-        this.started = true;
-        this.directSale = null;
-        this.availableHouses = 31;
-        this.availableHotels = 12;
-        this.turns = new LinkedList<>();
-        this.canroll = true;
-        this.ended = false;
-        this.currentPlayer = "Sibren";
-        this.winner = null;
-        addPlayer("Sibren", null);
-        addPlayer("Niels", null);
-        addPlayer("Lukas", null);
-        addPlayer("Robin", null);
+        this.directSale = directSale;
+        this.availableHouses = availableHouses;
+        this.availableHotels = availableHotels;
+        this.canroll = canroll;
+        this.ended = ended;
+        this.currentPlayer = currentPlayer;
+        this.winner = winner;
     }
 
     public Game(Request request) {

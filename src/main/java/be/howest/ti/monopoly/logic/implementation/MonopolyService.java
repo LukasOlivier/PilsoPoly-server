@@ -84,7 +84,12 @@ public class MonopolyService extends ServiceAdapter {
 
 
     public Game getDummyGame(){
-        return new Game();
+        Game dummyGame = new Game(4, true, "Dummy", null, 31, 12, true,false,"Sibren", null);
+        dummyGame.addPlayer("Sibren", null);
+        dummyGame.addPlayer("Niels", null);
+        dummyGame.addPlayer("Lukas", null);
+        dummyGame.addPlayer("Robin", null);
+        return dummyGame;
     }
 
     @Override
