@@ -28,5 +28,13 @@ public class TestService implements IService {
     public List<Tile> getTiles() {
         return delegate.getTiles();
     }
+    @Override
+    public Tile getTile(int position) {
+        return delegate.getTile(position);
+    }
 
+    @Override
+    public Tile getTile(String tileName) {
+        return delegate.getTile(tileName);
+    }
 }

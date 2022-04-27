@@ -1,14 +1,14 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-public class RailroadTile extends Tile{
+public class UtilityTile extends Tile{
 
     private int cost;
     private int mortgage;
-    private int rent;
+    private String rent;
     private int groupSize;
     private String color;
 
-    public RailroadTile(String name, int position, String type, String nameAsPathParameter, int cost, int mortgage, int rent, int groupSize, String color) {
+    public UtilityTile(String name, int position, String type, String nameAsPathParameter, int cost, int mortgage, String rent, int groupSize, String color) {
         super(name, position, type, nameAsPathParameter);
         this.cost = cost;
         this.mortgage = mortgage;
@@ -17,11 +17,15 @@ public class RailroadTile extends Tile{
         this.color = color;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
     public int getMortgage() {
         return mortgage;
     }
 
-    public int getRent() {
+    public String getRent() {
         return rent;
     }
 
