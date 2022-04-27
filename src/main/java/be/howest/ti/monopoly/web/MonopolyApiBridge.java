@@ -125,7 +125,7 @@ public class MonopolyApiBridge {
     }
 
     private void getTiles(RoutingContext ctx) {
-        throw new NotYetImplementedException("getTiles");
+        Response.sendJsonResponse(ctx, 200, service.getTiles());
     }
 
     private void getTile(RoutingContext ctx) {
@@ -137,7 +137,7 @@ public class MonopolyApiBridge {
     }
 
     private void getCommunityChest(RoutingContext ctx) {
-        throw new NotYetImplementedException("getCommunityChest");
+        Response.sendJsonResponse(ctx, 200, service.getCommunityCards());
     }
 
     private void clearGameList(RoutingContext ctx) {
@@ -165,11 +165,11 @@ public class MonopolyApiBridge {
     }
 
     private void getGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("getGame");
+        Response.sendJsonResponse(ctx, 200, service.getGameState());
     }
 
     private void getDummyGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("getDummyGame");
+        Response.sendJsonResponse(ctx, 200, service.getGameState());
     }
 
     private void useEstimateTax(RoutingContext ctx) {
