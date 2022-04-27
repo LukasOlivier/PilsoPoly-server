@@ -1,4 +1,5 @@
 package be.howest.ti.monopoly.logic;
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.logic.implementation.GameState;
 
@@ -19,7 +20,13 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public GameState getGameState() {throw new UnsupportedOperationException();}
+    public Game getGame() {
+        return null;
+    }
 
+    @Override
+    public Game CreateDummyGame() {
+        return null;
+    }
 
 }

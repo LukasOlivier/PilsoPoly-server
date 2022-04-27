@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic;
 
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.logic.implementation.GameState;
 
@@ -9,5 +10,6 @@ public interface IService {
     String getVersion();
     List<String > getCommunityCards();
     List<Tile> getTiles();
-    GameState getGameState();
+    Game getGame();
+    Game CreateDummyGame();
 }
