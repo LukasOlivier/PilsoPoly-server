@@ -54,7 +54,7 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
                 "/games",
                 null,
                 new JsonObject(),
-                response -> assertNotYetImplemented(response, "createGame")
+                response -> assertErrorResponse(response, 400)
         );
     }
 
@@ -67,7 +67,7 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
                 new JsonObject()
                         .put("prefix", "Prefix123")
                         .put("numberOfPlayers", 10),
-                response -> assertNotYetImplemented(response, "createGame")
+                response -> assertOkResponse(response)
         );
     }
 

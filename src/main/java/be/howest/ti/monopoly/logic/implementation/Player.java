@@ -73,4 +73,5 @@ public class Player {
     public String getIcon() {
         return icon;
     }
+
 }
