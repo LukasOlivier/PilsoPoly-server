@@ -84,6 +84,7 @@ public class MonopolyService extends ServiceAdapter {
         dummyGame.addPlayer("Niels", null);
         dummyGame.addPlayer("Lukas", null);
         dummyGame.addPlayer("Robin", null);
+        dummyGame.addTurns("Robin", "buy", "you can buy this property", "med", 1,2);
         return dummyGame;
     }
 

@@ -15,7 +15,7 @@ public class Game {
     private String directSale;
     private int availableHouses;
     private int availableHotels;
-    private List<Turn> turns = new ArrayList<>();
+    private List<Turn> turns = new LinkedList<>();
     private boolean canroll;
     private boolean ended;
     private String currentPlayer;
@@ -30,6 +30,7 @@ public class Game {
         this.directSale = directSale;
         this.availableHouses = availableHouses;
         this.availableHotels = availableHotels;
+        this.turns = new LinkedList<>();
         this.canroll = canroll;
         this.ended = ended;
         this.currentPlayer = currentPlayer;
@@ -84,6 +85,11 @@ public class Game {
 
     public void addPlayer(String name, String icon){
         players.add(new Player(name, icon));
+    }
+
+    public void addTurns(String name, String type, String description, String tile, int diceOne, int diceTwo ){
+        Move newMove = new Move(tile, type, description);
+        turns.add(new Turn( name, "DEFAULT", newMove, diceOne, diceTwo));
     }
 
     public String getDirectSale() {
