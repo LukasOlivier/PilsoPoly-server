@@ -157,7 +157,7 @@ public class MonopolyApiBridge {
     }
 
     private void getGames(RoutingContext ctx) {
-        throw new NotYetImplementedException("getGames");
+        Response.sendJsonResponse(ctx, 200, service.getAllGames());
     }
 
     private void joinGame(RoutingContext ctx) {

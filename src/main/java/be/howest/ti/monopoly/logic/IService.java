@@ -5,6 +5,7 @@ import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.logic.implementation.GameState;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IService {
     String getVersion();
@@ -12,4 +13,5 @@ public interface IService {
     List<Tile> getTiles();
     Game addGame(Game game);
     Game getDummyGame();
+    Map<String, Game> getAllGames();
 }
