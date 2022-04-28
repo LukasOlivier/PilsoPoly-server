@@ -69,4 +69,9 @@ public class Player {
     public int getDebt() {
         return debt;
     }
+
+    public String getIcon() {
+        return icon;
+    }
+
 }

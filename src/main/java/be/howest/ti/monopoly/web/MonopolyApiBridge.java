@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.web;
 
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
@@ -19,7 +20,9 @@ import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -154,7 +157,15 @@ public class MonopolyApiBridge {
     }
 
     private void createGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("createGame");
+        // Idee voor later, maak de game aan met de request -> new Game(request)
+        // dus pas de constructor aan, zodanig dat de empty body test ook kan daar gebeuren
+        Request request = Request.from(ctx);
+        try {
+            Response.sendJsonResponse(ctx, 200, new Game(request));
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+
     }
 
     private void getGames(RoutingContext ctx) {
@@ -165,12 +176,12 @@ public class MonopolyApiBridge {
         throw new NotYetImplementedException("joinGame");
     }
 
-    private void getGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("getGame");
-    }
+
+    private void getGame(RoutingContext ctx) { throw new NotYetImplementedException("joinGame");}
+
 
     private void getDummyGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("getDummyGame");
+        Response.sendJsonResponse(ctx, 200, service.getDummyGame());
     }
 
     private void useEstimateTax(RoutingContext ctx) {

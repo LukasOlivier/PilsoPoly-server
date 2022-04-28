@@ -2,9 +2,11 @@ package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 
 import java.util.List;
+
 
 public class TestService implements IService {
 
@@ -33,14 +35,16 @@ public class TestService implements IService {
     }
 
     @Override
-<<<<<<< HEAD
+    public Game getGame() {return delegate.getGame();}
+
+    @Override
+    public Game getDummyGame() {return delegate.getDummyGame();}
+
     public List<String> getChanceCards() {
         return delegate.getChanceCards();
     }
 
-=======
     public Tile getTile(String tileName) {
         return delegate.getTile(tileName);
     }
->>>>>>> ac2b6408e88feb1ca2176757539c8c748fe55033
 }

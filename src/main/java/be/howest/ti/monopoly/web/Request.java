@@ -56,6 +56,14 @@ public class Request {
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
+    public int getNumberOfPlayersForNewGame() {
+        return params.body().getJsonObject().getInteger("numberOfPlayers");
+    }
+
+    public String getPrefixForNewGame() {
+        return params.body().getJsonObject().getString("prefix");
+    }
+
     public int getTilePosition() {
         return params.pathParameter("tileId").getInteger();
     }
@@ -66,5 +74,6 @@ public class Request {
 
     public String getTileName() {
         return params.pathParameter("tileId").getString();
+
     }
 }

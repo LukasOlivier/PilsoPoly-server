@@ -1,8 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
-
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-
 import java.util.List;
 
 
@@ -79,8 +77,18 @@ public class MonopolyService extends ServiceAdapter {
         );
     }
 
-    @Override
 
+    public Game getDummyGame(){
+        Game dummyGame = new Game(4, true, "Dummy", null, 31, 12, true,false,"Sibren", null);
+        dummyGame.addPlayer("Sibren", null);
+        dummyGame.addPlayer("Niels", null);
+        dummyGame.addPlayer("Lukas", null);
+        dummyGame.addPlayer("Robin", null);
+        dummyGame.addTurns("Robin", "buy", "you can buy this property", "med", 1,2);
+        return dummyGame;
+    }
+
+    @Override
     public List<String> getChanceCards() {
         return List.of(
                 "Advance to Boardwalk",
@@ -119,4 +127,5 @@ public class MonopolyService extends ServiceAdapter {
         }
         throw new MonopolyResourceNotFoundException("No such tile");
     }
+
 }
