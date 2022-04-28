@@ -22,12 +22,7 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Game getGame() {
-        return null;
-    }
-
-    @Override
-    public Game CreateDummyGame() {
-        return null;
+    public Game getDummyGame() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -151,7 +151,6 @@ public class MonopolyApiBridge {
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }
-
     }
 
     private void getGames(RoutingContext ctx) {
@@ -167,7 +166,7 @@ public class MonopolyApiBridge {
     }
 
     private void getDummyGame(RoutingContext ctx) {
-        Response.sendJsonResponse(ctx, 200, service.CreateDummyGame());
+        Response.sendJsonResponse(ctx, 200, service.getDummyGame());
     }
 
     private void useEstimateTax(RoutingContext ctx) {

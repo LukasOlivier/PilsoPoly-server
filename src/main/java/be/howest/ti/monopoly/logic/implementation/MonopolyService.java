@@ -13,7 +13,6 @@ public class MonopolyService extends ServiceAdapter {
      Map globalList = new HashMap<String, Game>();
 
 
-
     @Override
     public String getVersion() {
         return "0.0.1";
@@ -80,7 +79,7 @@ public class MonopolyService extends ServiceAdapter {
         );
     }
 
-    public Game CreateDummyGame(){
+    public Game getDummyGame(){
         return new Game();
     }
 

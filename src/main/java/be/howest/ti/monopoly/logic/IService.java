@@ -10,6 +10,5 @@ public interface IService {
     String getVersion();
     List<String > getCommunityCards();
     List<Tile> getTiles();
-    Game getGame();
-    Game CreateDummyGame();
+    Game getDummyGame();
 }
