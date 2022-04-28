@@ -42,13 +42,16 @@ public class Game {
     }
 
     public Game(Request request) {
+
         if (request == null) {
             throw new IllegalArgumentException();
         }
+
         setNumberOfPlayers(request.getNumberOfPlayersForNewGame());
         this.started = false;
         this.players = new LinkedList<>();
         this.id = request.getPrefixForNewGame();
+
     }
 
     public void setId(String id) {

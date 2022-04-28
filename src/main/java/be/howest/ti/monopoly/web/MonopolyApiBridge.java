@@ -145,13 +145,11 @@ public class MonopolyApiBridge {
     }
 
     private void createGame(RoutingContext ctx) {
-        // Idee voor later, maak de game aan met de request -> new Game(request)
-        // dus pas de constructor aan, zodanig dat de empty body test ook kan daar gebeuren
         Request request = Request.from(ctx);
         try {
             Response.sendJsonResponse(ctx, 200, new Game(request));
         } catch (IllegalArgumentException e) {
-            return;
+            throw new InvalidRequestException("failed to create game!");
         }
 
     }
@@ -165,7 +163,8 @@ public class MonopolyApiBridge {
     }
 
     private void getGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("getGame");  }
+        throw new NotYetImplementedException("getGame");
+    }
 
     private void getDummyGame(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, service.CreateDummyGame());
