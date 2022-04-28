@@ -5,6 +5,8 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.validation.RequestParameters;
 import io.vertx.ext.web.validation.ValidationHandler;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -56,11 +58,10 @@ public class Request {
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
-    public int getNumberOfPlayersForNewGame() {
-        return params.body().getJsonObject().getInteger("numberOfPlayers");
-    }
-
-    public String getPrefixForNewGame() {
-        return params.body().getJsonObject().getString("prefix");
+    public Map<String, Object> getCreateGameInfo() {
+        Map<String, Object> info = new HashMap<>();
+        info.put("numberOfPlayers", params.body().getJsonObject().getInteger("numberOfPlayers"));
+        info.put("prefix", params.body().getJsonObject().getString("prefix"));
+        return info;
     }
 }

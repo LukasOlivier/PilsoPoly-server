@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Game {
 
+    // TODO : available huizen zijn altijd hetzelfde bij aammaken van een game.
     private int numberOfPlayers;
     private boolean started;
     private LinkedList players;
@@ -47,10 +48,13 @@ public class Game {
             throw new IllegalArgumentException();
         }
 
-        setNumberOfPlayers(request.getNumberOfPlayersForNewGame());
+        int numberOfPlayers = (int) request.getCreateGameInfo().get("numberOfPlayers");
+        String prefix = (String) request.getCreateGameInfo().get("prefix");
+
+        setNumberOfPlayers(numberOfPlayers);
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getPrefixForNewGame();
+        this.id = prefix;
 
     }
 

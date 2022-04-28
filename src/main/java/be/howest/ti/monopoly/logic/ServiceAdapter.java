@@ -22,6 +22,11 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
+    public Game addGame(Game game) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Game getDummyGame() {
         throw new UnsupportedOperationException();
     }

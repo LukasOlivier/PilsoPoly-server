@@ -5,6 +5,7 @@ import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+import be.howest.ti.monopoly.logic.implementation.ListOfGames;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -31,6 +32,8 @@ public class MonopolyApiBridge {
 
     private final IService service;
     private final TokenManager tokenManager;
+
+    ListOfGames listOfGames = new ListOfGames();
 
     public MonopolyApiBridge(IService service, TokenManager tokenManager) {
         this.service = service;
@@ -147,7 +150,7 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Response.sendJsonResponse(ctx, 200, new Game(request));
+            Response.sendJsonResponse(ctx, 200, service.addGame(new Game(request)));
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }

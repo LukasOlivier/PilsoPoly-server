@@ -1,17 +1,19 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
-import java.util.HashMap;
-import java.util.Map;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MonopolyService extends ServiceAdapter {
 
+    // TODO : is class: ListOfGames echt nodig?
 
-     Map globalList = new HashMap<String, Game>();
-
+    // MAP met gameID en de Game
+    // kan je makkelijk bij een get .get(gameID) en zo de game makkelijk verkrijgen.
+    Map<String, Game> allGames = new HashMap<>();
 
     @Override
     public String getVersion() {
@@ -77,6 +79,13 @@ public class MonopolyService extends ServiceAdapter {
                 new Tile("Luxury Tax", 38, "Luxury Tax", "Luxury_Tax"),
                 new StreetTile("Boardwalk", 39, "street", "Boardwalk", 400, 200, 50, 200, 600, 1400, 1700, 2000, 200, "DARKBLUE", 2, "DARKBLUE")
         );
+    }
+
+    @Override
+    public Game addGame(Game game) {
+        String gameId = game.getId() + "_" + allGames.size() + 1;
+        allGames.put(gameId, game);
+        return game;
     }
 
     public Game getDummyGame(){

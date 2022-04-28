@@ -2,6 +2,7 @@ package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.GameState;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 
@@ -22,13 +23,22 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<String > getCommunityCards() {return delegate.getCommunityCards();}
+    public List<String > getCommunityCards() {
+        return delegate.getCommunityCards();
+    }
 
     public List<Tile> getTiles() {
         return delegate.getTiles();
     }
 
     @Override
-    public GameState getGameState() {return delegate.getGameState();}
+    public Game addGame(Game game) {
+        return delegate.addGame(game);
+    }
+
+    @Override
+    public Game getDummyGame() {
+        return delegate.getDummyGame();
+    }
 
 }
