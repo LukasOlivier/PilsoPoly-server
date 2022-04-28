@@ -89,11 +89,6 @@ public class MonopolyService extends ServiceAdapter {
         return game;
     }
 
-    @Override
-    public Map<String, Game> getAllGames() {
-        return allGames;
-    }
-
     public Game getDummyGame(){
         return new Game();
     }

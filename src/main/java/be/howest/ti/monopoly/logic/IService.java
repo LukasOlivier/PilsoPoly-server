@@ -13,5 +13,4 @@ public interface IService {
     List<Tile> getTiles();
     Game addGame(Game game);
     Game getDummyGame();
-    Map<String, Game> getAllGames();
 }
