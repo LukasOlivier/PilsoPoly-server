@@ -2,7 +2,6 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 
 import java.util.ArrayList;
@@ -134,7 +133,7 @@ public class Game {
         return winner;
     }
 
-    public JsonObject getSpecificGameInfo(){
+    public JsonObject ShowSpecificGameInfo(){
         return new JsonObject()
                 .put("numberOfPlayers", this.getNumberOfPlayers())
                 .put("started", this.isStarted())
@@ -173,6 +172,4 @@ public class Game {
     public void setWinner(String winner) {
         this.winner = winner;
     }
-
-
 }

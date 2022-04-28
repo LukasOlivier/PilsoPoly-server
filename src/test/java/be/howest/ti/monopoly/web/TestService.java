@@ -49,9 +49,4 @@ public class TestService implements IService {
     public Map<String, Game> getAllGames() {
         return delegate.getAllGames();
     }
-
-    @Override
-    public Game CreateDummyGame() {
-        return null;
-    }
 }

@@ -5,7 +5,6 @@ import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-import be.howest.ti.monopoly.logic.implementation.ListOfGames;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -20,9 +19,7 @@ import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,8 +29,6 @@ public class MonopolyApiBridge {
 
     private final IService service;
     private final TokenManager tokenManager;
-
-    ListOfGames listOfGames = new ListOfGames();
 
     public MonopolyApiBridge(IService service, TokenManager tokenManager) {
         this.service = service;
@@ -152,16 +147,14 @@ public class MonopolyApiBridge {
         try {
             Game createdGame = new Game(request);
             service.addGame(createdGame);
-            Response.sendJsonResponse(ctx, 200, createdGame.getSpecificGameInfo());
+            Response.sendJsonResponse(ctx, 200, createdGame.ShowSpecificGameInfo());
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }
     }
 
     private void getGames(RoutingContext ctx) {
-
-        Request request = Request.from(ctx);
-        Response.sendJsonResponse(ctx, 200, service.getListOfGames());
+        Response.sendJsonResponse(ctx, 200, service.getAllGames());
     }
 
     private void joinGame(RoutingContext ctx) {

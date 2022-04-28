@@ -1,6 +1,5 @@
 package be.howest.ti.monopoly.logic;
 import be.howest.ti.monopoly.logic.implementation.Game;
-import be.howest.ti.monopoly.logic.implementation.ListOfGames;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 
 import java.util.List;
@@ -30,6 +29,11 @@ public class ServiceAdapter implements IService {
 
     @Override
     public Game getDummyGame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Game> getAllGames() {
         throw new UnsupportedOperationException();
     }
 }
