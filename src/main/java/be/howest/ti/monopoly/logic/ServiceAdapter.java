@@ -1,7 +1,7 @@
 package be.howest.ti.monopoly.logic;
 import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.ListOfGames;
 import be.howest.ti.monopoly.logic.implementation.Tile;
-import be.howest.ti.monopoly.logic.implementation.GameState;
 
 import java.util.List;
 
@@ -15,17 +15,27 @@ public class ServiceAdapter implements IService {
     @Override
     public List<String > getCommunityCards() {throw new UnsupportedOperationException();}
 
+    @Override
     public List<Tile> getTiles() {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Game getGame() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Game CreateDummyGame() {
+        return null;
+    }
+
+    @Override
+    public void addGameToList(Game createdGame) {
+    }
+
+    @Override
+    public ListOfGames getListOfGames() {
         return null;
     }
 

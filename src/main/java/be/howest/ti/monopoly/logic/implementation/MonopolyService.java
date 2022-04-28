@@ -5,14 +5,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public class MonopolyService extends ServiceAdapter {
 
+    ListOfGames listOfGames = new ListOfGames();
 
-     Map globalList = new HashMap<String, Game>();
+    public ListOfGames getListOfGames() {
+        return listOfGames;
+    }
 
-
+    public void addGameToList(Game game){
+        listOfGames.addGame(game);
+    }
 
     @Override
     public String getVersion() {
@@ -40,6 +46,7 @@ public class MonopolyService extends ServiceAdapter {
                 "You inherit $100");
     }
 
+    @Override
     public List<Tile> getTiles() {
         return List.of(
                 new Tile("Go", 0, "Go", "Go"),
@@ -80,6 +87,7 @@ public class MonopolyService extends ServiceAdapter {
         );
     }
 
+    @Override
     public Game CreateDummyGame(){
         return new Game();
     }
