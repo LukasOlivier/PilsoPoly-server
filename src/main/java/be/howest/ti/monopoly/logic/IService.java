@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.ListOfGames;
 import be.howest.ti.monopoly.logic.implementation.Tile;
-import be.howest.ti.monopoly.logic.implementation.GameState;
 
 import java.util.List;
 import java.util.Map;

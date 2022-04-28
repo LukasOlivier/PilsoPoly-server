@@ -41,6 +41,7 @@ public class MonopolyService extends ServiceAdapter {
                 "You inherit $100");
     }
 
+    @Override
     public List<Tile> getTiles() {
         return List.of(
                 new Tile("Go", 0, "Go", "Go"),
@@ -82,6 +83,7 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
+<<<<<<< HEAD
     public Game addGame(Game game) {
         int gameNumber = allGames.size() + 1;
         String gameId = game.getId() + "_" + gameNumber;
@@ -90,6 +92,9 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     public Game getDummyGame(){
+=======
+    public Game CreateDummyGame(){
+>>>>>>> fadec3caae81a4d336ca517d298b9f8e2db66db9
         return new Game();
     }
 

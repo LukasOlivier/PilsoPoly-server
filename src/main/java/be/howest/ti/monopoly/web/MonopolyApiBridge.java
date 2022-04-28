@@ -150,14 +150,18 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Response.sendJsonResponse(ctx, 200, service.addGame(new Game(request)));
+            Game createdGame = new Game(request);
+            service.addGame(createdGame);
+            Response.sendJsonResponse(ctx, 200, createdGame.getSpecificGameInfo());
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }
     }
 
     private void getGames(RoutingContext ctx) {
-        throw new NotYetImplementedException("getGames");
+
+        Request request = Request.from(ctx);
+        Response.sendJsonResponse(ctx, 200, service.getListOfGames());
     }
 
     private void joinGame(RoutingContext ctx) {

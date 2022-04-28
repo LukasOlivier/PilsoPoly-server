@@ -1,11 +1,15 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.web.Request;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+@JsonIgnoreProperties()
 public class Game {
 
     // TODO : available huizen zijn altijd hetzelfde bij aammaken van een game.
@@ -130,6 +134,13 @@ public class Game {
         return winner;
     }
 
+    public JsonObject getSpecificGameInfo(){
+        return new JsonObject()
+                .put("numberOfPlayers", this.getNumberOfPlayers())
+                .put("started", this.isStarted())
+                .put("players", this.getPlayers())
+                .put("id", this.getId());
+    }
 
     public void setDirectSale(String directSale) {
         this.directSale = directSale;
@@ -162,4 +173,6 @@ public class Game {
     public void setWinner(String winner) {
         this.winner = winner;
     }
+
+
 }
