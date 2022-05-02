@@ -36,4 +36,9 @@ public class ServiceAdapter implements IService {
     public Map<String, Game> getAllGames() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int getGameMapSize() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -13,4 +13,5 @@ public interface IService {
     Game addGame(Game game);
     Game getDummyGame();
     Map<String, Game> getAllGames();
+    int getGameMapSize();
 }

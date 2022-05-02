@@ -1,12 +1,32 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.vertx.core.json.JsonObject;
+import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.IService;
+import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
+import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
+import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+import be.howest.ti.monopoly.logic.implementation.MonopolyService;
+import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
+import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
+import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
+import be.howest.ti.monopoly.web.tokens.PlainTextTokens;
+import be.howest.ti.monopoly.web.tokens.TokenManager;
+import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BearerAuthHandler;
+import io.vertx.ext.web.handler.CorsHandler;
+import io.vertx.ext.web.openapi.RouterBuilder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import be.howest.ti.monopoly.logic.implementation.MonopolyService;
 
 @JsonIgnoreProperties()
 public class Game {
@@ -45,14 +65,14 @@ public class Game {
         addPlayer("Robin", null);
     }
 
-    public Game(Request request) {
+    public Game(Request request, int size) {
 
         if (request == null) {
             throw new IllegalArgumentException();
         }
 
         int numberOfPlayers = (int) request.getCreateGameInfo().get("numberOfPlayers");
-        String prefix = (String) request.getCreateGameInfo().get("prefix");
+        String prefix = (String) request.getCreateGameInfo().get("prefix") + "_" + (size+1);
 
         setNumberOfPlayers(numberOfPlayers);
         this.started = false;
@@ -133,7 +153,7 @@ public class Game {
         return winner;
     }
 
-    public JsonObject ShowSpecificGameInfo(){
+    public JsonObject showSpecificGameInfo(){
         return new JsonObject()
                 .put("numberOfPlayers", this.getNumberOfPlayers())
                 .put("started", this.isStarted())

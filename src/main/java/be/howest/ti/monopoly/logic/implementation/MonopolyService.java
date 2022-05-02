@@ -83,17 +83,22 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
+    // wrm returnd dit de game?
     public Game addGame(Game game) {
-        int gameNumber = allGames.size() + 1;
-        String gameId = game.getId() + "_" + gameNumber;
-        allGames.put(gameId, game);
+        allGames.put(game.getId(), game);
         return game;
     }
+    @Override
+    public int getGameMapSize(){
+        return allGames.size();
+    }
 
+    @Override
     public Map<String, Game> getAllGames() {
         return allGames;
     }
 
+    @Override
     public Game getDummyGame(){
         return new Game();
     }

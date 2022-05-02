@@ -145,9 +145,9 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game createdGame = new Game(request);
+            Game createdGame = new Game(request, service.getGameMapSize());
             service.addGame(createdGame);
-            Response.sendJsonResponse(ctx, 200, createdGame.ShowSpecificGameInfo());
+            Response.sendJsonResponse(ctx, 200, createdGame.showSpecificGameInfo());
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }
