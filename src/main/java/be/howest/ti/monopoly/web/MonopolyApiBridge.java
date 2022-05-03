@@ -208,9 +208,8 @@ public class MonopolyApiBridge {
         Tile tile = service.getTile(position);
         String  name = request.getPlayerName();
         Player player = service.getPlayer(name);
-        String gameId = request.getGameId();
-        Game game = service.getGame(gameId);
-
+        Response.sendJsonResponse(ctx, 200, service.getPlayer(name));
+        System.out.println(name);
     }
 
     private void dontBuyProperty(RoutingContext ctx) {
