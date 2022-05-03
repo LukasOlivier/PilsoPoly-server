@@ -11,11 +11,15 @@ public interface IService {
     List<String > getCommunityCards();
     List<Tile> getTiles();
     void addGame(Game game);
+
+    Game getGame();
+
     Game getDummyGame();
     List<JsonObject> getAllGames();
     int getGameMapSize();
-    Game getGame();
     List<String> getChanceCards();
     Tile getTile(int position);
     Tile getTile(String tileName);
+
+    Game getGameById(String id);
 }
