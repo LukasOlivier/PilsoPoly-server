@@ -78,4 +78,8 @@ public class Request {
         return params.pathParameter("tileId").getString();
 
     }
+
+    public String getGameId(){
+        return params.pathParameter("gameId").getString();
+    }
 }

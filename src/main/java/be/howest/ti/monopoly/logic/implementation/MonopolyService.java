@@ -126,6 +126,7 @@ public class MonopolyService extends ServiceAdapter {
         );
     }
 
+    @Override
     public Tile getTile(int position) {
         for (Tile tile : getTiles()) {
             if (tile.getPosition() == position) {
@@ -143,5 +144,10 @@ public class MonopolyService extends ServiceAdapter {
             }
         }
         throw new MonopolyResourceNotFoundException("No such tile");
+    }
+
+    @Override
+    public Game getGameById(String id){
+        return allGames.get(id);
     }
 }
