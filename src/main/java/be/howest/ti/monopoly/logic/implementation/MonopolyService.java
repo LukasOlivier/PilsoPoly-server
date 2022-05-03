@@ -148,16 +148,7 @@ public class MonopolyService extends ServiceAdapter {
 
 
 
-    public Player getPlayer(String name){
-        Game game = getDummyGame();
-        List<Player> players = game.getPlayers();
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getName() == name){
-                return players.get(i);
-            }
-        }
-        throw new MonopolyResourceNotFoundException("no such player");
-    }
+
 
     @Override
     public Game getGameById(String id){

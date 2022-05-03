@@ -66,8 +66,4 @@ public class ServiceAdapter implements IService {
     @Override
     public Game getGameById(String id) {throw new UnsupportedOperationException();}
 
-    @Override
-    public Player getPlayer(String name) {throw new UnsupportedOperationException();
-    }
-
 }

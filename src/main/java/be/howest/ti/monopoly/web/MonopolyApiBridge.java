@@ -202,14 +202,16 @@ public class MonopolyApiBridge {
         throw new NotYetImplementedException("declareBankruptcy");
     }
 
+    //http://localhost:8080/games/Dummy/players/Sibren/properties/Oriental
     private void buyProperty(RoutingContext ctx) {
-        Request request = Request.from(ctx);
-        int position = request.getTilePosition();
-        Tile tile = service.getTile(position);
-        String  name = request.getPlayerName();
-        Player player = service.getPlayer(name);
-        Response.sendJsonResponse(ctx, 200, service.getPlayer(name));
-        System.out.println(name);
+        Request request =  Request.from(ctx);
+        try {
+            String playerName = request.getPlayerName();
+            Player player = service.getPlayer(playerName);
+            Response.sendJsonResponse(ctx, 200, player);
+        } catch (Exception e) {
+            throw new InvalidRequestException("failed to create game!");
+        }
     }
 
     private void dontBuyProperty(RoutingContext ctx) {
@@ -257,7 +259,8 @@ public class MonopolyApiBridge {
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("placeBidOnBankAuction");
+        throw new NotYetImplementedException("getBankAuctions");
+
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {

@@ -22,5 +22,4 @@ public interface IService {
     Tile getTile(int position);
     Tile getTile(String tileName);
     Game getGameById(String id);
-    Player getPlayer(String name);
 }

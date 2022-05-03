@@ -27,7 +27,7 @@ public class Player {
     }
 
     public Player(String name, String icon) {
-        this(name,"Go",false, 1500, false, 0, 0, icon);
+        this(name,"Oriental",false, 1500, false, 0, 0, icon);
     }
 
     public void addProperties(PlayerProperty newProperty){
