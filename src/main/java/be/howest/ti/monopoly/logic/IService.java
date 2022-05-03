@@ -14,16 +14,20 @@ public interface IService {
     List<Tile> getTiles();
     void addGame(Game game);
 
+    // GAME
     Game getGame();
-
     Game getDummyGame();
     List<JsonObject> getAllGames();
     int getGameMapSize();
     List<String> getChanceCards();
+
+    // TILES
     Tile getTile(int position);
     Tile getTile(String tileName);
 
     Game getGameById(String id);
 
-    Auction startPlayerAuction(Request request);
+    // AUCTION
+    void startPlayerAuction(Request request);
+    void placeBidOnPlayerAuction(Request request);
 }

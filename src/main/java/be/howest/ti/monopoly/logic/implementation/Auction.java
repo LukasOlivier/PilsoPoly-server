@@ -18,6 +18,10 @@ public class Auction {
         this.last_bidder = last_bidder;
     }
 
+    public void setHighest_bid(int amount) {
+        this.highest_bid = amount;
+    }
+
     public int getHighest_bid() {
         return highest_bid;
     }
