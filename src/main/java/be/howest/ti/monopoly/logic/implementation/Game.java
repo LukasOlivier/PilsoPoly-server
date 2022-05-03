@@ -1,40 +1,19 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.vertx.core.json.JsonObject;
-import be.howest.ti.monopoly.logic.implementation.Game;
-import be.howest.ti.monopoly.logic.IService;
-import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
-import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
-import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-import be.howest.ti.monopoly.logic.implementation.MonopolyService;
-import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
-import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
-import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
-import be.howest.ti.monopoly.web.tokens.PlainTextTokens;
-import be.howest.ti.monopoly.web.tokens.TokenManager;
-import io.vertx.core.http.HttpMethod;
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.BearerAuthHandler;
-import io.vertx.ext.web.handler.CorsHandler;
-import io.vertx.ext.web.openapi.RouterBuilder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import be.howest.ti.monopoly.logic.implementation.MonopolyService;
 
 @JsonIgnoreProperties()
 public class Game {
-
     // TODO : available huizen zijn altijd hetzelfde bij aammaken van een game.
     private int numberOfPlayers;
     private boolean started;
-    private LinkedList players;
+    private List<Player> players;
     private String id;
     private String directSale;
     private int availableHouses;
@@ -49,12 +28,12 @@ public class Game {
     public Game (){
         this.numberOfPlayers = 4;
         this.id = "Dummy";
-        this.players = new LinkedList<>();
+        this.players = new ArrayList<>();
         this.started = true;
         this.directSale = null;
         this.availableHouses = 31;
         this.availableHotels = 12;
-        this.turns = new LinkedList<>();
+        this.turns = new ArrayList<>( );
         this.canroll = true;
         this.ended = false;
         this.currentPlayer = "Sibren";
@@ -66,19 +45,13 @@ public class Game {
     }
 
     public Game(Request request, int size) {
-
         if (request == null) {
             throw new IllegalArgumentException();
         }
-
-        int numberOfPlayers = (int) request.getCreateGameInfo().get("numberOfPlayers");
-        String prefix = (String) request.getCreateGameInfo().get("prefix") + "_" + (size+1);
-
-        setNumberOfPlayers(numberOfPlayers);
+        setNumberOfPlayers(request.getNumberOfPlayersToStart());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = prefix;
-
+        this.id = request.getGamePrefix() + "_" + (size+1);
     }
 
     public void setId(String id) {
@@ -105,7 +78,7 @@ public class Game {
         return started;
     }
 
-    public LinkedList getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 

@@ -1,18 +1,12 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import io.vertx.core.json.JsonObject;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class MonopolyService extends ServiceAdapter {
-
-    // TODO : is class: ListOfGames echt nodig?
-
-    // MAP met gameID en de Game
-    // kan je makkelijk bij een get .get(gameID) en zo de game makkelijk verkrijgen.
     Map<String, Game> allGames = new HashMap<>();
 
     @Override
@@ -84,9 +78,9 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     // wrm returnd dit de game?
-    public Game addGame(Game game) {
+    public void addGame(Game game) {
         allGames.put(game.getId(), game);
-        return game;
+        //return game;
     }
     @Override
     public int getGameMapSize(){
@@ -94,13 +88,19 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Map<String, Game> getAllGames() {
-        return allGames;
+    public List<JsonObject> getAllGames() {
+        List<JsonObject> listOfGames = new ArrayList<>();
+        for (Map.Entry<String, Game> entry : allGames.entrySet()) {
+            listOfGames.add(entry.getValue().showSpecificGameInfo());
+        }
+        return listOfGames;
     }
 
     @Override
     public Game getDummyGame(){
         return new Game();
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.logic;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
+import io.vertx.core.json.JsonObject;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Game addGame(Game game) {
+    public void addGame(Game game) {
         throw new UnsupportedOperationException();
     }
 
@@ -33,7 +34,7 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Map<String, Game> getAllGames() {
+    public List<JsonObject> getAllGames() {
         throw new UnsupportedOperationException();
     }
 

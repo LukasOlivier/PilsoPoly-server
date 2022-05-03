@@ -58,10 +58,11 @@ public class Request {
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
-    public Map<String, Object> getCreateGameInfo() {
-        Map<String, Object> info = new HashMap<>();
-        info.put("numberOfPlayers", params.body().getJsonObject().getInteger("numberOfPlayers"));
-        info.put("prefix", params.body().getJsonObject().getString("prefix"));
-        return info;
+    public int getNumberOfPlayersToStart(){
+        return params.body().getJsonObject().getInteger("numberOfPlayers");
+    }
+
+    public String getGamePrefix(){
+        return params.body().getJsonObject().getString("prefix");
     }
 }
