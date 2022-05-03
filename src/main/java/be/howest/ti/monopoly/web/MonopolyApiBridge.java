@@ -165,7 +165,6 @@ public class MonopolyApiBridge {
         } catch (IllegalArgumentException e) {
             return;
         }
-
     }
 
     private void getGames(RoutingContext ctx) {
@@ -177,7 +176,9 @@ public class MonopolyApiBridge {
     }
 
 
-    private void getGame(RoutingContext ctx) { throw new NotYetImplementedException("joinGame");}
+    private void getGame(RoutingContext ctx) {
+        Response.sendJsonResponse(ctx,200, service.getGameById());
+    }
 
 
     private void getDummyGame(RoutingContext ctx) {
@@ -201,7 +202,7 @@ public class MonopolyApiBridge {
     }
 
     private void buyProperty(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyProperty");
+        Request request = Request.from(ctx);
     }
 
     private void dontBuyProperty(RoutingContext ctx) {

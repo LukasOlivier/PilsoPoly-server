@@ -14,5 +14,6 @@ public interface IService {
     List<String> getChanceCards();
     Tile getTile(int position);
     Tile getTile(String tileName);
+    Game getGameById();
 
 }

@@ -42,4 +42,7 @@ public class ServiceAdapter implements IService {
     public Tile getTile(String tileName) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Game getGameById() {throw new UnsupportedOperationException();}
 }
