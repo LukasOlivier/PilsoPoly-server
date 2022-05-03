@@ -65,7 +65,7 @@ public class Request {
     public String getGamePrefix(){
         return params.body().getJsonObject().getString("prefix");
     }
-
+    // ToDo make hese functions in one function
     public int getTilePosition() {
         return params.pathParameter("tileId").getInteger();
     }
@@ -81,5 +81,9 @@ public class Request {
 
     public String getGameId(){
         return params.pathParameter("gameId").getString();
+    }
+
+    public String getStringFromBody(String key){
+        return params.body().getJsonObject().getString(key);
     }
 }
