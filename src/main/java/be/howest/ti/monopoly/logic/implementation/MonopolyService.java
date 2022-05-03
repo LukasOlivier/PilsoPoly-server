@@ -2,11 +2,13 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+import io.vertx.core.json.JsonObject;
 
-import java.util.List;
+import java.util.*;
 
 
 public class MonopolyService extends ServiceAdapter {
+    Map<String, Game> allGames = new HashMap<>();
 
     @Override
     public String getVersion() {
@@ -82,13 +84,26 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Game getDummyGame() {
-        Game dummyGame = new Game(4, true, "Dummy", null, 31, 12, true, false, "Sibren", null);
-        dummyGame.addPlayer("Sibren", null);
-        dummyGame.addPlayer("Niels", null);
-        dummyGame.addPlayer("Lukas", null);
-        dummyGame.addPlayer("Robin", null);
-        dummyGame.addTurns("Robin", "buy", "you can buy this property", "med", 1, 2);
+    public void addGame(Game game) {
+        allGames.put(game.getId(), game);
+    }
+
+    @Override
+    public int getGameMapSize(){
+        return allGames.size();
+    }
+
+    @Override
+    public List<JsonObject> getAllGames() {
+        List<JsonObject> listOfGames = new ArrayList<>();
+        for (Map.Entry<String, Game> entry : allGames.entrySet()) {
+            listOfGames.add(entry.getValue().showSpecificGameInfo());
+        }
+        return listOfGames;
+    }
+
+    public Game getDummyGame(){
+        Game dummyGame = new Game();
         return dummyGame;
     }
 
@@ -133,4 +148,8 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
+    @Override
+    public Game getGameById(String id){
+        return allGames.get(id);
+    }
 }

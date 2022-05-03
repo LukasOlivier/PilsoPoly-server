@@ -1,16 +1,21 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.vertx.core.json.JsonObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
+@JsonIgnoreProperties()
 public class Game {
-
+    // TODO : available huizen zijn altijd hetzelfde bij aammaken van een game.
     private int numberOfPlayers;
     private boolean started;
-    private LinkedList players;
+    private List<Player> players;
     private String id;
     private String directSale;
     private int availableHouses;
@@ -22,29 +27,33 @@ public class Game {
     private String winner;
 
     // This is to create a dummy game
-    public Game(int numberOfPlayers, boolean started, String id, String directSale, int availableHouses, int availableHotels, boolean canroll, boolean ended, String currentPlayer, String winner) {
-        this.numberOfPlayers = numberOfPlayers;
-        this.started = started;
-        this.id = id;
-        this.players = new LinkedList<>();
-        this.directSale = directSale;
-        this.availableHouses = availableHouses;
-        this.availableHotels = availableHotels;
-        this.turns = new LinkedList<>();
-        this.canroll = canroll;
-        this.ended = ended;
-        this.currentPlayer = currentPlayer;
-        this.winner = winner;
+    public Game (){
+        this.numberOfPlayers = 4;
+        this.id = "Dummy";
+        this.players = new ArrayList<>();
+        this.started = true;
+        this.directSale = null;
+        this.availableHouses = 31;
+        this.availableHotels = 12;
+        this.turns = new ArrayList<>( );
+        this.canroll = true;
+        this.ended = false;
+        this.currentPlayer = "Sibren";
+        this.winner = null;
+        addPlayer("Sibren", null);
+        addPlayer("Niels", null);
+        addPlayer("Lukas", null);
+        addPlayer("Robin", null);
     }
 
-    public Game(Request request) {
+    public Game(Request request, int size) {
         if (request == null) {
             throw new IllegalArgumentException();
         }
-        setNumberOfPlayers(request.getNumberOfPlayersForNewGame());
+        setNumberOfPlayers(request.getNumberOfPlayersToStart());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getPrefixForNewGame();
+        this.id = request.getGamePrefix() + "_" + (size+1);
     }
 
     public void setId(String id) {
@@ -71,7 +80,7 @@ public class Game {
         return started;
     }
 
-    public LinkedList getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -79,8 +88,8 @@ public class Game {
         return id;
     }
 
-    public void setStarted(boolean started) {
-        this.started = started;
+    public void setStarted() {
+        this.started = true;
     }
 
     public void addPlayer(String name, String icon){
@@ -120,10 +129,26 @@ public class Game {
         return currentPlayer;
     }
 
+    public Player getSpecificPlayer(String name){
+        for (Player player : players){
+            if (Objects.equals(player.getName(), name)) {
+                return player;
+            }
+        }
+        throw new MonopolyResourceNotFoundException("No player with this name is found");
+    }
+
     public String getWinner() {
         return winner;
     }
 
+    public JsonObject showSpecificGameInfo(){
+        return new JsonObject()
+                .put("numberOfPlayers", this.getNumberOfPlayers())
+                .put("started", this.isStarted())
+                .put("players", this.getPlayers())
+                .put("id", this.getId());
+    }
 
     public void setDirectSale(String directSale) {
         this.directSale = directSale;
