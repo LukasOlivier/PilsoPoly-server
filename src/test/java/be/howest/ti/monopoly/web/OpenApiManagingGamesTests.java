@@ -67,7 +67,7 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
                 new JsonObject()
                         .put("prefix", "Prefix123")
                         .put("numberOfPlayers", 10),
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 
@@ -143,13 +143,15 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
 
     @Test
     void joinGame(final VertxTestContext testContext) {
+
         post(
                 testContext,
                 "/games/game-id/players",
                 null,
                 new JsonObject()
-                        .put("playerName", "Alice"),
-                response -> assertNotYetImplemented(response, "joinGame")
+                        .put("playerName", "Alice")
+                        .put("icon", "Test"),
+                this::assertOkResponse
         );
     }
 

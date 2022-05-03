@@ -27,7 +27,7 @@ public class Game {
     private String winner;
 
     // This is to create a dummy game
-    public Game (){
+    public Game(){
         this.numberOfPlayers = 4;
         this.id = "Dummy";
         this.players = new ArrayList<>();
@@ -45,7 +45,7 @@ public class Game {
         addPlayer("Lukas", null);
         addPlayer("Robin", null);
     }
-
+    // we will leave this
     public Game(Request request, int size) {
         if (request == null) {
             throw new IllegalArgumentException();
@@ -93,6 +93,11 @@ public class Game {
     }
 
     public void addPlayer(String name, String icon){
+        for (Player player : players){
+            if (Objects.equals(player.getName(), name)) {
+                throw new IllegalArgumentException("There is already a player with this name!");
+            }
+        }
         players.add(new Player(name, icon));
     }
 
@@ -117,7 +122,7 @@ public class Game {
         return turns;
     }
 
-    public boolean isCanroll() {
+    public boolean isCanRoll() {
         return canroll;
     }
 
