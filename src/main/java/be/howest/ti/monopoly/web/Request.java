@@ -83,6 +83,22 @@ public class Request {
         return params.pathParameter("gameId").getString();
     }
 
+    public String getPlayerName() {
+        return params.pathParameter("playerName").getString();
+    }
+
+    public String getPropertyName() {
+        return params.pathParameter("propertyName").getString();
+    }
+
+    public int getBid() {
+        return params.body().getJsonObject().getInteger("start-bid");
+    }
+
+    public int getDuration() {
+        return params.body().getJsonObject().getInteger("duration");
+    }
+
     public String getStringFromBody(String key){
         return params.body().getJsonObject().getString(key);
     }
