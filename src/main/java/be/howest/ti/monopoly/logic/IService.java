@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic;
 
+import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
@@ -24,4 +25,6 @@ public interface IService {
     Tile getTile(String tileName);
     Game getGameById(String id);
     Player buyProperty(Request request);
+    Auction startPlayerAuction(Request request);
+
 }

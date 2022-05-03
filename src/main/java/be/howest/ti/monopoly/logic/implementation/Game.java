@@ -16,12 +16,13 @@ public class Game {
     private int numberOfPlayers;
     private boolean started;
     private List<Player> players;
+    private Auction auction;
     private String id;
     private String directSale;
     private int availableHouses;
     private int availableHotels;
     private List<Turn> turns = new LinkedList<>();
-    private boolean canroll;
+    private boolean canRoll;
     private boolean ended;
     private String currentPlayer;
     private String winner;
@@ -36,7 +37,7 @@ public class Game {
         this.availableHouses = 31;
         this.availableHotels = 12;
         this.turns = new ArrayList<>( );
-        this.canroll = true;
+        this.canRoll = true;
         this.ended = false;
         this.currentPlayer = "Sibren";
         this.winner = null;
@@ -71,6 +72,13 @@ public class Game {
         }
     }
 
+    public void startPlayerAuction(int bid, int duration, String bidder, String property) {
+        auction = new Auction(bid, duration, bidder, property);
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
@@ -117,8 +125,8 @@ public class Game {
         return turns;
     }
 
-    public boolean isCanroll() {
-        return canroll;
+    public boolean isCanRoll() {
+        return canRoll;
     }
 
     public boolean isEnded() {
@@ -166,8 +174,8 @@ public class Game {
         this.turns = turns;
     }
 
-    public void setCanroll(boolean canroll) {
-        this.canroll = canroll;
+    public void setCanRoll(boolean canRoll) {
+        this.canRoll = canRoll;
     }
 
     public void setEnded(boolean ended) {

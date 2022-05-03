@@ -268,7 +268,8 @@ public class MonopolyApiBridge {
     }
 
     private void startPlayerAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("startPlayerAuction");
+        Request request = Request.from(ctx);
+        Response.sendJsonResponse(ctx, 200, service.startPlayerAuction(request));
     }
 
     private void placeBidOnPlayerAuction(RoutingContext ctx) {
