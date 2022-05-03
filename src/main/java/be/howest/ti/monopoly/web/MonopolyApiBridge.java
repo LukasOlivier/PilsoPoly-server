@@ -20,9 +20,7 @@ import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -157,28 +155,27 @@ public class MonopolyApiBridge {
     }
 
     private void createGame(RoutingContext ctx) {
-        // Idee voor later, maak de game aan met de request -> new Game(request)
-        // dus pas de constructor aan, zodanig dat de empty body test ook kan daar gebeuren
         Request request = Request.from(ctx);
         try {
-            Response.sendJsonResponse(ctx, 200, new Game(request));
+            Game createdGame = new Game(request, service.getGameMapSize());
+            service.addGame(createdGame);
+            Response.sendJsonResponse(ctx, 200, createdGame.showSpecificGameInfo());
         } catch (IllegalArgumentException e) {
-            return;
+            throw new InvalidRequestException("failed to create game!");
         }
-
     }
 
     private void getGames(RoutingContext ctx) {
-        throw new NotYetImplementedException("getGames");
+        Response.sendJsonResponse(ctx, 200, service.getAllGames());
     }
 
     private void joinGame(RoutingContext ctx) {
         throw new NotYetImplementedException("joinGame");
     }
 
-
-    private void getGame(RoutingContext ctx) { throw new NotYetImplementedException("joinGame");}
-
+    private void getGame(RoutingContext ctx) {
+        throw new NotYetImplementedException("getGame");
+    }
 
     private void getDummyGame(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, service.getDummyGame());

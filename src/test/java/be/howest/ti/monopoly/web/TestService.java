@@ -4,6 +4,7 @@ import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
+import io.vertx.core.json.JsonObject;
 
 import java.util.List;
 
@@ -38,7 +39,24 @@ public class TestService implements IService {
     public Game getGame() {return delegate.getGame();}
 
     @Override
-    public Game getDummyGame() {return delegate.getDummyGame();}
+    public void addGame(Game game) {
+        delegate.addGame(game);
+    }
+
+    @Override
+    public Game getDummyGame() {
+        return delegate.getDummyGame();
+    }
+
+    @Override
+    public List<JsonObject> getAllGames() {
+        return delegate.getAllGames();
+    }
+
+    @Override
+    public int getGameMapSize() {
+        return delegate.getGameMapSize();
+    }
 
     public List<String> getChanceCards() {
         return delegate.getChanceCards();
@@ -48,3 +66,4 @@ public class TestService implements IService {
         return delegate.getTile(tileName);
     }
 }
+
