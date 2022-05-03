@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.vertx.core.json.JsonObject;
@@ -7,6 +8,7 @@ import io.vertx.core.json.JsonObject;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 @JsonIgnoreProperties()
 public class Game {
@@ -94,8 +96,8 @@ public class Game {
         return id;
     }
 
-    public void setStarted(boolean started) {
-        this.started = started;
+    public void setStarted() {
+        this.started = true;
     }
 
     public void addPlayer(String name, String icon){
@@ -133,6 +135,15 @@ public class Game {
 
     public String getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public Player getSpecificPlayer(String name){
+        for (Player player : players){
+            if (Objects.equals(player.getName(), name)) {
+                return player;
+            }
+        }
+        throw new MonopolyResourceNotFoundException("No player with this name is found");
     }
 
     public String getWinner() {
