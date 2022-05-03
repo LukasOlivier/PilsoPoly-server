@@ -203,6 +203,8 @@ public class MonopolyApiBridge {
 
     private void buyProperty(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        int position = request.getTilePosition();
+        Tile tile = service.getTile(position);
     }
 
     private void dontBuyProperty(RoutingContext ctx) {
