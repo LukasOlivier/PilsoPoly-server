@@ -267,7 +267,6 @@ public class MonopolyApiBridge {
 
     private void placeBidOnPlayerAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        // TODO: add try and catch if bid is lower than previous bid.
         service.placeBidOnPlayerAuction(request);
         Response.sendOkResponse(ctx);
     }
