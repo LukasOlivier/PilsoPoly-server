@@ -177,7 +177,8 @@ public class MonopolyApiBridge {
 
 
     private void getGame(RoutingContext ctx) {
-        Response.sendJsonResponse(ctx,200, service.getGameById());
+        Request request = Request.from(ctx);
+        Response.sendJsonResponse(ctx, 200, service.getGameById(request.getGameId()));
     }
 
 

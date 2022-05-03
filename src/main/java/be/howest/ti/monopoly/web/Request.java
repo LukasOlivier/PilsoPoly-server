@@ -58,11 +58,11 @@ public class Request {
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
-    public int getNumberOfPlayersToStart(){
+    public int getNumberOfPlayersToStart() {
         return params.body().getJsonObject().getInteger("numberOfPlayers");
     }
 
-    public String getGamePrefix(){
+    public String getGamePrefix() {
         return params.body().getJsonObject().getString("prefix");
     }
 
@@ -79,7 +79,13 @@ public class Request {
 
     }
 
+
     public String getPlayerName() {
         return params.pathParameter("playerName").getString();
     }
+
+    public String getGameId() {
+        return params.pathParameter("gameId").getString();
+    }
 }
+
