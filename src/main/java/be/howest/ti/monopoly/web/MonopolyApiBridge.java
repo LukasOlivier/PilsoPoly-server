@@ -171,7 +171,13 @@ public class MonopolyApiBridge {
     }
 
     private void joinGame(RoutingContext ctx) {
-        throw new NotYetImplementedException("joinGame");
+        Request request = Request.from(ctx);
+        String player = request.getStringFromBody("playerName");
+        String icon = request.getStringFromBody("icon");
+        String gameId = request.getGameId();
+        Game game = service.getGameById(gameId);
+
+        game.addPlayer(player, icon);
     }
 
 
@@ -208,9 +214,9 @@ public class MonopolyApiBridge {
         try {
             Game game = service.getGameById(request.getGameId());
             String playerName = request.getPlayerName();
-            Response.sendJsonResponse(ctx, 200, game.get);
+            Response.sendJsonResponse(ctx, 200, game.getSpecificPlayer(playerName));
         } catch (Exception e) {
-            throw new InvalidRequestException("failed to create game!");
+            throw new InvalidRequestException("failed to buy propertie");
         }
     }
 

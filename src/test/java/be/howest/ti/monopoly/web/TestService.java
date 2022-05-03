@@ -72,9 +72,5 @@ public class TestService implements IService {
         return delegate.getGameById(id);
     }
 
-    @Override
-    public Player getPlayer(String name) {
-        return delegate.getPlayer(name);
-    }
 }
 
