@@ -37,7 +37,7 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
 
     @Test
     void getTiles(final VertxTestContext testContext) {
-        service.setDelegate(new ServiceAdapter(){
+        service.setDelegate( new ServiceAdapter() {
             @Override
             public List<Tile> getTiles() {
                 return Collections.emptyList();
