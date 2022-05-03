@@ -2,6 +2,7 @@ package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import io.vertx.core.json.JsonObject;
@@ -64,6 +65,16 @@ public class TestService implements IService {
 
     public Tile getTile(String tileName) {
         return delegate.getTile(tileName);
+    }
+
+    @Override
+    public Game getGameById(String id) {
+        return delegate.getGameById(id);
+    }
+
+    @Override
+    public Auction startPlayerAuction(Request request) {
+        return delegate.startPlayerAuction(request);
     }
 }
 
