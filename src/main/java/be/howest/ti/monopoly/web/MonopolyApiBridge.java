@@ -6,6 +6,7 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -205,6 +206,11 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
         int position = request.getTilePosition();
         Tile tile = service.getTile(position);
+        String  name = request.getPlayerName();
+        Player player = service.getPlayer(name);
+        String gameId = request.getGameId();
+        Game game = service.getGame(gameId);
+
     }
 
     private void dontBuyProperty(RoutingContext ctx) {
