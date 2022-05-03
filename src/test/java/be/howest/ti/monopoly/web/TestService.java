@@ -72,5 +72,10 @@ public class TestService implements IService {
         return delegate.getGameById(id);
     }
 
+    @Override
+    public Player buyProperty(Request request) {
+        return delegate.buyProperty(request);
+    }
+
 }
 

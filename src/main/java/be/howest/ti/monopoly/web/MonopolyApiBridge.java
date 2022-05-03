@@ -211,13 +211,7 @@ public class MonopolyApiBridge {
     //http://localhost:8080/games/Dummy/players/Sibren/properties/Oriental
     private void buyProperty(RoutingContext ctx) {
         Request request =  Request.from(ctx);
-        try {
-            Game game = service.getGameById(request.getGameId());
-            String playerName = request.getPlayerName();
-            Response.sendJsonResponse(ctx, 200, game.getSpecificPlayer(playerName));
-        } catch (Exception e) {
-            throw new InvalidRequestException("failed to buy propertie");
-        }
+        Response.sendJsonResponse(ctx, 200, service.buyProperty(request));
     }
 
     private void dontBuyProperty(RoutingContext ctx) {

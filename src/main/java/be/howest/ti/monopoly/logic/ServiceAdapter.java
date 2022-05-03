@@ -2,6 +2,7 @@ package be.howest.ti.monopoly.logic;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
+import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
@@ -65,5 +66,10 @@ public class ServiceAdapter implements IService {
 
     @Override
     public Game getGameById(String id) {throw new UnsupportedOperationException();}
+
+    @Override
+    public Player buyProperty(Request request) {
+        throw new UnsupportedOperationException();
+    }
 
 }
