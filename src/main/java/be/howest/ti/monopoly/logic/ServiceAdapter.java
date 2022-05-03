@@ -28,6 +28,10 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
+    public Game getGame() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public Game getDummyGame() {
         throw new UnsupportedOperationException();
@@ -40,6 +44,21 @@ public class ServiceAdapter implements IService {
 
     @Override
     public int getGameMapSize() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<String> getChanceCards() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Tile getTile(int position) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Tile getTile(String tileName) {
         throw new UnsupportedOperationException();
     }
 }

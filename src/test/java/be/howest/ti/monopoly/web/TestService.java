@@ -30,6 +30,13 @@ public class TestService implements IService {
     public List<Tile> getTiles() {
         return delegate.getTiles();
     }
+    @Override
+    public Tile getTile(int position) {
+        return delegate.getTile(position);
+    }
+
+    @Override
+    public Game getGame() {return delegate.getGame();}
 
     @Override
     public void addGame(Game game) {
@@ -50,4 +57,13 @@ public class TestService implements IService {
     public int getGameMapSize() {
         return delegate.getGameMapSize();
     }
+
+    public List<String> getChanceCards() {
+        return delegate.getChanceCards();
+    }
+
+    public Tile getTile(String tileName) {
+        return delegate.getTile(tileName);
+    }
 }
+

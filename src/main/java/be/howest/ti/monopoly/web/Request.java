@@ -65,4 +65,17 @@ public class Request {
     public String getGamePrefix(){
         return params.body().getJsonObject().getString("prefix");
     }
+
+    public int getTilePosition() {
+        return params.pathParameter("tileId").getInteger();
+    }
+
+    public boolean hasTilePosition() {
+        return params.pathParameter("tileId").isNumber();
+    }
+
+    public String getTileName() {
+        return params.pathParameter("tileId").getString();
+
+    }
 }

@@ -6,6 +6,7 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
+import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
@@ -127,11 +128,22 @@ public class MonopolyApiBridge {
     }
 
     private void getTile(RoutingContext ctx) {
-        throw new NotYetImplementedException("getTile");
+        Request request = Request.from(ctx);
+
+        Tile tile;
+        if (request.hasTilePosition()) {
+            int position = request.getTilePosition();
+            tile = service.getTile(position);
+        } else {
+            String name = request.getTileName();
+            tile = service.getTile(name);
+        }
+
+        Response.sendJsonResponse(ctx, 200, tile);
     }
 
     private void getChance(RoutingContext ctx) {
-        throw new NotYetImplementedException("getChance");
+        Response.sendJsonResponse(ctx, 200, service.getChanceCards());
     }
 
     private void getCommunityChest(RoutingContext ctx) {
@@ -161,9 +173,15 @@ public class MonopolyApiBridge {
         throw new NotYetImplementedException("joinGame");
     }
 
+<<<<<<< HEAD
     private void getGame(RoutingContext ctx) {
         throw new NotYetImplementedException("getGame");
     }
+=======
+
+    private void getGame(RoutingContext ctx) { throw new NotYetImplementedException("joinGame");}
+
+>>>>>>> ae4490bee265ed5fffc892b887f6943e97d1c855
 
     private void getDummyGame(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, service.getDummyGame());

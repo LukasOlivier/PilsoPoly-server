@@ -5,7 +5,6 @@ import be.howest.ti.monopoly.logic.implementation.Tile;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IService {
     String getVersion();
@@ -15,4 +14,8 @@ public interface IService {
     Game getDummyGame();
     List<JsonObject> getAllGames();
     int getGameMapSize();
+    Game getGame();
+    List<String> getChanceCards();
+    Tile getTile(int position);
+    Tile getTile(String tileName);
 }

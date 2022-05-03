@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Tile;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
 
@@ -36,43 +37,67 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
 
     @Test
     void getTiles(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            @Override
+            public List<Tile> getTiles() {
+                return Collections.emptyList();
+            }
+        });
         get(
                 testContext,
                 "/tiles",
                 null,
-                response -> assertNotYetImplemented(response, "getTiles")
+                response -> assertOkResponse(response)
         );
     }
 
 
     @Test
     void getTileByName(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            @Override
+            public Tile getTile(String name) {
+                return new Tile("Go", 0, "Go", "Go");
+            }
+        });
         get(
                 testContext,
-                "/tiles/something",
+                "/tiles/Go",
                 null,
-                response -> assertNotYetImplemented(response, "getTile")
+                response -> assertOkResponse(response)
         );
     }
 
     @Test
     void getTileById(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            @Override
+            public Tile getTile(int position) {
+                return new Tile("Go", 0, "Go", "Go");
+            }
+        });
         get(
                 testContext,
-                "/tiles/100",
+                "/tiles/0",
                 null,
-                response -> assertNotYetImplemented(response, "getTile")
+                response -> assertOkResponse(response)
         );
     }
 
 
     @Test
     void getChance(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter() {
+            @Override
+            public List<String> getChanceCards() {
+                return Collections.emptyList();
+            }
+        });
         get(
                 testContext,
                 "/chance",
                 null,
-                response -> assertNotYetImplemented(response, "getChance")
+                response -> assertOkResponse(response)
         );
     }
 

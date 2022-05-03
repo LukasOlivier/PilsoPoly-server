@@ -9,11 +9,13 @@ public class Turn {
     private String type;
     private Move moves;
 
-    public Turn(List<Integer> roll, String player, String type, Move moves) {
-        this.roll = roll;
+    public Turn( String player, String type, Move moves, int diceOne, int diceTwo) {
+        this.roll = new ArrayList<>();
         this.player = player;
         this.type = type;
         this.moves = moves;
+        roll.add(diceOne);
+        roll.add(diceTwo);
     }
 
     public List<Integer> getRoll() {
