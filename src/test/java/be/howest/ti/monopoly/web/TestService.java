@@ -3,14 +3,10 @@ package be.howest.ti.monopoly.web;
 import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.implementation.Game;
-<<<<<<< HEAD
-import be.howest.ti.monopoly.logic.implementation.GameState;
-=======
->>>>>>> fadec3caae81a4d336ca517d298b9f8e2db66db9
 import be.howest.ti.monopoly.logic.implementation.Tile;
+import io.vertx.core.json.JsonObject;
 
 import java.util.List;
-import java.util.Map;
 
 
 public class TestService implements IService {
@@ -36,8 +32,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public Game addGame(Game game) {
-        return delegate.addGame(game);
+    public void addGame(Game game) {
+        delegate.addGame(game);
     }
 
     @Override
@@ -46,7 +42,12 @@ public class TestService implements IService {
     }
 
     @Override
-    public Map<String, Game> getAllGames() {
+    public List<JsonObject> getAllGames() {
         return delegate.getAllGames();
+    }
+
+    @Override
+    public int getGameMapSize() {
+        return delegate.getGameMapSize();
     }
 }
