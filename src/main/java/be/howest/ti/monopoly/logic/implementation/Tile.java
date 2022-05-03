@@ -1,7 +1,5 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-//import com.fasterxml.jackson.annotation.JsonInclude;
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Tile {
 
     private String name;
