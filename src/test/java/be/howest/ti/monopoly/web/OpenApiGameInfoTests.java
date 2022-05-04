@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 
 class OpenApiGameInfoTests extends OpenApiTestsBase {
-
     @Test
     void getGame(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
@@ -37,7 +36,8 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
     @Test
     void getDummyGame(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
-            public Game getGameState(){
+            @Override
+            public Game getDummyGame(){
                 Game dummyGame = new Game();
                 return dummyGame;
             }
@@ -46,7 +46,7 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
                 testContext,
                 "/games/dummy",
                 null,
-                response -> assertErrorResponse(response, 401)
+                this::assertOkResponse
         );
     }
 }

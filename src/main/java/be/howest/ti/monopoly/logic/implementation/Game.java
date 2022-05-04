@@ -201,4 +201,19 @@ public class Game {
     public void setWinner(String winner) {
         this.winner = winner;
     }
+
+    public void isEveryoneBankrupt(){
+        int bankruptCounter = 0;
+        String possibleWinner = null;
+        for(Player player : getPlayers()){
+            if (player.isBankrupt()){
+                bankruptCounter++;
+            }else{
+                possibleWinner = player.getName();
+            }
+        }
+        if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null){
+            this.winner = possibleWinner;
+        }
+    }
 }

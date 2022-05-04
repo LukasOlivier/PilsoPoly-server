@@ -54,6 +54,10 @@ public class Player {
         return bankrupt;
     }
 
+    public void setBankrupt() {
+        this.bankrupt = true;
+    }
+
     public int getGetOutOfJailFreeCards() {
         return getOutOfJailFreeCards;
     }

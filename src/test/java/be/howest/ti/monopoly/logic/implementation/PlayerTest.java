@@ -12,4 +12,11 @@ class PlayerTest {
         assertEquals("Sibren", testPlayer.getName());
         assertEquals("Beer", testPlayer.getIcon());
     }
+
+    @Test
+    void testBankruptcy(){
+        Player testPlayer = new Player("Sibren", "Beer");
+        testPlayer.setBankrupt();
+        assertTrue(testPlayer.isBankrupt());
+    }
 }
