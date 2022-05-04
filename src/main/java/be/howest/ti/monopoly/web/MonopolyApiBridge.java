@@ -205,9 +205,10 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
         try {
             Game game = service.getGameById(request.getGameId());
-            Player player = game.getSp;
-            player.setPlayerBankrupt();
-            Response.sendJsonResponse(ctx, 200, createdGame.showSpecificGameInfo());
+            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+            player.setBankrupt();
+            Response.sendOkResponse(ctx);
+            game.isEveryoneBankrupt();
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
         }

@@ -5,7 +5,7 @@ import io.vertx.core.json.JsonObject;
 
 import java.util.List;
 
-public abstract class ServiceAdapter implements IService {
+public class ServiceAdapter implements IService {
 
     @Override
     public String getVersion() {

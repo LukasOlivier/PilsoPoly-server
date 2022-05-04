@@ -7,18 +7,14 @@ import org.junit.jupiter.api.Test;
 
 
 class OpenApiGameInfoTests extends OpenApiTestsBase {
-
     @Test
     void getGame(final VertxTestContext testContext) {
-<<<<<<< HEAD
-        service.setDelegate(new ServiceAdapter(){
-            public Game getGameState(){
+        service.setDelegate(new ServiceAdapter() {
+            public Game getGameState() {
                 Game dummyGame = new Game();
                 return dummyGame;
             }
         });
-=======
->>>>>>> ae4490bee265ed5fffc892b887f6943e97d1c855
         get(
                 testContext,
                 "/games/game-id",
@@ -39,16 +35,10 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
 
     @Test
     void getDummyGame(final VertxTestContext testContext) {
-        service.setDelegate(new ServiceAdapter(){
-<<<<<<< HEAD
-            public Game getGameState(){
+        service.setDelegate(new ServiceAdapter() {
+            public Game dummyGame() {
                 Game dummyGame = new Game();
                 return dummyGame;
-=======
-            @Override
-            public List<String > getCommunityCards(){
-                return Collections.emptyList();
->>>>>>> ae4490bee265ed5fffc892b887f6943e97d1c855
             }
         });
         get(
@@ -59,3 +49,4 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         );
     }
 }
+

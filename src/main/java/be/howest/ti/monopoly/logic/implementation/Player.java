@@ -55,7 +55,7 @@ public class Player {
     }
 
     public void setBankrupt() {
-        bankrupt = true;
+        this.bankrupt = true;
     }
 
     public int getGetOutOfJailFreeCards() {

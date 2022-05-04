@@ -86,4 +86,8 @@ public class Request {
     public String getStringFromBody(String key){
         return params.body().getJsonObject().getString(key);
     }
+
+    public String getParameterValue(String key){
+        return params.pathParameter(key).getString();
+    }
 }
