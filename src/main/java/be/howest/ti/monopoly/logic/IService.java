@@ -30,4 +30,5 @@ public interface IService {
     // AUCTION
     void startPlayerAuction(Request request);
     void placeBidOnPlayerAuction(Request request);
+    Auction getPlayerAuctions(Request request);
 }
