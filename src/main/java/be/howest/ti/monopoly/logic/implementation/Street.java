@@ -42,7 +42,6 @@ public class Street extends Property {
         return housePrice;
     }
 
-    @Override
     public int getRent(){
         return super.rent;
     }
