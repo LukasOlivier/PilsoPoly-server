@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.web;
 
+import be.howest.ti.monopoly.logic.ServiceAdapter;
 import io.vertx.core.json.JsonObject;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
@@ -94,11 +95,19 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
     @Test
     void startPlayerAuction(final VertxTestContext testContext) {
+
+        service.setDelegate( new ServiceAdapter() {
+
+            @Override
+            public void startPlayerAuction(Request request) {}
+
+        });
+
         post(
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property",
                 "some-token",
-                response -> assertNotYetImplemented(response, "startPlayerAuction")
+                response -> assertOkResponse(response)
         );
     }
 
@@ -114,6 +123,14 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
     @Test
     void placeBidOnPlayerAuction(final VertxTestContext testContext) {
+
+        service.setDelegate( new ServiceAdapter() {
+
+            @Override
+            public void placeBidOnPlayerAuction(Request request) {}
+
+        });
+
         post(
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property/bid",
@@ -121,7 +138,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 new JsonObject()
                         .put("bidder", "Bob")
                         .put("amount", 100),
-                response -> assertNotYetImplemented(response, "placeBidOnPlayerAuction")
+                response -> assertOkResponse(response)
         );
     }
 

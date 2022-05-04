@@ -37,9 +37,8 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
     @Test
     void getDummyGame(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
-            public Game dummyGame(){
-                Game dummyGame = new Game();
-                return dummyGame;
+            public Game getDummyGame(){
+                return new Game();
             }
         });
         get(

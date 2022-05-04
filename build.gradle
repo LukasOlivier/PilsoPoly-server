@@ -22,6 +22,7 @@ java {
 }
 
 dependencies {
+    implementation 'junit:junit:4.13.1'
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
@@ -40,7 +41,6 @@ dependencies {
 
     testImplementation "io.vertx:vertx-junit5:$vertxVersion"
     testImplementation "io.vertx:vertx-web-client:$vertxVersion"
-
 }
 
 test {
