@@ -10,7 +10,7 @@ public class Player {
     private int money;
     private boolean bankrupt;
     private int getOutOfJailFreeCards;
-    private final String taxSystem = "ESTIMATE";
+    private String taxSystem = "ESTIMATE";
     private List<PlayerProperty> properties = new ArrayList<>();
     private int debt;
     private final String icon;
@@ -78,5 +78,24 @@ public class Player {
         return icon;
     }
 
+    public void fine() {
+        if (this.money >= 50){
+            this.money = this.money - 50;
+            this.jailed = false;
+        }
+        else {
+            throw new IllegalStateException("Not enough money");
+        }
+    }
+
+    public void free() {
+        if (this.getOutOfJailFreeCards >= 1){
+            this.getOutOfJailFreeCards--;
+            this.jailed = false;
+        }
+        else {
+            throw new IllegalStateException("Not enough get-out-of-jail-free cards");
+        }
+    }
 
 }

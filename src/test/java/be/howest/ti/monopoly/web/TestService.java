@@ -115,6 +115,21 @@ public class TestService implements IService {
     }
 
     @Override
+    public void fine(Request request) {
+
+    }
+
+    @Override
+    public void free(Request request) {
+
+    }
+
+    @Override
+    public void setBankrupt(Request request) {
+
+    }
+
+    @Override
     public void joinGame(String gameId, String playerName, String icon) {
         delegate.joinGame(gameId, playerName, icon);
     }

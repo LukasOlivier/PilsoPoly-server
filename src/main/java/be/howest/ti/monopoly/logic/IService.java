@@ -44,4 +44,9 @@ public interface IService {
 
     Auction getPlayerAuctions(Request request);
 
+    void fine(Request request);
+
+    void free(Request request);
+
+    void setBankrupt(Request request);
 }
