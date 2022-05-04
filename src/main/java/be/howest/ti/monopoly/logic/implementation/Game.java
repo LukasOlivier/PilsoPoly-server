@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -74,6 +75,17 @@ public class Game {
 
     public void startPlayerAuction(int bid, int duration, String bidder, String property) {
         auction = new Auction(bid, duration, bidder, property);
+    }
+
+    public void placeBidOnPlayerAuction(String bidder, int amount) {
+        if ( amount <= auction.getHighest_bid() ) {
+            throw new IllegalMonopolyActionException("Amount must be higher than previous bid!");
+        } else if ( bidder.equals(auction.getLast_bidder())) {
+            throw new IllegalMonopolyActionException("Wait for another player to bid!");
+        } else {
+            auction.setHighest_bid(amount);
+            auction.setLast_bidder(bidder);
+        }
     }
 
     public Auction getAuction() {

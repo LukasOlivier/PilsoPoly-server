@@ -155,13 +155,20 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Auction startPlayerAuction(Request request) {
+    public void startPlayerAuction(Request request) {
         Game game = getGameById(request.getGameId());
-        String playerName = request.getPlayerName();
+        String playerName = request.playerThatStartedAuction();
         String propertyName = request.getPropertyName();
-        int bid = request.getBid();
+        int bid = request.getStartBid();
         int duration = request.getDuration();
         game.startPlayerAuction(bid, duration, playerName, propertyName);
-        return game.getAuction();
+    }
+
+    @Override
+    public void placeBidOnPlayerAuction(Request request) {
+        Game game = getGameById(request.getGameId());
+        String bidder = request.getBidder();
+        int amount = request.getAmount();
+        game.placeBidOnPlayerAuction(bidder, amount);
     }
 }
