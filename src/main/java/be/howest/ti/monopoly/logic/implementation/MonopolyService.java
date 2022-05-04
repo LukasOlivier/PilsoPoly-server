@@ -154,7 +154,8 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(request.getGameId());
         String playerName = request.getPlayerName();
         Player player = game.getSpecificPlayer(playerName);
-        Tile tile = getTile(request.getTilePosition());
+        String propertyName = request.getPropertyName();
+        Tile tile = getTile(propertyName);
         PlayerProperty boughtProperty = new PlayerProperty(tile.getName());
         player.addProperties(boughtProperty);
         return player;
