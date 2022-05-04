@@ -78,8 +78,8 @@ public class Player {
         return icon;
     }
 
-    public void setTaxSystem(String estimate){
-        this.taxSystem = "";
+    public void setTaxSystem(String preferredTaxSystem){
+        this.taxSystem = preferredTaxSystem;
     }
 
 
