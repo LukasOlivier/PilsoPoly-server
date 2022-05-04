@@ -1,4 +1,5 @@
 package be.howest.ti.monopoly.logic;
+import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
@@ -69,6 +70,11 @@ public class ServiceAdapter implements IService {
 
     @Override
     public Player buyProperty(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Auction startPlayerAuction(Request request) {
         throw new UnsupportedOperationException();
     }
 
