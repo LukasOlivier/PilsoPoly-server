@@ -1,4 +1,5 @@
 package be.howest.ti.monopoly.logic;
+import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.Request;
@@ -80,6 +81,11 @@ public  class ServiceAdapter implements IService {
 
     @Override
     public void placeBidOnPlayerAuction(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Auction getPlayerAuctions(Request request) {
         throw new UnsupportedOperationException();
     }
 }
