@@ -195,7 +195,15 @@ public class MonopolyApiBridge {
     }
 
     private void useEstimateTax(RoutingContext ctx) {
-        throw new NotYetImplementedException("estimateTax");
+        Request request = Request.from(ctx);
+        try {
+            Game game = service.getGameById(request.getGameId());
+            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+            player.setTaxSystem("ESTIMATE");
+            Response.sendOkResponse(ctx);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("something went wrong");
+        }
     }
 
     private void useComputeTax(RoutingContext ctx) {
