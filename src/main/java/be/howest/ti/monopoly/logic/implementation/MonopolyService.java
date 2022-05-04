@@ -103,6 +103,7 @@ public class MonopolyService extends ServiceAdapter {
         return listOfGames;
     }
 
+    @Override
     public Game getDummyGame(){
         Game dummyGame = new Game();
         return dummyGame;
@@ -152,6 +153,12 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public Game getGameById(String id){
         return allGames.get(id);
+    }
+
+    @Override
+    public void joinGame(String gameId, String playerName, String icon) {
+        Game game = getGameById(gameId);
+        game.addPlayer(playerName, icon);
     }
 
     @Override
