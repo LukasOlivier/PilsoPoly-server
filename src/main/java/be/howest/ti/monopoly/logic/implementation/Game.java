@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,12 +17,13 @@ public class Game {
     private int numberOfPlayers;
     private boolean started;
     private List<Player> players;
+    private Auction auction;
     private String id;
     private String directSale;
     private int availableHouses;
     private int availableHotels;
     private List<Turn> turns = new LinkedList<>();
-    private boolean canroll;
+    private boolean canRoll;
     private boolean ended;
     private String currentPlayer;
     private String winner;
@@ -36,7 +38,7 @@ public class Game {
         this.availableHouses = 31;
         this.availableHotels = 12;
         this.turns = new ArrayList<>( );
-        this.canroll = true;
+        this.canRoll = true;
         this.ended = false;
         this.currentPlayer = "Sibren";
         this.winner = null;
@@ -71,6 +73,24 @@ public class Game {
         }
     }
 
+    public void startPlayerAuction(int bid, int duration, String bidder, String property) {
+        auction = new Auction(bid, duration, bidder, property);
+    }
+
+    public void placeBidOnPlayerAuction(String bidder, int amount) {
+        if ( amount <= auction.getHighest_bid() ) {
+            throw new IllegalMonopolyActionException("Amount must be higher than previous bid!");
+        } else if ( bidder.equals(auction.getLast_bidder())) {
+            throw new IllegalMonopolyActionException("Wait for another player to bid!");
+        } else {
+            auction.setHighest_bid(amount);
+            auction.setLast_bidder(bidder);
+        }
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
@@ -117,8 +137,8 @@ public class Game {
         return turns;
     }
 
-    public boolean isCanroll() {
-        return canroll;
+    public boolean isCanRoll() {
+        return canRoll;
     }
 
     public boolean isEnded() {
@@ -166,8 +186,8 @@ public class Game {
         this.turns = turns;
     }
 
-    public void setCanroll(boolean canroll) {
-        this.canroll = canroll;
+    public void setCanRoll(boolean canRoll) {
+        this.canRoll = canRoll;
     }
 
     public void setEnded(boolean ended) {

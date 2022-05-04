@@ -8,22 +8,22 @@ class TileTest {
 
     @Test
     public void testGoTile() {
-        Tile goTile = new Tile("Go", 0, "Go", "Go");
+        Tile goTile = new Tile("Go", 0, "Go");
         assertEquals("Go", goTile.getName());
         assertEquals(0, goTile.getPosition());
     }
 
     @Test
     public void testStreetTile() {
-        StreetTile streetTile = new StreetTile("Indiana Avenue", 23, "street", "Indiana_Avenue", 220, 110, 18, 90, 250, 700, 875, 1050, 150, "RED", 3, "RED");
-        assertEquals("Indiana Avenue", streetTile.getName());
-        assertEquals(23, streetTile.getPosition());
+        Street indiana = new Street("Indiana Avenue", 23, "street", 3,  "RED", 100, 300, 750, 925, 1100, 150, 20, 120, 240);
+        assertEquals("Indiana Avenue", indiana.getName());
+        assertEquals(23, indiana.getPosition());
     }
 
     @Test
     public void testRailroadTile() {
-        RailroadTile railroadTile = new RailroadTile("Reading RR", 5, "railroad", "Reading_RR", 200, 100, 25, 4, "BLACK");
-        assertEquals("Reading RR", railroadTile.getName());
-        assertEquals(5, railroadTile.getPosition());
+        Railroad readingRR = new Railroad("Reading RR", 5, "railroad", 4, "BLACK", 25,100,200);
+        assertEquals("Reading RR", readingRR.getName());
+        assertEquals(5, readingRR.getPosition());
     }
 }

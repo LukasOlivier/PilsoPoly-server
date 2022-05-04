@@ -5,8 +5,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.validation.RequestParameters;
 import io.vertx.ext.web.validation.ValidationHandler;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -81,6 +79,30 @@ public class Request {
 
     public String getGameId(){
         return params.pathParameter("gameId").getString();
+    }
+
+    public String playerThatStartedAuction() {
+        return params.pathParameter("playerName").getString();
+    }
+
+    public String getPropertyName() {
+        return params.pathParameter("propertyName").getString();
+    }
+
+    public int getStartBid() {
+        return params.body().getJsonObject().getInteger("start-bid");
+    }
+
+    public int getAmount() {
+        return params.body().getJsonObject().getInteger("amount");
+    }
+
+    public String getBidder() {
+        return params.body().getJsonObject().getString("bidder");
+    }
+
+    public int getDuration() {
+        return params.body().getJsonObject().getInteger("duration");
     }
 
     public String getStringFromBody(String key){

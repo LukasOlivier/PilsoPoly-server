@@ -176,7 +176,6 @@ public class MonopolyApiBridge {
         String icon = request.getStringFromBody("icon");
         String gameId = request.getGameId();
         Game game = service.getGameById(gameId);
-
         game.addPlayer(player, icon);
     }
 
@@ -271,11 +270,15 @@ public class MonopolyApiBridge {
     }
 
     private void startPlayerAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("startPlayerAuction");
+        Request request = Request.from(ctx);
+        service.startPlayerAuction(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void placeBidOnPlayerAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("placeBidOnPlayerAuction");
+        Request request = Request.from(ctx);
+        service.placeBidOnPlayerAuction(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void trade(RoutingContext ctx) {
