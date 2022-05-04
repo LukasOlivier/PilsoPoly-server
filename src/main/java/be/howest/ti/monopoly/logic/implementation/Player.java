@@ -74,4 +74,6 @@ public class Player {
         return icon;
     }
 
+    public void removeMoney(int amount){money -= amount;}
+
 }

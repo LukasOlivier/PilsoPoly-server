@@ -156,15 +156,25 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         String propertyName = request.getPropertyName();
         Tile tile = getTile(propertyName);
-        if (player.getMoney() >= tile.getCost()){
-            PlayerProperty boughtProperty = new PlayerProperty(tile.getName());
-            player.addProperties(boughtProperty);
-            return player;
-        }else if (player.getMoney() < tile.getCost()){
-            throw new IllegalStateException("you do not have enough money");
+        if (tile.getType() == "street" || tile.getType() == "railroad" || tile.getType() == "utility"){
+            Property tileToProperty = (Property) tile;
+            if (player.getMoney() >= tileToProperty.getCost()){
+                if (Boolean.TRUE.equals(checkIfAlreadyBought(tileToProperty.getName(), game))){
+                    PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName());
+                    player.addProperties(boughtProperty);
+                    player.removeMoney(tileToProperty.getCost());
+                    return player;
+                }
+                else {
+                    throw new IllegalStateException("property is already bought");
+                }
+            }else{
+                throw new IllegalStateException("you do not have enough money");
+            }
+        }else{
+            throw new IllegalArgumentException("you can not buy a tile of any other type");
         }
     }
-
 
 
     @Override
@@ -184,4 +194,14 @@ public class MonopolyService extends ServiceAdapter {
         return game.getAuction();
     }
 
+    public Boolean checkIfAlreadyBought(String name, Game game){
+        for (Player player : game.getPlayers()){
+            for (PlayerProperty playerProperty : player.getProperties()){
+                if (playerProperty.getProperty() == name){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

@@ -23,4 +23,8 @@ public class Tile {
     public String getType() {
         return type;
     }
+
+    public int getCost(){
+        return -1;
+    }
 }
