@@ -216,4 +216,10 @@ public class MonopolyService extends ServiceAdapter {
         int amount = request.getAmount();
         game.placeBidOnPlayerAuction(bidder, amount);
     }
+
+    @Override
+    public Auction getPlayerAuctions(Request request) {
+        Game game = getGameById(request.getGameId());
+        return game.getAuction();
+    }
 }

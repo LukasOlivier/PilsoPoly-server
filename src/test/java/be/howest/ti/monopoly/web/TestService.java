@@ -8,6 +8,7 @@ import be.howest.ti.monopoly.logic.implementation.Tile;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class TestService implements IService {
@@ -50,8 +51,13 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<JsonObject> getAllGames() {
+    public Map<String, Game> getAllGames() {
         return delegate.getAllGames();
+    }
+
+    @Override
+    public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
+        return null;
     }
 
     @Override
@@ -59,13 +65,29 @@ public class TestService implements IService {
         return delegate.getGameMapSize();
     }
 
+    @Override
     public List<String> getChanceCards() {
         return delegate.getChanceCards();
     }
 
     @Override
-    public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
+    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
         return null;
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
+        return null;
+    }
+
+    @Override
+    public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
+        return delegate.filterGamesBy(isStarted, numberPlayers, prefix);
     }
 
     public Tile getTile(String tileName) {
@@ -88,13 +110,13 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<JsonObject> filterGamesBy(String isStartedString) {
-        return null;
+    public Auction getPlayerAuctions(Request request) {
+        return delegate.getPlayerAuctions(request);
     }
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
-
+        delegate.joinGame(gameId, playerName, icon);
     }
 }
 

@@ -32,11 +32,16 @@ public interface IService {
     Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter);
     // TILES
     Tile getTile(int position);
+
+    List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix);
+
     Tile getTile(String tileName);
 
 
     // AUCTION
     void startPlayerAuction(Request request);
     void placeBidOnPlayerAuction(Request request);
+
+    Auction getPlayerAuctions(Request request);
 
 }

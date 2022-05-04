@@ -1,4 +1,5 @@
 package be.howest.ti.monopoly.logic;
+import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.Request;
@@ -42,7 +43,7 @@ public  class ServiceAdapter implements IService {
 
     @Override
     public Map<String, Game> getAllGames() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -81,6 +82,11 @@ public  class ServiceAdapter implements IService {
     }
 
     @Override
+    public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Tile getTile(String tileName) {
         throw new UnsupportedOperationException();
     }
@@ -104,4 +110,8 @@ public  class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Auction getPlayerAuctions(Request request) {
+        throw new UnsupportedOperationException();
+    }
 }
