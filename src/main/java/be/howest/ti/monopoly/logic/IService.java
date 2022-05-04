@@ -32,4 +32,10 @@ public interface IService {
     void startPlayerAuction(Request request);
     void placeBidOnPlayerAuction(Request request);
     Auction getPlayerAuctions(Request request);
+
+    void fine(Request request);
+
+    void free(Request request);
+
+    void setBankrupt(Request request);
 }

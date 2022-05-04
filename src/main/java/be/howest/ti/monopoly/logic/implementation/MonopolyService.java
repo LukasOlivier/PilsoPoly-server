@@ -184,4 +184,24 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(request.getGameId());
         return game.getAuction();
     }
+
+    @Override
+    public void fine(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.fine();
+    }
+
+    public void free(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.free();
+    }
+
+    public void setBankrupt(Request request){
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.setBankrupt();
+        game.isEveryoneBankrupt();
+    }
 }
