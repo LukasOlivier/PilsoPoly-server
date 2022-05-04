@@ -57,7 +57,7 @@ public class TestService implements IService {
 
     @Override
     public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
-        return null;
+        return delegate.mapToList(mapOfGames);
     }
 
     @Override
