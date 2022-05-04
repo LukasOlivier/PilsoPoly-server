@@ -184,4 +184,8 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(request.getGameId());
         return game.getAuction();
     }
+
+    public Player collectRent(){
+
+    }
 }

@@ -2,6 +2,7 @@ package be.howest.ti.monopoly.logic;
 
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
@@ -32,4 +33,7 @@ public interface IService {
     void startPlayerAuction(Request request);
     void placeBidOnPlayerAuction(Request request);
     Auction getPlayerAuctions(Request request);
+
+    // RENT
+    Player collectDebt(Request request);
 }

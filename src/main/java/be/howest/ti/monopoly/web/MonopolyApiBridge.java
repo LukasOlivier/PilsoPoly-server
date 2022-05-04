@@ -228,7 +228,8 @@ public class MonopolyApiBridge {
     }
 
     private void collectDebt(RoutingContext ctx) {
-        throw new NotYetImplementedException("collectDebt");
+        Request request = Request.from(ctx);
+        Response.sendJsonResponse(ctx, 200, service.collectDebt(request));
     }
 
     private void takeMortgage(RoutingContext ctx) {
