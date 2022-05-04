@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
 import java.util.*;
@@ -150,4 +151,11 @@ public class MonopolyService extends ServiceAdapter {
     public Game getGameById(String id){
         return allGames.get(id);
     }
+
+    @Override
+    public void joinGame(String gameId, String playerName, String icon) {
+        Game game = getGameById(gameId);
+        game.addPlayer(playerName, icon);
+    }
+
 }

@@ -70,5 +70,10 @@ public class TestService implements IService {
     public Game getGameById(String id) {
         return null;
     }
+
+    @Override
+    public void joinGame(String gameId, String playerName, String icon) {
+
+    }
 }
 

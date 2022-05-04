@@ -175,8 +175,7 @@ public class MonopolyApiBridge {
         String playerName = request.getStringFromBody("playerName");
         String icon = request.getStringFromBody("icon");
         String gameId = request.getGameId();
-        Game game = service.getGameById(gameId);
-        game.addPlayer(playerName, icon);
+        service.joinGame(gameId, playerName, icon);
         String playerToken = tokenManager.createToken(
                 new MonopolyUser(gameId, playerName)
         );

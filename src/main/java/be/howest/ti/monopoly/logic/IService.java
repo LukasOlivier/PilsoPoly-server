@@ -22,4 +22,5 @@ public interface IService {
     Tile getTile(String tileName);
 
     Game getGameById(String id);
+    void joinGame(String gameId, String playerName, String icon);
 }
