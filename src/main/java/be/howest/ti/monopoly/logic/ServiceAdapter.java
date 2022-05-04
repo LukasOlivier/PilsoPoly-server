@@ -88,4 +88,19 @@ public  class ServiceAdapter implements IService {
     public Auction getPlayerAuctions(Request request) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void fine(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void free(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setBankrupt(Request request) {
+        throw new UnsupportedOperationException();
+    }
 }

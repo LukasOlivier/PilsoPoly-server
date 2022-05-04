@@ -78,5 +78,24 @@ public class Player {
         return icon;
     }
 
+    public void fine() {
+        if (this.money >= 50){
+            this.money = this.money - 50;
+            this.jailed = false;
+        }
+        else {
+            throw new IllegalStateException("Not enough money");
+        }
+    }
+
+    public void free() {
+        if (this.getOutOfJailFreeCards >= 1){
+            this.getOutOfJailFreeCards--;
+            this.jailed = false;
+        }
+        else {
+            throw new IllegalStateException("Not enough get-out-of-jail-free cards");
+        }
+    }
 
 }

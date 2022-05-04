@@ -209,11 +209,8 @@ public class MonopolyApiBridge {
     private void declareBankruptcy(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game game = service.getGameById(request.getGameId());
-            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
-            player.setBankrupt();
+            service.setBankrupt(request);
             Response.sendOkResponse(ctx);
-            game.isEveryoneBankrupt();
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
         }
@@ -256,11 +253,15 @@ public class MonopolyApiBridge {
     }
 
     private void getOutOfJailFine(RoutingContext ctx) {
-        throw new NotYetImplementedException("getOutOfJailFine");
+        Request request = Request.from(ctx);
+        service.fine(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void getOutOfJailFree(RoutingContext ctx) {
-        throw new NotYetImplementedException("getOutOfJailFree");
+        Request request = Request.from(ctx);
+        service.free(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void getBankAuctions(RoutingContext ctx) {
