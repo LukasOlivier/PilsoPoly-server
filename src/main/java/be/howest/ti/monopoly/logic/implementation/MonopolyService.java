@@ -103,6 +103,7 @@ public class MonopolyService extends ServiceAdapter {
         return listOfGames;
     }
 
+    @Override
     public Game getDummyGame(){
         Game dummyGame = new Game();
         return dummyGame;

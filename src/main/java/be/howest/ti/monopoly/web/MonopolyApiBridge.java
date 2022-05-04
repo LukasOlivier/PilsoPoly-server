@@ -176,7 +176,6 @@ public class MonopolyApiBridge {
         String playerName = request.getStringFromBody("playerName");
         String icon = request.getStringFromBody("icon");
         String gameId = request.getGameId();
-<<<<<<< HEAD
         service.joinGame(gameId, playerName, icon);
         String playerToken = tokenManager.createToken(
                 new MonopolyUser(gameId, playerName)
@@ -184,10 +183,6 @@ public class MonopolyApiBridge {
         Response.sendJsonResponse(ctx, 200, new JsonObject()
                 .put("token", playerToken)
         );
-=======
-        Game game = service.getGameById(gameId);
-        game.addPlayer(player, icon);
->>>>>>> 8062b8bf295bb60944c2a6f156b3c937c524864d
     }
 
     private void getGame(RoutingContext ctx) {
