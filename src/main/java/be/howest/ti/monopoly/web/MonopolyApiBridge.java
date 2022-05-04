@@ -6,6 +6,7 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -211,7 +212,16 @@ public class MonopolyApiBridge {
     }
 
     private void declareBankruptcy(RoutingContext ctx) {
-        throw new NotYetImplementedException("declareBankruptcy");
+        Request request = Request.from(ctx);
+        try {
+            Game game = service.getGameById(request.getGameId());
+            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+            player.setBankrupt();
+            Response.sendOkResponse(ctx);
+            game.isEveryoneBankrupt();
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("something went wrong");
+        }
     }
 
     private void buyProperty(RoutingContext ctx) {
