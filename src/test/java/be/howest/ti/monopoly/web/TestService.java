@@ -63,6 +63,11 @@ public class TestService implements IService {
         return delegate.getChanceCards();
     }
 
+    @Override
+    public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
+        return null;
+    }
+
     public Tile getTile(String tileName) {
         return delegate.getTile(tileName);
     }
@@ -80,6 +85,11 @@ public class TestService implements IService {
     @Override
     public void placeBidOnPlayerAuction(Request request) {
         delegate.placeBidOnPlayerAuction(request);
+    }
+
+    @Override
+    public List<JsonObject> filterGamesBy(String isStartedString) {
+        return null;
     }
 
     @Override

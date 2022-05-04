@@ -5,6 +5,7 @@ import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
+import java.util.Map;
 
 
 public  class ServiceAdapter implements IService {
@@ -40,7 +41,12 @@ public  class ServiceAdapter implements IService {
     }
 
     @Override
-    public List<JsonObject> getAllGames() {
+    public Map<String, Game> getAllGames() {
+        return null;
+    }
+
+    @Override
+    public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
         throw new UnsupportedOperationException();
     }
 
@@ -51,6 +57,21 @@ public  class ServiceAdapter implements IService {
 
     @Override
     public List<String> getChanceCards() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
         throw new UnsupportedOperationException();
     }
 
@@ -82,4 +103,5 @@ public  class ServiceAdapter implements IService {
     public void placeBidOnPlayerAuction(Request request) {
         throw new UnsupportedOperationException();
     }
+
 }

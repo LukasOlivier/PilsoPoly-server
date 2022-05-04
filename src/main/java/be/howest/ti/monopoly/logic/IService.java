@@ -7,6 +7,7 @@ import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IService {
     String getVersion();
@@ -19,10 +20,16 @@ public interface IService {
     void joinGame(String gameId, String playerName, String icon);
     Game getGame();
     Game getDummyGame();
-    List<JsonObject> getAllGames();
+    Map<String , Game>  getAllGames();
+
+    List<JsonObject> mapToList(Map<String, Game> mapOfGames);
+
     int getGameMapSize();
     List<String> getChanceCards();
 
+    Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter);
+    Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter);
+    Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter);
     // TILES
     Tile getTile(int position);
     Tile getTile(String tileName);
@@ -31,4 +38,5 @@ public interface IService {
     // AUCTION
     void startPlayerAuction(Request request);
     void placeBidOnPlayerAuction(Request request);
+
 }

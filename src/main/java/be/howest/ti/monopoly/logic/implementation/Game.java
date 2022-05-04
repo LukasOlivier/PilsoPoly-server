@@ -55,7 +55,7 @@ public class Game {
         setNumberOfPlayers(request.getNumberOfPlayersToStart());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getGamePrefix() + "_" + (size+1);
+        this.id = request.getGamePrefix() + "-" + (size+1);
     }
 
     public void setId(String id) {
