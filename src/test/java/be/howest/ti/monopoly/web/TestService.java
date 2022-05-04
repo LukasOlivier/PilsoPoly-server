@@ -81,5 +81,10 @@ public class TestService implements IService {
     public void placeBidOnPlayerAuction(Request request) {
         delegate.placeBidOnPlayerAuction(request);
     }
+
+    @Override
+    public void joinGame(String gameId, String playerName, String icon) {
+
+    }
 }
 

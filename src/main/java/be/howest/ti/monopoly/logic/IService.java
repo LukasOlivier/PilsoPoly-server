@@ -15,6 +15,8 @@ public interface IService {
     void addGame(Game game);
 
     // GAME
+    Game getGameById(String id);
+    void joinGame(String gameId, String playerName, String icon);
     Game getGame();
     Game getDummyGame();
     List<JsonObject> getAllGames();
@@ -25,7 +27,6 @@ public interface IService {
     Tile getTile(int position);
     Tile getTile(String tileName);
 
-    Game getGameById(String id);
 
     // AUCTION
     void startPlayerAuction(Request request);

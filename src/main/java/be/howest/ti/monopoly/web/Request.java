@@ -50,7 +50,7 @@ public class Request {
     public RequestParameters getRequestParameters() {
         return params;
     }
-
+    // Only give token
     public boolean isAuthorized(String expectedGameId, String expectedPlayerName) {
         return Objects.equals(expectedGameId, user.getGameId()) &&
                 Objects.equals(expectedPlayerName, user.getPlayerName());

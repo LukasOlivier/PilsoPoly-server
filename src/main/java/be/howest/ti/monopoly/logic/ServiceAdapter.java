@@ -6,7 +6,8 @@ import io.vertx.core.json.JsonObject;
 
 import java.util.List;
 
-public class ServiceAdapter implements IService {
+
+public  class ServiceAdapter implements IService {
 
     @Override
     public String getVersion() {
@@ -14,7 +15,7 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public List<String > getCommunityCards() {
+    public List<String> getCommunityCards() {
         throw new UnsupportedOperationException();
     }
 
@@ -64,11 +65,15 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Game getGameById(String id){
+    public Game getGameById(String id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
+    public void joinGame(String gameId, String playerName, String icon) {
+        throw new UnsupportedOperationException();
+    }
+
     public void startPlayerAuction(Request request) {
         throw new UnsupportedOperationException();
     }
