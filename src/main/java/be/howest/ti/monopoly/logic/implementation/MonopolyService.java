@@ -156,7 +156,7 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         String propertyName = request.getPropertyName();
         Tile tile = getTile(propertyName);
-        if (player.getMoney() >= tile.ge){
+        if (player.getMoney() >= tile.getRent()){
             PlayerProperty boughtProperty = new PlayerProperty(tile.getName());
             player.addProperties(boughtProperty);
             return player;
