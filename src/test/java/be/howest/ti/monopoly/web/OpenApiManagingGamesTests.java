@@ -147,9 +147,7 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
         service.setDelegate(new ServiceAdapter(){
             @Override
             public void joinGame(String gameId, String playerName, String icon) {
-
             }
-
         });
         post(
                 testContext,
