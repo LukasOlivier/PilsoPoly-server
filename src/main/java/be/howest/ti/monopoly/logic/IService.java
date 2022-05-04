@@ -24,7 +24,7 @@ public interface IService {
     Tile getTile(int position);
     Tile getTile(String tileName);
     Game getGameById(String id);
-    Player buyProperty(Request request);
+    int buyProperty(Request request);
     Auction startPlayerAuction(Request request);
 
 }

@@ -79,7 +79,7 @@ public class TestService implements IService {
     }
 
     @Override
-    public Player buyProperty(Request request) {
+    public int buyProperty(Request request) {
         return delegate.buyProperty(request);
     }
 
