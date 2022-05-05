@@ -1,9 +1,12 @@
 package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Game;
 import io.vertx.core.json.JsonObject;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 
 class OpenApiManagingGamesTests extends OpenApiTestsBase {
@@ -20,11 +23,16 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
 
     @Test
     void getGamesWithAllParams(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            public Map<String, Game> getAllGames() {
+                return getAllGames();
+            }
+        });
         get(
                 testContext,
-                "/games?started=true&prefix=azerty&numberOfPlayers=3",
+                "/games?started=false&prefix=PilsoPoly&numberOfPlayers=3",
                 null,
-                response -> assertNotYetImplemented(response, "getGames")
+                this::assertOkResponse
         );
     }
 

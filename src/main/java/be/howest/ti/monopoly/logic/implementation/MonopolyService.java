@@ -5,6 +5,7 @@ import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
+import java.io.File;
 import java.util.*;
 
 
@@ -100,18 +101,55 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public List<JsonObject> getAllGames() {
+    public Map<String , Game> getAllGames(){
+        return allGames;
+    }
+
+    @Override
+    public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
         List<JsonObject> listOfGames = new ArrayList<>();
-        for (Map.Entry<String, Game> entry : allGames.entrySet()) {
+        for (Map.Entry<String, Game> entry : mapOfGames.entrySet()) {
             listOfGames.add(entry.getValue().showSpecificGameInfo());
         }
         return listOfGames;
     }
 
     @Override
+    public Map<String , Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().isStarted() == isStarted){
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    @Override
+    public Map<String , Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)){
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    @Override
+    public Map<String , Game> filterGamesByNumberOfPlayers(int numberOfPlayers, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().getNumberOfPlayers() == numberOfPlayers){
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    @Override
     public Game getDummyGame(){
-        Game dummyGame = new Game();
-        return dummyGame;
+        return new Game();
     }
 
     @Override
