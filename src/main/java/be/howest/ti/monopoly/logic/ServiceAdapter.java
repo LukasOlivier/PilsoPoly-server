@@ -8,7 +8,7 @@ import io.vertx.core.json.JsonObject;
 import java.util.List;
 
 
-public  class ServiceAdapter implements IService {
+public abstract class ServiceAdapter implements IService {
 
     @Override
     public String getVersion() {
@@ -42,6 +42,11 @@ public  class ServiceAdapter implements IService {
 
     @Override
     public List<JsonObject> getAllGames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clearGameList() {
         throw new UnsupportedOperationException();
     }
 

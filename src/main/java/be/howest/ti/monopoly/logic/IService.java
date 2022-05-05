@@ -20,6 +20,9 @@ public interface IService {
     Game getGame();
     Game getDummyGame();
     List<JsonObject> getAllGames();
+
+    void clearGameList();
+
     int getGameMapSize();
     List<String> getChanceCards();
 

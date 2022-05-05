@@ -90,6 +90,11 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
+    public void clearGameList(){
+        allGames.clear();
+    }
+
+    @Override
     public int getGameMapSize(){
         return allGames.size();
     }
