@@ -55,6 +55,11 @@ public class TestService implements IService {
     }
 
     @Override
+    public void clearGameList() {
+        delegate.clearGameList();
+    }
+
+    @Override
     public int getGameMapSize() {
         return delegate.getGameMapSize();
     }
@@ -85,6 +90,21 @@ public class TestService implements IService {
     @Override
     public Auction getPlayerAuctions(Request request) {
         return delegate.getPlayerAuctions(request);
+    }
+
+    @Override
+    public void fine(Request request) {
+        delegate.fine(request);
+    }
+
+    @Override
+    public void free(Request request) {
+        delegate.free(request);
+    }
+
+    @Override
+    public void setBankrupt(Request request) {
+        delegate.setBankrupt(request);
     }
 
     @Override
