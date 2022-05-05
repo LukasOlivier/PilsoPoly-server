@@ -218,7 +218,6 @@ public class MonopolyApiBridge {
             throw new InvalidRequestException("failed to buy property");
         }
     }
-
     private void dontBuyProperty(RoutingContext ctx) {
         throw new NotYetImplementedException("dontBuyProperty");
     }
