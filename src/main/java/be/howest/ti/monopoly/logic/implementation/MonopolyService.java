@@ -215,8 +215,23 @@ public class MonopolyService extends ServiceAdapter {
     public Player collectDebt(Request request){
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player debtPlayer = game.getSpecificPlayer(request.getParameterValue("debtorName"));
         Tile tile = getTile(request.getPropertyName());
-        if ()
+        if (Boolean.TRUE.equals(checkIfAlreadyBought(tile.getName(), game))){
+            Property tileToProperty = (Property) tile;
+            player.rem
+        }
         return player;
+    }
+
+    public Boolean checkIfAlreadyBought(String name, Game game) {
+        for (Player player : game.getPlayers()) {
+            for (PlayerProperty playerProperty : player.getProperties()) {
+                if (playerProperty.getProperty() == name) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

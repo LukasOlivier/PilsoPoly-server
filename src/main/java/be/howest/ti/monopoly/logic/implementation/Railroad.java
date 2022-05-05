@@ -6,7 +6,7 @@ public class Railroad extends Property{
         super(name, position, type, groupSize, color, rent,mortgage,cost);
     }
 
-    public String getRent() {
+    /*public String getRent() {
         return "25 x amount of RR owned";
-    }
+    }*/
 }
