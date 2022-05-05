@@ -185,7 +185,36 @@ public class MonopolyService extends ServiceAdapter {
         return game.getAuction();
     }
 
-    public Player collectRent(){
+    /*public int buyProperty(Request request){
+        Game game = getGameById(request.getGameId());
+        String playerName = request.getPlayerName();
+        Player player = game.getSpecificPlayer(playerName);
+        String propertyName = request.getPropertyName();
+        Tile tile = getTile(propertyName);
+        if (tile.getType() == "street" || tile.getType() == "railroad" || tile.getType() == "utility"){
+            Property tileToProperty = (Property) tile;
+            if (player.getMoney() >= tileToProperty.getCost()){
+                if (Boolean.TRUE.equals(checkIfAlreadyBought(tileToProperty.getName(), game))){
+                    PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName());
+                    player.addProperties(boughtProperty);
+                    player.removeMoney(tileToProperty.getCost());
+                    return 200;
+                }
+                else {
+                    throw new IllegalStateException("property is already bought");
+                }
+            }else{
+                throw new IllegalStateException("you do not have enough money");
+            }
+        }else{
+            throw new IllegalArgumentException("you can not buy a tile of any other type");
+        }
+    }*/
 
+    //games/{gameId}/players/{playerName}/properties/{propertyName}/visitors/{debtorName}/rent
+    public Player collectDebt(Request request){
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        return player;
     }
 }

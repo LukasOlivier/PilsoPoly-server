@@ -4,6 +4,7 @@ import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import io.vertx.core.json.JsonObject;
 
@@ -85,6 +86,11 @@ public class TestService implements IService {
     @Override
     public Auction getPlayerAuctions(Request request) {
         return delegate.getPlayerAuctions(request);
+    }
+
+    @Override
+    public Player collectDebt(Request request) {
+        return delegate.collectDebt(request);
     }
 
     @Override
