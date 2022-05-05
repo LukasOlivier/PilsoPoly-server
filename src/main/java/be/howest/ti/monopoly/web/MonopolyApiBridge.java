@@ -21,7 +21,12 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
+import io.vertx.ext.web.validation.RequestParameter;
+import io.vertx.ext.web.validation.RequestParameters;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -168,7 +173,21 @@ public class MonopolyApiBridge {
     }
 
     private void getGames(RoutingContext ctx) {
-        Response.sendJsonResponse(ctx, 200, service.getAllGames());
+        Request request = Request.from(ctx);
+        Map<String, Game> filteredMapOfGames = service.getAllGames();
+        RequestParameter isStarted = request.getRequestParameters().queryParameter("started");
+        RequestParameter numberOfPlayers = request.getRequestParameters().queryParameter("numberOfPlayers");
+        RequestParameter prefix = request.getRequestParameters().queryParameter("prefix");
+        if (isStarted != null) {
+            filteredMapOfGames = service.filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
+        }
+        if (numberOfPlayers != null) {
+            filteredMapOfGames = service.filterGamesByNumberOfPlayers(numberOfPlayers.getInteger(), filteredMapOfGames);
+        }
+        if (prefix != null) {
+            filteredMapOfGames = service.filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
+        }
+        Response.sendJsonResponse(ctx, 200, service.mapToList(filteredMapOfGames));
     }
 
     private void joinGame(RoutingContext ctx) {
