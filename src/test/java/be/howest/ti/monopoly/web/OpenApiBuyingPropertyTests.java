@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.web;
 
+import be.howest.ti.monopoly.logic.ServiceAdapter;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
 
@@ -8,11 +9,17 @@ class OpenApiBuyingPropertyTests extends OpenApiTestsBase {
 
     @Test
     void buyProperty(final VertxTestContext testContext) {
+        service.setDelegate( new ServiceAdapter() {
+
+            @Override
+            public int buyProperty(Request request) {return 0;}
+
+        });
         post(
                 testContext,
                 "/games/game-id/players/Alice/properties/some-property",
                 "some-token",
-                response -> assertNotYetImplemented(response, "buyProperty")
+                response -> assertOkResponse(response)
         );
     }
 
