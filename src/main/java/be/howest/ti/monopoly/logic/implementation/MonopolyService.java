@@ -215,6 +215,8 @@ public class MonopolyService extends ServiceAdapter {
     public Player collectDebt(Request request){
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Tile tile = getTile(request.getPropertyName());
+        if ()
         return player;
     }
 }
