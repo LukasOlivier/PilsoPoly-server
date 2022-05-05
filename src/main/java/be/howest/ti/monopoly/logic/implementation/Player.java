@@ -98,4 +98,7 @@ public class Player {
         }
     }
 
+    public void setTaxSystem(String preferredTaxSystem) {
+        this.taxSystem = preferredTaxSystem;
+    }
 }
