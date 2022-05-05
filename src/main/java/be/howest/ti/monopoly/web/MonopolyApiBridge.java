@@ -11,6 +11,7 @@ import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
+import be.howest.ti.monopoly.web.tokens.MonopolyUser;
 import be.howest.ti.monopoly.web.tokens.PlainTextTokens;
 import be.howest.ti.monopoly.web.tokens.TokenManager;
 import io.vertx.core.http.HttpMethod;
@@ -20,7 +21,12 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
+import io.vertx.ext.web.validation.RequestParameter;
+import io.vertx.ext.web.validation.RequestParameters;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -167,17 +173,35 @@ public class MonopolyApiBridge {
     }
 
     private void getGames(RoutingContext ctx) {
-        Response.sendJsonResponse(ctx, 200, service.getAllGames());
+        Request request = Request.from(ctx);
+        Map<String, Game> filteredMapOfGames = service.getAllGames();
+        RequestParameter isStarted = request.getRequestParameters().queryParameter("started");
+        RequestParameter numberOfPlayers = request.getRequestParameters().queryParameter("numberOfPlayers");
+        RequestParameter prefix = request.getRequestParameters().queryParameter("prefix");
+        if (isStarted != null) {
+            filteredMapOfGames = service.filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
+        }
+        if (numberOfPlayers != null) {
+            filteredMapOfGames = service.filterGamesByNumberOfPlayers(numberOfPlayers.getInteger(), filteredMapOfGames);
+        }
+        if (prefix != null) {
+            filteredMapOfGames = service.filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
+        }
+        Response.sendJsonResponse(ctx, 200, service.mapToList(filteredMapOfGames));
     }
 
     private void joinGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String player = request.getStringFromBody("playerName");
+        String playerName = request.getStringFromBody("playerName");
         String icon = request.getStringFromBody("icon");
         String gameId = request.getGameId();
-        Game game = service.getGameById(gameId);
-
-        game.addPlayer(player, icon);
+        service.joinGame(gameId, playerName, icon);
+        String playerToken = tokenManager.createToken(
+                new MonopolyUser(gameId, playerName)
+        );
+        Response.sendJsonResponse(ctx, 200, new JsonObject()
+                .put("token", playerToken)
+        );
     }
 
 
@@ -193,11 +217,27 @@ public class MonopolyApiBridge {
     }
 
     private void useEstimateTax(RoutingContext ctx) {
-        throw new NotYetImplementedException("useEstimateTax");
+        Request request = Request.from(ctx);
+        try {
+            Game game = service.getGameById(request.getGameId());
+            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+            player.setTaxSystem("ESTIMATE");
+            Response.sendOkResponse(ctx);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("something went wrong");
+        }
     }
 
     private void useComputeTax(RoutingContext ctx) {
-        throw new NotYetImplementedException("useComputeTax");
+        Request request = Request.from(ctx);
+        try {
+            Game game = service.getGameById(request.getGameId());
+            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+            player.setTaxSystem("COMPUTE");
+            Response.sendOkResponse(ctx);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("something went wrong");
+        }
     }
 
     private void rollDice(RoutingContext ctx) {
@@ -205,7 +245,13 @@ public class MonopolyApiBridge {
     }
 
     private void declareBankruptcy(RoutingContext ctx) {
-        throw new NotYetImplementedException("declareBankruptcy");
+        Request request = Request.from(ctx);
+        try {
+            service.setBankrupt(request);
+            Response.sendOkResponse(ctx);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("something went wrong");
+        }
     }
 
     //http://localhost:8080/games/Dummy/players/Sibren/properties/Oriental
@@ -251,11 +297,15 @@ public class MonopolyApiBridge {
     }
 
     private void getOutOfJailFine(RoutingContext ctx) {
-        throw new NotYetImplementedException("getOutOfJailFine");
+        Request request = Request.from(ctx);
+        service.fine(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void getOutOfJailFree(RoutingContext ctx) {
-        throw new NotYetImplementedException("getOutOfJailFree");
+        Request request = Request.from(ctx);
+        service.free(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void getBankAuctions(RoutingContext ctx) {
@@ -268,16 +318,20 @@ public class MonopolyApiBridge {
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
-        throw new NotYetImplementedException("getPlayerAuctions");
+        Request request = Request.from(ctx);
+        Response.sendJsonResponse(ctx, 200, service.getPlayerAuctions(request));
     }
 
     private void startPlayerAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        Response.sendJsonResponse(ctx, 200, service.startPlayerAuction(request));
+        service.startPlayerAuction(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void placeBidOnPlayerAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("placeBidOnPlayerAuction");
+        Request request = Request.from(ctx);
+        service.placeBidOnPlayerAuction(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void trade(RoutingContext ctx) {

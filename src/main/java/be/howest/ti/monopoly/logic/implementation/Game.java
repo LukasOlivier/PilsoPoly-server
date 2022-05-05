@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,7 +29,7 @@ public class Game {
     private String winner;
 
     // This is to create a dummy game
-    public Game (){
+    public Game(){
         this.numberOfPlayers = 4;
         this.id = "Dummy";
         this.players = new ArrayList<>();
@@ -46,7 +47,7 @@ public class Game {
         addPlayer("Lukas", null);
         addPlayer("Robin", null);
     }
-
+    // we will leave this
     public Game(Request request, int size) {
         if (request == null) {
             throw new IllegalArgumentException();
@@ -54,7 +55,7 @@ public class Game {
         setNumberOfPlayers(request.getNumberOfPlayersToStart());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getGamePrefix() + "_" + (size+1);
+        this.id = request.getGamePrefix() + "-" + (size+1);
     }
 
     public void setId(String id) {
@@ -74,6 +75,11 @@ public class Game {
 
     public void startPlayerAuction(int bid, int duration, String bidder, String property) {
         auction = new Auction(bid, duration, bidder, property);
+    }
+
+    public void placeBidOnPlayerAuction(String bidder, int amount) {
+            auction.setHighest_bid(amount);
+            auction.setLast_bidder(bidder);
     }
 
     public Auction getAuction() {
@@ -101,6 +107,11 @@ public class Game {
     }
 
     public void addPlayer(String name, String icon){
+        for (Player player : players){
+            if (Objects.equals(player.getName(), name)) {
+                throw new IllegalArgumentException("There is already a player with this name!");
+            }
+        }
         players.add(new Player(name, icon));
     }
 
@@ -188,5 +199,20 @@ public class Game {
 
     public void setWinner(String winner) {
         this.winner = winner;
+    }
+
+    public void isEveryoneBankrupt(){
+        int bankruptCounter = 0;
+        String possibleWinner = null;
+        for(Player player : getPlayers()){
+            if (player.isBankrupt()){
+                bankruptCounter++;
+            }else{
+                possibleWinner = player.getName();
+            }
+        }
+        if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null){
+            this.winner = possibleWinner;
+        }
     }
 }

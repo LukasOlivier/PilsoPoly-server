@@ -1,5 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
+
 public class Auction {
 
     private int highest_bid;
@@ -15,7 +17,19 @@ public class Auction {
     }
 
     public void setLast_bidder(String last_bidder) {
-        this.last_bidder = last_bidder;
+        if ( this.last_bidder.equals(last_bidder) ) {
+            throw new IllegalMonopolyActionException("Wait for another player to bid!");
+        } else {
+            this.last_bidder = last_bidder;
+        }
+    }
+
+    public void setHighest_bid(int amount) {
+        if ( this.highest_bid == amount ) {
+            throw new IllegalMonopolyActionException("Amount mus be higher than previous bid!");
+        } else {
+            this.highest_bid = amount;
+        }
     }
 
     public int getHighest_bid() {

@@ -5,6 +5,7 @@ import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
+import java.io.File;
 import java.util.*;
 
 
@@ -95,17 +96,55 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public List<JsonObject> getAllGames() {
+    public Map<String , Game> getAllGames(){
+        return allGames;
+    }
+
+    @Override
+    public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
         List<JsonObject> listOfGames = new ArrayList<>();
-        for (Map.Entry<String, Game> entry : allGames.entrySet()) {
+        for (Map.Entry<String, Game> entry : mapOfGames.entrySet()) {
             listOfGames.add(entry.getValue().showSpecificGameInfo());
         }
         return listOfGames;
     }
 
+    @Override
+    public Map<String , Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().isStarted() == isStarted){
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    @Override
+    public Map<String , Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)){
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    @Override
+    public Map<String , Game> filterGamesByNumberOfPlayers(int numberOfPlayers, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().getNumberOfPlayers() == numberOfPlayers){
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    @Override
     public Game getDummyGame(){
-        Game dummyGame = new Game();
-        return dummyGame;
+        return new Game();
     }
 
     @Override
@@ -152,7 +191,7 @@ public class MonopolyService extends ServiceAdapter {
 
     public int buyProperty(Request request){
         Game game = getGameById(request.getGameId());
-        String playerName = request.getPlayerName();
+        String playerName = request.getParameterValue("playerName");
         Player player = game.getSpecificPlayer(playerName);
         String propertyName = request.getPropertyName();
         Tile tile = getTile(propertyName);
@@ -184,24 +223,63 @@ public class MonopolyService extends ServiceAdapter {
 
 
     @Override
-    public Auction startPlayerAuction(Request request) {
+    public void joinGame(String gameId, String playerName, String icon) {
+        Game game = getGameById(gameId);
+        game.addPlayer(playerName, icon);
+    }
+
+    @Override
+    public void startPlayerAuction(Request request) {
         Game game = getGameById(request.getGameId());
-        String playerName = request.getPlayerName();
+        String playerName = request.playerThatStartedAuction();
         String propertyName = request.getPropertyName();
-        int bid = request.getBid();
+        int bid = request.getStartBid();
         int duration = request.getDuration();
         game.startPlayerAuction(bid, duration, playerName, propertyName);
+    }
+
+    @Override
+    public void placeBidOnPlayerAuction(Request request) {
+        Game game = getGameById(request.getGameId());
+        String bidder = request.getBidder();
+        int amount = request.getAmount();
+        game.placeBidOnPlayerAuction(bidder, amount);
+    }
+
+    @Override
+    public Auction getPlayerAuctions(Request request) {
+        Game game = getGameById(request.getGameId());
         return game.getAuction();
     }
 
-    public Boolean checkIfAlreadyBought(String name, Game game){
-        for (Player player : game.getPlayers()){
-            for (PlayerProperty playerProperty : player.getProperties()){
-                if (playerProperty.getProperty() == name){
+    public Boolean checkIfAlreadyBought(String name, Game game) {
+        for (Player player : game.getPlayers()) {
+            for (PlayerProperty playerProperty : player.getProperties()) {
+                if (playerProperty.getProperty() == name) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    @Override
+    public void fine(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.fine();
+    }
+
+    public void free(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.free();
+    }
+
+    public void setBankrupt(Request request){
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.setBankrupt();
+        game.isEveryoneBankrupt();
     }
 }

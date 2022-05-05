@@ -9,6 +9,7 @@ import be.howest.ti.monopoly.logic.implementation.Tile;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class TestService implements IService {
@@ -51,8 +52,13 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<JsonObject> getAllGames() {
+    public Map<String, Game> getAllGames() {
         return delegate.getAllGames();
+    }
+
+    @Override
+    public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
+        return delegate.mapToList(mapOfGames);
     }
 
     @Override
@@ -60,8 +66,29 @@ public class TestService implements IService {
         return delegate.getGameMapSize();
     }
 
+    @Override
     public List<String> getChanceCards() {
         return delegate.getChanceCards();
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
+        return null;
+    }
+
+    @Override
+    public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
+        return delegate.filterGamesBy(isStarted, numberPlayers, prefix);
     }
 
     public Tile getTile(String tileName) {
@@ -74,8 +101,38 @@ public class TestService implements IService {
     }
 
     @Override
-    public Auction startPlayerAuction(Request request) {
-        return delegate.startPlayerAuction(request);
+    public void startPlayerAuction(Request request) {
+        delegate.startPlayerAuction(request);
+    }
+
+    @Override
+    public void placeBidOnPlayerAuction(Request request) {
+        delegate.placeBidOnPlayerAuction(request);
+    }
+
+    @Override
+    public Auction getPlayerAuctions(Request request) {
+        return delegate.getPlayerAuctions(request);
+    }
+
+    @Override
+    public void fine(Request request) {
+
+    }
+
+    @Override
+    public void free(Request request) {
+
+    }
+
+    @Override
+    public void setBankrupt(Request request) {
+
+    }
+
+    @Override
+    public void joinGame(String gameId, String playerName, String icon) {
+        delegate.joinGame(gameId, playerName, icon);
     }
 
     @Override

@@ -5,8 +5,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.validation.RequestParameters;
 import io.vertx.ext.web.validation.ValidationHandler;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -52,7 +50,7 @@ public class Request {
     public RequestParameters getRequestParameters() {
         return params;
     }
-
+    // Only give token
     public boolean isAuthorized(String expectedGameId, String expectedPlayerName) {
         return Objects.equals(expectedGameId, user.getGameId()) &&
                 Objects.equals(expectedPlayerName, user.getPlayerName());
@@ -85,7 +83,7 @@ public class Request {
         return params.pathParameter("gameId").getString();
     }
 
-    public String getPlayerName() {
+    public String playerThatStartedAuction() {
         return params.pathParameter("playerName").getString();
     }
 
@@ -93,8 +91,16 @@ public class Request {
         return params.pathParameter("propertyName").getString();
     }
 
-    public int getBid() {
+    public int getStartBid() {
         return params.body().getJsonObject().getInteger("start-bid");
+    }
+
+    public int getAmount() {
+        return params.body().getJsonObject().getInteger("amount");
+    }
+
+    public String getBidder() {
+        return params.body().getJsonObject().getString("bidder");
     }
 
     public int getDuration() {
@@ -103,6 +109,10 @@ public class Request {
 
     public String getStringFromBody(String key){
         return params.body().getJsonObject().getString(key);
+    }
+
+    public String getParameterValue(String key){
+        return params.pathParameter(key).getString();
     }
 
 
