@@ -107,7 +107,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property",
                 "some-token",
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 

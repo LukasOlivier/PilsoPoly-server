@@ -49,4 +49,10 @@ public interface IService {
     void free(Request request);
 
     void setBankrupt(Request request);
+
+    void useComputeTax(Request request);
+
+    void useEstimateTax(Request request);
+
+    Game createGame(Request request);
 }

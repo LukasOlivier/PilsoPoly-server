@@ -165,8 +165,7 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game createdGame = new Game(request, service.getGameMapSize());
-            service.addGame(createdGame);
+            Game createdGame = service.createGame(request);
             Response.sendJsonResponse(ctx, 200, createdGame.showSpecificGameInfo());
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
@@ -217,9 +216,7 @@ public class MonopolyApiBridge {
     private void useEstimateTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game game = service.getGameById(request.getGameId());
-            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
-            player.setTaxSystem("ESTIMATE");
+            service.useEstimateTax(request);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
@@ -229,9 +226,7 @@ public class MonopolyApiBridge {
     private void useComputeTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game game = service.getGameById(request.getGameId());
-            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
-            player.setTaxSystem("COMPUTE");
+            service.useComputeTax(request);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");

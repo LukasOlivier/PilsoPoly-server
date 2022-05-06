@@ -134,4 +134,19 @@ public class ServiceAdapter implements IService {
     public void setBankrupt(Request request) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void useComputeTax(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void useEstimateTax(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Game createGame(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
 }

@@ -5,7 +5,6 @@ import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
-import java.io.File;
 import java.util.*;
 
 
@@ -91,17 +90,17 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void clearGameList(){
+    public void clearGameList() {
         allGames.clear();
     }
 
     @Override
-    public int getGameMapSize(){
+    public int getGameMapSize() {
         return allGames.size();
     }
 
     @Override
-    public Map<String , Game> getAllGames(){
+    public Map<String, Game> getAllGames() {
         return allGames;
     }
 
@@ -115,10 +114,10 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Map<String , Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
+    public Map<String, Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
         Map<String, Game> filteredMap = new HashMap<>();
         for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
-            if (entry.getValue().isStarted() == isStarted){
+            if (entry.getValue().isStarted() == isStarted) {
                 filteredMap.put(entry.getKey(), entry.getValue());
             }
         }
@@ -126,10 +125,10 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Map<String , Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
+    public Map<String, Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
         Map<String, Game> filteredMap = new HashMap<>();
         for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
-            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)){
+            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)) {
                 filteredMap.put(entry.getKey(), entry.getValue());
             }
         }
@@ -137,10 +136,10 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Map<String , Game> filterGamesByNumberOfPlayers(int numberOfPlayers, Map<String, Game> mapToFilter) {
+    public Map<String, Game> filterGamesByNumberOfPlayers(int numberOfPlayers, Map<String, Game> mapToFilter) {
         Map<String, Game> filteredMap = new HashMap<>();
         for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
-            if (entry.getValue().getNumberOfPlayers() == numberOfPlayers){
+            if (entry.getValue().getNumberOfPlayers() == numberOfPlayers) {
                 filteredMap.put(entry.getKey(), entry.getValue());
             }
         }
@@ -148,7 +147,7 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Game getDummyGame(){
+    public Game getDummyGame() {
         return new Game();
     }
 
@@ -194,7 +193,7 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Game getGameById(String id){
+    public Game getGameById(String id) {
         return allGames.get(id);
     }
 
@@ -235,16 +234,38 @@ public class MonopolyService extends ServiceAdapter {
         player.fine();
     }
 
+    @Override
     public void free(Request request) {
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
         player.free();
     }
 
-    public void setBankrupt(Request request){
+    @Override
+    public void setBankrupt(Request request) {
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
         player.setBankrupt();
         game.isEveryoneBankrupt();
+    }
+
+    @Override
+    public void useComputeTax(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.setTaxSystem("COMPUTE");
+    }
+
+    @Override
+    public void useEstimateTax(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.setTaxSystem("ESTIMATE");
+    }
+
+    public Game createGame(Request request){
+        Game createdGame = new Game(request, getGameMapSize());
+        addGame(createdGame);
+        return createdGame;
     }
 }
