@@ -56,6 +56,10 @@ public class TestService implements IService {
     }
 
     @Override
+    public void clearGameList() {
+        delegate.clearGameList();
+    }
+
     public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
         return delegate.mapToList(mapOfGames);
     }
@@ -116,17 +120,17 @@ public class TestService implements IService {
 
     @Override
     public void fine(Request request) {
-
+        delegate.fine(request);
     }
 
     @Override
     public void free(Request request) {
-
+        delegate.free(request);
     }
 
     @Override
     public void setBankrupt(Request request) {
-
+        delegate.setBankrupt(request);
     }
 
     @Override

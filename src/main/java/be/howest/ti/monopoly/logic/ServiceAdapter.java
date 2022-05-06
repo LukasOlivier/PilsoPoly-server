@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public  class ServiceAdapter implements IService {
+public class ServiceAdapter implements IService {
 
     @Override
     public String getVersion() {
@@ -48,6 +48,11 @@ public  class ServiceAdapter implements IService {
 
     @Override
     public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clearGameList() {
         throw new UnsupportedOperationException();
     }
 
