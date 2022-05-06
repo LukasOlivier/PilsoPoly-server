@@ -78,5 +78,11 @@ public class Player {
         return icon;
     }
 
+    public void removeMoney(int amount){money -= amount;}
+    public void addMoney(int amount){money += amount;}
+
+    public void payRent(Property property){
+
+    }
 
 }

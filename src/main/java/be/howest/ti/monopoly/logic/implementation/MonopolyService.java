@@ -217,17 +217,19 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
         Player debtPlayer = game.getSpecificPlayer(request.getParameterValue("debtorName"));
         Tile tile = getTile(request.getPropertyName());
-        if (Boolean.TRUE.equals(checkIfAlreadyBought(tile.getName(), game))){
+        if (checkIfPlayerOwnesTile(tile.getName(), player.getName(), game)){
             Property tileToProperty = (Property) tile;
-            player.rem
+            player.payRent(tileToProperty);
+            return player;
+        }else {
+            throw new IllegalArgumentException("the tile is not you're property");
         }
-        return player;
     }
 
-    public Boolean checkIfAlreadyBought(String name, Game game) {
+    public boolean checkIfPlayerOwnesTile(String name, String playerName, Game game){
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
-                if (playerProperty.getProperty() == name) {
+                if (playerProperty.getProperty() == name && player.getName() == playerName) {
                     return false;
                 }
             }
