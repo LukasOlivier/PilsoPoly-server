@@ -82,44 +82,55 @@ public class Player {
     public void removeMoney(int amount){money -= amount;}
     public void addMoney(int amount){money += amount;}
 
-    public void payRent(PlayerProperty playerProperty, Tile tile, Property property, Game game){
+    public int payRent(PlayerProperty playerProperty, Tile tile, Property property, Game game){
+        int rentToReceive = 0;
         switch (tile.getType()){
             case ("utility"):
                 if (checkHowManyUtilitys("utility") > 1){
                     removeMoney(10 * game.getNumberOfPlayers());
+                    rentToReceive = 10 * game.getNumberOfPlayers();
                 }else{
                     removeMoney(4 * game.getNumberOfPlayers());
+                    rentToReceive = 10 * game.getNumberOfPlayers();
                 }
                 break;
             case ("street"):
                 switch (playerProperty.getHouseCount()){
                     case 1:
                         removeMoney(property.getRentWithOneHouse());
+                        rentToReceive = property.getRentWithOneHouse();
                         break;
                     case 2:
                         removeMoney(property.getRentWithTwoHouses());
+                        rentToReceive = property.getRentWithTwoHouses();
                         break;
                     case 3:
                         removeMoney(property.getRentWithThreeHouses());
+                        rentToReceive = property.getRentWithThreeHouses();
                         break;
                     case 4:
                         removeMoney(property.getRentWithFourHouses());
+                        rentToReceive = property.getRentWithFourHouses();
                         break;
                     default:
                         if (playerProperty.getHotelCount() > 0){
                             removeMoney(property.getRentWithHotel());
+                            rentToReceive = property.getRentWithHotel();
                         }else{
                             removeMoney(property.getRent());
+                            rentToReceive = property.getRent();
                         }
                         break;
                 }
                 break;
             case ("railroad"):
-                removeMoney(25 * checkHowManyUtilitys("street"));
+                rentToReceive = checkHowManyUtilitys("street");
+                removeMoney(25 * rentToReceive);
                 break;
             default:
                 throw new IllegalArgumentException("you can not ask rent for any other type");
         }
+        return rentToReceive;
     }
 
     private int checkHowManyUtilitys(String type) {

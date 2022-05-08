@@ -219,7 +219,7 @@ public class MonopolyService extends ServiceAdapter {
         Tile tile = getTile(request.getPropertyName());
         if (findBoughtProperty(tile.getName(), player.getName(), game) != null){
             Property tileToProperty = (Property) tile;
-            player.payRent(findBoughtProperty(tile.getName(), player.getName(), game), tile,tileToProperty, game );
+            debtPlayer.addMoney(player.payRent(findBoughtProperty(tile.getName(), player.getName(), game), tile,tileToProperty, game ));
             return player;
         }else {
             throw new IllegalArgumentException("the tile is not you're property");
