@@ -2,6 +2,7 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
     private final String name;
@@ -81,8 +82,54 @@ public class Player {
     public void removeMoney(int amount){money -= amount;}
     public void addMoney(int amount){money += amount;}
 
-    public void payRent(Property property){
+    public void payRent(PlayerProperty playerProperty, Tile tile, Property property, Game game){
+        switch (tile.getType()){
+            case ("utility"):
+                if (checkHowManyUtilitys("utility") > 1){
+                    removeMoney(10 * game.getNumberOfPlayers());
+                }else{
+                    removeMoney(4 * game.getNumberOfPlayers());
+                }
+                break;
+            case ("street"):
+                switch (playerProperty.getHouseCount()){
+                    case 1:
+                        removeMoney(property.getRentWithOneHouse());
+                        break;
+                    case 2:
+                        removeMoney(property.getRentWithTwoHouses());
+                        break;
+                    case 3:
+                        removeMoney(property.getRentWithThreeHouses());
+                        break;
+                    case 4:
+                        removeMoney(property.getRentWithFourHouses());
+                        break;
+                    default:
+                        if (playerProperty.getHotelCount() > 0){
+                            removeMoney(property.getRentWithHotel());
+                        }else{
+                            removeMoney(property.getRent());
+                        }
+                        break;
+                }
+                break;
+            case ("railroad"):
+                removeMoney(25 * checkHowManyUtilitys("street"));
+                break;
+            default:
+                throw new IllegalArgumentException("you can not ask rent for any other type");
+        }
+    }
 
+    private int checkHowManyUtilitys(String type) {
+        int countTheTypes = 0;
+        for (PlayerProperty playerProperty : this.properties){
+            if (playerProperty.getType() == type){
+                countTheTypes += 1;
+            }
+        }
+        return countTheTypes;
     }
 
 }

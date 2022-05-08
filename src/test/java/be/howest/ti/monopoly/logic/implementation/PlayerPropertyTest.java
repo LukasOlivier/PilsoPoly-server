@@ -8,7 +8,7 @@ class PlayerPropertyTest {
 
     @Test
     void testPlayerProperties(){
-        PlayerProperty testProperty = new PlayerProperty("med");
+        PlayerProperty testProperty = new PlayerProperty("med", "street");
         assertEquals("med", testProperty.getProperty());
     }
 }

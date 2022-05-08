@@ -6,6 +6,7 @@ public class PlayerProperty {
     private final String property;
     private boolean mortgage;
     private int houseCount;
+    private String type;
 
     @Override
     public boolean equals(Object o) {
@@ -22,15 +23,16 @@ public class PlayerProperty {
 
     private int hotelCount;
 
-    public PlayerProperty(String property, boolean mortgage, int houseCount, int hotelCount) {
+    public PlayerProperty(String property, boolean mortgage, int houseCount, int hotelCount, String type) {
         this.property = property;
         this.mortgage = mortgage;
         this.houseCount = houseCount;
         this.hotelCount = hotelCount;
+        this.type = type;
     }
 
-    public PlayerProperty(String property) {
-        this(property, false,0,0);
+    public PlayerProperty(String property, String type) {
+        this(property, false,0,0, type);
     }
 
     public String getProperty() {
@@ -48,4 +50,6 @@ public class PlayerProperty {
     public int getHotelCount() {
         return hotelCount;
     }
+
+    public String getType(){ return type;}
 }

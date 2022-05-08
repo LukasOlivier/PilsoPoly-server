@@ -23,4 +23,5 @@ public class Tile {
     public String getType() {
         return type;
     }
+
 }

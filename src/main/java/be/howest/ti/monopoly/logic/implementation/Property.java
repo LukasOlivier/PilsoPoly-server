@@ -39,4 +39,28 @@ public class Property extends Tile {
     }
 
 
+    public int getRentWithOneHouse() {return getRentWithOneHouse();}
+
+
+    public int getRentWithTwoHouses() {return getRentWithTwoHouses();}
+
+
+
+    public int getRentWithThreeHouses() {
+        return getRentWithThreeHouses();
+    }
+
+    public int getRentWithFourHouses() {
+        return getRentWithFourHouses();
+    }
+
+
+    public int getRentWithHotel() {
+        return getRentWithHotel();
+    }
+
+
+    public int getHousePrice() {
+        return getHousePrice();
+    }
 }

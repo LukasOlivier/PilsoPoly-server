@@ -18,7 +18,7 @@ public class Street extends Property {
         this.housePrice = housePrice;
     }
 
-    public int getRentWithOneHouse() {
+    /*public int getRentWithOneHouse() {
         return rentWithOneHouse;
     }
 
@@ -40,7 +40,7 @@ public class Street extends Property {
 
     public int getHousePrice() {
         return housePrice;
-    }
+    }*/
 
     public int getRent(){
         return super.rent;
