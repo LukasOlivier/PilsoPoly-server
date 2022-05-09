@@ -1,7 +1,5 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.ServiceAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +16,10 @@ public class Player {
     private List<PlayerProperty> properties = new ArrayList<>();
     private int debt;
     private final String icon;
+
     private static Tile previousTile = null;
+    private boolean firstThrow = true;
+    private int turnsInJail = 0;
 
     public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
         this.name = name;
@@ -32,7 +33,7 @@ public class Player {
     }
 
     public Player(String name, String icon) {
-        this(name, new Tile("Go", 0, "Go"), false, 1500, false, 0, 0, icon);
+        this(name, new Tile("Go", 0, "Go","passes 'GO!' and receives 200 for it"), false, 1500, false, 0, 0, icon);
     }
 
     public void addProperties(PlayerProperty newProperty) {
@@ -126,7 +127,7 @@ public class Player {
     }
 
     private void CheckIfPassedGo(List<Turn> turns) {
-        if ((currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed) || Objects.equals(previousTile, new Tile("Go", 0, "Go")) && turns.size() > 1){
+        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go","passes 'GO!' and receives 200 for it")))){
             addMoney(200);
             System.out.println("passed Go");
         }
@@ -150,9 +151,8 @@ public class Player {
     public Turn rollDice(List<Tile> tiles, List<Turn> turns) {
         int diceOne = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int diceTwo = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        if (jailed){
-            jailFreeDiceRoll(diceOne,diceTwo);
-        }else{
+        System.out.println(isJailed(diceOne,diceTwo));
+        if (!isJailed(diceOne,diceTwo)){
             int currentPosition = (currentTile.getPosition() + (diceOne + diceTwo)) % 40;
             currentTile = getTileFromPosition(tiles, currentPosition);
             takeTileAction(currentTile);
@@ -163,7 +163,20 @@ public class Player {
         System.out.print(" - ");
         System.out.println(diceTwo);
         System.out.println(currentTile.getName());
-        return new Turn(getName(),"DEFAULT",new Move(currentTile.getName()),diceOne,diceTwo);
+        firstThrow = false;
+        return new Turn(getName(),"DEFAULT",new Move(currentTile.getName(),currentTile.getDescription()),diceOne,diceTwo);
+    }
+
+    private boolean isJailed(int diceOne, int diceTwo){
+        if (!jailed){
+            return false;
+        }
+        if (diceOne == diceTwo || turnsInJail >= 3){
+            jailed = false;
+            return false;
+        }
+        turnsInJail++;
+        return true;
     }
 
     private Tile getTileFromPosition(List<Tile> tiles, int position) {
@@ -177,10 +190,9 @@ public class Player {
 
 
     private void takeTileAction(Tile tile) {
-        System.out.println(tile.getType());
         switch (tile.getType()) {
             case "Go to Jail":
-                setCurrentTile(new Tile("Go to Jail", 30, "Go to Jail"));
+                setCurrentTile(new Tile("Jail", 10, "Jail", "In jail"));
                 jailed = true;
                 break;
             case "Luxury Tax":
@@ -195,12 +207,6 @@ public class Player {
                 break;
             default:
                 // code block
-        }
-    }
-
-    public void jailFreeDiceRoll(int diceOne, int diceTwo){
-        if (diceOne == diceTwo){
-            jailed = false;
         }
     }
 }

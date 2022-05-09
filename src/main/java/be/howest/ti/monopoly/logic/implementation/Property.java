@@ -10,7 +10,7 @@ public class Property extends Tile {
 
 
     public Property(String name, int position, String type, int groupSize, String color,int rent,int mortgage,int cost) {
-        super(name, position, type);
+        super(name, position, type, null);
         this.groupSize = groupSize;
         this.color = color;
         this.rent = rent;
@@ -34,4 +34,19 @@ public class Property extends Tile {
         return cost;
     }
 
+    public void setBought(boolean bought) {
+        this.bought = bought;
+    }
+
+    public boolean isBought() {
+        return bought;
+    }
+
+    public String getDescription() {
+        if(isBought()){
+            return "should pay rent";
+        }else {
+            return "can buy this property in direct sale";
+        }
+    }
 }

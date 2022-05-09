@@ -5,9 +5,9 @@ public class Move {
     private String description;
     private String actionType; //TODO: WHUT?
 
-    public Move(String tile) {
+    public Move(String tile,String description) {
         this.tile = tile;
-        this.description = "";
+        this.description = description;
         this.actionType = "";
     }
 

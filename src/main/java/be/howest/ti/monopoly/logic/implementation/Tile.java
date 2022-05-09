@@ -8,15 +8,21 @@ public class Tile {
     private String name;
     private int position;
     private String type;
+    private String description;
 
-    public Tile(String name, int position, String type) {
+    public Tile(String name, int position, String type, String description) {
         this.name = name;
         this.position = position;
         this.type = type;
+        this.description = description;
     }
 
     public int getCost() {
         return -1;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getName() {
