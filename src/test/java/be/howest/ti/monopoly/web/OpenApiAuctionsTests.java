@@ -1,6 +1,8 @@
 package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Auction;
+import be.howest.ti.monopoly.logic.implementation.Game;
 import io.vertx.core.json.JsonObject;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
@@ -75,11 +77,19 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
     @Test
     void getPlayerAuctions(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            @Override
+            public Auction getPlayerAuctions(Request request) {
+                return new Game().getAuction();
+            }
+        });
+
+
         get(
                 testContext,
                 "/games/game-id/players/Alice/auctions",
                 "some-token",
-                response -> assertNotYetImplemented(response, "getPlayerAuctions")
+                this::assertOkResponse
         );
     }
 
