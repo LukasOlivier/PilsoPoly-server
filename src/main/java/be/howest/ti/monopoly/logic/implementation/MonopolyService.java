@@ -198,7 +198,7 @@ public class MonopolyService extends ServiceAdapter {
         if (tile.getType() == "street" || tile.getType() == "railroad" || tile.getType() == "utility"){
             Property tileToProperty = (Property) tile;
             if (player.getMoney() >= tileToProperty.getCost()){
-                if (Boolean.TRUE.equals(checkIfAlreadyBought(tileToProperty.getName(), game))){
+                if (getPlayerProperty(tileToProperty.getName(), game) != null){
                     PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName());
                     player.addProperties(boughtProperty);
                     player.removeMoney(tileToProperty.getCost());
@@ -252,15 +252,15 @@ public class MonopolyService extends ServiceAdapter {
         return game.getAuction();
     }
 
-    public Boolean checkIfAlreadyBought(String name, Game game) {
+    public PlayerProperty getPlayerProperty(String name, Game game) {
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
                 if (playerProperty.getProperty() == name) {
-                    return false;
+                    return playerProperty;
                 }
             }
         }
-        return true;
+        return null;
     }
 
     @Override
