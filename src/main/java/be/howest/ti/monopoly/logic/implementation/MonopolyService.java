@@ -226,6 +226,7 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+
     public PlayerProperty findBoughtProperty(String name, String playerName, Game game){
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
