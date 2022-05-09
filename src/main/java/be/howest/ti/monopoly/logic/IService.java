@@ -21,8 +21,8 @@ public interface IService {
     void joinGame(String gameId, String playerName, String icon);
     Game getGame();
     Game getDummyGame();
+    void clearGameList();
     Map<String , Game>  getAllGames();
-
     List<JsonObject> mapToList(Map<String, Game> mapOfGames);
 
     int getGameMapSize();

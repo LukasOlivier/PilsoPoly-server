@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class ServiceAdapter implements IService {
 
-
     @Override
     public String getVersion() {
         throw new UnsupportedOperationException();
@@ -50,6 +49,11 @@ public class ServiceAdapter implements IService {
 
     @Override
     public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clearGameList() {
         throw new UnsupportedOperationException();
     }
 
