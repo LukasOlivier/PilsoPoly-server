@@ -6,6 +6,7 @@ public class Property extends Tile {
     protected int rent;
     private int groupSize;
     private String color;
+    private boolean bought;
 
 
     public Property(String name, int position, String type, int groupSize, String color,int rent,int mortgage,int cost) {

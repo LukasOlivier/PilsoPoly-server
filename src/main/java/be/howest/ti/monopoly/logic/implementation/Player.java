@@ -83,6 +83,9 @@ public class Player {
         return icon;
     }
 
+
+    public void removeMoney(int amount){money -= amount;}
+
     public void fine() {
         if (this.money >= 50) {
             this.money = this.money - 50;
@@ -94,10 +97,6 @@ public class Player {
 
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
-    }
-
-    private void removeMoney(int amount) {
-        money -= amount;
     }
 
     private void addMoney(int amount) {
@@ -142,9 +141,11 @@ public class Player {
         }
     }
 
+
     public void setTaxSystem(String preferredTaxSystem) {
         this.taxSystem = preferredTaxSystem;
     }
+
 
     public Turn rollDice(List<Tile> tiles, List<Turn> turns) {
         int diceOne = ThreadLocalRandom.current().nextInt(1, 6 + 1);

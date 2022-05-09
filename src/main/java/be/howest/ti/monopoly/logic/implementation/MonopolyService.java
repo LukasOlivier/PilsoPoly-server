@@ -152,10 +152,38 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
+
+    public void buyProperty(Request request){
+        Game game = getGameById(request.getGameId());
+        String playerName = request.getParameterValue("playerName");
+        Player player = game.getSpecificPlayer(playerName);
+        String propertyName = request.getPropertyName();
+        Tile tile = getTile(propertyName);
+        if (tile.getType() == "street" || tile.getType() == "railroad" || tile.getType() == "utility"){
+            Property tileToProperty = (Property) tile;
+            if (player.getMoney() >= tileToProperty.getCost()){
+                if (getPlayerProperty(tileToProperty.getName(), game) == null){
+                    PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName());
+                    player.addProperties(boughtProperty);
+                    player.removeMoney(tileToProperty.getCost());
+                }
+                else {
+                    throw new IllegalStateException("property is already bought");
+                }
+            }else{
+                throw new IllegalStateException("you do not have enough money");
+            }
+        }else{
+            throw new IllegalArgumentException("you can not buy a tile of any other type");
+        }
+    }
+
+
     @Override
     public Game getGameById(String id) {
         return allGames.get(id);
     }
+
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -188,6 +216,17 @@ public class MonopolyService extends ServiceAdapter {
     public Auction getPlayerAuctions(Request request) {
         Game game = getGameById(request.getGameId());
         return game.getAuction();
+    }
+
+    public PlayerProperty getPlayerProperty(String name, Game game) {
+        for (Player player : game.getPlayers()) {
+            for (PlayerProperty playerProperty : player.getProperties()) {
+                if (playerProperty.getProperty() == name) {
+                    return playerProperty;
+                }
+            }
+        }
+        return null;
     }
 
     @Override

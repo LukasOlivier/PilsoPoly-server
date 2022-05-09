@@ -2,6 +2,7 @@ package be.howest.ti.monopoly.logic;
 
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
@@ -38,6 +39,8 @@ public interface IService {
 
     Tile getTile(String tileName);
 
+    void buyProperty(Request request);
+
 
     // AUCTION
     void startPlayerAuction(Request request);
@@ -61,4 +64,5 @@ public interface IService {
     Map<String, Game> getGames();
 
     void rollDice(Request request);
+
 }

@@ -3,7 +3,7 @@ package be.howest.ti.monopoly.logic.implementation;
 import java.util.List;
 import java.util.Objects;
 
-public class Tile{
+public class Tile {
 
     private String name;
     private int position;
@@ -13,6 +13,10 @@ public class Tile{
         this.name = name;
         this.position = position;
         this.type = type;
+    }
+
+    public int getCost() {
+        return -1;
     }
 
     public String getName() {
@@ -43,5 +47,6 @@ public class Tile{
     @Override
     public int hashCode() {
         return Objects.hash(name, position, type);
+
     }
 }
