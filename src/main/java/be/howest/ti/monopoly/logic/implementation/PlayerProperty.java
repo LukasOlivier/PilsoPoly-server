@@ -1,24 +1,24 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 public class PlayerProperty {
-    private final String property;
+    public final Property property;
     private boolean mortgage;
     private int houseCount;
     private int hotelCount;
 
-    public PlayerProperty(String property, boolean mortgage, int houseCount, int hotelCount) {
+    public PlayerProperty(Property property, boolean mortgage, int houseCount, int hotelCount) {
         this.property = property;
         this.mortgage = mortgage;
         this.houseCount = houseCount;
         this.hotelCount = hotelCount;
     }
 
-    public PlayerProperty(String property) {
+    public PlayerProperty(Property property) {
         this(property, false,0,0);
     }
 
     public String getProperty() {
-        return property;
+        return property.getName();
     }
 
     public boolean isMortgage() {

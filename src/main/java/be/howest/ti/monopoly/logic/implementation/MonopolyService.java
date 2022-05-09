@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -160,6 +161,9 @@ public class MonopolyService extends ServiceAdapter {
     public void joinGame(String gameId, String playerName, String icon) {
         Game game = getGameById(gameId);
         game.addPlayer(playerName, icon);
+        if (game.getCurrentPlayer() == null){
+            game.setCurrentPlayer(playerName);
+        }
     }
 
     @Override
@@ -222,6 +226,7 @@ public class MonopolyService extends ServiceAdapter {
         player.setTaxSystem("ESTIMATE");
     }
 
+    @Override
     public Game createGame(Request request){
         if (request != null){
             Game createdGame = new Game(request, getGameMapSize());
@@ -230,4 +235,24 @@ public class MonopolyService extends ServiceAdapter {
         }
         throw new InvalidRequestException("failed to create game!");
     }
+
+    @Override
+    public void rollDice(Request request){
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        if (Objects.equals(game.getCurrentPlayer(), player.getName())){
+            game.addTurn(player.rollDice(getTiles(), game.getTurns()));
+            int indexOfNextPlayer = game.getPlayers().indexOf(player) + 1;
+            if (indexOfNextPlayer >= game.getPlayers().size()){
+                indexOfNextPlayer = 0;
+            }
+            game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
+
+        }else{
+            throw new IllegalMonopolyActionException("Not your turn!");
+        }
+    }
+
 }
+
+

@@ -56,6 +56,11 @@ public class TestService implements IService {
     }
 
     @Override
+    public void rollDice(Request request) {
+        delegate.rollDice(request);
+    }
+
+    @Override
     public void clearGameList() {
         delegate.clearGameList();
     }

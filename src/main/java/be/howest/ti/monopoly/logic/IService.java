@@ -59,4 +59,6 @@ public interface IService {
     Game createGame(Request request);
 
     Map<String, Game> getGames();
+
+    void rollDice(Request request);
 }

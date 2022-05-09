@@ -3,12 +3,12 @@ package be.howest.ti.monopoly.logic.implementation;
 public class Move {
     private String tile;
     private String description;
-    private String actionType;
+    private String actionType; //TODO: WHUT?
 
-    public Move(String tile, String description, String actionType) {
+    public Move(String tile) {
         this.tile = tile;
-        this.description = description;
-        this.actionType = actionType;
+        this.description = "";
+        this.actionType = "";
     }
 
     public String getTile() {
