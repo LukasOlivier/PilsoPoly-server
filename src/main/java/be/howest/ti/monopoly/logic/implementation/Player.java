@@ -78,6 +78,9 @@ public class Player {
         return icon;
     }
 
+
+    public void removeMoney(int amount){money -= amount;}
+
     public void fine() {
         if (this.money >= 50){
             this.money = this.money - 50;
@@ -98,7 +101,9 @@ public class Player {
         }
     }
 
+
     public void setTaxSystem(String preferredTaxSystem) {
         this.taxSystem = preferredTaxSystem;
     }
+
 }

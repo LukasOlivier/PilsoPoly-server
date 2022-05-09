@@ -236,10 +236,13 @@ public class MonopolyApiBridge {
         );
     }
 
+
+
     private void getGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         Response.sendJsonResponse(ctx, 200, service.getGameById(request.getGameId()));
     }
+
 
     private void getDummyGame(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, service.getDummyGame());
@@ -279,10 +282,16 @@ public class MonopolyApiBridge {
         }
     }
 
+    //http://localhost:8080/games/Dummy/players/Sibren/properties/Oriental
     private void buyProperty(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyProperty");
+        try{
+            Request request =  Request.from(ctx);
+            service.buyProperty(request);
+            Response.sendOkResponse(ctx);
+        }catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("failed to buy property");
+        }
     }
-
     private void dontBuyProperty(RoutingContext ctx) {
         throw new NotYetImplementedException("dontBuyProperty");
     }
@@ -332,7 +341,8 @@ public class MonopolyApiBridge {
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("placeBidOnBankAuction");
+        throw new NotYetImplementedException("getBankAuctions");
+
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {

@@ -4,6 +4,7 @@ import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import io.vertx.core.json.JsonObject;
 
@@ -156,6 +157,11 @@ public class TestService implements IService {
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
         delegate.joinGame(gameId, playerName, icon);
+    }
+
+    @Override
+    public void buyProperty(Request request) {
+         delegate.buyProperty(request);
     }
 
 

@@ -33,6 +33,7 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         );
     }
 
+
     @Test
     void getDummyGame(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
@@ -40,6 +41,7 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
                 return new Game();
 
             }
+
         });
         get(
                 testContext,
