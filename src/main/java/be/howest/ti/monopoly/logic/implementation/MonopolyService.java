@@ -3,6 +3,7 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
+import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import io.vertx.core.json.JsonObject;
 
 import java.util.*;
@@ -103,7 +104,7 @@ public class MonopolyService extends ServiceAdapter {
     public Map<String, Game> getAllGames() {
         return allGames;
     }
-
+/*
     @Override
     public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
         List<JsonObject> listOfGames = new ArrayList<>();
@@ -112,6 +113,7 @@ public class MonopolyService extends ServiceAdapter {
         }
         return listOfGames;
     }
+ */
 
     @Override
     public Map<String, Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
@@ -264,8 +266,11 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     public Game createGame(Request request){
-        Game createdGame = new Game(request, getGameMapSize());
-        addGame(createdGame);
-        return createdGame;
+        if (request != null){
+            Game createdGame = new Game(request, getGameMapSize());
+            addGame(createdGame);
+            return createdGame;
+        }
+        throw new InvalidRequestException("failed to create game!");
     }
 }

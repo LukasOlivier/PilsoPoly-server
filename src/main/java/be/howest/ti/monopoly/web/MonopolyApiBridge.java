@@ -6,7 +6,6 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
-import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -14,6 +13,7 @@ import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
 import be.howest.ti.monopoly.web.tokens.MonopolyUser;
 import be.howest.ti.monopoly.web.tokens.PlainTextTokens;
 import be.howest.ti.monopoly.web.tokens.TokenManager;
+import be.howest.ti.monopoly.web.views.SpecificGameInfo;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -22,7 +22,6 @@ import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.validation.RequestParameter;
-import io.vertx.ext.web.validation.RequestParameters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,7 +165,8 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
         try {
             Game createdGame = service.createGame(request);
-            Response.sendJsonResponse(ctx, 200, createdGame.showSpecificGameInfo());
+            SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
+            Response.sendJsonResponse(ctx, 200, specificGameInfo);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }
@@ -187,7 +187,11 @@ public class MonopolyApiBridge {
         if (prefix != null) {
             filteredMapOfGames = service.filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
         }
-        Response.sendJsonResponse(ctx, 200, service.mapToList(filteredMapOfGames));
+        List<SpecificGameInfo> listOfGames = new ArrayList<>();
+        for (Game game : filteredMapOfGames.values()) {
+            listOfGames.add(new SpecificGameInfo(game));
+        }
+        Response.sendJsonResponse(ctx, 200, listOfGames);
     }
 
     private void joinGame(RoutingContext ctx) {

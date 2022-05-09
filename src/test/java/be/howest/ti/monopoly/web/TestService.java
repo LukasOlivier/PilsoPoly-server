@@ -51,13 +51,18 @@ public class TestService implements IService {
     }
 
     @Override
-    public Map<String, Game> getAllGames() {
+    public Map<String, Game> getGames() {
         return delegate.getAllGames();
     }
 
     @Override
     public void clearGameList() {
         delegate.clearGameList();
+    }
+
+    @Override
+    public Map<String, Game> getAllGames() {
+        return delegate.getAllGames();
     }
 
     public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
@@ -152,7 +157,6 @@ public class TestService implements IService {
     public void joinGame(String gameId, String playerName, String icon) {
         delegate.joinGame(gameId, playerName, icon);
     }
-
 
 
 }

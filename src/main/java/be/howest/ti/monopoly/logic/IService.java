@@ -21,7 +21,8 @@ public interface IService {
     Game getGame();
     Game getDummyGame();
     void clearGameList();
-    Map<String , Game>  getAllGames();
+
+    Map<String, Game> getAllGames();
     List<JsonObject> mapToList(Map<String, Game> mapOfGames);
 
     int getGameMapSize();
@@ -54,5 +55,8 @@ public interface IService {
 
     void useEstimateTax(Request request);
 
+
     Game createGame(Request request);
+
+    Map<String, Game> getGames();
 }

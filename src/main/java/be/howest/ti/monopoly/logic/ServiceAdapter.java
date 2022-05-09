@@ -149,4 +149,9 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Map<String, Game> getGames() {
+        throw new UnsupportedOperationException();
+    }
+
 }

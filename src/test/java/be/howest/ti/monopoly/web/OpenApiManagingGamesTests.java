@@ -30,9 +30,16 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
     @Test
     void getGamesWithAllParams(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
-            public Map<String, Game> getAllGames() {
-                return getAllGames();
+            public Map<String, Game> getGames() {
+                return Collections.emptyMap();
             }
+
+            public Map<String, Game> getAllGames() {
+                return Collections.emptyMap();
+            }
+
+
+
         });
         get(
                 testContext,
