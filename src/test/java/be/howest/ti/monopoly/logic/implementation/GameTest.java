@@ -11,6 +11,6 @@ class GameTest {
     void findPlayer(){
         Game testGame = new Game();
         assertEquals("Lukas",testGame.getSpecificPlayer("Lukas").getName());
-        assertThrows(MonopolyResourceNotFoundException.class, () -> testGame.getSpecificPlayer("Lukas"));
+        assertThrows(MonopolyResourceNotFoundException.class, () -> testGame.getSpecificPlayer("Houdini"));
     }
 }

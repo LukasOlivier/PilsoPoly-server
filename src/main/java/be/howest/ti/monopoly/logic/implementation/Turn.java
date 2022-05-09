@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Turn {
-    private List<Integer> roll = new ArrayList<>();
+    private List<Integer> roll;
     private String player;
     private String type;
     private Move moves;

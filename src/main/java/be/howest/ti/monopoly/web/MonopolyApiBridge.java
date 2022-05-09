@@ -6,7 +6,6 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
-import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -14,6 +13,7 @@ import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
 import be.howest.ti.monopoly.web.tokens.MonopolyUser;
 import be.howest.ti.monopoly.web.tokens.PlainTextTokens;
 import be.howest.ti.monopoly.web.tokens.TokenManager;
+import be.howest.ti.monopoly.web.views.SpecificGameInfo;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -22,12 +22,8 @@ import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.validation.RequestParameter;
-import io.vertx.ext.web.validation.RequestParameters;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -165,9 +161,9 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game createdGame = new Game(request, service.getGameMapSize());
-            service.addGame(createdGame);
-            Response.sendJsonResponse(ctx, 200, createdGame.showSpecificGameInfo());
+            Game createdGame = service.createGame(request);
+            SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
+            Response.sendJsonResponse(ctx, 200, specificGameInfo);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }
@@ -180,16 +176,51 @@ public class MonopolyApiBridge {
         RequestParameter numberOfPlayers = request.getRequestParameters().queryParameter("numberOfPlayers");
         RequestParameter prefix = request.getRequestParameters().queryParameter("prefix");
         if (isStarted != null) {
-            filteredMapOfGames = service.filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
+            filteredMapOfGames = filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
         }
         if (numberOfPlayers != null) {
-            filteredMapOfGames = service.filterGamesByNumberOfPlayers(numberOfPlayers.getInteger(), filteredMapOfGames);
+            filteredMapOfGames = filterGamesByNumberOfPlayers(numberOfPlayers.getInteger(), filteredMapOfGames);
         }
         if (prefix != null) {
-            filteredMapOfGames = service.filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
+            filteredMapOfGames = filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
         }
-        Response.sendJsonResponse(ctx, 200, service.mapToList(filteredMapOfGames));
+        List<SpecificGameInfo> listOfGames = new ArrayList<>();
+        for (Game game : filteredMapOfGames.values()) {
+            listOfGames.add(new SpecificGameInfo(game));
+        }
+        Response.sendJsonResponse(ctx, 200, listOfGames);
     }
+
+    public Map<String, Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().isStarted() == isStarted) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    public Map<String, Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    public Map<String, Game> filterGamesByNumberOfPlayers(int numberOfPlayers, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().getNumberOfPlayers() == numberOfPlayers) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
 
     private void joinGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
@@ -220,9 +251,7 @@ public class MonopolyApiBridge {
     private void useEstimateTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game game = service.getGameById(request.getGameId());
-            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
-            player.setTaxSystem("ESTIMATE");
+            service.useEstimateTax(request);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
@@ -232,9 +261,7 @@ public class MonopolyApiBridge {
     private void useComputeTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game game = service.getGameById(request.getGameId());
-            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
-            player.setTaxSystem("COMPUTE");
+            service.useComputeTax(request);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
