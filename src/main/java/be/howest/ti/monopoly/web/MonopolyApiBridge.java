@@ -23,10 +23,7 @@ import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.validation.RequestParameter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -179,13 +176,13 @@ public class MonopolyApiBridge {
         RequestParameter numberOfPlayers = request.getRequestParameters().queryParameter("numberOfPlayers");
         RequestParameter prefix = request.getRequestParameters().queryParameter("prefix");
         if (isStarted != null) {
-            filteredMapOfGames = service.filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
+            filteredMapOfGames = filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
         }
         if (numberOfPlayers != null) {
-            filteredMapOfGames = service.filterGamesByNumberOfPlayers(numberOfPlayers.getInteger(), filteredMapOfGames);
+            filteredMapOfGames = filterGamesByNumberOfPlayers(numberOfPlayers.getInteger(), filteredMapOfGames);
         }
         if (prefix != null) {
-            filteredMapOfGames = service.filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
+            filteredMapOfGames = filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
         }
         List<SpecificGameInfo> listOfGames = new ArrayList<>();
         for (Game game : filteredMapOfGames.values()) {
@@ -193,6 +190,37 @@ public class MonopolyApiBridge {
         }
         Response.sendJsonResponse(ctx, 200, listOfGames);
     }
+
+    public Map<String, Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().isStarted() == isStarted) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    public Map<String, Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    public Map<String, Game> filterGamesByNumberOfPlayers(int numberOfPlayers, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().getNumberOfPlayers() == numberOfPlayers) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
 
     private void joinGame(RoutingContext ctx) {
         Request request = Request.from(ctx);

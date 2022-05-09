@@ -30,16 +30,9 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
     @Test
     void getGamesWithAllParams(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
-            public Map<String, Game> getGames() {
-                return Collections.emptyMap();
-            }
-
             public Map<String, Game> getAllGames() {
                 return Collections.emptyMap();
             }
-
-
-
         });
         get(
                 testContext,
@@ -74,7 +67,7 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
             @Override
             public Game createGame(Request request) {
-                return new Game();
+                throw new IllegalArgumentException();
             }
         });
         post(

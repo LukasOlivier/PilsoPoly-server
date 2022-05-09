@@ -49,7 +49,7 @@ public class Game {
     }
     // we will leave this
     public Game(Request request, int size) {
-        if (request == null) {
+        if (request.getRequestParameters().body() == null) {
             throw new IllegalArgumentException();
         }
         setNumberOfPlayers(request.getNumberOfPlayersToStart());
@@ -59,6 +59,7 @@ public class Game {
     }
 
     public void setId(String id) {
+        // todo add more characters to the list
         if (id == null || id.contains("-")) {
             throw new IllegalArgumentException();
         }
