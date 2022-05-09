@@ -203,7 +203,7 @@ public class MonopolyService extends ServiceAdapter {
         if (tile.getType() == "street" || tile.getType() == "railroad" || tile.getType() == "utility"){
             Property tileToProperty = (Property) tile;
             if (player.getMoney() >= tileToProperty.getCost()){
-                if (getPlayerProperty(tileToProperty.getName(), game) != null){
+                if (getPlayerProperty(tileToProperty.getName(), game) == null){
                     PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName());
                     player.addProperties(boughtProperty);
                     player.removeMoney(tileToProperty.getCost());
