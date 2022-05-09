@@ -101,7 +101,7 @@ public class ServiceAdapter implements IService {
     public Game getGameById(String id) {throw new UnsupportedOperationException();}
 
     @Override
-    public int buyProperty(Request request) {throw new UnsupportedOperationException();}
+    public void buyProperty(Request request) {throw new UnsupportedOperationException();}
 
 
 

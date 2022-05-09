@@ -160,8 +160,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public int buyProperty(Request request) {
-        return delegate.buyProperty(request);
+    public void buyProperty(Request request) {
+         delegate.buyProperty(request);
     }
 
 

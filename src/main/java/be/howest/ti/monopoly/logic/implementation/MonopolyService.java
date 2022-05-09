@@ -152,7 +152,7 @@ public class MonopolyService extends ServiceAdapter {
     }
 
 
-    public int buyProperty(Request request){
+    public void buyProperty(Request request){
         Game game = getGameById(request.getGameId());
         String playerName = request.getParameterValue("playerName");
         Player player = game.getSpecificPlayer(playerName);
@@ -165,7 +165,6 @@ public class MonopolyService extends ServiceAdapter {
                     PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName());
                     player.addProperties(boughtProperty);
                     player.removeMoney(tileToProperty.getCost());
-                    return 200;
                 }
                 else {
                     throw new IllegalStateException("property is already bought");

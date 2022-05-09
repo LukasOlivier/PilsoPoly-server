@@ -39,7 +39,7 @@ public interface IService {
 
     Tile getTile(String tileName);
 
-    int buyProperty(Request request);
+    void buyProperty(Request request);
 
 
     // AUCTION
