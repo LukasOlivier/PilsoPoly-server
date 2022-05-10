@@ -116,9 +116,8 @@ public class Game {
         players.add(new Player(name, icon));
     }
 
-    public void addTurns(String name, String type, String description, String tile, int diceOne, int diceTwo ){
-        Move newMove = new Move(tile, type, description);
-        turns.add(new Turn( name, "DEFAULT", newMove, diceOne, diceTwo));
+    public void addTurn(Turn turn){
+        turns.add(turn);
     }
 
     public String getDirectSale() {
