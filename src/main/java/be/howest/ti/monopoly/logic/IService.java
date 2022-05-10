@@ -66,4 +66,6 @@ public interface IService {
 
     Map<String, Game> getGames();
 
+    void rollDice(Request request);
+
 }

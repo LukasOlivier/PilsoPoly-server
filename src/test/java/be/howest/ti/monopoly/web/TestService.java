@@ -57,6 +57,11 @@ public class TestService implements IService {
     }
 
     @Override
+    public void rollDice(Request request) {
+        delegate.rollDice(request);
+    }
+
+    @Override
     public void clearGameList() {
         delegate.clearGameList();
     }
@@ -167,7 +172,5 @@ public class TestService implements IService {
     public void buyProperty(Request request) {
          delegate.buyProperty(request);
     }
-
-
 }
 

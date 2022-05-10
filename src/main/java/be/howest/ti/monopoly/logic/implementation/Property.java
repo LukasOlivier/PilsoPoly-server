@@ -6,12 +6,12 @@ public class Property extends Tile {
     protected int rent;
     private int groupSize;
     private String color;
-
+    private boolean bought;
 
 
 
     public Property(String name, int position, String type, int groupSize, String color, int rent, int mortgage, int cost) {
-        super(name, position, type);
+        super(name, position, type, "can buy this property in direct sale","buy");
         this.groupSize = groupSize;
         this.color = color;
         this.rent = rent;
@@ -31,6 +31,7 @@ public class Property extends Tile {
         return color;
     }
 
+    @Override
     public int getCost() {
         return cost;
     }
@@ -62,5 +63,29 @@ public class Property extends Tile {
 
     public int getHousePrice() {
         return getHousePrice();
+}
+    public void setBought(boolean bought) {
+        this.bought = bought;
+    }
+
+    public boolean isBought() {
+        return bought;
+    }
+
+    @Override
+    public String getDescription() {
+        if (isBought()) {
+            return "should pay rent";
+        } else {
+            return "can buy this property in direct sale";
+        }
+    }
+@Override
+    public String getActionType() {
+        if (isBought()) {
+            return "rent";
+        } else {
+            return "buy";
+        }
     }
 }

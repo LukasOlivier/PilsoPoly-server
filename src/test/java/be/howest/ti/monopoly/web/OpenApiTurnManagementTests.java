@@ -9,11 +9,17 @@ class OpenApiTurnManagementTests extends OpenApiTestsBase {
 
     @Test
     void rollDice(final VertxTestContext testContext) {
+        service.setDelegate( new ServiceAdapter() {
+
+            @Override
+            public void rollDice(Request request) {}
+
+        });
         post(
                 testContext,
                 "/games/game-id/players/Alice/dice",
                 "some-token",
-                response -> assertNotYetImplemented(response, "rollDice")
+                this::assertOkResponse
         );
     }
 

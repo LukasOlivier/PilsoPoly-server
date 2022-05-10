@@ -3,7 +3,7 @@ package be.howest.ti.monopoly.logic.implementation;
 import java.util.Objects;
 
 public class PlayerProperty {
-    private final String property;
+    public final Property property;
     private boolean mortgage;
     private int houseCount;
     private String type;
@@ -23,7 +23,8 @@ public class PlayerProperty {
 
     private int hotelCount;
 
-    public PlayerProperty(String property, boolean mortgage, int houseCount, int hotelCount, String type) {
+
+    public PlayerProperty(Property property, boolean mortgage, int houseCount, int hotelCount, String type) {
         this.property = property;
         this.mortgage = mortgage;
         this.houseCount = houseCount;
@@ -31,12 +32,13 @@ public class PlayerProperty {
         this.type = type;
     }
 
-    public PlayerProperty(String property, String type) {
-        this(property, false,0,0, type);
-    }
+
+    public PlayerProperty(Property property, String type) {
+            this(property, false, 0, 0, type);
+        }
 
     public String getProperty() {
-        return property;
+        return property.getName();
     }
 
     public boolean isMortgage() {
