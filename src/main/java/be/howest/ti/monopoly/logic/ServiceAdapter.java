@@ -120,15 +120,11 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-<<<<<<< HEAD
     public Auction getPlayerAuctions(Request request) {throw new UnsupportedOperationException();}
 
     @Override
     public Player collectDebt(Request request) {throw new UnsupportedOperationException();}
-=======
-    public Auction getPlayerAuctions(Request request) {
-        throw new UnsupportedOperationException();
-    }
+
 
     @Override
     public void fine(Request request) {
@@ -164,6 +160,4 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
-
->>>>>>> 1f18ad4db8488e9e267734f35f4114c41de73d11
 }
