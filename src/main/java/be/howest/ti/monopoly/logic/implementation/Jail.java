@@ -6,13 +6,15 @@ public class Jail {
 
 
     public static void checkIfFreeByWaitingTurns(Player player) {
+        int amountToPayToGetOutOfJail = 50;
+        int maxTurnsInJail = 3;
         if (player.isJailed()) {
-            int amountToPayToGetOutOfJail = 50;
-            int maxTurnsInJail = 3;
             if (player.getTurnsInJail() == maxTurnsInJail) {
                 player.setJailed(false);
                 player.removeMoney(amountToPayToGetOutOfJail);
                 System.out.println("free by waiting turns");
+            } else {
+                player.addTurnInJail();
             }
         }
     }

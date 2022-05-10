@@ -111,6 +111,10 @@ public class Player {
         }
     }
 
+    public void addGetOutOfJailFreeCard(){
+        getOutOfJailFreeCards++;
+    }
+
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
     }
