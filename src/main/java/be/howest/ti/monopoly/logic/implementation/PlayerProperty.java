@@ -1,5 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import java.util.List;
+
 public class PlayerProperty {
     public final Property property;
     private boolean mortgage;
@@ -33,12 +35,37 @@ public class PlayerProperty {
         return hotelCount;
     }
 
-    public void addHouse() {
-        if ( getHouseCount() < 4 ) {
+    public void addHouse(List<PlayerProperty> otherProperties) {
+        if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties) ) {
             houseCount += 1;
         } else {
-            throw new IllegalStateException("Can't have more than 4 houses");
+            throw new IllegalStateException("could not buy house");
         }
+    }
+
+    public boolean canAddHouse() {
+        return getHouseCount() < 4;
+    }
+
+    public boolean playerOwnsStreet(List<PlayerProperty> playerProperties) {
+        int amount = 0;
+        int groupSize = property.getGroupSize();
+        String streetColor = property.getColor();
+        for ( PlayerProperty p : playerProperties ) {
+            if ( p.property.getColor().equals(streetColor) ) {
+                amount += 1;
+            }
+        }
+        return amount == groupSize;
+    }
+
+    public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties) {
+        for ( PlayerProperty p : playerProperties ) {
+            if ( Math.abs( ( getHouseCount() + 1 ) - p.getHouseCount() ) > 1 ) { // getHouseCount + 1 because house still needs to be "bought"
+                return false;
+            }
+        }
+        return true;
     }
 
     public void removeHouse() {

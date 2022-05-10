@@ -277,40 +277,11 @@ public class MonopolyService extends ServiceAdapter {
     public void buyHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        for ( PlayerProperty property1 : player.getProperties() ) {
-            if ( property1.getProperty().equals(propertyName) && playerOwnsWholeStreet(player, property1.property) && houseCountIsSame(player, property1) ) {
-                System.out.println(property1.property.getName());
-                    property1.addHouse();
+        for (PlayerProperty property : player.getProperties()) {
+            if (property.getProperty().equals(propertyName)) {
+                property.addHouse(player.getProperties());
             }
         }
-    }
-
-    // TODO : FIX THIS !!!
-    private boolean houseCountIsSame(Player player, PlayerProperty property) {
-        for ( PlayerProperty property1 : player.getProperties() ) {
-            if ( property.getHouseCount() != property1.getHouseCount() || property.getHouseCount() - 1 != property1.getHouseCount()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean playerOwnsWholeStreet(Player player, Property property) {
-        int amount = 1;
-        int groupSize = property.getGroupSize();
-        String color = property.getColor();
-        for ( PlayerProperty property1 : player.getProperties() ) {
-            if ( isDifferentPropertyWithSameColor(property1.property, property) ) {
-                amount += 1;
-            }
-        }
-        System.out.println("groupsize" + groupSize);
-        System.out.println("amount" + amount);
-        return amount == groupSize;
-    }
-
-    public boolean isDifferentPropertyWithSameColor(Property p1, Property p2) {
-        return !p1.getName().equals(p2.getName()) && p1.getColor().equals(p2.getColor());
     }
 
     public void rollDice(Request request){
@@ -321,7 +292,7 @@ public class MonopolyService extends ServiceAdapter {
             game.addTurn(currentTurn);
             setNextPlayer(game,player);
             checkIfRolledTwice(currentTurn,player,game);
-        }else{
+        } else {
             throw new IllegalMonopolyActionException("Not your turn!");
         }
     }
