@@ -162,4 +162,8 @@ public class ServiceAdapter implements IService {
     public void buyHouse(String gameId, String playerName, String propertyName) {
         throw new UnsupportedOperationException();
     }
+
+    public void rollDice(Request request) {
+        throw new UnsupportedOperationException();
+    }
 }

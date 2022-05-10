@@ -269,7 +269,9 @@ public class MonopolyApiBridge {
     }
 
     private void rollDice(RoutingContext ctx) {
-        throw new NotYetImplementedException("rollDice");
+        Request request = Request.from(ctx);
+        service.rollDice(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void declareBankruptcy(RoutingContext ctx) {
@@ -346,8 +348,7 @@ public class MonopolyApiBridge {
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("getBankAuctions");
-
+        throw new NotYetImplementedException("placeBidOnBankAuction");
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
