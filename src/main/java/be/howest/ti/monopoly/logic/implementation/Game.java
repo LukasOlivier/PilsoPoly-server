@@ -55,15 +55,14 @@ public class Game {
         setNumberOfPlayers(request.getNumberOfPlayersToStart());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getGamePrefix() + "-" + (size+1);
+        setId(request.getStringFromBody("prefix"), size);
     }
 
-    public void setId(String id) {
-        // todo add more characters to the list
-        if (id == null || id.contains("-")) {
+    public void setId(String id, int size) {
+        if (!Objects.equals(id, "PilsoPoly")) {
             throw new IllegalArgumentException();
         }
-        this.id = id;
+        this.id = id + "_" + (size+1);
     }
 
     public void setNumberOfPlayers(int numberOfPlayers) {
@@ -108,9 +107,9 @@ public class Game {
     }
 
     public void addPlayer(String name, String icon){
-        if (started) {
-            throw new IllegalMonopolyActionException("The game has already started");
-        }
+        //if (started) {
+            //throw new IllegalMonopolyActionException("The game has already started");
+        // }
         for (Player player : players){
             if (Objects.equals(player.getName(), name)) {
                 throw new IllegalArgumentException("There is already a player with this name!");
@@ -166,14 +165,6 @@ public class Game {
 
     public String getWinner() {
         return winner;
-    }
-
-    public JsonObject showSpecificGameInfo(){
-        return new JsonObject()
-                .put("numberOfPlayers", this.getNumberOfPlayers())
-                .put("started", this.isStarted())
-                .put("players", this.getPlayers())
-                .put("id", this.getId());
     }
 
     public void setDirectSale(String directSale) {

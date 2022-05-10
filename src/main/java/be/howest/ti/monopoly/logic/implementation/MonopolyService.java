@@ -4,7 +4,6 @@ import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
-import io.vertx.core.json.JsonObject;
 
 import java.util.*;
 
@@ -154,7 +153,7 @@ public class MonopolyService extends ServiceAdapter {
 
     public void buyProperty(Request request){
         Game game = getGameById(request.getGameId());
-        String playerName = request.getParameterValue("playerName");
+        String playerName = request.getPathParameterValue("playerName");
         Player player = game.getSpecificPlayer(playerName);
         String propertyName = request.getPropertyName();
         Tile tile = getTile(propertyName);
@@ -177,12 +176,10 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
-
     @Override
     public Game getGameById(String id) {
         return allGames.get(id);
     }
-
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -228,21 +225,21 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public void fine(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.fine();
     }
 
     @Override
     public void free(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.free();
     }
 
     @Override
     public void setBankrupt(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.setBankrupt();
         game.isEveryoneBankrupt();
     }
@@ -250,14 +247,14 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public void useComputeTax(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.setTaxSystem("COMPUTE");
     }
 
     @Override
     public void useEstimateTax(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.setTaxSystem("ESTIMATE");
     }
 

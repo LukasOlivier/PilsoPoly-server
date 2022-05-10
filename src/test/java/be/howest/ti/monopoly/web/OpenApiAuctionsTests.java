@@ -148,7 +148,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 new JsonObject()
                         .put("bidder", "Bob")
                         .put("amount", 100),
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 
