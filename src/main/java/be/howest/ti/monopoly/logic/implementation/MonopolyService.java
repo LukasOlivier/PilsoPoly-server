@@ -283,16 +283,24 @@ public class MonopolyService extends ServiceAdapter {
         if (Objects.equals(game.getCurrentPlayer(), player.getName())){
             Turn currentTurn = player.rollDice(getTiles());
             game.addTurn(currentTurn);
-            int indexOfNextPlayer = game.getPlayers().indexOf(player) + 1;
-            if (indexOfNextPlayer >= game.getPlayers().size()){
-                indexOfNextPlayer = 0;
-            }
-            game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
-            if (Objects.equals(currentTurn.getRoll().get(0), currentTurn.getRoll().get(1)) && !Objects.equals(player.previousTile.getName(), "Jail")){
-                game.setCurrentPlayer(player.getName());
-            }
+            setNextPlayer(game,player);
+            checkIfRolledTwice(currentTurn,player,game);
         }else{
             throw new IllegalMonopolyActionException("Not your turn!");
+        }
+    }
+
+    public void setNextPlayer(Game game, Player currentPlayer){
+        int indexOfNextPlayer = game.getPlayers().indexOf(currentPlayer) + 1;
+        if (indexOfNextPlayer >= game.getPlayers().size()){
+            indexOfNextPlayer = 0;
+        }
+        game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
+    }
+
+    public void checkIfRolledTwice(Turn currentTurn, Player currentPlayer, Game game){
+        if (Objects.equals(currentTurn.getRoll().get(0), currentTurn.getRoll().get(1)) && !Objects.equals(currentPlayer.previousTile.getType(), "Jail")){
+            game.setCurrentPlayer(currentPlayer.getName());
         }
     }
 

@@ -21,6 +21,8 @@ public class Player {
     private boolean firstThrow = true;
     private int turnsInJail = 0;
 
+    private int amountOfDoubleThrows = 0;
+
     public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
         this.name = name;
         this.currentTile = currentTile;
@@ -149,8 +151,14 @@ public class Player {
 
 
     public Turn rollDice(List<Tile> tiles) {
+        System.out.println(jailed);
+
+        int diceOne = 3;
+        int diceTwo = 3;
+        /*
         int diceOne = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int diceTwo = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+         */
         if (!isJailed(diceOne,diceTwo)){
             int currentPosition = (currentTile.getPosition() + (diceOne + diceTwo)) % 40;
             currentTile = Tile.getTileFromPosition(tiles, currentPosition);
@@ -198,5 +206,21 @@ public class Player {
             default:
                 // code block
         }
+    }
+
+    public void setJailed(boolean jailed) {
+        this.jailed = jailed;
+    }
+
+    public void addDoubleThrow(){
+        amountOfDoubleThrows++;
+    }
+
+    public void resetDoubleThrows(){
+        amountOfDoubleThrows = 0;
+    }
+
+    public int getAmountOfDoubleThrows(){
+        return amountOfDoubleThrows;
     }
 }
