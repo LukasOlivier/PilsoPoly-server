@@ -221,8 +221,9 @@ public class MonopolyService extends ServiceAdapter {
         Player debtPlayer = game.getSpecificPlayer(request.getParameterValue("debtorName"));
         Tile tile = getTile(request.getPropertyName());
         if (findBoughtProperty(tile.getName(), debtPlayer.getName(), game) != null){
+            PlayerProperty playerProperty = findBoughtProperty(tile.getName(), debtPlayer.getName(), game);
             Property tileToProperty = (Property) tile;
-            debtPlayer.addMoney(player.payRent(findBoughtProperty(tile.getName(), player.getName(), game), tile,tileToProperty, game ));
+            debtPlayer.addMoney(player.payRent(playerProperty, tile,tileToProperty, game ));
             return player;
         }else {
             throw new IllegalArgumentException("the tile is not you're property");
@@ -233,7 +234,7 @@ public class MonopolyService extends ServiceAdapter {
     public PlayerProperty findBoughtProperty(String name, String playerName, Game game) {
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
-                if (playerProperty.getProperty() == name && player.getName() == playerName) {
+                if (Objects.equals(playerProperty.getProperty(), name) && Objects.equals(player.getName(), playerName)) {
                     return playerProperty;
                 }
             }
@@ -244,7 +245,7 @@ public class MonopolyService extends ServiceAdapter {
     public PlayerProperty getPlayerProperty(String name, Game game) {
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
-                if (playerProperty.getProperty() == name) {
+                if (Objects.equals(playerProperty.getProperty(), name)) {
                     return playerProperty;
                 }
             }
