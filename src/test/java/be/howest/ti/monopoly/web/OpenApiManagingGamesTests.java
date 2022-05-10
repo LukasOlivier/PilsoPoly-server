@@ -65,7 +65,6 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
     @Test
     void createGameWithEmptyBody(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
-            @Override
             public Game createGame(Request request) {
                 throw new IllegalArgumentException();
             }
@@ -82,9 +81,9 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
     @Test
     void createGame(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
-            @Override
-            public Game createGame(Request request) {
-                return  new Game(8, "PilsoPoly", 8);
+
+            public void createGame() {
+
             }
         });
         post(

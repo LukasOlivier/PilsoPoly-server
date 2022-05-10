@@ -58,9 +58,6 @@ public interface IService {
 
     void useEstimateTax(Request request);
 
-
-    Game createGame(Request request);
-
     Map<String, Game> getGames();
 
 }
