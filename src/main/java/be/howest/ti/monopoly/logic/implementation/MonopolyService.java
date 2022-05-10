@@ -220,7 +220,7 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
         Player debtPlayer = game.getSpecificPlayer(request.getParameterValue("debtorName"));
         Tile tile = getTile(request.getPropertyName());
-        if (findBoughtProperty(tile.getName(), player.getName(), game) != null){
+        if (findBoughtProperty(tile.getName(), debtPlayer.getName(), game) != null){
             Property tileToProperty = (Property) tile;
             debtPlayer.addMoney(player.payRent(findBoughtProperty(tile.getName(), player.getName(), game), tile,tileToProperty, game ));
             return player;
