@@ -151,7 +151,6 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
-
     public void buyProperty(Request request){
         Game game = getGameById(request.getGameId());
         String playerName = request.getParameterValue("playerName");
@@ -177,12 +176,10 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
-
     @Override
     public Game getGameById(String id) {
         return allGames.get(id);
     }
-
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -268,5 +265,16 @@ public class MonopolyService extends ServiceAdapter {
             return createdGame;
         }
         throw new InvalidRequestException("failed to create game!");
+    }
+
+    @Override
+    public void buyHouse(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        for ( PlayerProperty property : player.getProperties() ) {
+            if ( property.getProperty().equals(propertyName) ) {
+                property.addHouse();
+            }
+        }
     }
 }
