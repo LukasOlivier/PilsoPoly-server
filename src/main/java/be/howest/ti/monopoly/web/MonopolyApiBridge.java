@@ -343,8 +343,7 @@ public class MonopolyApiBridge {
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("getBankAuctions");
-
+        throw new NotYetImplementedException("placeBidOnBankAuction");
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {

@@ -168,7 +168,5 @@ public class TestService implements IService {
     public void buyProperty(Request request) {
          delegate.buyProperty(request);
     }
-
-
 }
 

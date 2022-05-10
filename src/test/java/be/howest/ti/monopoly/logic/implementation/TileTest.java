@@ -8,7 +8,7 @@ class TileTest {
 
     @Test
     public void testGoTile() {
-        Tile goTile = new Tile("Go", 0, "Go");
+        Tile goTile = new Tile("Go", 0, "Go", "Passes go", "go");
         assertEquals("Go", goTile.getName());
         assertEquals(0, goTile.getPosition());
     }
