@@ -1,11 +1,15 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-public class Move {
-    private String tile;
-    private String description;
-    private String actionType;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 
-    public Move(String tile,String description, String actionType) {
+import java.util.Objects;
+
+public class Move {
+    private final String tile;
+    private final String description;
+    private final String actionType;
+
+    public Move(String tile, String description, String actionType) {
         this.tile = tile;
         this.description = description;
         this.actionType = actionType;
@@ -21,5 +25,35 @@ public class Move {
 
     public String getActionType() {
         return actionType;
+    }
+
+    public static Move makeMove(Player player, int placesToMove) {
+        if (!player.isJailed()){
+            int endOfBoardPosition = 40;
+            int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % endOfBoardPosition;
+            player.currentTile = Tile.getTileFromPosition(Game.getGameTiles(), currentPosition);
+            Tile.takeTileAction(player.currentTile, player);
+            checkIfPassedGo(player);
+        }
+        return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());
+    }
+
+
+    private static void checkIfPassedGo(Player player) {
+        Tile goTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
+        int rewardForPassingGo = 200;
+        if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.previousTile, goTile)))) {
+            player.addMoney(rewardForPassingGo);
+            System.out.println("PASSED GO");
+        }
+    }
+
+    private static boolean loopedTheBoard(Player player) {
+        int positionOfFirstTileOfBoard = 1;
+        return player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard;
+    }
+
+    private static boolean passGoWithoutReward(Player player) {
+        return player.getFirstThrow() || player.isJailed();
     }
 }

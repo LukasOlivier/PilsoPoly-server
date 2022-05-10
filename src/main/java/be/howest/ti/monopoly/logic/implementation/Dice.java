@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Dice {
-    static int minvalue = 1;
-    static int maxvalue = 6;
+    static int minvalue = 2;
+    static int maxvalue = 2;
     static int amountOfDice = 2;
 
 
@@ -33,10 +33,6 @@ public class Dice {
     }
 
 
-    private void checkIfPassedGo() {
-        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go")))) {
-            addMoney(200);
-        }
-    }
+
 
 }
