@@ -32,4 +32,20 @@ public class PlayerProperty {
     public int getHotelCount() {
         return hotelCount;
     }
+
+    public void addHouse() {
+        if ( getHouseCount() < 4 ) {
+            houseCount += 1;
+        } else {
+            throw new IllegalStateException("Can't have more than 4 houses");
+        }
+    }
+
+    public void removeHouse() {
+        if ( getHouseCount() > 0 ) {
+            houseCount -= 1;
+        } else {
+            throw new IllegalStateException("Can not have less than 0 houses");
+        }
+    }
 }
