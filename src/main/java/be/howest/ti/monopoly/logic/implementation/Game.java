@@ -13,7 +13,6 @@ import java.util.Objects;
 
 @JsonIgnoreProperties()
 public class Game {
-    // TODO : available huizen zijn altijd hetzelfde bij aammaken van een game.
     private int numberOfPlayers;
     private boolean started;
     private List<Player> players;
@@ -28,26 +27,6 @@ public class Game {
     private String currentPlayer;
     private String winner;
 
-    // This is to create a dummy game
-    public Game(){
-        this.numberOfPlayers = 4;
-        this.id = "Dummy";
-        this.players = new ArrayList<>();
-        this.started = true;
-        this.directSale = null;
-        this.availableHouses = 31;
-        this.availableHotels = 12;
-        this.turns = new ArrayList<>( );
-        this.canRoll = true;
-        this.ended = false;
-        this.currentPlayer = "Sibren";
-        this.winner = null;
-        addPlayer("Sibren", null);
-        addPlayer("Niels", null);
-        addPlayer("Lukas", null);
-        addPlayer("Robin", null);
-    }
-    // we will leave this
     public Game(Request request, int size) {
         if (request.getRequestParameters().body() == null) {
             throw new IllegalArgumentException();
@@ -59,7 +38,6 @@ public class Game {
     }
 
     public void setId(String id) {
-        // todo add more characters to the list
         if (id == null || id.contains("-")) {
             throw new IllegalArgumentException();
         }
@@ -180,7 +158,6 @@ public class Game {
     public void setAvailableHotels(int availableHotels) {
         this.availableHotels = availableHotels;
     }
-    // todo make this add turns
     public void setTurns(List<Turn> turns) {
         this.turns = turns;
     }

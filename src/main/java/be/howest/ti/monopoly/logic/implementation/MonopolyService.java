@@ -42,7 +42,6 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public List<Tile> getTiles() {
         return List.of(
-                //String name, int position, String type
                 new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"),
                 new Street("Mediterranean", 1, "street", 2, "PURPLE", 10, 30, 90, 160, 250, 50, 2, 30, 60),
                 new Tile("Community Chest I", 2, "community chest", "Draw a card", "community"),

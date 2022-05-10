@@ -218,7 +218,6 @@ public class Player {
                 }
                 break;
             default:
-                // code block
         }
     }
 

@@ -284,7 +284,6 @@ public class MonopolyApiBridge {
         }
     }
 
-    //http://localhost:8080/games/Dummy/players/Sibren/properties/Oriental
     private void buyProperty(RoutingContext ctx) {
         try{
             Request request =  Request.from(ctx);
