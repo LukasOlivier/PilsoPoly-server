@@ -240,7 +240,6 @@ public class MonopolyApiBridge {
         } catch (IllegalArgumentException exceptions) {
             throw new IllegalArgumentException(exceptions);
         }
-
     }
 
     private void getGame(RoutingContext ctx) {
