@@ -3,9 +3,9 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+import be.howest.ti.monopoly.logic.implementation.Tiles.*;
 import be.howest.ti.monopoly.web.Request;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
-import io.vertx.core.json.JsonObject;
 
 import java.util.*;
 
@@ -103,11 +103,6 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public Map<String, Game> getAllGames() {
         return allGames;
-    }
-
-    @Override
-    public Game getDummyGame() {
-        return new Game();
     }
 
     @Override

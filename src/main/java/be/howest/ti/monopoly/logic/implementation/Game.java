@@ -21,7 +21,7 @@ public class Game {
     private String directSale;
     private int availableHouses;
     private int availableHotels;
-    private List<Turn> turns = new LinkedList<>();
+    private List<Turn> turns;
     private boolean canRoll;
     private boolean ended;
     private String currentPlayer;
@@ -34,8 +34,10 @@ public class Game {
         setNumberOfPlayers(request.getNumberOfPlayersToStart());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getGamePrefix() + "-" + (size+1);
+        this.id = request.getGamePrefix() + "-" + (size + 1);
+        this.turns = new LinkedList<>();
     }
+
 
     public void setId(String id) {
         if (id == null || id.contains("-")) {
@@ -57,8 +59,8 @@ public class Game {
     }
 
     public void placeBidOnPlayerAuction(String bidder, int amount) {
-            auction.setHighest_bid(amount);
-            auction.setLast_bidder(bidder);
+        auction.setHighest_bid(amount);
+        auction.setLast_bidder(bidder);
     }
 
     public Auction getAuction() {
@@ -85,8 +87,8 @@ public class Game {
         this.started = true;
     }
 
-    public void addPlayer(String name, String icon){
-        for (Player player : players){
+    public void addPlayer(String name, String icon) {
+        for (Player player : players) {
             if (Objects.equals(player.getName(), name)) {
                 throw new IllegalArgumentException("There is already a player with this name!");
             }
@@ -94,7 +96,7 @@ public class Game {
         players.add(new Player(name, icon));
     }
 
-    public void addTurn(Turn turn){
+    public void addTurn(Turn turn) {
         turns.add(turn);
     }
 
@@ -126,8 +128,8 @@ public class Game {
         return currentPlayer;
     }
 
-    public Player getSpecificPlayer(String name){
-        for (Player player : players){
+    public Player getSpecificPlayer(String name) {
+        for (Player player : players) {
             if (Objects.equals(player.getName(), name)) {
                 return player;
             }
@@ -139,7 +141,7 @@ public class Game {
         return winner;
     }
 
-    public JsonObject showSpecificGameInfo(){
+    public JsonObject showSpecificGameInfo() {
         return new JsonObject()
                 .put("numberOfPlayers", this.getNumberOfPlayers())
                 .put("started", this.isStarted())
@@ -158,6 +160,7 @@ public class Game {
     public void setAvailableHotels(int availableHotels) {
         this.availableHotels = availableHotels;
     }
+
     public void setTurns(List<Turn> turns) {
         this.turns = turns;
     }
@@ -178,17 +181,17 @@ public class Game {
         this.winner = winner;
     }
 
-    public void isEveryoneBankrupt(){
+    public void isEveryoneBankrupt() {
         int bankruptCounter = 0;
         String possibleWinner = null;
-        for(Player player : getPlayers()){
-            if (player.isBankrupt()){
+        for (Player player : getPlayers()) {
+            if (player.isBankrupt()) {
                 bankruptCounter++;
-            }else{
+            } else {
                 possibleWinner = player.getName();
             }
         }
-        if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null){
+        if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null) {
             this.winner = possibleWinner;
         }
     }

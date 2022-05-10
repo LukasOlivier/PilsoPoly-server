@@ -1,5 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
+
 public class PlayerProperty {
     public final Property property;
     private boolean mortgage;

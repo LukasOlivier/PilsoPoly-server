@@ -1,5 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -105,10 +108,6 @@ public class Player {
         this.currentTile = currentTile;
     }
 
-    private void addMoney(int amount) {
-        money += amount;
-    }
-
     private int calculateTax() {
         return (int) Math.round(0.1 * (getMoney() + getTotalTilesCost() + getTotalBuildingsCost()));
     }
@@ -131,12 +130,6 @@ public class Player {
         return totalCost;
     }
 
-    private void checkIfPassedGo() {
-        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go")))) {
-            addMoney(200);
-        }
-    }
-
     public void free() {
         if (this.getOutOfJailFreeCards >= 1) {
             this.getOutOfJailFreeCards--;
@@ -146,18 +139,19 @@ public class Player {
         }
     }
 
-
     public void setTaxSystem(String preferredTaxSystem) {
         this.taxSystem = preferredTaxSystem;
     }
 
 
     public Turn rollDice(List<Tile> tiles) {
+        List<Integer> diceRollResult = Dice.rollDice();
+        if (Dice.checkIfRolledDouble(diceRollResult)){
+            amountOfDoubleThrows++;
+        }else {
+            resetDoubleThrows();
+        }
 
-        int diceOne = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        int diceTwo = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-
-        checkIfRolledTwice(diceOne, diceTwo);
         if (!isJailed(diceOne, diceTwo)) {
             int currentPosition = (currentTile.getPosition() + (diceOne + diceTwo)) % 40;
             currentTile = Tile.getTileFromPosition(tiles, currentPosition);
@@ -169,13 +163,6 @@ public class Player {
         return new Turn(getName(), "DEFAULT", new Move(currentTile.getName(), currentTile.getDescription(), currentTile.getActionType()), diceOne, diceTwo);
     }
 
-    public void checkIfRolledTwice(int diceOne, int diceTwo) {
-        if (diceOne == diceTwo) {
-            addDoubleThrow();
-        } else {
-            resetDoubleThrows();
-        }
-    }
 
     private boolean isJailed(int diceOne, int diceTwo) {
         if (!jailed) {

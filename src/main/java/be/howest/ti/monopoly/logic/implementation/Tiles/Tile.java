@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation;
+package be.howest.ti.monopoly.logic.implementation.Tiles;
 
 import java.util.List;
 import java.util.Objects;
