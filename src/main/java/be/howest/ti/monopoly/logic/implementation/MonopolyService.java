@@ -82,7 +82,7 @@ public class MonopolyService extends ServiceAdapter {
                 new Tile("Chance III", 36, "chance","Draw a card", "chance"),
                 new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350),
                 new Tile("Luxury Tax", 38, "Luxury Tax","should pay rent", "rent"),
-                new Street("Boardwalk", 39, "street", 3, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400)
+                new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400)
         );
     }
 
@@ -277,11 +277,40 @@ public class MonopolyService extends ServiceAdapter {
     public void buyHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        for ( PlayerProperty property : player.getProperties() ) {
-            if ( property.getProperty().equals(propertyName) ) {
-                property.addHouse();
+        for ( PlayerProperty property1 : player.getProperties() ) {
+            if ( property1.getProperty().equals(propertyName) && playerOwnsWholeStreet(player, property1.property) && houseCountIsSame(player, property1) ) {
+                System.out.println(property1.property.getName());
+                    property1.addHouse();
             }
         }
+    }
+
+    // TODO : FIX THIS !!!
+    private boolean houseCountIsSame(Player player, PlayerProperty property) {
+        for ( PlayerProperty property1 : player.getProperties() ) {
+            if ( property.getHouseCount() != property1.getHouseCount() || property.getHouseCount() - 1 != property1.getHouseCount()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean playerOwnsWholeStreet(Player player, Property property) {
+        int amount = 1;
+        int groupSize = property.getGroupSize();
+        String color = property.getColor();
+        for ( PlayerProperty property1 : player.getProperties() ) {
+            if ( isDifferentPropertyWithSameColor(property1.property, property) ) {
+                amount += 1;
+            }
+        }
+        System.out.println("groupsize" + groupSize);
+        System.out.println("amount" + amount);
+        return amount == groupSize;
+    }
+
+    public boolean isDifferentPropertyWithSameColor(Property p1, Property p2) {
+        return !p1.getName().equals(p2.getName()) && p1.getColor().equals(p2.getColor());
     }
 
     public void rollDice(Request request){
