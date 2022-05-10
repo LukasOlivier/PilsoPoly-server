@@ -4,7 +4,6 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.vertx.core.json.JsonObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,7 +12,6 @@ import java.util.Objects;
 
 @JsonIgnoreProperties()
 public class Game {
-    // TODO : available huizen zijn altijd hetzelfde bij aammaken van een game.
     private int numberOfPlayers;
     private boolean started;
     private List<Player> players;
@@ -28,41 +26,19 @@ public class Game {
     private String currentPlayer;
     private String winner;
 
-    // This is to create a dummy game
-    public Game(){
-        this.numberOfPlayers = 4;
-        this.id = "Dummy";
-        this.players = new ArrayList<>();
-        this.started = true;
-        this.directSale = null;
-        this.availableHouses = 31;
-        this.availableHotels = 12;
-        this.turns = new ArrayList<>( );
-        this.canRoll = true;
-        this.ended = false;
-        this.currentPlayer = "Sibren";
-        this.winner = null;
-        addPlayer("Sibren", null);
-        addPlayer("Niels", null);
-        addPlayer("Lukas", null);
-        addPlayer("Robin", null);
-    }
-    // we will leave this
-    public Game(Request request, int size) {
-        if (request.getRequestParameters().body() == null) {
-            throw new IllegalArgumentException();
-        }
-        setNumberOfPlayers(request.getNumberOfPlayersToStart());
+    public Game(int numberOfPlayers, String prefix, int size) {
+        setNumberOfPlayers(numberOfPlayers);
         this.started = false;
         this.players = new LinkedList<>();
-        setId(request.getStringFromBody("prefix"), size);
+        setId(prefix, size);
     }
 
     public void setId(String id, int size) {
+        int increasePrefixCount = 1;
         if (!Objects.equals(id, "PilsoPoly")) {
             throw new IllegalArgumentException();
         }
-        this.id = id + "_" + (size+1);
+        this.id = id + "_" + (size+increasePrefixCount);
     }
 
     public void setNumberOfPlayers(int numberOfPlayers) {

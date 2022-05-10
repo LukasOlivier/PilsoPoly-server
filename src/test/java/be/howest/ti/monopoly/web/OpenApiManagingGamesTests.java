@@ -84,7 +84,7 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
             @Override
             public Game createGame(Request request) {
-                return new Game();
+                return  new Game(8, "PilsoPoly", 8);
             }
         });
         post(
@@ -92,8 +92,8 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
                 "/games",
                 null,
                 new JsonObject()
-                        .put("prefix", "Prefix123")
-                        .put("numberOfPlayers", 10),
+                        .put("prefix", "PilsoPoly")
+                        .put("numberOfPlayers", 8),
                 this::assertOkResponse
         );
     }

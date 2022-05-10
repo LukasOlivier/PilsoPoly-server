@@ -106,7 +106,8 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public Game getDummyGame() {
-        return new Game();
+        // Do we keep this?
+        return new Game(4, "PilsoPoly", 99);
     }
 
     @Override
@@ -256,14 +257,5 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.setTaxSystem("ESTIMATE");
-    }
-
-    public Game createGame(Request request){
-        if (request != null){
-            Game createdGame = new Game(request, getGameMapSize());
-            addGame(createdGame);
-            return createdGame;
-        }
-        throw new InvalidRequestException("failed to create game!");
     }
 }

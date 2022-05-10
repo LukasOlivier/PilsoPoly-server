@@ -12,7 +12,8 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         service.setDelegate(new ServiceAdapter(){
             @Override
             public Game getGameById(String gameId){
-                return new Game();
+                // i dont know aaaaaaaaaaaah
+                return  new Game(4, "PilsoPoly", 5);
             }
         });
         get(
@@ -38,7 +39,7 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
     void getDummyGame(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
             public Game getDummyGame(){
-                return new Game();
+                return new Game(4, "PilsoPoly", 5);
 
             }
 
