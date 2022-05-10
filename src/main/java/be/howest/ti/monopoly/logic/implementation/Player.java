@@ -35,7 +35,7 @@ public class Player {
     }
 
     public Player(String name, String icon) {
-        this(name, new Tile("Go", 0, "Go","passes 'GO!' and receives 200 for it", "go"), false, 1500, false, 0, 0, icon);
+        this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), false, 1500, false, 0, 0, icon);
     }
 
 
@@ -88,7 +88,9 @@ public class Player {
     }
 
 
-    public void removeMoney(int amount){money -= amount;}
+    public void removeMoney(int amount) {
+        money -= amount;
+    }
 
     public void fine() {
         if (this.money >= 50) {
@@ -130,7 +132,7 @@ public class Player {
     }
 
     private void checkIfPassedGo() {
-        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go","passes 'GO!' and receives 200 for it", "go")))){
+        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go")))) {
             addMoney(200);
         }
     }
@@ -151,15 +153,12 @@ public class Player {
 
 
     public Turn rollDice(List<Tile> tiles) {
-        System.out.println(jailed);
 
-        int diceOne = 3;
-        int diceTwo = 3;
-        /*
         int diceOne = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int diceTwo = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-         */
-        if (!isJailed(diceOne,diceTwo)){
+
+        checkIfRolledTwice(diceOne, diceTwo);
+        if (!isJailed(diceOne, diceTwo)) {
             int currentPosition = (currentTile.getPosition() + (diceOne + diceTwo)) % 40;
             currentTile = Tile.getTileFromPosition(tiles, currentPosition);
             takeTileAction(currentTile);
@@ -167,24 +166,39 @@ public class Player {
         }
         previousTile = currentTile;
         firstThrow = false;
-        return new Turn(getName(),"DEFAULT",new Move(currentTile.getName(),currentTile.getDescription(), currentTile.getActionType()),diceOne,diceTwo);
+        return new Turn(getName(), "DEFAULT", new Move(currentTile.getName(), currentTile.getDescription(), currentTile.getActionType()), diceOne, diceTwo);
     }
 
-    private boolean isJailed(int diceOne, int diceTwo){
-        if (!jailed){
-            return false;
+    public void checkIfRolledTwice(int diceOne, int diceTwo) {
+        if (diceOne == diceTwo) {
+            addDoubleThrow();
+        } else {
+            resetDoubleThrows();
         }
-        if (diceOne == diceTwo){
-            jailed = false;
+    }
+
+    private boolean isJailed(int diceOne, int diceTwo) {
+        if (!jailed) {
+            if (getAmountOfDoubleThrows() >= 3) {
+                resetDoubleThrows();
+                jailed = true;
+                setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
+                return true;
+            }
             return false;
+        } else {
+            if (diceOne == diceTwo) {
+                jailed = false;
+                return false;
+            }
+            if (turnsInJail >= 3) {
+                jailed = false;
+                removeMoney(50);
+                return false;
+            }
+            turnsInJail++;
+            return true;
         }
-        if(turnsInJail >= 3){
-            jailed = false;
-            removeMoney(50);
-            return false;
-        }
-        turnsInJail++;
-        return true;
     }
 
     private void takeTileAction(Tile tile) {
@@ -212,15 +226,15 @@ public class Player {
         this.jailed = jailed;
     }
 
-    public void addDoubleThrow(){
+    public void addDoubleThrow() {
         amountOfDoubleThrows++;
     }
 
-    public void resetDoubleThrows(){
+    public void resetDoubleThrows() {
         amountOfDoubleThrows = 0;
     }
 
-    public int getAmountOfDoubleThrows(){
+    private int getAmountOfDoubleThrows() {
         return amountOfDoubleThrows;
     }
 }
