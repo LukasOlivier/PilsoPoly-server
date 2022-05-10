@@ -7,7 +7,6 @@ import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.vertx.core.json.JsonObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,23 +28,20 @@ public class Game {
     private String currentPlayer;
     private String winner;
 
-    public Game(Request request, int size) {
-        if (request.getRequestParameters().body() == null) {
-            throw new IllegalArgumentException();
-        }
-        setNumberOfPlayers(request.getNumberOfPlayersToStart());
+
+    public Game(int numberOfPlayers, String prefix, int size) {
+        setNumberOfPlayers(numberOfPlayers);
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getGamePrefix() + "-" + (size + 1);
-        this.turns = new LinkedList<>();
+        setId(prefix, size);
     }
 
-
-    public void setId(String id) {
-        if (id == null || id.contains("-")) {
+    public void setId(String id, int size) {
+        int increasePrefixCount = 1;
+        if (!Objects.equals(id, "PilsoPoly")) {
             throw new IllegalArgumentException();
         }
-        this.id = id;
+        this.id = id + "_" + (size+increasePrefixCount);
     }
 
     public void setNumberOfPlayers(int numberOfPlayers) {
@@ -89,13 +85,20 @@ public class Game {
         this.started = true;
     }
 
-    public void addPlayer(String name, String icon) {
-        for (Player player : players) {
+
+    public void addPlayer(String name, String icon){
+        //if (started) {
+            //throw new IllegalMonopolyActionException("The game has already started");
+        // }
+        for (Player player : players){
             if (Objects.equals(player.getName(), name)) {
                 throw new IllegalArgumentException("There is already a player with this name!");
             }
         }
         players.add(new Player(name, icon));
+        if (players.size() == numberOfPlayers) {
+            this.started = true;
+        }
     }
 
     public void addTurn(Turn turn) {
@@ -141,14 +144,6 @@ public class Game {
 
     public String getWinner() {
         return winner;
-    }
-
-    public JsonObject showSpecificGameInfo() {
-        return new JsonObject()
-                .put("numberOfPlayers", this.getNumberOfPlayers())
-                .put("started", this.isStarted())
-                .put("players", this.getPlayers())
-                .put("id", this.getId());
     }
 
     public void setDirectSale(String directSale) {

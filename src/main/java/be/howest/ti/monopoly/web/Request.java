@@ -73,9 +73,7 @@ public class Request {
 
     public String getTileName() {
         return params.pathParameter("tileId").getString();
-
     }
-
 
     public String getGameId() {
         return params.pathParameter("gameId").getString();
@@ -109,9 +107,15 @@ public class Request {
         return params.body().getJsonObject().getString(key);
     }
 
-    public String getParameterValue(String key){
+    public int getIntFromBody(String key) {
+        return params.body().getJsonObject().getInteger(key);
+    }
+
+    public String getPathParameterValue(String key){
         return params.pathParameter(key).getString();
     }
+
+
 
 
 }

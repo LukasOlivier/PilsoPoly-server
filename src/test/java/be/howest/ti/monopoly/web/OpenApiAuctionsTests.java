@@ -80,7 +80,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
         service.setDelegate(new ServiceAdapter(){
             @Override
             public Auction getPlayerAuctions(Request request) {
-                return new Game().getAuction();
+                return new Game(4, "PilsoPoly", 5).getAuction();
             }
         });
 
@@ -148,7 +148,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 new JsonObject()
                         .put("bidder", "Bob")
                         .put("amount", 100),
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 

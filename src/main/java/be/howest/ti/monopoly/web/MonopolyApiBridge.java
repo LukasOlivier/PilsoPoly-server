@@ -7,9 +7,11 @@ import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
+import be.howest.ti.monopoly.web.tokens.InvalidTokenException;
 import be.howest.ti.monopoly.web.tokens.MonopolyUser;
 import be.howest.ti.monopoly.web.tokens.PlainTextTokens;
 import be.howest.ti.monopoly.web.tokens.TokenManager;
@@ -23,6 +25,7 @@ import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.validation.RequestParameter;
 
+import javax.naming.AuthenticationException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -161,7 +164,12 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game createdGame = service.createGame(request);
+            if (request.getRequestParameters() == null){
+                throw new InvalidRequestException("empty body");
+            }
+            int numberOfPlayers =  request.getIntFromBody("numberOfPlayers");
+            String gameId = request.getStringFromBody("gameId");
+            Game createdGame = new Game(numberOfPlayers, gameId, service.getGameMapSize());
             SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
             Response.sendJsonResponse(ctx, 200, specificGameInfo);
         } catch (IllegalArgumentException e) {
@@ -221,28 +229,45 @@ public class MonopolyApiBridge {
         return filteredMap;
     }
 
-
     private void joinGame(RoutingContext ctx) {
-        Request request = Request.from(ctx);
-        String playerName = request.getStringFromBody("playerName");
-        String icon = request.getStringFromBody("icon");
-        String gameId = request.getGameId();
-        service.joinGame(gameId, playerName, icon);
-        String playerToken = tokenManager.createToken(
-                new MonopolyUser(gameId, playerName)
-        );
-        Response.sendJsonResponse(ctx, 200, new JsonObject()
-                .put("token", playerToken)
-        );
+        try {
+            Request request = Request.from(ctx);
+            String playerName = request.getStringFromBody("playerName");
+            String icon = request.getStringFromBody("icon");
+            String gameId = request.getPathParameterValue("gameId");
+            service.joinGame(gameId, playerName, icon);
+            String playerToken = tokenManager.createToken(
+                    new MonopolyUser(gameId, playerName)
+            );
+            Response.sendJsonResponse(ctx, 200, new JsonObject()
+                    .put("token", playerToken)
+            );
+        } catch (IllegalArgumentException exceptions) {
+            throw new IllegalArgumentException(exceptions);
+        }
     }
-
-
 
     private void getGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        try {
+            authenticateGetGame(request);
+        } catch (InvalidTokenException exception) {
+            throw new InvalidTokenException();
+        }
         Response.sendJsonResponse(ctx, 200, service.getGameById(request.getGameId()));
     }
 
+    private void authenticateGetGame(Request request){
+        String gameId = request.getPathParameterValue("gameId");
+        Game game = service.getGameById(gameId);
+        List<Player> players = game.getPlayers();
+        for(Player player : players){
+            if (request.isAuthorized(gameId, player.getName())) {
+                return;
+            }
+        }
+        throw new InvalidTokenException();
+    }
 
     private void getDummyGame(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, service.getDummyGame());
@@ -287,10 +312,15 @@ public class MonopolyApiBridge {
     private void buyProperty(RoutingContext ctx) {
         try{
             Request request =  Request.from(ctx);
+            if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
+                throw new AuthenticationException();
+            }
             service.buyProperty(request);
             Response.sendOkResponse(ctx);
         }catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to buy property");
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException("failed to authenticate");
         }
     }
     private void dontBuyProperty(RoutingContext ctx) {
@@ -327,7 +357,15 @@ public class MonopolyApiBridge {
 
     private void getOutOfJailFine(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        service.fine(request);
+        try {
+            if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
+                throw new AuthenticationException();
+            }
+            // All your code that has something to do with this function
+            service.fine(request);
+        } catch (AuthenticationException e) {
+            throw new InvalidTokenException();
+        }
         Response.sendOkResponse(ctx);
     }
 
@@ -393,6 +431,7 @@ public class MonopolyApiBridge {
 
         Response.sendFailure(ctx, code, quote);
     }
+
 
     private CorsHandler createCorsHandler() {
         return CorsHandler.create(".*.")

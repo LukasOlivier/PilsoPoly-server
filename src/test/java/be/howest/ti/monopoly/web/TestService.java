@@ -154,11 +154,6 @@ public class TestService implements IService {
     }
 
     @Override
-    public Game createGame(Request request) {
-        return delegate.createGame(request);
-    }
-
-    @Override
     public void joinGame(String gameId, String playerName, String icon) {
         delegate.joinGame(gameId, playerName, icon);
     }

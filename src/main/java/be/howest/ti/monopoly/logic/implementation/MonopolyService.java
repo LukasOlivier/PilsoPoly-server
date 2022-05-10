@@ -65,6 +65,12 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
+    public Game getDummyGame() {
+        // Do we keep this?
+        return new Game(4, "PilsoPoly", 99);
+    }
+
+    @Override
     public List<String> getChanceCards() {
         return List.of(
                 "Advance to Boardwalk",
@@ -108,7 +114,7 @@ public class MonopolyService extends ServiceAdapter {
 
     public void buyProperty(Request request) {
         Game game = getGameById(request.getGameId());
-        String playerName = request.getParameterValue("playerName");
+        String playerName = request.getPathParameterValue("playerName");
         Player player = game.getSpecificPlayer(playerName);
         String propertyName = request.getPropertyName();
         Tile tile = getTile(propertyName);
@@ -131,12 +137,10 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
-
     @Override
     public Game getGameById(String id) {
         return allGames.get(id);
     }
-
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -185,21 +189,21 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public void fine(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.fine();
     }
 
     @Override
     public void free(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.free();
     }
 
     @Override
     public void setBankrupt(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.setBankrupt();
         game.isEveryoneBankrupt();
     }
@@ -207,31 +211,22 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public void useComputeTax(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.setTaxSystem("COMPUTE");
     }
 
     @Override
     public void useEstimateTax(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         player.setTaxSystem("ESTIMATE");
     }
 
-    @Override
-    public Game createGame(Request request) {
-        if (request != null) {
-            Game createdGame = new Game(request, getGameMapSize());
-            addGame(createdGame);
-            return createdGame;
-        }
-        throw new InvalidRequestException("failed to create game!");
-    }
 
     @Override
     public void rollDice(Request request) {
         Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         if (Objects.equals(game.getCurrentPlayer(), player.getName())) {
             player.previousTile = player.currentTile;
             List<Integer> diceRollResult = Dice.rollDice();

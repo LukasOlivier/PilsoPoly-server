@@ -143,12 +143,8 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
-    public void useEstimateTax(Request request) {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
-    public Game createGame(Request request) {
+    public void useEstimateTax(Request request) {
         throw new UnsupportedOperationException();
     }
 
