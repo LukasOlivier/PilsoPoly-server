@@ -7,9 +7,10 @@ import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
+import java.util.Map;
 
 
-public  class ServiceAdapter implements IService {
+public class ServiceAdapter implements IService {
 
     @Override
     public String getVersion() {
@@ -42,7 +43,17 @@ public  class ServiceAdapter implements IService {
     }
 
     @Override
-    public List<JsonObject> getAllGames() {
+    public Map<String, Game> getAllGames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<JsonObject> mapToList(Map<String, Game> mapOfGames) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clearGameList() {
         throw new UnsupportedOperationException();
     }
 
@@ -57,7 +68,27 @@ public  class ServiceAdapter implements IService {
     }
 
     @Override
+    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Tile getTile(int position) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
         throw new UnsupportedOperationException();
     }
 
@@ -67,9 +98,12 @@ public  class ServiceAdapter implements IService {
     }
 
     @Override
-    public Game getGameById(String id) {
-        throw new UnsupportedOperationException();
-    }
+    public Game getGameById(String id) {throw new UnsupportedOperationException();}
+
+    @Override
+    public void buyProperty(Request request) {throw new UnsupportedOperationException();}
+
+
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -86,8 +120,50 @@ public  class ServiceAdapter implements IService {
     }
 
     @Override
+<<<<<<< HEAD
     public Auction getPlayerAuctions(Request request) {throw new UnsupportedOperationException();}
 
     @Override
     public Player collectDebt(Request request) {throw new UnsupportedOperationException();}
+=======
+    public Auction getPlayerAuctions(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void fine(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void free(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setBankrupt(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void useComputeTax(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void useEstimateTax(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Game createGame(Request request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Game> getGames() {
+        throw new UnsupportedOperationException();
+    }
+
+
+>>>>>>> 1f18ad4db8488e9e267734f35f4114c41de73d11
 }

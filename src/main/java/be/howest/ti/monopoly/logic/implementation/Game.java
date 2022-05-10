@@ -49,16 +49,17 @@ public class Game {
     }
     // we will leave this
     public Game(Request request, int size) {
-        if (request == null) {
+        if (request.getRequestParameters().body() == null) {
             throw new IllegalArgumentException();
         }
         setNumberOfPlayers(request.getNumberOfPlayersToStart());
         this.started = false;
         this.players = new LinkedList<>();
-        this.id = request.getGamePrefix() + "_" + (size+1);
+        this.id = request.getGamePrefix() + "-" + (size+1);
     }
 
     public void setId(String id) {
+        // todo add more characters to the list
         if (id == null || id.contains("-")) {
             throw new IllegalArgumentException();
         }

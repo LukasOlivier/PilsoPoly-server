@@ -1,30 +1,44 @@
 package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Game;
 import io.vertx.core.json.JsonObject;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.Map;
 
 
 class OpenApiManagingGamesTests extends OpenApiTestsBase {
 
     @Test
     void getGames(final VertxTestContext testContext) {
+        service.setDelegate((new ServiceAdapter(){
+            public Map<String, Game> getAllGames() {
+                return Collections.emptyMap();
+            }
+        }) );
         get(
                 testContext,
                 "/games",
-                null,
-                response -> assertNotYetImplemented(response, "getGames")
+                "some-token",
+                this::assertOkResponse
         );
     }
 
     @Test
     void getGamesWithAllParams(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            public Map<String, Game> getAllGames() {
+                return Collections.emptyMap();
+            }
+        });
         get(
                 testContext,
-                "/games?started=true&prefix=azerty&numberOfPlayers=3",
+                "/games?started=false&prefix=PilsoPoly&numberOfPlayers=3",
                 null,
-                response -> assertNotYetImplemented(response, "getGames")
+                this::assertOkResponse
         );
     }
 
@@ -50,6 +64,12 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
 
     @Test
     void createGameWithEmptyBody(final VertxTestContext testContext) {
+        service.setDelegate( new ServiceAdapter() {
+            @Override
+            public Game createGame(Request request) {
+                throw new IllegalArgumentException();
+            }
+        });
         post(
                 testContext,
                 "/games",
@@ -61,6 +81,12 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
 
     @Test
     void createGame(final VertxTestContext testContext) {
+        service.setDelegate( new ServiceAdapter() {
+            @Override
+            public Game createGame(Request request) {
+                return new Game();
+            }
+        });
         post(
                 testContext,
                 "/games",
@@ -219,11 +245,16 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
 
     @Test
     void clearGameList(final VertxTestContext testContext) {
+        service.setDelegate(new ServiceAdapter(){
+            @Override
+            public void clearGameList() {
+            }
+        });
         delete(
                 testContext,
                 "/games",
                 "some-token",
-                response -> assertNotYetImplemented(response, "clearGameList")
+                this::assertOkResponse
         );
     }
 

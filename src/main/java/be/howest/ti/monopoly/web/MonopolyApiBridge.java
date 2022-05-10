@@ -6,7 +6,6 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
-import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -14,6 +13,7 @@ import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
 import be.howest.ti.monopoly.web.tokens.MonopolyUser;
 import be.howest.ti.monopoly.web.tokens.PlainTextTokens;
 import be.howest.ti.monopoly.web.tokens.TokenManager;
+import be.howest.ti.monopoly.web.views.SpecificGameInfo;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -21,8 +21,9 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BearerAuthHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
+import io.vertx.ext.web.validation.RequestParameter;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -153,23 +154,73 @@ public class MonopolyApiBridge {
     }
 
     private void clearGameList(RoutingContext ctx) {
-        throw new NotYetImplementedException("clearGameList");
+        service.clearGameList();
+        Response.sendOkResponse(ctx);
     }
 
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game createdGame = new Game(request, service.getGameMapSize());
-            service.addGame(createdGame);
-            Response.sendJsonResponse(ctx, 200, createdGame.showSpecificGameInfo());
+            Game createdGame = service.createGame(request);
+            SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
+            Response.sendJsonResponse(ctx, 200, specificGameInfo);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
         }
     }
 
     private void getGames(RoutingContext ctx) {
-        Response.sendJsonResponse(ctx, 200, service.getAllGames());
+        Request request = Request.from(ctx);
+        Map<String, Game> filteredMapOfGames = service.getAllGames();
+        RequestParameter isStarted = request.getRequestParameters().queryParameter("started");
+        RequestParameter numberOfPlayers = request.getRequestParameters().queryParameter("numberOfPlayers");
+        RequestParameter prefix = request.getRequestParameters().queryParameter("prefix");
+        if (isStarted != null) {
+            filteredMapOfGames = filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
+        }
+        if (numberOfPlayers != null) {
+            filteredMapOfGames = filterGamesByNumberOfPlayers(numberOfPlayers.getInteger(), filteredMapOfGames);
+        }
+        if (prefix != null) {
+            filteredMapOfGames = filterGamesByPrefix(prefix.toString(), filteredMapOfGames);
+        }
+        List<SpecificGameInfo> listOfGames = new ArrayList<>();
+        for (Game game : filteredMapOfGames.values()) {
+            listOfGames.add(new SpecificGameInfo(game));
+        }
+        Response.sendJsonResponse(ctx, 200, listOfGames);
     }
+
+    public Map<String, Game> filterGamesByStarted(boolean isStarted, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().isStarted() == isStarted) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    public Map<String, Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
+    public Map<String, Game> filterGamesByNumberOfPlayers(int numberOfPlayers, Map<String, Game> mapToFilter) {
+        Map<String, Game> filteredMap = new HashMap<>();
+        for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
+            if (entry.getValue().getNumberOfPlayers() == numberOfPlayers) {
+                filteredMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return filteredMap;
+    }
+
 
     private void joinGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
@@ -185,21 +236,36 @@ public class MonopolyApiBridge {
         );
     }
 
+
+
     private void getGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         Response.sendJsonResponse(ctx, 200, service.getGameById(request.getGameId()));
     }
+
 
     private void getDummyGame(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, service.getDummyGame());
     }
 
     private void useEstimateTax(RoutingContext ctx) {
-        throw new NotYetImplementedException("useEstimateTax");
+        Request request = Request.from(ctx);
+        try {
+            service.useEstimateTax(request);
+            Response.sendOkResponse(ctx);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("something went wrong");
+        }
     }
 
     private void useComputeTax(RoutingContext ctx) {
-        throw new NotYetImplementedException("useComputeTax");
+        Request request = Request.from(ctx);
+        try {
+            service.useComputeTax(request);
+            Response.sendOkResponse(ctx);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("something went wrong");
+        }
     }
 
     private void rollDice(RoutingContext ctx) {
@@ -209,20 +275,23 @@ public class MonopolyApiBridge {
     private void declareBankruptcy(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            Game game = service.getGameById(request.getGameId());
-            Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
-            player.setBankrupt();
+            service.setBankrupt(request);
             Response.sendOkResponse(ctx);
-            game.isEveryoneBankrupt();
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
         }
     }
 
+    //http://localhost:8080/games/Dummy/players/Sibren/properties/Oriental
     private void buyProperty(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyProperty");
+        try{
+            Request request =  Request.from(ctx);
+            service.buyProperty(request);
+            Response.sendOkResponse(ctx);
+        }catch (IllegalArgumentException e) {
+            throw new InvalidRequestException("failed to buy property");
+        }
     }
-
     private void dontBuyProperty(RoutingContext ctx) {
         throw new NotYetImplementedException("dontBuyProperty");
     }
@@ -257,11 +326,15 @@ public class MonopolyApiBridge {
     }
 
     private void getOutOfJailFine(RoutingContext ctx) {
-        throw new NotYetImplementedException("getOutOfJailFine");
+        Request request = Request.from(ctx);
+        service.fine(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void getOutOfJailFree(RoutingContext ctx) {
-        throw new NotYetImplementedException("getOutOfJailFree");
+        Request request = Request.from(ctx);
+        service.free(request);
+        Response.sendOkResponse(ctx);
     }
 
     private void getBankAuctions(RoutingContext ctx) {
@@ -269,7 +342,8 @@ public class MonopolyApiBridge {
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("placeBidOnBankAuction");
+        throw new NotYetImplementedException("getBankAuctions");
+
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {

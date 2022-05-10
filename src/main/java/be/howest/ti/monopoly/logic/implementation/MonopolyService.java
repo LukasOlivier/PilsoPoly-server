@@ -3,6 +3,7 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.Request;
+import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import io.vertx.core.json.JsonObject;
 
 import java.util.*;
@@ -90,23 +91,23 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public int getGameMapSize(){
+    public void clearGameList() {
+        allGames.clear();
+    }
+
+    @Override
+    public int getGameMapSize() {
         return allGames.size();
     }
 
     @Override
-    public List<JsonObject> getAllGames() {
-        List<JsonObject> listOfGames = new ArrayList<>();
-        for (Map.Entry<String, Game> entry : allGames.entrySet()) {
-            listOfGames.add(entry.getValue().showSpecificGameInfo());
-        }
-        return listOfGames;
+    public Map<String, Game> getAllGames() {
+        return allGames;
     }
 
     @Override
-    public Game getDummyGame(){
-        Game dummyGame = new Game();
-        return dummyGame;
+    public Game getDummyGame() {
+        return new Game();
     }
 
     @Override
@@ -150,10 +151,38 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
+
+    public void buyProperty(Request request){
+        Game game = getGameById(request.getGameId());
+        String playerName = request.getParameterValue("playerName");
+        Player player = game.getSpecificPlayer(playerName);
+        String propertyName = request.getPropertyName();
+        Tile tile = getTile(propertyName);
+        if (tile.getType() == "street" || tile.getType() == "railroad" || tile.getType() == "utility"){
+            Property tileToProperty = (Property) tile;
+            if (player.getMoney() >= tileToProperty.getCost()){
+                if (getPlayerProperty(tileToProperty.getName(), game) == null){
+                    PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName(), tileToProperty.getType());
+                    player.addProperties(boughtProperty);
+                    player.removeMoney(tileToProperty.getCost());
+                }
+                else {
+                    throw new IllegalStateException("property is already bought");
+                }
+            }else{
+                throw new IllegalStateException("you do not have enough money");
+            }
+        }else{
+            throw new IllegalArgumentException("you can not buy a tile of any other type");
+        }
+    }
+
+
     @Override
-    public Game getGameById(String id){
+    public Game getGameById(String id) {
         return allGames.get(id);
     }
+
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -185,33 +214,7 @@ public class MonopolyService extends ServiceAdapter {
         return game.getAuction();
     }
 
-    /*public int buyProperty(Request request){
-        Game game = getGameById(request.getGameId());
-        String playerName = request.getPlayerName();
-        Player player = game.getSpecificPlayer(playerName);
-        String propertyName = request.getPropertyName();
-        Tile tile = getTile(propertyName);
-        if (tile.getType() == "street" || tile.getType() == "railroad" || tile.getType() == "utility"){
-            Property tileToProperty = (Property) tile;
-            if (player.getMoney() >= tileToProperty.getCost()){
-                if (Boolean.TRUE.equals(checkIfAlreadyBought(tileToProperty.getName(), game))){
-                    PlayerProperty boughtProperty = new PlayerProperty(tileToProperty.getName());
-                    player.addProperties(boughtProperty);
-                    player.removeMoney(tileToProperty.getCost());
-                    return 200;
-                }
-                else {
-                    throw new IllegalStateException("property is already bought");
-                }
-            }else{
-                throw new IllegalStateException("you do not have enough money");
-            }
-        }else{
-            throw new IllegalArgumentException("you can not buy a tile of any other type");
-        }
-    }*/
 
-    //games/{gameId}/players/{playerName}/properties/{propertyName}/visitors/{debtorName}/rent
     public Player collectDebt(Request request){
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
@@ -227,7 +230,7 @@ public class MonopolyService extends ServiceAdapter {
     }
 
 
-    public PlayerProperty findBoughtProperty(String name, String playerName, Game game){
+    public PlayerProperty findBoughtProperty(String name, String playerName, Game game) {
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
                 if (playerProperty.getProperty() == name && player.getName() == playerName) {
@@ -237,4 +240,61 @@ public class MonopolyService extends ServiceAdapter {
         }
         return null;
     }
+
+    public PlayerProperty getPlayerProperty(String name, Game game) {
+        for (Player player : game.getPlayers()) {
+            for (PlayerProperty playerProperty : player.getProperties()) {
+                if (playerProperty.getProperty() == name) {
+                    return playerProperty;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void fine(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.fine();
+    }
+
+    @Override
+    public void free(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.free();
+    }
+
+    @Override
+    public void setBankrupt(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.setBankrupt();
+        game.isEveryoneBankrupt();
+    }
+
+    @Override
+    public void useComputeTax(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.setTaxSystem("COMPUTE");
+    }
+
+    @Override
+    public void useEstimateTax(Request request) {
+        Game game = getGameById(request.getGameId());
+        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
+        player.setTaxSystem("ESTIMATE");
+    }
+
+    public Game createGame(Request request){
+        if (request != null){
+            Game createdGame = new Game(request, getGameMapSize());
+            addGame(createdGame);
+            return createdGame;
+        }
+        throw new InvalidRequestException("failed to create game!");
+    }
 }
+

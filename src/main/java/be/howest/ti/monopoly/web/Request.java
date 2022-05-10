@@ -56,13 +56,14 @@ public class Request {
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
-    public int getNumberOfPlayersToStart(){
+    public int getNumberOfPlayersToStart() {
         return params.body().getJsonObject().getInteger("numberOfPlayers");
     }
 
-    public String getGamePrefix(){
+    public String getGamePrefix() {
         return params.body().getJsonObject().getString("prefix");
     }
+
     // ToDo make hese functions in one function
     public int getTilePosition() {
         return params.pathParameter("tileId").getInteger();
@@ -77,7 +78,8 @@ public class Request {
 
     }
 
-    public String getGameId(){
+
+    public String getGameId() {
         return params.pathParameter("gameId").getString();
     }
 
@@ -114,3 +116,4 @@ public class Request {
     }
 
 }
+

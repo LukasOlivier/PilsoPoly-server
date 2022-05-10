@@ -24,4 +24,7 @@ public class Tile {
         return type;
     }
 
+    public int getCost(){
+        return -1;
+    }
 }
