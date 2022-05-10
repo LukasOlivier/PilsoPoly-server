@@ -79,7 +79,10 @@ public class Player {
         return icon;
     }
 
-    public void removeMoney(int amount){money -= amount;}
+    public int removeMoney(int amount){
+        money -= amount;
+        return amount;
+    }
     public void addMoney(int amount){money += amount;}
 
     public int payRent(PlayerProperty playerProperty, Tile tile, Property property, Game game){
@@ -87,38 +90,30 @@ public class Player {
         switch (tile.getType()){
             case ("utility"):
                 if (checkHowManyUtilitys("utility") > 1){
-                    removeMoney(10 * game.getNumberOfPlayers());
-                    rentToReceive = 10 * game.getNumberOfPlayers();
+                    rentToReceive = removeMoney(10 * game.getNumberOfPlayers());
                 }else{
-                    removeMoney(4 * game.getNumberOfPlayers());
-                    rentToReceive = 10 * game.getNumberOfPlayers();
+                    rentToReceive = removeMoney(4 * game.getNumberOfPlayers());
                 }
                 break;
             case ("street"):
                 switch (playerProperty.getHouseCount()){
                     case 1:
-                        removeMoney(property.getRentWithOneHouse());
-                        rentToReceive = property.getRentWithOneHouse();
+                        rentToReceive = removeMoney(property.getRentWithOneHouse());
                         break;
                     case 2:
-                        removeMoney(property.getRentWithTwoHouses());
-                        rentToReceive = property.getRentWithTwoHouses();
+                        rentToReceive = removeMoney(property.getRentWithTwoHouses());
                         break;
                     case 3:
-                        removeMoney(property.getRentWithThreeHouses());
-                        rentToReceive = property.getRentWithThreeHouses();
+                        rentToReceive = removeMoney(property.getRentWithThreeHouses());
                         break;
                     case 4:
-                        removeMoney(property.getRentWithFourHouses());
-                        rentToReceive = property.getRentWithFourHouses();
+                        rentToReceive = removeMoney(property.getRentWithFourHouses());
                         break;
                     default:
                         if (playerProperty.getHotelCount() > 0){
-                            removeMoney(property.getRentWithHotel());
-                            rentToReceive = property.getRentWithHotel();
+                            rentToReceive = removeMoney(property.getRentWithHotel());
                         }else{
-                            removeMoney(property.getRent());
-                            rentToReceive = property.getRent();
+                            rentToReceive = removeMoney(property.getRent());
                         }
                         break;
                 }
