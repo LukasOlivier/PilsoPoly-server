@@ -168,8 +168,9 @@ public class MonopolyApiBridge {
                 throw new InvalidRequestException("empty body");
             }
             int numberOfPlayers =  request.getIntFromBody("numberOfPlayers");
-            String gameId = request.getStringFromBody("gameId");
+            String gameId = request.getStringFromBody("prefix");
             Game createdGame = new Game(numberOfPlayers, gameId, service.getGameMapSize());
+            service.addGame(createdGame);
             SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
             Response.sendJsonResponse(ctx, 200, specificGameInfo);
         } catch (IllegalArgumentException e) {

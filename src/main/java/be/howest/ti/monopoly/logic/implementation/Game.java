@@ -36,7 +36,7 @@ public class Game {
     public void setId(String id, int size) {
         int increasePrefixCount = 1;
         if (!Objects.equals(id, "PilsoPoly")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Test");
         }
         this.id = id + "_" + (size+increasePrefixCount);
     }

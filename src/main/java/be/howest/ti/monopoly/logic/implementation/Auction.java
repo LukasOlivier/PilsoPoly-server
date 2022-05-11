@@ -2,6 +2,8 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 
+import java.util.Objects;
+
 public class Auction {
 
     private int highest_bid;
@@ -46,5 +48,24 @@ public class Auction {
 
     public String getProperty() {
         return property;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Auction auction = (Auction) o;
+        return highest_bid == auction.highest_bid && duration == auction.duration && Objects.equals(last_bidder, auction.last_bidder) && Objects.equals(property, auction.property);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(highest_bid, duration, last_bidder, property);
+    }
+
+    @Override
+    public String toString(){
+        return "Property: " + property + "\nHighest bid: " + highest_bid + "\nlast bidder: " + last_bidder;
     }
 }
