@@ -2,6 +2,8 @@ package be.howest.ti.monopoly.web.views;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +15,12 @@ public class SpecificGameInfo {
         this.game = game;
     }
 
-    public List<String> getPlayers() {
-        List<String> listOfPlayerNames = new ArrayList<>();
+    public List<JsonObject> getPlayers() {
+        List<JsonObject> listOfPlayerNames = new ArrayList<>();
         for (Player player : game.getPlayers()) {
-            listOfPlayerNames.add(player.getName());
+
+            listOfPlayerNames.add(new JsonObject()
+                    .put("name", player.getName()));
         }
         return listOfPlayerNames;
     }
@@ -25,8 +29,12 @@ public class SpecificGameInfo {
         return game.isStarted();
     }
 
-    public int getNumberOfPlayer(){
+    public int getNumberOfPlayers(){
         return game.getNumberOfPlayers();
+    }
+
+    public String getId(){
+        return game.getId();
     }
 
     public String getPrefix(){

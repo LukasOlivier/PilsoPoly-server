@@ -151,6 +151,9 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
         Game game = getGameById(gameId);
+        if (game.isStarted()) {
+            throw new IllegalStateException("already started");
+        }
         game.addPlayer(playerName, icon);
         if (game.getCurrentPlayer() == null) {
             game.setCurrentPlayer(playerName);

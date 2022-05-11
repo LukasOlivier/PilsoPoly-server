@@ -212,7 +212,7 @@ public class MonopolyApiBridge {
     public Map<String, Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
         Map<String, Game> filteredMap = new HashMap<>();
         for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
-            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)) {
+            if (Objects.equals(entry.getValue().getId().split("_")[0], prefix)) {
                 filteredMap.put(entry.getKey(), entry.getValue());
             }
         }
