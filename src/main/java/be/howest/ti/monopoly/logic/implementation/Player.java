@@ -119,7 +119,9 @@ public class Player {
 
     public int payRentUtility(Game game){
         int indexOfLastTurn = game.getTurns().size() - 1;
-        int lastDiceRoll = game.getTurns().get(indexOfLastTurn).getRoll().get(0) + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
+        int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().get(0);
+        int lastDiceRollTwo =  + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
+        int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
         if (checkHowManyUtilitys("utility") > 1){
             return removeMoney(10 * lastDiceRoll);
         }else{
