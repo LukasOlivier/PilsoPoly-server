@@ -12,7 +12,6 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         service.setDelegate(new ServiceAdapter(){
             @Override
             public Game getGameById(String gameId){
-                // i dont know aaaaaaaaaaaah
                 return  new Game(4, "PilsoPoly", 5);
             }
         });
