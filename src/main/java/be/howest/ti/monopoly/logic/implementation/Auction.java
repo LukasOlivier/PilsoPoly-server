@@ -5,9 +5,9 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 public class Auction {
 
     private int highest_bid;
-    private int duration;
+    private final int duration;
     private String last_bidder;
-    private String property;
+    private final String property;
 
     public Auction(int highest_bid, int duration, String bidder, String property) {
         this.highest_bid = highest_bid;
