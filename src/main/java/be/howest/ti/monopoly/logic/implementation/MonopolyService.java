@@ -218,27 +218,25 @@ public class MonopolyService extends ServiceAdapter {
     }
 
 
+    @Override
     public Player collectDebt(String gameName,String playerName, String debtPlayerName,String tileName){
         Game game = getGameById(gameName);
         Player player = game.getSpecificPlayer(playerName);
         Player debtPlayer = game.getSpecificPlayer(debtPlayerName);
         Tile tile = getTile(tileName);
-        if (findBoughtProperty(tile.getName(), debtPlayer.getName(), game) != null){
-            if (Objects.equals(player.getCurrentTile(), tile.getName())){
-                PlayerProperty playerProperty = findBoughtProperty(tile.getName(), debtPlayer.getName(), game);
-                Property tileToProperty = (Property) tile;
-                debtPlayer.addMoney(player.payRent(playerProperty, tile,tileToProperty, game ));
-                return player;
-            }else {
-                throw new IllegalArgumentException("player is not on the tile.");
-            }
-        }else {
+        if (tile != player.currentTile){
+            throw new IllegalArgumentException("player is not on the tile.");
+        }else if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
             throw new IllegalArgumentException("the tile is not you're property");
         }
+        PlayerProperty playerProperty = findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName, game);
+        Property tileToProperty = (Property) tile;
+        debtPlayer.addMoney(player.payRent(playerProperty, tileToProperty, game ));
+        return player;
     }
 
 
-    public PlayerProperty findBoughtProperty(String name, String playerName, Game game) {
+    public PlayerProperty findBoughtPropertyByOwner(String name, String playerName, Game game) {
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
                 if (Objects.equals(playerProperty.getProperty(), name) && Objects.equals(player.getName(), playerName)) {

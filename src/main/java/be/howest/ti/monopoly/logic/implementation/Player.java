@@ -1,14 +1,15 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
+@JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" })
 
-@JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" });
 public class Player {
     private final String name;
     public Tile currentTile;
@@ -97,9 +98,9 @@ public class Player {
     }
     public void addMoney(int amount){money += amount;}
 
-    public int payRent(PlayerProperty playerProperty, Tile tile, Property property, Game game){
+    public int payRent(PlayerProperty playerProperty, Property property, Game game){
         int rentToReceive = 0;
-        switch (tile.getType()){
+        switch (currentTile.getType()){
             case ("utility"):
                 if (checkHowManyUtilitys("utility") > 1){
                     rentToReceive = removeMoney(10 * game.getNumberOfPlayers());
