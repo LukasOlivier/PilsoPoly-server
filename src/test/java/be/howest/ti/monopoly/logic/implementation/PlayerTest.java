@@ -36,5 +36,9 @@ class PlayerTest {
     }
 
 
+    @Test
+    void payRent(){
+        Player testPlayer = new Player("Sibren", "Beer");
+    }
 
 }
