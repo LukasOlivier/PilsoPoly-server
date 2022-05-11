@@ -181,17 +181,6 @@ public class MonopolyService extends ServiceAdapter {
         return game.getAuction();
     }
 
-    public PlayerProperty getPlayerProperty(String name, Game game) {
-        for (Player player : game.getPlayers()) {
-            for (PlayerProperty playerProperty : player.getProperties()) {
-                if (Objects.equals(playerProperty.getProperty(), name)) {
-                    return playerProperty;
-                }
-            }
-        }
-        return null;
-    }
-
     @Override
     public void fine(Request request) {
         Game game = getGameById(request.getGameId());

@@ -37,6 +37,7 @@ public class Game {
         setId(prefix, size);
     }
 
+
     public void setId(String id, int size) {
         int increasePrefixCount = 1;
         if (!Objects.equals(id, "PilsoPoly")) {

@@ -17,8 +17,8 @@ class OpenApiPrisonTests extends OpenApiTestsBase {
         });
         post(
                 testContext,
-                "/games/game-id/prison/Alice/fine",
-                "some-token",
+                "/games/PilsoPoly/prison/Alice/fine",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }

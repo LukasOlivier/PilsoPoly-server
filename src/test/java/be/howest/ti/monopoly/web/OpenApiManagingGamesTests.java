@@ -65,9 +65,11 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
     @Test
     void createGameWithEmptyBody(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
-            public Game createGame(Request request) {
-                throw new IllegalArgumentException();
+            public int getGameMapSize(){
+                return 1;
             }
+
+            public void addGame(Game game){}
         });
         post(
                 testContext,
@@ -81,10 +83,11 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
     @Test
     void createGame(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
-
-            public void createGame() {
-
+            public int getGameMapSize(){
+                return 1;
             }
+
+            public void addGame(Game game){}
         });
         post(
                 testContext,
@@ -92,10 +95,11 @@ class OpenApiManagingGamesTests extends OpenApiTestsBase {
                 null,
                 new JsonObject()
                         .put("prefix", "PilsoPoly")
-                        .put("numberOfPlayers", 8),
+                        .put("numberOfPlayers", 2),
                 this::assertOkResponse
         );
     }
+
 
     @Test
     void createGamePrefixTooLong(final VertxTestContext testContext) {

@@ -12,17 +12,18 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         service.setDelegate(new ServiceAdapter(){
             @Override
             public Game getGameById(String gameId){
-                // i dont know aaaaaaaaaaaah
-                return  new Game(4, "PilsoPoly", 5);
+                return new Game(2,"PilsoPoly",1);
             }
+
         });
         get(
                 testContext,
-                "/games/game-id",
-                "some-token",
+                "/games/PilsoPoly_2",
+                "PilsoPoly_2-Bob",
                 this::assertOkResponse
         );
     }
+
 
     @Test
     void getGameUnauthorized(final VertxTestContext testContext) {

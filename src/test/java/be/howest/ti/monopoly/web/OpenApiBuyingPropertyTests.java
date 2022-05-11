@@ -17,9 +17,9 @@ class OpenApiBuyingPropertyTests extends OpenApiTestsBase {
         });
         post(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property",
-                "some-token",
-                response -> assertOkResponse(response)
+                "/games/PilsoPoly/players/Alice/properties/some-property",
+                "PilsoPoly-Alice",
+                this::assertOkResponse
         );
     }
 

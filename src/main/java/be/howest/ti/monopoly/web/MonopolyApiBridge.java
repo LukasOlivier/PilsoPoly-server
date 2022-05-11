@@ -78,7 +78,6 @@ public class MonopolyApiBridge {
 
         // Game Info
         routerBuilder.operation("getGame").handler(this::getGame);
-        routerBuilder.operation("getDummyGame").handler(this::getDummyGame);
 
         // Turn Management
         routerBuilder.operation("rollDice").handler(this::rollDice);
@@ -250,17 +249,17 @@ public class MonopolyApiBridge {
 
     private void getGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        String gameId = request.getPathParameterValue("gameId");
+        Game game = service.getGameById(gameId);
         try {
-            authenticateGetGame(request);
+            authenticateGetGame(request,game, gameId);
         } catch (InvalidTokenException exception) {
             throw new InvalidTokenException();
         }
-        Response.sendJsonResponse(ctx, 200, service.getGameById(request.getGameId()));
+        Response.sendJsonResponse(ctx, 200, game);
     }
 
-    private void authenticateGetGame(Request request) {
-        String gameId = request.getPathParameterValue("gameId");
-        Game game = service.getGameById(gameId);
+    private void authenticateGetGame(Request request,Game game, String gameId) {
         List<Player> players = game.getPlayers();
         for (Player player : players) {
             if (request.isAuthorized(gameId, player.getName())) {
@@ -268,10 +267,6 @@ public class MonopolyApiBridge {
             }
         }
         throw new InvalidTokenException();
-    }
-
-    private void getDummyGame(RoutingContext ctx) {
-        Response.sendJsonResponse(ctx, 200, service.getDummyGame());
     }
 
     private void useEstimateTax(RoutingContext ctx) {
