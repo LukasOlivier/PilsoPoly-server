@@ -5,7 +5,6 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.Tiles.*;
 import be.howest.ti.monopoly.web.Request;
-import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 
 import java.util.*;
 
@@ -117,23 +116,41 @@ public class MonopolyService extends ServiceAdapter {
         String playerName = request.getPathParameterValue("playerName");
         Player player = game.getSpecificPlayer(playerName);
         String propertyName = request.getPropertyName();
-        Tile tile = getTile(propertyName);
-        if (Objects.equals(tile.getType(), "street") || Objects.equals(tile.getType(), "railroad") || Objects.equals(tile.getType(), "utility")) {
-            Property tileToProperty = (Property) tile;
-            if (player.getMoney() >= tileToProperty.getCost()) {
-                if (getPlayerProperty(tileToProperty.getName(), game) == null) {
-                    PlayerProperty boughtProperty = new PlayerProperty(tileToProperty);
-                    player.addProperties(boughtProperty);
-                    player.removeMoney(tileToProperty.getCost());
-                    tileToProperty.setBought(true);
-                } else {
-                    throw new IllegalStateException("property is already bought");
-                }
-            } else {
+        Tile tileToBuy = player.currentTile;
+        try {
+            if (getTile(propertyName).getPosition() != player.currentTile.getPosition()) {
+                throw new IllegalStateException("you are not on that tile");
+            }
+            if (!Objects.equals(tileToBuy.getActionType(), "buy")) {
+                throw new IllegalStateException("you can not buy a tile of any other type");
+            }
+            Property tileToProperty = (Property) tileToBuy;
+            if (player.getMoney() < tileToProperty.getCost()) {
                 throw new IllegalStateException("you do not have enough money");
             }
-        } else {
-            throw new IllegalArgumentException("you can not buy a tile of any other type");
+            PlayerProperty boughtProperty = new PlayerProperty(tileToProperty);
+            player.addProperties(boughtProperty);
+            player.removeMoney(tileToProperty.getCost());
+            tileToProperty.setBought(true);
+            tileToBuy.setActionType("rent");
+            System.out.println(tileToProperty.getActionType());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("failed to buy property");
+        }
+    }
+
+    public void checkIfTileCanBeBought(String propertyName, Player player, Property tileToProperty, Tile tileToBuy) {
+        if (getTile(propertyName).getPosition() != player.currentTile.getPosition()) {
+            throw new IllegalStateException("you are not on that tile");
+        }
+        if (tileToProperty.isBought()) {
+            throw new IllegalStateException("property is already bought");
+        }
+        if (!Objects.equals(tileToBuy.getActionType(), "buy")) {
+            throw new IllegalStateException("you can not buy a tile of any other type");
+        }
+        if (player.getMoney() < tileToProperty.getCost()) {
+            throw new IllegalStateException("you do not have enough money");
         }
     }
 
@@ -231,11 +248,9 @@ public class MonopolyService extends ServiceAdapter {
             player.previousTile = player.currentTile;
             List<Integer> diceRollResult = Dice.rollDice();
             int placesToMove = calculatePlacesToMove(diceRollResult);
-            checkIfPlayerRolledDouble(game,diceRollResult, player);
             Jail.checkIfFreeByWaitingTurns(player);
             game.addTurn(new Turn(player.getName(), "DEFAULT", Move.makeMove(player, placesToMove), diceRollResult.get(0), diceRollResult.get(1)));
-            System.out.print("Current Tile: ");
-            System.out.println(player.currentTile.getName());
+            checkIfPlayerCanRollAgain(player);
         } else {
             throw new IllegalMonopolyActionException("Not your turn!");
         }
@@ -257,21 +272,39 @@ public class MonopolyService extends ServiceAdapter {
         game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
     }
 
-    public void checkIfPlayerRolledDouble(Game game,List<Integer> diceRollResult, Player player) {
+    public void checkIfPlayerCanRollAgain(Player player) {
+        System.out.println(player.currentTile.getName());
+        System.out.println(player.currentTile.getActionType());
+    }
+}
+        /*
+        if (player.currentTile.getActionType() != "buy"){
+
+        }
+
+
+
         if (Dice.checkIfRolledDouble(diceRollResult)) {
             player.addDoubleThrow();
-            if (!Jail.checkIfFreeByDoubleThrow(player) && !Jail.checkIfJailedByDoubleThrow(player)){
-                System.out.println("you can throw again");
+            if (checkIfJailedByDoubleThrow(player)){
+                System.out.println("next");
+                setNextPlayer(game,player);
+            }else{
+                System.out.println("throw again");
                 game.setCurrentPlayer(player.getName());
-            }else {
-                setNextPlayer(game, player);
             }
-
         } else {
             player.resetDoubleThrows();
             setNextPlayer(game, player);
         }
     }
+
+    public boolean checkIfJailedByDoubleThrow(Player player) {
+        System.out.println(player.getAmountOfDoubleThrows());
+        return Jail.checkIfFreeByDoubleThrow(player) && Jail.checkIfJailedByDoubleThrow(player);
+    }
 }
+
+         */
 
 

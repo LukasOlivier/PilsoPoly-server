@@ -8,6 +8,7 @@ import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +23,7 @@ public class Game {
     private String directSale;
     private int availableHouses;
     private int availableHotels;
-    private List<Turn> turns;
+    private List<Turn> turns = new ArrayList<>();
     private boolean canRoll;
     private boolean ended;
     private String currentPlayer;

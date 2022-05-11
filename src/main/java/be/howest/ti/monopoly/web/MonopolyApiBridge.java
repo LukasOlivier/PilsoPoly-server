@@ -164,13 +164,14 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            if (request.getRequestParameters() == null){
+            if (request.getRequestParameters() == null) {
                 throw new InvalidRequestException("empty body");
             }
-            int numberOfPlayers =  request.getIntFromBody("numberOfPlayers");
-            String gameId = request.getStringFromBody("gameId");
+            int numberOfPlayers = request.getIntFromBody("numberOfPlayers");
+            String gameId = request.getStringFromBody("prefix");
             Game createdGame = new Game(numberOfPlayers, gameId, service.getGameMapSize());
             SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
+            service.addGame(createdGame);
             Response.sendJsonResponse(ctx, 200, specificGameInfo);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
@@ -257,11 +258,11 @@ public class MonopolyApiBridge {
         Response.sendJsonResponse(ctx, 200, service.getGameById(request.getGameId()));
     }
 
-    private void authenticateGetGame(Request request){
+    private void authenticateGetGame(Request request) {
         String gameId = request.getPathParameterValue("gameId");
         Game game = service.getGameById(gameId);
         List<Player> players = game.getPlayers();
-        for(Player player : players){
+        for (Player player : players) {
             if (request.isAuthorized(gameId, player.getName())) {
                 return;
             }
@@ -310,19 +311,22 @@ public class MonopolyApiBridge {
     }
 
     private void buyProperty(RoutingContext ctx) {
-        try{
-            Request request =  Request.from(ctx);
+        try {
+            Request request = Request.from(ctx);
             if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
                 throw new AuthenticationException();
             }
             service.buyProperty(request);
             Response.sendOkResponse(ctx);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to buy property");
         } catch (AuthenticationException e) {
             throw new InvalidRequestException("failed to authenticate");
+        }catch (IllegalStateException e) {
+            throw new IllegalStateException("failed to buy property");
         }
     }
+
     private void dontBuyProperty(RoutingContext ctx) {
         throw new NotYetImplementedException("dontBuyProperty");
     }

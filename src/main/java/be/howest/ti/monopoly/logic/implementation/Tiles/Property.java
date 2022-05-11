@@ -51,7 +51,10 @@ public class Property extends Tile {
             return "can buy this property in direct sale";
         }
     }
-@Override
+
+
+
+    @Override
     public String getActionType() {
         if (isBought()) {
             return "rent";

@@ -57,7 +57,7 @@ public class Tile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tile tile = (Tile) o;
-        return position == tile.position && name.equals(tile.name) && type.equals(tile.type);
+        return position == tile.position;
     }
 
     @Override
@@ -73,6 +73,10 @@ public class Tile {
             }
         }
         return null;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 
     public static void takeTileAction(Tile tile, Player player) {

@@ -18,7 +18,8 @@ public class Tax {
 
     public static int getComputeTax(Player player) {
         int totalWorthToTheBank = player.getMoney() + getTotalTilesCost(player) + getTotalBuildingsCost(player);
-        return (int) Math.round(computeTaxMultiplier * totalWorthToTheBank);
+        int roundedToInt = (int) Math.round(computeTaxMultiplier * totalWorthToTheBank);
+        return roundedToInt;
     }
 
     private static int getTotalTilesCost(Player player) {
