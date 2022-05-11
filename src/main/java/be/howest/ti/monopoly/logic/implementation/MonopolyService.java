@@ -105,12 +105,6 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Game getDummyGame() {
-        // Do we keep this?
-        return new Game(4, "PilsoPoly", 99);
-    }
-
-    @Override
     public List<String> getChanceCards() {
         return List.of(
                 "Advance to Boardwalk",
