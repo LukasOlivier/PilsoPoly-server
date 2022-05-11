@@ -102,10 +102,13 @@ public class Player {
         int rentToReceive = 0;
         switch (currentTile.getType()){
             case ("utility"):
+                int indexOfLastTurn = game.getTurns().size() - 1;
+                int lastDiceRoll = game.getTurns().get(indexOfLastTurn).getRoll().get(0) + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
                 if (checkHowManyUtilitys("utility") > 1){
-                    rentToReceive = removeMoney(10 * game.getNumberOfPlayers());
+
+                    rentToReceive = removeMoney(10 * lastDiceRoll);
                 }else{
-                    rentToReceive = removeMoney(4 * game.getNumberOfPlayers());
+                    rentToReceive = removeMoney(4 * lastDiceRoll);
                 }
                 break;
             case ("street"):
