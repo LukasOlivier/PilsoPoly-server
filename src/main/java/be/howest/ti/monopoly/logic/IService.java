@@ -39,7 +39,7 @@ public interface IService {
 
     Tile getTile(String tileName);
 
-    void buyProperty(Request request);
+    void buyProperty(String gameName,String playerName,String propertyName);
 
 
     // AUCTION
@@ -49,7 +49,7 @@ public interface IService {
     Auction getPlayerAuctions(Request request);
 
     // RENT
-    Player collectDebt(Request request);
+    Player collectDebt(String gameName,String playerName, String debtPlayerName,String tileName);
 
     void fine(Request request);
 

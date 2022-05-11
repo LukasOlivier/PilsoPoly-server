@@ -1,11 +1,14 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" });
 public class Player {
     private final String name;
     public Tile currentTile;

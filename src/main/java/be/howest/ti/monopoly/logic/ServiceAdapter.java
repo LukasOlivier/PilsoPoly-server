@@ -101,7 +101,7 @@ public class ServiceAdapter implements IService {
     public Game getGameById(String id) {throw new UnsupportedOperationException();}
 
     @Override
-    public void buyProperty(Request request) {throw new UnsupportedOperationException();}
+    public void buyProperty(String gameName,String playerName,String propertyName) {throw new UnsupportedOperationException();}
 
 
 
@@ -123,7 +123,7 @@ public class ServiceAdapter implements IService {
     public Auction getPlayerAuctions(Request request) {throw new UnsupportedOperationException();}
 
     @Override
-    public Player collectDebt(Request request) {throw new UnsupportedOperationException();}
+    public Player collectDebt(String gameName,String playerName, String debtPlayerName,String tileName) {throw new UnsupportedOperationException();}
 
 
     @Override

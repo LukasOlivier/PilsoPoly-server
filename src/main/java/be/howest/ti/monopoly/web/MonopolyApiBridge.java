@@ -6,6 +6,7 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
@@ -288,7 +289,10 @@ public class MonopolyApiBridge {
     private void buyProperty(RoutingContext ctx) {
         try{
             Request request =  Request.from(ctx);
-            service.buyProperty(request);
+            String  game = request.getGameId();
+            String playerName = request.getParameterValue("playerName");
+            String propertyName = request.getPropertyName();
+            service.buyProperty(game,playerName,propertyName);
             Response.sendOkResponse(ctx);
         }catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to buy property");
@@ -300,7 +304,15 @@ public class MonopolyApiBridge {
 
     private void collectDebt(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        Response.sendJsonResponse(ctx, 200, service.collectDebt(request));
+        try {
+            String game = request.getGameId();
+            String  player = request.getParameterValue("playerName");
+            String  debtPlayer = request.getParameterValue("debtorName");
+            String tileName = request.getPropertyName();
+            Response.sendJsonResponse(ctx, 200, service.collectDebt(game,player,debtPlayer,tileName));
+        }catch (IllegalArgumentException e){
+            throw new InvalidRequestException("failed to collect rent");
+        }
     }
 
     private void takeMortgage(RoutingContext ctx) {

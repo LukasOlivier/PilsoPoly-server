@@ -153,11 +153,9 @@ public class MonopolyService extends ServiceAdapter {
     }
 
 
-    public void buyProperty(Request request){
-        Game game = getGameById(request.getGameId());
-        String playerName = request.getParameterValue("playerName");
+    public void buyProperty(String gameName,String playerName,String propertyName){
+        Game game = getGameById(gameName);
         Player player = game.getSpecificPlayer(playerName);
-        String propertyName = request.getPropertyName();
         Tile tile = getTile(propertyName);
         if (Objects.equals(tile.getType(), "street") || Objects.equals(tile.getType(), "railroad") || Objects.equals(tile.getType(), "utility")){
             Property tileToProperty = (Property) tile;
@@ -220,11 +218,11 @@ public class MonopolyService extends ServiceAdapter {
     }
 
 
-    public Player collectDebt(Request request){
-        Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
-        Player debtPlayer = game.getSpecificPlayer(request.getParameterValue("debtorName"));
-        Tile tile = getTile(request.getPropertyName());
+    public Player collectDebt(String gameName,String playerName, String debtPlayerName,String tileName){
+        Game game = getGameById(gameName);
+        Player player = game.getSpecificPlayer(playerName);
+        Player debtPlayer = game.getSpecificPlayer(debtPlayerName);
+        Tile tile = getTile(tileName);
         if (findBoughtProperty(tile.getName(), debtPlayer.getName(), game) != null){
             if (Objects.equals(player.getCurrentTile(), tile.getName())){
                 PlayerProperty playerProperty = findBoughtProperty(tile.getName(), debtPlayer.getName(), game);

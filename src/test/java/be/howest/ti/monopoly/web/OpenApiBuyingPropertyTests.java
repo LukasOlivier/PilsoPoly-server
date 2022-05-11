@@ -12,7 +12,7 @@ class OpenApiBuyingPropertyTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void buyProperty(Request request) {}
+            public void buyProperty(String gameName,String playerName,String propertyName) {}
 
         });
         post(

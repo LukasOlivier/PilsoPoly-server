@@ -130,8 +130,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public Player collectDebt(Request request) {
-        return delegate.collectDebt(request);
+    public Player collectDebt(String gameName,String playerName, String debtPlayerName,String tileName) {
+        return delegate.collectDebt(gameName,playerName,debtPlayerName,tileName);
     }
 
     public void fine(Request request) {
@@ -169,8 +169,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public void buyProperty(Request request) {
-         delegate.buyProperty(request);
+    public void buyProperty(String gameName,String playerName,String propertyName) {
+         delegate.buyProperty(gameName,playerName,propertyName);
     }
 }
 
