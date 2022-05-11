@@ -102,37 +102,10 @@ public class Player {
         int rentToReceive = 0;
         switch (currentTile.getType()){
             case ("utility"):
-                int indexOfLastTurn = game.getTurns().size() - 1;
-                int lastDiceRoll = game.getTurns().get(indexOfLastTurn).getRoll().get(0) + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
-                if (checkHowManyUtilitys("utility") > 1){
-
-                    rentToReceive = removeMoney(10 * lastDiceRoll);
-                }else{
-                    rentToReceive = removeMoney(4 * lastDiceRoll);
-                }
+                rentToReceive = payRentUtility(game);
                 break;
             case ("street"):
-                switch (playerProperty.getHouseCount()){
-                    case 1:
-                        rentToReceive = removeMoney(property.getRentWithOneHouse());
-                        break;
-                    case 2:
-                        rentToReceive = removeMoney(property.getRentWithTwoHouses());
-                        break;
-                    case 3:
-                        rentToReceive = removeMoney(property.getRentWithThreeHouses());
-                        break;
-                    case 4:
-                        rentToReceive = removeMoney(property.getRentWithFourHouses());
-                        break;
-                    default:
-                        if (playerProperty.getHotelCount() > 0){
-                            rentToReceive = removeMoney(property.getRentWithHotel());
-                        }else{
-                            rentToReceive = removeMoney(property.getRent());
-                        }
-                        break;
-                }
+                rentToReceive = paySRentStreet(playerProperty, property);
                 break;
             case ("railroad"):
                 rentToReceive = checkHowManyUtilitys("street");
@@ -142,6 +115,35 @@ public class Player {
                 throw new IllegalArgumentException("you can not ask rent for any other type");
         }
         return rentToReceive;
+    }
+
+    public int payRentUtility(Game game){
+        int indexOfLastTurn = game.getTurns().size() - 1;
+        int lastDiceRoll = game.getTurns().get(indexOfLastTurn).getRoll().get(0) + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
+        if (checkHowManyUtilitys("utility") > 1){
+            return removeMoney(10 * lastDiceRoll);
+        }else{
+            return removeMoney(4 * lastDiceRoll);
+        }
+    }
+
+    public int paySRentStreet(PlayerProperty playerProperty, Property property){
+        switch (playerProperty.getHouseCount()){
+            case 1:
+                return removeMoney(property.getRentWithOneHouse());
+            case 2:
+                return removeMoney(property.getRentWithTwoHouses());
+            case 3:
+                return removeMoney(property.getRentWithThreeHouses());
+            case 4:
+                return removeMoney(property.getRentWithFourHouses());
+            default:
+                if (playerProperty.getHotelCount() > 0){
+                    return removeMoney(property.getRentWithHotel());
+                }else{
+                    return removeMoney(property.getRent());
+                }
+        }
     }
 
     private int checkHowManyUtilitys(String type) {
