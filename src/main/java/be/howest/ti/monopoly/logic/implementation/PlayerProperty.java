@@ -69,7 +69,9 @@ public class PlayerProperty {
 
     public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties) {
         for ( PlayerProperty p : playerProperties ) {
-            if ( Math.abs( ( getHouseCount() + 1 ) - p.getHouseCount() ) > 1 ) { // getHouseCount + 1 because house still needs to be "bought"
+            int differenceInHouses = Math.abs( ( getHouseCount() ) - p.getHouseCount() );
+            int maxDifferenceInHouses = 1;
+            if ( differenceInHouses == maxDifferenceInHouses ) {
                 return false;
             }
         }
