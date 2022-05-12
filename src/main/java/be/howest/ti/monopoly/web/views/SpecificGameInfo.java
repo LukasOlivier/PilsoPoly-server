@@ -25,7 +25,7 @@ public class SpecificGameInfo {
         return game.isStarted();
     }
 
-    public int getNumberOfPlayer(){
+    public int getNumberOfPlayers(){
         return game.getNumberOfPlayers();
     }
 

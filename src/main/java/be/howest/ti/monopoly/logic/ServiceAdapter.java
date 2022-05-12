@@ -68,21 +68,6 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Tile getTile(int position) {
         throw new UnsupportedOperationException();
     }
