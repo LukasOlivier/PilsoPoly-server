@@ -6,8 +6,8 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.Tile;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
@@ -78,7 +78,6 @@ public class MonopolyApiBridge {
 
         // Game Info
         routerBuilder.operation("getGame").handler(this::getGame);
-        routerBuilder.operation("getDummyGame").handler(this::getDummyGame);
 
         // Turn Management
         routerBuilder.operation("rollDice").handler(this::rollDice);
@@ -120,6 +119,12 @@ public class MonopolyApiBridge {
 
         LOGGER.log(Level.INFO, "All handlers are installed");
         return routerBuilder.createRouter();
+    }
+
+    private void authorizationCheck(Request request) throws AuthenticationException {
+        if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
+            throw new AuthenticationException();
+        }
     }
 
     private void getInfo(RoutingContext ctx) {
@@ -164,14 +169,15 @@ public class MonopolyApiBridge {
     private void createGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            if (request.getRequestParameters() == null){
+            if (request.getRequestParameters() == null) {
                 throw new InvalidRequestException("empty body");
             }
-            int numberOfPlayers =  request.getIntFromBody("numberOfPlayers");
+            int numberOfPlayers = request.getIntFromBody("numberOfPlayers");
             String gameId = request.getStringFromBody("prefix");
             Game createdGame = new Game(numberOfPlayers, gameId, service.getGameMapSize());
             service.addGame(createdGame);
             SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
+            service.addGame(createdGame);
             Response.sendJsonResponse(ctx, 200, specificGameInfo);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to create game!");
@@ -213,7 +219,7 @@ public class MonopolyApiBridge {
     public Map<String, Game> filterGamesByPrefix(String prefix, Map<String, Game> mapToFilter) {
         Map<String, Game> filteredMap = new HashMap<>();
         for (Map.Entry<String, Game> entry : mapToFilter.entrySet()) {
-            if (Objects.equals(entry.getValue().getId().split("-")[0], prefix)) {
+            if (Objects.equals(entry.getValue().getId().split("_")[0], prefix)) {
                 filteredMap.put(entry.getKey(), entry.getValue());
             }
         }
@@ -250,19 +256,19 @@ public class MonopolyApiBridge {
 
     private void getGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        String gameId = request.getPathParameterValue("gameId");
+        Game game = service.getGameById(gameId);
         try {
-            authenticateGetGame(request);
+            authenticateGetGame(request,game, gameId);
         } catch (InvalidTokenException exception) {
             throw new InvalidTokenException();
         }
-        Response.sendJsonResponse(ctx, 200, service.getGameById(request.getGameId()));
+        Response.sendJsonResponse(ctx, 200, game);
     }
 
-    private void authenticateGetGame(Request request){
-        String gameId = request.getPathParameterValue("gameId");
-        Game game = service.getGameById(gameId);
+    private void authenticateGetGame(Request request,Game game, String gameId) {
         List<Player> players = game.getPlayers();
-        for(Player player : players){
+        for (Player player : players) {
             if (request.isAuthorized(gameId, player.getName())) {
                 return;
             }
@@ -270,14 +276,12 @@ public class MonopolyApiBridge {
         throw new InvalidTokenException();
     }
 
-    private void getDummyGame(RoutingContext ctx) {
-        Response.sendJsonResponse(ctx, 200, service.getDummyGame());
-    }
-
     private void useEstimateTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getPathParameterValue("gameId");
         try {
-            service.useEstimateTax(request);
+            service.useEstimateTax(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
@@ -286,8 +290,10 @@ public class MonopolyApiBridge {
 
     private void useComputeTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getPathParameterValue("gameId");
         try {
-            service.useComputeTax(request);
+            service.useComputeTax(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
@@ -295,34 +301,45 @@ public class MonopolyApiBridge {
     }
 
     private void rollDice(RoutingContext ctx) {
-        throw new NotYetImplementedException("rollDice");
+        Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getPathParameterValue("gameId");
+        Response.sendJsonResponse(ctx, 200, service.rollDice(playerName,gameId));
+
     }
 
     private void declareBankruptcy(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getPathParameterValue("gameId");
         try {
-            service.setBankrupt(request);
+            service.setBankrupt(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong");
         }
     }
 
-    //http://localhost:8080/games/Dummy/players/Sibren/properties/Oriental
     private void buyProperty(RoutingContext ctx) {
-        try{
-            Request request =  Request.from(ctx);
+        try {
+            Request request = Request.from(ctx);
             if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
                 throw new AuthenticationException();
             }
-            service.buyProperty(request);
+            String gameId = request.getGameId();
+            String playerName = request.getPathParameterValue("playerName");
+            String propertyName = request.getPropertyName();
+            service.buyProperty(gameId,playerName,propertyName);
             Response.sendOkResponse(ctx);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("failed to buy property");
         } catch (AuthenticationException e) {
             throw new InvalidRequestException("failed to authenticate");
+        }catch (IllegalStateException e) {
+            throw new IllegalStateException("failed to buy property");
         }
     }
+
     private void dontBuyProperty(RoutingContext ctx) {
         throw new NotYetImplementedException("dontBuyProperty");
     }
@@ -340,7 +357,12 @@ public class MonopolyApiBridge {
     }
 
     private void buyHouse(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyHouse");
+        Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getGameId();
+        String propertyName = request.getPropertyName();
+        service.buyHouse(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void sellHouse(RoutingContext ctx) {
@@ -358,11 +380,10 @@ public class MonopolyApiBridge {
     private void getOutOfJailFine(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
-                throw new AuthenticationException();
-            }
-            // All your code that has something to do with this function
-            service.fine(request);
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValue("playerName");
+            String gameId = request.getPathParameterValue("gameId");
+            service.getOutOfJailFine(gameId,playerName);
         } catch (AuthenticationException e) {
             throw new InvalidTokenException();
         }
@@ -371,27 +392,44 @@ public class MonopolyApiBridge {
 
     private void getOutOfJailFree(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        service.free(request);
+        try {
+            if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
+                throw new AuthenticationException();
+            }
+            String playerName = request.getPathParameterValue("playerName");
+            String gameId = request.getPathParameterValue("gameId");
+            service.getOutOfJailFree(gameId,playerName);
+
+        } catch (AuthenticationException e) {
+            throw new InvalidTokenException();
+        }
         Response.sendOkResponse(ctx);
     }
-
     private void getBankAuctions(RoutingContext ctx) {
         throw new NotYetImplementedException("getBankAuctions");
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
         throw new NotYetImplementedException("placeBidOnBankAuction");
-
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        Response.sendJsonResponse(ctx, 200, service.getPlayerAuctions(request));
+        String gameId = request.getPathParameterValue("gameId");
+        Response.sendJsonResponse(ctx, 200, service.getPlayerAuctions(gameId));
     }
 
     private void startPlayerAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        service.startPlayerAuction(request);
+        System.out.println(request.getIntFromBody("start-bid"));
+        System.out.println(request.getIntFromBody("duration"));
+
+        String gameId = request.getPathParameterValue("gameId");
+        String playerName = request.getPathParameterValue("playerName");
+        String propertyName = request.getPathParameterValue("propertyName");
+        int startBid = request.getIntFromBody("start-bid");
+        int duration = request.getIntFromBody("duration");
+        service.startPlayerAuction(gameId,playerName,propertyName,startBid,duration);
         Response.sendOkResponse(ctx);
     }
 

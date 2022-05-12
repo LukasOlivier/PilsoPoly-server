@@ -1,5 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +11,7 @@ class TileTest {
 
     @Test
     public void testGoTile() {
-        Tile goTile = new Tile("Go", 0, "Go");
+        Tile goTile = new Tile("Go", 0, "Go", "Passes go", "go");
         assertEquals("Go", goTile.getName());
         assertEquals(0, goTile.getPosition());
     }

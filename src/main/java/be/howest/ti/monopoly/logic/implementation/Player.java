@@ -1,11 +1,18 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+@JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" })
 
 public class Player {
     private final String name;
-    private String currentTile;
+    public Tile currentTile;
     private boolean jailed;
     private int money;
     private boolean bankrupt;
@@ -15,7 +22,12 @@ public class Player {
     private int debt;
     private final String icon;
 
-    public Player(String name, String currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt ,String icon) {
+    public Tile previousTile;
+    private boolean firstThrow = true;
+    private int turnsInJail = 0;
+    private int amountOfDoubleThrows = 0;
+
+    public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
         this.name = name;
         this.currentTile = currentTile;
         this.jailed = jailed;
@@ -24,13 +36,19 @@ public class Player {
         this.getOutOfJailFreeCards = getOutOfJailFreeCards;
         this.debt = debt;
         this.icon = icon;
+        this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
+    }
+
+    public boolean getFirstThrow(){
+        return this.firstThrow;
     }
 
     public Player(String name, String icon) {
-        this(name,"Go",false, 1500, false, 0, 0, icon);
+        this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), false, 1500, false, 0, 0, icon);
     }
 
-    public void addProperties(PlayerProperty newProperty){
+
+    public void addProperties(PlayerProperty newProperty) {
         properties.add(newProperty);
     }
 
@@ -39,7 +57,7 @@ public class Player {
     }
 
     public String getCurrentTile() {
-        return currentTile;
+        return currentTile.getName();
     }
 
     public boolean isJailed() {
@@ -53,6 +71,7 @@ public class Player {
     public boolean isBankrupt() {
         return bankrupt;
     }
+
 
     public void setBankrupt() {
         this.bankrupt = true;
@@ -79,31 +98,66 @@ public class Player {
     }
 
 
-    public void removeMoney(int amount){money -= amount;}
+    public void removeMoney(int amount) {
+        money -= amount;
+    }
 
     public void fine() {
-        if (this.money >= 50){
+        if (this.money >= 50) {
             this.money = this.money - 50;
             this.jailed = false;
-        }
-        else {
+        } else {
             throw new IllegalStateException("Not enough money");
         }
     }
 
+    public void addGetOutOfJailFreeCard(){
+        getOutOfJailFreeCards++;
+    }
+
+    public void setCurrentTile(Tile currentTile) {
+        this.currentTile = currentTile;
+    }
+
     public void free() {
-        if (this.getOutOfJailFreeCards >= 1){
+        if (this.getOutOfJailFreeCards >= 1) {
             this.getOutOfJailFreeCards--;
             this.jailed = false;
-        }
-        else {
+        } else {
             throw new IllegalStateException("Not enough get-out-of-jail-free cards");
         }
     }
-
 
     public void setTaxSystem(String preferredTaxSystem) {
         this.taxSystem = preferredTaxSystem;
     }
 
+    public void setJailed(boolean jailed) {
+        this.jailed = jailed;
+    }
+
+    public int getTurnsInJail() {
+        return turnsInJail;
+    }
+
+    public void addTurnInJail(){
+        turnsInJail++;
+    }
+
+    public void addDoubleThrow() {
+        amountOfDoubleThrows++;
+    }
+
+    public void resetDoubleThrows() {
+        amountOfDoubleThrows = 0;
+    }
+
+    public int getAmountOfDoubleThrows() {
+        return amountOfDoubleThrows;
+    }
+
+
+    public void addMoney(int amount) {
+        this.money += amount;
+    }
 }

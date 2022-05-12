@@ -79,7 +79,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void getPlayerAuctions(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
             @Override
-            public Auction getPlayerAuctions(Request request) {
+            public Auction getPlayerAuctions(String gameId) {
                 return new Game(4, "PilsoPoly", 5).getAuction();
             }
         });
@@ -109,7 +109,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void startPlayerAuction(Request request) {}
+            public void startPlayerAuction(String gameId,String playerName, String propertyName, int startBid, int duration) {}
 
         });
 
@@ -117,6 +117,10 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property",
                 "some-token",
+                new JsonObject()
+                        .put("start-bid", 54)
+                        .put("duration", 100)
+                        .put("tradable", true),
                 this::assertOkResponse
         );
     }

@@ -7,9 +7,9 @@ import java.util.Objects;
 public class Auction {
 
     private int highest_bid;
-    private int duration;
+    private final int duration;
     private String last_bidder;
-    private String property;
+    private final String property;
 
     public Auction(int highest_bid, int duration, String bidder, String property) {
         this.highest_bid = highest_bid;
@@ -27,7 +27,7 @@ public class Auction {
     }
 
     public void setHighest_bid(int amount) {
-        if ( this.highest_bid == amount ) {
+        if ( this.highest_bid >= amount ) {
             throw new IllegalMonopolyActionException("Amount mus be higher than previous bid!");
         } else {
             this.highest_bid = amount;

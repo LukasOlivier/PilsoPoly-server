@@ -50,7 +50,6 @@ public class Request {
     public RequestParameters getRequestParameters() {
         return params;
     }
-    // Only give token
     public boolean isAuthorized(String expectedGameId, String expectedPlayerName) {
         return Objects.equals(expectedGameId, user.getGameId()) &&
                 Objects.equals(expectedPlayerName, user.getPlayerName());
@@ -60,7 +59,10 @@ public class Request {
         return params.body().getJsonObject().getInteger("numberOfPlayers");
     }
 
-    // ToDo make hese functions in one function
+    public String getGamePrefix() {
+        return params.body().getJsonObject().getString("prefix");
+    }
+
     public int getTilePosition() {
         return params.pathParameter("tileId").getInteger();
     }
@@ -112,9 +114,5 @@ public class Request {
     public String getPathParameterValue(String key){
         return params.pathParameter(key).getString();
     }
-
-
-
-
 }
 
