@@ -163,6 +163,11 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void sellHouse(String gameId, String playerName, String propertyName) {
+        throw new UnsupportedOperationException();
+    }
+
     public void rollDice(Request request) {
         throw new UnsupportedOperationException();
     }

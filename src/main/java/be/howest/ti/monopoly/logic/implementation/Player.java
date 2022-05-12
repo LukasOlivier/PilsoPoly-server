@@ -92,6 +92,10 @@ public class Player {
         money -= amount;
     }
 
+    public void addMoney(int amount) {
+        money += amount;
+    }
+
     public void fine() {
         if (this.money >= 50) {
             this.money = this.money - 50;
@@ -103,10 +107,6 @@ public class Player {
 
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
-    }
-
-    private void addMoney(int amount) {
-        money += amount;
     }
 
     private int calculateTax() {

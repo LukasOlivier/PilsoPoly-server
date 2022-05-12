@@ -44,6 +44,21 @@ public class PlayerProperty {
         }
     }
 
+    public void sellHouse(Player player, List<PlayerProperty> otherProperties) {
+        if ( canRemoveHouse() && houseCountIsCorrect(otherProperties) ) {
+            houseCount -= 1;
+            addHousePrice(player);
+        } else {
+            throw new IllegalStateException("could not sell house");
+        }
+    }
+
+    public void addHousePrice(Player player) {
+        Street street = (Street) property;
+        int housePrice = street.getHousePrice();
+        player.addMoney(housePrice);
+    }
+
     public void withdrawHousePrice(Player player) {
         Street street = (Street) property;
         int housePrice = street.getHousePrice();
@@ -53,6 +68,11 @@ public class PlayerProperty {
     public boolean canAddHouse() {
         int MAX_HOUSE_COUNT = 4;
         return getHouseCount() < MAX_HOUSE_COUNT;
+    }
+
+    public boolean canRemoveHouse() {
+        int MIN_HOUSE_COUNT = 0;
+        return getHouseCount() > MIN_HOUSE_COUNT;
     }
 
     public boolean playerOwnsStreet(List<PlayerProperty> playerProperties) {
@@ -76,13 +96,5 @@ public class PlayerProperty {
             }
         }
         return true;
-    }
-
-    public void removeHouse() {
-        if ( getHouseCount() > 0 ) {
-            houseCount -= 1;
-        } else {
-            throw new IllegalStateException("Can not have less than 0 houses");
-        }
     }
 }

@@ -283,6 +283,17 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+    @Override
+    public void sellHouse(String gameId, String playerName, String propertyName) {
+        Game game =getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        for (PlayerProperty property : player.getProperties()) {
+            if (property.getProperty().equals(propertyName)) {
+                property.sellHouse( player, player.getProperties() );
+            }
+        }
+    }
+
     public void rollDice(Request request){
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
