@@ -68,9 +68,9 @@ public class PlayerProperty {
     }
 
     public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties) {
+        int maxDifferenceInHouses = 1;
         for ( PlayerProperty p : playerProperties ) {
             int differenceInHouses = Math.abs( ( getHouseCount() ) - p.getHouseCount() );
-            int maxDifferenceInHouses = 1;
             if ( differenceInHouses == maxDifferenceInHouses ) {
                 return false;
             }
