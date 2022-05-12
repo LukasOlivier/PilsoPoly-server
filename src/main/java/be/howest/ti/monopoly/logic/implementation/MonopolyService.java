@@ -64,12 +64,6 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Game getDummyGame() {
-        // Do we keep this?
-        return new Game(4, "PilsoPoly", 99);
-    }
-
-    @Override
     public List<String> getChanceCards() {
         return List.of(
                 "Advance to Boardwalk",
@@ -111,11 +105,9 @@ public class MonopolyService extends ServiceAdapter {
     }
 
 
-    public void buyProperty(Request request) {
-        Game game = getGameById(request.getGameId());
-        String playerName = request.getPathParameterValue("playerName");
+    public void buyProperty(String gameId, String playerName,String propertyName) {
+        Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        String propertyName = request.getPropertyName();
         Tile tileToBuy = player.currentTile;
         try {
             checkIfTileCanBeBought(propertyName,player,tileToBuy);
@@ -161,16 +153,6 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void startPlayerAuction(Request request) {
-        Game game = getGameById(request.getGameId());
-        String playerName = request.playerThatStartedAuction();
-        String propertyName = request.getPropertyName();
-        int bid = request.getStartBid();
-        int duration = request.getDuration();
-        game.startPlayerAuction(bid, duration, playerName, propertyName);
-    }
-
-    @Override
     public void placeBidOnPlayerAuction(Request request) {
         Game game = getGameById(request.getGameId());
         String bidder = request.getBidder();
@@ -179,52 +161,36 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public Auction getPlayerAuctions(Request request) {
-        Game game = getGameById(request.getGameId());
+    public Auction getPlayerAuctions(String gameId) {
+        Game game = getGameById(gameId);
         return game.getAuction();
     }
 
     @Override
-    public void fine(Request request) {
-        Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
-        player.fine();
-    }
-
-    @Override
-    public void free(Request request) {
-        Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
-        player.free();
-    }
-
-    @Override
-    public void setBankrupt(Request request) {
-        Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
+    public void setBankrupt(String playerName,String gameId) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
         player.setBankrupt();
         game.isEveryoneBankrupt();
     }
 
     @Override
-    public void useComputeTax(Request request) {
-        Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
+    public void useComputeTax(String playerName,String gameId) {
+        Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.setTaxSystem("COMPUTE");
     }
 
     @Override
-    public void useEstimateTax(Request request) {
-        Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
+    public void useEstimateTax(String playerName,String gameId) {
+        Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.setTaxSystem("ESTIMATE");
     }
 
 
     @Override
-    public void rollDice(Request request) {
-        Game game = getGameById(request.getGameId());
-        Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
+    public Game rollDice(String playerName,String gameId) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
         if (Objects.equals(game.getCurrentPlayer(), player.getName())) {
             game.addTurn(new Turn(player.getName(),"DEFAULT"));
             player.previousTile = player.currentTile;
@@ -236,7 +202,7 @@ public class MonopolyService extends ServiceAdapter {
             checkIfPlayerRolledDouble(player,diceRollResult, game);
             checkIfPlayerCanRollAgain(game,player);
             game.setLastDiceRoll(diceRollResult);
-            System.out.println(game.getCurrentTurn().getMoves());
+            return game;
         } else {
             throw new IllegalMonopolyActionException("Not your turn!");
         }

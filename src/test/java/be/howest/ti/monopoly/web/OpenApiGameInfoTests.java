@@ -34,22 +34,4 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
                 response -> assertErrorResponse(response, 401)
         );
     }
-
-
-    @Test
-    void getDummyGame(final VertxTestContext testContext) {
-        service.setDelegate(new ServiceAdapter(){
-            public Game getDummyGame(){
-                return new Game(4, "PilsoPoly", 5);
-
-            }
-
-        });
-        get(
-                testContext,
-                "/games/dummy",
-                null,
-                this::assertOkResponse
-        );
-    }
 }

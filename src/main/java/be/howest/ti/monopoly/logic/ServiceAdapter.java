@@ -100,8 +100,12 @@ public class ServiceAdapter implements IService {
     public Game getGameById(String id) {throw new UnsupportedOperationException();}
 
     @Override
-    public void buyProperty(Request request) {throw new UnsupportedOperationException();}
+    public void buyProperty(String gameId, String playerName, String propertyName) {throw new UnsupportedOperationException();}
 
+    @Override
+    public void startPlayerAuction(String playerName, String gameId, String propertyName) {
+
+    }
 
 
     @Override
@@ -119,32 +123,27 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Auction getPlayerAuctions(Request request) {
+    public Auction getPlayerAuctions(String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void fine(Request request) {
+    public void fine(String playerName,String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void free(Request request) {
+    public void setBankrupt(String playerName,String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setBankrupt(Request request) {
+    public void useComputeTax(String playerName,String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void useComputeTax(Request request) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void useEstimateTax(Request request) {
+    public void useEstimateTax(String playerName, String gameId) {
         throw new UnsupportedOperationException();
     }
 
@@ -154,8 +153,13 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public void rollDice(Request request) {
+    public Game rollDice(String playerName, String gameId) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void free(String playerName, String gameId) {
+
     }
 
 }

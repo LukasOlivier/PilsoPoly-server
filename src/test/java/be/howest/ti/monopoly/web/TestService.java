@@ -25,20 +25,23 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<String > getCommunityCards() {
+    public List<String> getCommunityCards() {
         return delegate.getCommunityCards();
     }
 
     public List<Tile> getTiles() {
         return delegate.getTiles();
     }
+
     @Override
     public Tile getTile(int position) {
         return delegate.getTile(position);
     }
 
     @Override
-    public Game getGame() {return delegate.getGame();}
+    public Game getGame() {
+        return delegate.getGame();
+    }
 
     @Override
     public void addGame(Game game) {
@@ -56,8 +59,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public void rollDice(Request request) {
-        delegate.rollDice(request);
+    public Game rollDice(String playerName, String gameId) {
+        return delegate.rollDice(playerName, gameId);
     }
 
     @Override
@@ -114,8 +117,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public void startPlayerAuction(Request request) {
-        delegate.startPlayerAuction(request);
+    public void startPlayerAuction(String playerName, String gameId, String propertyName) {
+        delegate.startPlayerAuction(playerName, gameId, propertyName);
     }
 
     @Override
@@ -124,33 +127,33 @@ public class TestService implements IService {
     }
 
     @Override
-    public Auction getPlayerAuctions(Request request) {
-        return delegate.getPlayerAuctions(request);
+    public Auction getPlayerAuctions(String gameId) {
+        return delegate.getPlayerAuctions(gameId);
     }
 
     @Override
-    public void fine(Request request) {
-        delegate.fine(request);
+    public void fine(String playerName, String gameId) {
+        delegate.fine(playerName, gameId);
     }
 
     @Override
-    public void free(Request request) {
-        delegate.free(request);
+    public void free(String playerName, String gameId) {
+        delegate.free(playerName, gameId);
     }
 
     @Override
-    public void setBankrupt(Request request) {
-        delegate.setBankrupt(request);
+    public void setBankrupt(String playerName, String gameId) {
+        delegate.setBankrupt(playerName, gameId);
     }
 
     @Override
-    public void useComputeTax(Request request) {
-
+    public void useComputeTax(String playerName, String gameId) {
+        delegate.useComputeTax(playerName, gameId);
     }
 
     @Override
-    public void useEstimateTax(Request request) {
-
+    public void useEstimateTax(String playerName, String gameId) {
+        delegate.useEstimateTax(playerName, gameId);
     }
 
     @Override
@@ -159,8 +162,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public void buyProperty(Request request) {
-         delegate.buyProperty(request);
+    public void buyProperty(String gameId, String playerName, String propertyName) {
+        delegate.buyProperty(gameId,playerName,propertyName);
     }
 
 

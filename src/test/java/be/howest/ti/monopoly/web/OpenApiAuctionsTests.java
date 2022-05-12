@@ -79,7 +79,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void getPlayerAuctions(final VertxTestContext testContext) {
         service.setDelegate(new ServiceAdapter(){
             @Override
-            public Auction getPlayerAuctions(Request request) {
+            public Auction getPlayerAuctions(String gameId) {
                 return new Game(4, "PilsoPoly", 5).getAuction();
             }
         });

@@ -38,27 +38,26 @@ public interface IService {
 
     Tile getTile(String tileName);
 
-    void buyProperty(Request request);
+    void buyProperty(String gameId, String playerName, String propertyName);
 
 
     // AUCTION
-    void startPlayerAuction(Request request);
+    void startPlayerAuction(String playerName, String gameId, String propertyName);
     void placeBidOnPlayerAuction(Request request);
 
-    Auction getPlayerAuctions(Request request);
+    Auction getPlayerAuctions(String gameId);
 
-    void fine(Request request);
+    void fine(String playerName, String gameId);
 
-    void free(Request request);
-
-    void setBankrupt(Request request);
-
-    void useComputeTax(Request request);
-
-    void useEstimateTax(Request request);
+    void setBankrupt(String playerName,String gameId);
 
     Map<String, Game> getGames();
 
-    void rollDice(Request request);
+    void free(String playerName, String gameId);
 
+    Game rollDice(String playerName, String gameId);
+
+    void useEstimateTax(String playerName, String gameId);
+
+    void useComputeTax(String playerName, String gameId);
 }
