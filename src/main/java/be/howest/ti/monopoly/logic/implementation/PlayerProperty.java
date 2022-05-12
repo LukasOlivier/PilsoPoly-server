@@ -35,12 +35,19 @@ public class PlayerProperty {
         return hotelCount;
     }
 
-    public void addHouse(List<PlayerProperty> otherProperties) {
+    public void addHouse(Player player, List<PlayerProperty> otherProperties) {
         if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties) ) {
             houseCount += 1;
+            withdrawHousePrice(player);
         } else {
             throw new IllegalStateException("could not buy house");
         }
+    }
+
+    public void withdrawHousePrice(Player player) {
+        Street street = (Street) property;
+        int housePrice = street.getHousePrice();
+        player.removeMoney(housePrice);
     }
 
     public boolean canAddHouse() {

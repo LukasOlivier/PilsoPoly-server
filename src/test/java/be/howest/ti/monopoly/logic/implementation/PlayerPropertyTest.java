@@ -18,15 +18,17 @@ class PlayerPropertyTest {
     @Test
     void addHouseWhenStreetNotOwned() {
         PlayerProperty testProperty = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
+        Player player = new Player("niels", "beer");
         assertThrows(IllegalStateException.class, () -> {
-            testProperty.addHouse(List.of(testProperty));
+            testProperty.addHouse(player, List.of(testProperty));
         });
     }
 
     @Test
     void addHouseWhenStreetOwned() {
         PlayerProperty testProperty = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
-        testProperty.addHouse(List.of(
+        Player player = new Player("niels", "beer");
+        testProperty.addHouse(player, List.of(
                 testProperty,
                 new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350))));
         assertEquals(1, testProperty.getHouseCount());
@@ -35,13 +37,24 @@ class PlayerPropertyTest {
     @Test
     void addHouseWithIncorrectHouseCount() {
         PlayerProperty testProperty = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
-        testProperty.addHouse(List.of(
+        Player player = new Player("niels", "beer");
+        testProperty.addHouse(player, List.of(
                 testProperty,
                 new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350))));
         assertThrows(IllegalStateException.class, () -> {
-           testProperty.addHouse(List.of(
+           testProperty.addHouse(player, List.of(
                    testProperty,
                    new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350))));
         });
+    }
+
+    @Test
+    void seeIfMoneyIsRemoved() {
+        PlayerProperty testProperty = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
+        Player player = new Player("niels", "beer");
+        testProperty.addHouse(player, List.of(
+                testProperty,
+                new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350))));
+        assertEquals(1300, player.getMoney());
     }
 }

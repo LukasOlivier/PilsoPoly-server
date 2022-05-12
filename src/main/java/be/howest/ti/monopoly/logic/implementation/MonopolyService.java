@@ -278,7 +278,7 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         for (PlayerProperty property : player.getProperties()) {
             if (property.getProperty().equals(propertyName)) {
-                property.addHouse(player.getProperties());
+                property.addHouse( player, player.getProperties() );
             }
         }
     }
