@@ -53,6 +53,15 @@ public class Move {
         return player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard;
     }
 
+    @Override
+    public String toString() {
+        return "Move{" +
+                "tile='" + tile + '\'' +
+                ", description='" + description + '\'' +
+                ", actionType='" + actionType + '\'' +
+                '}';
+    }
+
     private static boolean passGoWithoutReward(Player player) {
         return player.getFirstThrow() || player.isJailed();
     }

@@ -291,8 +291,11 @@ public class MonopolyApiBridge {
 
     private void rollDice(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        String gameId = request.getPathParameterValue("gameId");
+        Game game = service.getGameById(gameId);
         service.rollDice(request);
-        Response.sendOkResponse(ctx);
+        Response.sendJsonResponse(ctx, 200, game);
+
     }
 
     private void declareBankruptcy(RoutingContext ctx) {

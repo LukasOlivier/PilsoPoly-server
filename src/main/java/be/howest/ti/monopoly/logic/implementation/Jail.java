@@ -12,7 +12,6 @@ public class Jail {
             if (player.getTurnsInJail() == maxTurnsInJail) {
                 player.setJailed(false);
                 player.removeMoney(amountToPayToGetOutOfJail);
-                System.out.println("free by waiting turns");
             } else {
                 player.addTurnInJail();
             }
@@ -23,19 +22,18 @@ public class Jail {
         if (player.isJailed()) {
             player.setJailed(false);
             player.resetDoubleThrows();
-            System.out.println("free by double");
             return true;
         }
         return false;
     }
 
-    public static boolean checkIfJailedByDoubleThrow(Player player) {
+    public static boolean checkIfJailedByDoubleThrow(Player player, Game game) {
         int maxDoubleThrowsBeforeJail = 3;
         if (player.getAmountOfDoubleThrows() == maxDoubleThrowsBeforeJail) {
             player.setJailed(true);
             player.setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
             player.resetDoubleThrows();
-            System.out.println("jailed by double");
+            game.getCurrentTurn().addMove(new Move("Jail","In jail", "jailed"));
             return true;
         }
         return false;

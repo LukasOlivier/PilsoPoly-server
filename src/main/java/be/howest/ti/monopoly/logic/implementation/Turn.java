@@ -9,13 +9,18 @@ public class Turn {
     private String type;
     private List<Move> moves = new ArrayList<>();
 
-    public Turn( String player, String type, Move move, int diceOne, int diceTwo) {
+    public Turn( String player, String type) {
         this.roll = new ArrayList<>();
         this.player = player;
         this.type = type;
+    }
+
+    public void setRoll(List<Integer> roll) {
+        this.roll = roll;
+    }
+
+    public void addMove(Move move){
         this.moves.add(move);
-        roll.add(diceOne);
-        roll.add(diceTwo);
     }
 
     public List<Integer> getRoll() {

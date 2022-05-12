@@ -8,12 +8,9 @@ import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
 import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-@JsonIgnoreProperties()
+@JsonIgnoreProperties({""})
 public class Game {
     private int numberOfPlayers;
     private boolean started;
@@ -28,6 +25,8 @@ public class Game {
     private boolean ended;
     private String currentPlayer;
     private String winner;
+
+    private List<Integer> lastDiceRoll = new ArrayList<>();
 
 
     public Game(int numberOfPlayers, String prefix, int size) {
@@ -75,6 +74,14 @@ public class Game {
         return started;
     }
 
+    public List<Integer> getLastDiceRoll() {
+        return lastDiceRoll;
+    }
+
+    public void setLastDiceRoll(List<Integer> lastDiceRoll) {
+        this.lastDiceRoll = lastDiceRoll;
+    }
+
     public List<Player> getPlayers() {
         return players;
     }
@@ -100,6 +107,7 @@ public class Game {
         players.add(new Player(name, icon));
         if (players.size() == numberOfPlayers) {
             this.started = true;
+            this.canRoll = true;
         }
     }
 
@@ -142,6 +150,14 @@ public class Game {
             }
         }
         throw new MonopolyResourceNotFoundException("No player with this name is found");
+    }
+
+    public Turn getCurrentTurn() {
+        if (!turns.isEmpty()) {
+            return getTurns().get(getTurns().size() - 1);
+        }else{
+            return null;
+        }
     }
 
     public String getWinner() {

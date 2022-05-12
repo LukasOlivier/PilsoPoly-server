@@ -226,16 +226,17 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getPathParameterValue("playerName"));
         if (Objects.equals(game.getCurrentPlayer(), player.getName())) {
+            game.addTurn(new Turn(player.getName(),"DEFAULT"));
             player.previousTile = player.currentTile;
             List<Integer> diceRollResult = Dice.rollDice();
             int placesToMove = calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
-            game.addTurn(new Turn(player.getName(), "DEFAULT", Move.makeMove(player, placesToMove), diceRollResult.get(0), diceRollResult.get(1)));
-            checkIfPlayerRolledDouble(player,diceRollResult);
+            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));
+            game.getCurrentTurn().setRoll(diceRollResult);
+            checkIfPlayerRolledDouble(player,diceRollResult, game);
             checkIfPlayerCanRollAgain(game,player);
-            System.out.println(player.currentTile.getName());
-            System.out.println(diceRollResult);
-            System.out.println();
+            game.setLastDiceRoll(diceRollResult);
+            System.out.println(game.getCurrentTurn().getMoves());
         } else {
             throw new IllegalMonopolyActionException("Not your turn!");
         }
@@ -257,27 +258,30 @@ public class MonopolyService extends ServiceAdapter {
         game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
     }
 
-    public void checkIfPlayerRolledDouble(Player player, List<Integer> diceRollResult){
+    public void checkIfPlayerRolledDouble(Player player, List<Integer> diceRollResult, Game game){
         if (Dice.checkIfRolledDouble(diceRollResult)) {
             player.addDoubleThrow();
-            checkIfJailedByDoubleThrow(player);
+            checkIfJailedByDoubleThrow(player, game);
         }else{
             player.resetDoubleThrows();
         }
     }
     public void checkIfPlayerCanRollAgain(Game game,Player player) {
         if (Objects.equals(player.currentTile.getActionType(), "buy")){
-            game.setCurrentPlayer("waiting for buy");
+            game.setCanRoll(false);
         }
-        else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player)){
+        else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)){
             game.setCurrentPlayer(player.getName());
+            game.setCanRoll(true);
+
         }else{
+            game.setCanRoll(true);
             setNextPlayer(game,player);
         }
     }
 
-    public boolean checkIfJailedByDoubleThrow(Player player) {
-        return Jail.checkIfFreeByDoubleThrow(player) || Jail.checkIfJailedByDoubleThrow(player);
+    public boolean checkIfJailedByDoubleThrow(Player player, Game game) {
+        return Jail.checkIfFreeByDoubleThrow(player) || Jail.checkIfJailedByDoubleThrow(player,game);
     }
 }
 
