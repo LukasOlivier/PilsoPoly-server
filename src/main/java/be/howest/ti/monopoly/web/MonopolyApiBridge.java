@@ -377,9 +377,7 @@ public class MonopolyApiBridge {
             authorizationCheck(request);
             String playerName = request.getPathParameterValue("playerName");
             String gameId = request.getPathParameterValue("gameId");
-            Player player = service.getGameById(gameId).getSpecificPlayer(playerName);
-            player.fine();
-
+            service.getOutOfJailFine(gameId,playerName);
         } catch (AuthenticationException e) {
             throw new InvalidTokenException();
         }
@@ -394,8 +392,7 @@ public class MonopolyApiBridge {
             }
             String playerName = request.getPathParameterValue("playerName");
             String gameId = request.getPathParameterValue("gameId");
-            Player player = service.getGameById(gameId).getSpecificPlayer(playerName);
-            player.free();
+            service.getOutOfJailFree(gameId,playerName);
 
         } catch (AuthenticationException e) {
             throw new InvalidTokenException();
@@ -421,10 +418,12 @@ public class MonopolyApiBridge {
         String gameId = request.getPathParameterValue("gameId");
         String playerName = request.getPathParameterValue("playerName");
         String propertyName = request.getPathParameterValue("propertyName");
+        /*
         int startBid = request.getIntFromBody("start-bid");
         int duration = request.getIntFromBody("duration");
-        Game game = service.getGameById(gameId);
-        game.startPlayerAuction(startBid, duration, playerName, propertyName);
+        service.startPlayerAuction(gameId,playerName,propertyName,startBid,duration);
+
+         */
         Response.sendOkResponse(ctx);
     }
 

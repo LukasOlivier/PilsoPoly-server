@@ -42,7 +42,8 @@ public interface IService {
 
 
     // AUCTION
-    void startPlayerAuction(String playerName, String gameId, String propertyName);
+    void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration);
+
     void placeBidOnPlayerAuction(Request request);
 
     Auction getPlayerAuctions(String gameId);
@@ -60,4 +61,9 @@ public interface IService {
     void useEstimateTax(String playerName, String gameId);
 
     void useComputeTax(String playerName, String gameId);
+
+    void getOutOfJailFine(String gameId, String playerName);
+
+    void getOutOfJailFree(String gameId, String playerName);
+
 }

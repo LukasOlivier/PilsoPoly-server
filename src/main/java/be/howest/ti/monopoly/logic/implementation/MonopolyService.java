@@ -186,6 +186,21 @@ public class MonopolyService extends ServiceAdapter {
         player.setTaxSystem("ESTIMATE");
     }
 
+    public void getOutOfJailFine(String gameId, String playerName){
+        Player player = getGameById(gameId).getSpecificPlayer(playerName);
+        player.fine();
+    }
+
+    public void getOutOfJailFree(String gameId, String playerName){
+        Player player = getGameById(gameId).getSpecificPlayer(playerName);
+        player.free();
+    }
+
+    public void startPlayerAuction(String gameId,String playerName, String propertyName, int startBid, int duration){
+        Game game = getGameById(gameId);
+        game.startPlayerAuction(startBid,duration,playerName,propertyName);
+    }
+
 
     @Override
     public Game rollDice(String playerName,String gameId) {

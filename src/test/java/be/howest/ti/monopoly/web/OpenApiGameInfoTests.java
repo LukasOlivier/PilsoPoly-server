@@ -18,8 +18,8 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         });
         get(
                 testContext,
-                "/games/PilsoPoly_2",
-                "PilsoPoly_2-Bob",
+                "/games/PilsoPoly",
+                "PilsoPoly",
                 this::assertOkResponse
         );
     }

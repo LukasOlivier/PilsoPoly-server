@@ -96,9 +96,6 @@ public class Game {
 
 
     public void addPlayer(String name, String icon){
-        //if (started) {
-            //throw new IllegalMonopolyActionException("The game has already started");
-        // }
         for (Player player : players){
             if (Objects.equals(player.getName(), name)) {
                 throw new IllegalArgumentException("There is already a player with this name!");

@@ -117,8 +117,9 @@ public class TestService implements IService {
     }
 
     @Override
-    public void startPlayerAuction(String playerName, String gameId, String propertyName) {
-        delegate.startPlayerAuction(playerName, gameId, propertyName);
+    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
+        delegate.startPlayerAuction(gameId,playerName,propertyName,startBid,duration);
+
     }
 
     @Override
@@ -149,6 +150,16 @@ public class TestService implements IService {
     @Override
     public void useComputeTax(String playerName, String gameId) {
         delegate.useComputeTax(playerName, gameId);
+    }
+
+    @Override
+    public void getOutOfJailFine(String gameId, String playerName) {
+
+    }
+
+    @Override
+    public void getOutOfJailFree(String gameId, String playerName) {
+
     }
 
     @Override

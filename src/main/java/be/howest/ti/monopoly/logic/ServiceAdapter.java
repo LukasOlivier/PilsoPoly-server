@@ -103,10 +103,9 @@ public class ServiceAdapter implements IService {
     public void buyProperty(String gameId, String playerName, String propertyName) {throw new UnsupportedOperationException();}
 
     @Override
-    public void startPlayerAuction(String playerName, String gameId, String propertyName) {
-
+    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
+        throw new UnsupportedOperationException();
     }
-
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -143,6 +142,16 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
+    public void getOutOfJailFine(String gameId, String playerName) {
+
+    }
+
+    @Override
+    public void getOutOfJailFree(String gameId, String playerName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void useEstimateTax(String playerName, String gameId) {
         throw new UnsupportedOperationException();
     }
@@ -159,7 +168,7 @@ public class ServiceAdapter implements IService {
 
     @Override
     public void free(String playerName, String gameId) {
-
+        throw new UnsupportedOperationException();
     }
 
 }
