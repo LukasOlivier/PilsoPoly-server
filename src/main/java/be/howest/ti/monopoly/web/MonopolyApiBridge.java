@@ -175,6 +175,7 @@ public class MonopolyApiBridge {
             int numberOfPlayers = request.getIntFromBody("numberOfPlayers");
             String gameId = request.getStringFromBody("prefix");
             Game createdGame = new Game(numberOfPlayers, gameId, service.getGameMapSize());
+            service.addGame(createdGame);
             SpecificGameInfo specificGameInfo = new SpecificGameInfo(createdGame);
             service.addGame(createdGame);
             Response.sendJsonResponse(ctx, 200, specificGameInfo);

@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,8 @@ class GameTest {
 
     int gameMapSize = 5;
     Game testGame = new Game(3, "PilsoPoly", gameMapSize);
+
+
 
     @Test
     void createGame(){
@@ -52,4 +55,16 @@ class GameTest {
     }
 
 
+    @Test
+    void bankruptTest(){
+        testGame.addPlayer("Sibren", "icon");
+        testGame.addPlayer("Robin", "icon");
+        testGame.addPlayer("Lukas", "icon");
+        testGame.getSpecificPlayer("Sibren").setBankrupt();
+        testGame.getSpecificPlayer("Lukas").setBankrupt();
+        testGame.isEveryoneBankrupt();
+        assertFalse(testGame.getSpecificPlayer("Robin").isBankrupt());
+        assertTrue(testGame.getSpecificPlayer("Lukas").isBankrupt());
+        assertEquals("Robin" ,testGame.getWinner());
+    }
 }

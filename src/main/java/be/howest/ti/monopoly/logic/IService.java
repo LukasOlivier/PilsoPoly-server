@@ -27,11 +27,6 @@ public interface IService {
 
     int getGameMapSize();
     List<String> getChanceCards();
-
-    Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter);
-    Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter);
-    Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter);
-    // TILES
     Tile getTile(int position);
 
     List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix);
@@ -39,7 +34,6 @@ public interface IService {
     Tile getTile(String tileName);
 
     void buyProperty(String gameId, String playerName, String propertyName);
-
 
     // AUCTION
     void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration);

@@ -93,21 +93,6 @@ public class TestService implements IService {
     }
 
     @Override
-    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
-        return null;
-    }
-
-    @Override
     public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
         return delegate.filterGamesBy(isStarted, numberPlayers, prefix);
     }
@@ -154,12 +139,12 @@ public class TestService implements IService {
 
     @Override
     public void getOutOfJailFine(String gameId, String playerName) {
-
+        delegate.getOutOfJailFine(gameId, playerName);
     }
 
     @Override
     public void getOutOfJailFree(String gameId, String playerName) {
-
+        delegate.getOutOfJailFree(gameId, playerName);
     }
 
     @Override
