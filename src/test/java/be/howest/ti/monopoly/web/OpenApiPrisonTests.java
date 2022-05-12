@@ -36,7 +36,7 @@ class OpenApiPrisonTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void free(String playerName,String gameId) {}
+            public void getOutOfJailFree(String playerName,String gameId) {}
         });
         post(
                 testContext,

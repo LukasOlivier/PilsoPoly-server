@@ -356,7 +356,12 @@ public class MonopolyApiBridge {
     }
 
     private void buyHouse(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyHouse");
+        Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getGameId();
+        String propertyName = request.getPropertyName();
+        service.buyHouse(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void sellHouse(RoutingContext ctx) {
@@ -415,15 +420,15 @@ public class MonopolyApiBridge {
 
     private void startPlayerAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        System.out.println(request.getIntFromBody("start-bid"));
+        System.out.println(request.getIntFromBody("duration"));
+
         String gameId = request.getPathParameterValue("gameId");
         String playerName = request.getPathParameterValue("playerName");
         String propertyName = request.getPathParameterValue("propertyName");
-        /*
         int startBid = request.getIntFromBody("start-bid");
         int duration = request.getIntFromBody("duration");
         service.startPlayerAuction(gameId,playerName,propertyName,startBid,duration);
-
-         */
         Response.sendOkResponse(ctx);
     }
 

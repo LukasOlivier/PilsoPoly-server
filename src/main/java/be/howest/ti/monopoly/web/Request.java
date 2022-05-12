@@ -114,9 +114,5 @@ public class Request {
     public String getPathParameterValue(String key){
         return params.pathParameter(key).getString();
     }
-
-
-
-
 }
 

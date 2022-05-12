@@ -54,8 +54,6 @@ public interface IService {
 
     Map<String, Game> getGames();
 
-    void free(String playerName, String gameId);
-
     Game rollDice(String playerName, String gameId);
 
     void useEstimateTax(String playerName, String gameId);
@@ -65,5 +63,7 @@ public interface IService {
     void getOutOfJailFine(String gameId, String playerName);
 
     void getOutOfJailFree(String gameId, String playerName);
+
+    void buyHouse(String gameId, String playerName, String propertyName);
 
 }

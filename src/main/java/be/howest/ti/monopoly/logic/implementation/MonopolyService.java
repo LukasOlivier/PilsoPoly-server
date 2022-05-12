@@ -104,7 +104,6 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
-
     public void buyProperty(String gameId, String playerName,String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
@@ -186,16 +185,19 @@ public class MonopolyService extends ServiceAdapter {
         player.setTaxSystem("ESTIMATE");
     }
 
+    @Override
     public void getOutOfJailFine(String gameId, String playerName){
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.fine();
     }
 
+    @Override
     public void getOutOfJailFree(String gameId, String playerName){
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.free();
     }
 
+    @Override
     public void startPlayerAuction(String gameId,String playerName, String propertyName, int startBid, int duration){
         Game game = getGameById(gameId);
         game.startPlayerAuction(startBid,duration,playerName,propertyName);
@@ -223,6 +225,16 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+    public void buyHouse(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        for (PlayerProperty property : player.getProperties()) {
+            if (property.getProperty().equals(propertyName)) {
+                property.addHouse( player, player.getProperties() );
+            }
+        }
+    }
+
     private int calculatePlacesToMove(List<Integer> diceRoll) {
         int placesToMove = 0;
         for (Integer diceNumber : diceRoll) {
@@ -238,6 +250,7 @@ public class MonopolyService extends ServiceAdapter {
         }
         game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
     }
+
 
     public void checkIfPlayerRolledDouble(Player player, List<Integer> diceRollResult, Game game){
         if (Dice.checkIfRolledDouble(diceRollResult)) {

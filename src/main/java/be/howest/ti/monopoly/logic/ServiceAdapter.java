@@ -167,7 +167,7 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public void free(String playerName, String gameId) {
+    public void buyHouse(String gameId, String playerName, String propertyName) {
         throw new UnsupportedOperationException();
     }
 

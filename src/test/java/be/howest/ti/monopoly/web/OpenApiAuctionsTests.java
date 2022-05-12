@@ -117,6 +117,10 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property",
                 "some-token",
+                new JsonObject()
+                        .put("start-bid", 54)
+                        .put("duration", 100)
+                        .put("tradable", true),
                 this::assertOkResponse
         );
     }

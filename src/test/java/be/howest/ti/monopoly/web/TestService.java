@@ -64,6 +64,11 @@ public class TestService implements IService {
     }
 
     @Override
+    public void buyHouse(String gameId, String playerName, String propertyName) {
+        delegate.buyHouse(gameId, playerName, propertyName);
+    }
+
+    @Override
     public void clearGameList() {
         delegate.clearGameList();
     }
@@ -135,11 +140,6 @@ public class TestService implements IService {
     @Override
     public void fine(String playerName, String gameId) {
         delegate.fine(playerName, gameId);
-    }
-
-    @Override
-    public void free(String playerName, String gameId) {
-        delegate.free(playerName, gameId);
     }
 
     @Override
