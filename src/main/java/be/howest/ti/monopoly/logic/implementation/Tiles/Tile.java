@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation.Tiles;
 
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tax;
 
@@ -78,8 +79,9 @@ public class Tile {
     public void setActionType(String actionType) {
         this.actionType = actionType;
     }
-
-    public static void takeTileAction(Tile tile, Player player) {
+    // Added Game here
+    public static void takeTileAction(Tile tile, Player player, Game game) {
+        System.out.print(tile.actionType);
         switch (tile.getActionType()) {
             case "jail":
                 player.currentTile = new Tile("Jail", 10, "Jail", "In jail", "jailed");
@@ -94,6 +96,13 @@ public class Tile {
                 } else {
                     player.removeMoney(Tax.getComputeTax(player));
                 }
+                break;
+            case "chance":
+                break;
+            case "community chest":
+                // this is stupid lmao (de name azo meegeven?
+                System.out.println(tile.actionType);
+                game.doCard(player.getName());
                 break;
             default:
         }

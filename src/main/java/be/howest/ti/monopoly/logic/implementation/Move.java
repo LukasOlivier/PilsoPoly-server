@@ -26,13 +26,15 @@ public class Move {
     public String getActionType() {
         return actionType;
     }
-
-    public static Move makeMove(Player player, int placesToMove) {
+    // Added Game here
+    public static Move makeMove(Player player, int placesToMove, Game game) {
         if (!player.isJailed()){
             int endOfBoardPosition = 40;
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % endOfBoardPosition;
             player.currentTile = Tile.getTileFromPosition(Game.getGameTiles(), currentPosition);
-            Tile.takeTileAction(player.currentTile, player);
+            // Added Game here
+            System.out.println(player.currentTile);
+            Tile.takeTileAction(player.currentTile, player, game);
             checkIfPassedGo(player);
         }
         return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());

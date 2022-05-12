@@ -67,4 +67,11 @@ class GameTest {
         assertTrue(testGame.getSpecificPlayer("Lukas").isBankrupt());
         assertEquals("Robin" ,testGame.getWinner());
     }
+
+    @Test
+    void ccCardTest(){
+        testGame.addPlayer("Lukas", "icon");
+        Game.createCommunityCards();
+        Move.makeMove(testGame.getSpecificPlayer("Lukas"), 2, testGame);
+    }
 }

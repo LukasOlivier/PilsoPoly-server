@@ -305,7 +305,6 @@ public class MonopolyApiBridge {
         String playerName = request.getPathParameterValue("playerName");
         String gameId = request.getPathParameterValue("gameId");
         Response.sendJsonResponse(ctx, 200, service.rollDice(playerName,gameId));
-
     }
 
     private void declareBankruptcy(RoutingContext ctx) {

@@ -104,6 +104,7 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
+    @Override
     public void buyProperty(String gameId, String playerName,String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
@@ -214,7 +215,8 @@ public class MonopolyService extends ServiceAdapter {
             List<Integer> diceRollResult = Dice.rollDice();
             int placesToMove = calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
-            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));
+            // Added Game here
+            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove, game));
             game.getCurrentTurn().setRoll(diceRollResult);
             checkIfPlayerRolledDouble(player,diceRollResult, game);
             checkIfPlayerCanRollAgain(game,player);

@@ -1,11 +1,12 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+import be.howest.ti.monopoly.logic.implementation.CommunityAndChance.CommunityCard;
+import be.howest.ti.monopoly.logic.implementation.CommunityAndChance.PayCC;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
-import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public class Game {
     private boolean ended;
     private String currentPlayer;
     private String winner;
-
+    private static List<CommunityCard> ccCards = new ArrayList<>();
     private List<Integer> lastDiceRoll = new ArrayList<>();
 
 
@@ -207,6 +208,23 @@ public class Game {
             this.winner = possibleWinner;
         }
     }
+
+
+    public static void createCommunityCards(){
+        ccCards.add( new PayCC("Doctor's fee. Pay $50", 50));
+        ccCards.add(new PayCC("Pay hospital fees of $100", 100));
+        ccCards.add(new PayCC("Pay school fees of $50", 50));
+    }
+
+    public void doCard(String playerName){
+        System.out.println(ccCards.get(1));
+        ccCards.get(1).communityCardAction(this, playerName);
+    }
+
+
+
+
+
 
     public static List<Tile> getGameTiles(){
         return List.of(
