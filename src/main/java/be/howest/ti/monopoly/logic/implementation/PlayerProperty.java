@@ -44,7 +44,8 @@ public class PlayerProperty {
     }
 
     public boolean canAddHouse() {
-        return getHouseCount() < 4;
+        int MAXHOUSECOUNT = 4;
+        return getHouseCount() < MAXHOUSECOUNT;
     }
 
     public boolean playerOwnsStreet(List<PlayerProperty> playerProperties) {
