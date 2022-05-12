@@ -81,8 +81,8 @@ public class MonopolyService extends ServiceAdapter {
                 new Railroad("Short Line RR", 35, "railroad", 4, "BLACK", 25, 100, 200),
                 new Tile("Chance III", 36, "chance", "Draw a card", "chance"),
                 new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350),
-                new Tile("Luxury Tax", 38, "Luxury Tax", "should pay rent", "rent"),
-                new Street("Boardwalk", 39, "street", 3, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400)
+                new Tile("Luxury Tax", 38, "Luxury Tax","should pay rent", "rent"),
+                new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400)
         );
     }
 
@@ -152,8 +152,7 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
-
-    public void buyProperty(Request request) {
+    public void buyProperty(Request request){
         Game game = getGameById(request.getGameId());
         String playerName = request.getParameterValue("playerName");
         Player player = game.getSpecificPlayer(playerName);
@@ -178,12 +177,10 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
-
     @Override
     public Game getGameById(String id) {
         return allGames.get(id);
     }
-
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -276,7 +273,17 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void rollDice(Request request) {
+    public void buyHouse(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        for (PlayerProperty property : player.getProperties()) {
+            if (property.getProperty().equals(propertyName)) {
+                property.addHouse( player, player.getProperties() );
+            }
+        }
+    }
+
+    public void rollDice(Request request){
         Game game = getGameById(request.getGameId());
         Player player = game.getSpecificPlayer(request.getParameterValue("playerName"));
         if (Objects.equals(game.getCurrentPlayer(), player.getName())) {
@@ -300,8 +307,6 @@ public class MonopolyService extends ServiceAdapter {
         }
         game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
     }
-
-
 }
 
 

@@ -311,7 +311,12 @@ public class MonopolyApiBridge {
     }
 
     private void buyHouse(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyHouse");
+        Request request = Request.from(ctx);
+        String playerName = request.getParameterValue("playerName");
+        String gameId = request.getGameId();
+        String propertyName = request.getPropertyName();
+        service.buyHouse(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void sellHouse(RoutingContext ctx) {

@@ -63,6 +63,6 @@ public interface IService {
 
     Map<String, Game> getGames();
 
+    void buyHouse(String gameId, String playerName, String propertyName);
     void rollDice(Request request);
-
 }
