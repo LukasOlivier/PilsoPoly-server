@@ -58,7 +58,7 @@ class OpenApiImprovingPropertyTests extends OpenApiTestsBase {
         );
     }
 
-    //
+
     @Test
     void buyHotel(final VertxTestContext testContext) {
         post(

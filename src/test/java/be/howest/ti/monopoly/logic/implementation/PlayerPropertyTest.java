@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

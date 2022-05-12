@@ -12,7 +12,7 @@ class OpenApiTaxManagementTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void useEstimateTax(Request request) {}
+            public void useEstimateTax(String playerName, String gameId) {}
 
         });
 
@@ -39,7 +39,7 @@ class OpenApiTaxManagementTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void useEstimateTax(Request request) {}
+            public void useComputeTax(String playerName, String gameId) {}
 
         });
 

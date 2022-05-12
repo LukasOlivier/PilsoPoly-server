@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.web;
 
 import be.howest.ti.monopoly.logic.ServiceAdapter;
+import be.howest.ti.monopoly.logic.implementation.Game;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,9 @@ class OpenApiTurnManagementTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void rollDice(Request request) {}
+            public Game rollDice(String playerName, String gameId) {
+                return new Game(2,"PilsoPoly", 1);
+            }
 
         });
         post(
@@ -38,7 +41,7 @@ class OpenApiTurnManagementTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void setBankrupt(Request request) {}
+            public void setBankrupt(String playerName,String gameId) {}
 
         });
         post(

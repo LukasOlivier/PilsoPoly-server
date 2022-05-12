@@ -2,8 +2,7 @@ package be.howest.ti.monopoly.logic;
 
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
-import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.Tile;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
@@ -39,30 +38,32 @@ public interface IService {
 
     Tile getTile(String tileName);
 
-    void buyProperty(Request request);
+    void buyProperty(String gameId, String playerName, String propertyName);
 
 
     // AUCTION
-    void startPlayerAuction(Request request);
+    void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration);
+
     void placeBidOnPlayerAuction(Request request);
 
-    Auction getPlayerAuctions(Request request);
+    Auction getPlayerAuctions(String gameId);
 
-    void fine(Request request);
+    void fine(String playerName, String gameId);
 
-    void free(Request request);
-
-    void setBankrupt(Request request);
-
-    void useComputeTax(Request request);
-
-    void useEstimateTax(Request request);
-
-
-    Game createGame(Request request);
+    void setBankrupt(String playerName,String gameId);
 
     Map<String, Game> getGames();
 
+    Game rollDice(String playerName, String gameId);
+
+    void useEstimateTax(String playerName, String gameId);
+
+    void useComputeTax(String playerName, String gameId);
+
+    void getOutOfJailFine(String gameId, String playerName);
+
+    void getOutOfJailFree(String gameId, String playerName);
+
     void buyHouse(String gameId, String playerName, String propertyName);
-    void rollDice(Request request);
+
 }
