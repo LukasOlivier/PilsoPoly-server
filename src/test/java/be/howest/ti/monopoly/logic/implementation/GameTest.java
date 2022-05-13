@@ -76,10 +76,15 @@ class GameTest {
     }
 
     @Test
-    void ccPay(){
+    void ccPayAndReceive(){
         testGame.addPlayer("Lukas", "icon");
+        Player Lukas = testGame.getSpecificPlayer("Lukas");
         Game.createCommunityCards();
-
+        assertEquals(1500, Lukas.getMoney());
+        testGame.doCommunityCard(0, Lukas);
+        assertEquals(1450, Lukas.getMoney());
+        testGame.doCommunityCard(7, Lukas);
+        assertEquals(1550, Lukas.getMoney());
     }
 
     @Test
