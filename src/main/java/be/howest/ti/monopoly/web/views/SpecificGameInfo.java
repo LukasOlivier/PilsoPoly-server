@@ -20,7 +20,8 @@ public class SpecificGameInfo {
         for (Player player : game.getPlayers()) {
 
             listOfPlayerNames.add(new JsonObject()
-                    .put("name", player.getName()));
+                    .put("name", player.getName())
+                    .put("icon", player.getIcon()));
         }
         return listOfPlayerNames;
     }
