@@ -37,8 +37,10 @@ class PlayerTest {
 
 
     @Test
-    void payRent(){
+    void payRentStreet(){
+        Game game = new Game()
         Player testPlayer = new Player("Sibren", "Beer");
+        testPlayer.addProperties();
     }
 
 }
