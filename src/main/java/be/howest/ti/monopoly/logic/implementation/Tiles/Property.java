@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation;
+package be.howest.ti.monopoly.logic.implementation.Tiles;
 
 public class Property extends Tile {
     private int cost;
@@ -51,7 +51,10 @@ public class Property extends Tile {
             return "can buy this property in direct sale";
         }
     }
-@Override
+
+
+
+    @Override
     public String getActionType() {
         if (isBought()) {
             return "rent";

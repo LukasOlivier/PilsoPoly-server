@@ -1,9 +1,14 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
+@JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" })
 
 public class Player {
     private final String name;
@@ -17,10 +22,9 @@ public class Player {
     private int debt;
     private final String icon;
 
-    public Tile previousTile = null;
+    public Tile previousTile;
     private boolean firstThrow = true;
     private int turnsInJail = 0;
-
     private int amountOfDoubleThrows = 0;
 
     public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
@@ -32,6 +36,11 @@ public class Player {
         this.getOutOfJailFreeCards = getOutOfJailFreeCards;
         this.debt = debt;
         this.icon = icon;
+        this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
+    }
+
+    public boolean getFirstThrow(){
+        return this.firstThrow;
     }
 
     public Player(String name, String icon) {
@@ -63,6 +72,7 @@ public class Player {
         return bankrupt;
     }
 
+
     public void setBankrupt() {
         this.bankrupt = true;
     }
@@ -92,10 +102,6 @@ public class Player {
         money -= amount;
     }
 
-    public void addMoney(int amount) {
-        money += amount;
-    }
-
     public void fine() {
         if (this.money >= 50) {
             this.money = this.money - 50;
@@ -105,36 +111,12 @@ public class Player {
         }
     }
 
+    public void addGetOutOfJailFreeCard(){
+        getOutOfJailFreeCards++;
+    }
+
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
-    }
-
-    private int calculateTax() {
-        return (int) Math.round(0.1 * (getMoney() + getTotalTilesCost() + getTotalBuildingsCost()));
-    }
-
-    private int getTotalTilesCost() {
-        int totalCost = 0;
-        for (PlayerProperty playerProperty : getProperties()) {
-            totalCost += playerProperty.property.getCost();
-        }
-        return totalCost;
-    }
-
-    private int getTotalBuildingsCost() {
-        int totalCost = 0;
-        for (PlayerProperty playerProperty : getProperties()) {
-            Street street = (Street) playerProperty.property;
-            int houseCost = street.getHousePrice();
-            totalCost = totalCost + (playerProperty.getHouseCount() * houseCost) + (playerProperty.getHotelCount() * houseCost);
-        }
-        return totalCost;
-    }
-
-    private void checkIfPassedGo() {
-        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go")))) {
-            addMoney(200);
-        }
     }
 
     public void free() {
@@ -146,84 +128,20 @@ public class Player {
         }
     }
 
-
     public void setTaxSystem(String preferredTaxSystem) {
         this.taxSystem = preferredTaxSystem;
     }
 
-
-    public Turn rollDice(List<Tile> tiles) {
-
-        int diceOne = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        int diceTwo = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-
-        checkIfRolledTwice(diceOne, diceTwo);
-        if (!isJailed(diceOne, diceTwo)) {
-            int currentPosition = (currentTile.getPosition() + (diceOne + diceTwo)) % 40;
-            currentTile = Tile.getTileFromPosition(tiles, currentPosition);
-            takeTileAction(currentTile);
-            checkIfPassedGo();
-        }
-        previousTile = currentTile;
-        firstThrow = false;
-        return new Turn(getName(), "DEFAULT", new Move(currentTile.getName(), currentTile.getDescription(), currentTile.getActionType()), diceOne, diceTwo);
-    }
-
-    public void checkIfRolledTwice(int diceOne, int diceTwo) {
-        if (diceOne == diceTwo) {
-            addDoubleThrow();
-        } else {
-            resetDoubleThrows();
-        }
-    }
-
-    private boolean isJailed(int diceOne, int diceTwo) {
-        if (!jailed) {
-            if (getAmountOfDoubleThrows() >= 3) {
-                resetDoubleThrows();
-                jailed = true;
-                setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
-                return true;
-            }
-            return false;
-        } else {
-            if (diceOne == diceTwo) {
-                jailed = false;
-                return false;
-            }
-            if (turnsInJail >= 3) {
-                jailed = false;
-                removeMoney(50);
-                return false;
-            }
-            turnsInJail++;
-            return true;
-        }
-    }
-
-    private void takeTileAction(Tile tile) {
-        switch (tile.getType()) {
-            case "Go to Jail":
-                setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
-                jailed = true;
-                break;
-            case "Luxury Tax":
-                removeMoney(100);
-                break;
-            case "Tax Income":
-                if (Objects.equals(getTaxSystem(), "ESTIMATE")) {
-                    removeMoney(200);
-                } else {
-                    removeMoney(calculateTax());
-                }
-                break;
-            default:
-                // code block
-        }
-    }
-
     public void setJailed(boolean jailed) {
         this.jailed = jailed;
+    }
+
+    public int getTurnsInJail() {
+        return turnsInJail;
+    }
+
+    public void addTurnInJail(){
+        turnsInJail++;
     }
 
     public void addDoubleThrow() {
@@ -234,7 +152,12 @@ public class Player {
         amountOfDoubleThrows = 0;
     }
 
-    private int getAmountOfDoubleThrows() {
+    public int getAmountOfDoubleThrows() {
         return amountOfDoubleThrows;
+    }
+
+
+    public void addMoney(int amount) {
+        this.money += amount;
     }
 }

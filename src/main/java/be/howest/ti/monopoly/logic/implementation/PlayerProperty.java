@@ -1,6 +1,9 @@
 package be.howest.ti.monopoly.logic.implementation;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 
 import java.util.List;
+
 
 public class PlayerProperty {
     public final Property property;

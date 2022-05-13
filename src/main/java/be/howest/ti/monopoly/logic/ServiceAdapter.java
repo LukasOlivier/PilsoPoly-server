@@ -1,8 +1,7 @@
 package be.howest.ti.monopoly.logic;
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
-import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.Tile;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
 
@@ -68,21 +67,6 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Tile getTile(int position) {
         throw new UnsupportedOperationException();
     }
@@ -101,9 +85,12 @@ public class ServiceAdapter implements IService {
     public Game getGameById(String id) {throw new UnsupportedOperationException();}
 
     @Override
-    public void buyProperty(Request request) {throw new UnsupportedOperationException();}
+    public void buyProperty(String gameId, String playerName, String propertyName) {throw new UnsupportedOperationException();}
 
-
+    @Override
+    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public void joinGame(String gameId, String playerName, String icon) {
@@ -120,41 +107,47 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Auction getPlayerAuctions(Request request) {
+    public Auction getPlayerAuctions(String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void fine(Request request) {
+    public void fine(String playerName,String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void free(Request request) {
+    public void setBankrupt(String playerName,String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setBankrupt(Request request) {
+    public void useComputeTax(String playerName,String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void useComputeTax(Request request) {
-        throw new UnsupportedOperationException();
+    public void getOutOfJailFine(String gameId, String playerName) {
+
     }
 
-    public void useEstimateTax(Request request) {
+    @Override
+    public void getOutOfJailFree(String gameId, String playerName) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Game createGame(Request request) {
+    public void useEstimateTax(String playerName, String gameId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Map<String, Game> getGames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Game rollDice(String playerName, String gameId) {
         throw new UnsupportedOperationException();
     }
 
@@ -168,6 +161,7 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void rollDice(Request request) {
         throw new UnsupportedOperationException();
     }

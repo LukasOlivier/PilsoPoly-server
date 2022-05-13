@@ -10,16 +10,14 @@ class OpenApiBuyingPropertyTests extends OpenApiTestsBase {
     @Test
     void buyProperty(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
-
             @Override
-            public void buyProperty(Request request) {}
-
+            public void buyProperty(String gameId, String playerName, String propertyName) {}
         });
         post(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property",
-                "some-token",
-                response -> assertOkResponse(response)
+                "/games/PilsoPoly/players/Alice/properties/some-property",
+                "PilsoPoly-Alice",
+                this::assertOkResponse
         );
     }
 
