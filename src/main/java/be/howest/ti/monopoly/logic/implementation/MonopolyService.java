@@ -181,6 +181,7 @@ public class MonopolyService extends ServiceAdapter {
         }
         PlayerProperty playerProperty = findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName, game);
         Property tileToProperty = (Property) tile;
+        player.payRent(playerProperty,tileToProperty,game,debtPlayer);
     }
 
 
