@@ -79,7 +79,6 @@ public class Tile {
     public void setActionType(String actionType) {
         this.actionType = actionType;
     }
-    // Added Game here
     public static void takeTileAction(Tile tile, Player player, Game game) {
         switch (tile.getActionType()) {
             case "jail":
@@ -99,8 +98,7 @@ public class Tile {
             case "chance":
                 break;
             case "community":
-                // this is stupid lmao (de name azo meegeven?
-                game.getRandomCommunityCardAction(player.getName());
+                game.getRandomCommunityCardAction(player);
                 break;
             default:
         }

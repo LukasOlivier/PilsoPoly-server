@@ -28,7 +28,7 @@ public class Game {
     private String winner;
     private static List<CommunityCard> ccCards = new ArrayList<>();
     private List<Integer> lastDiceRoll = new ArrayList<>();
-
+    private final Random random = new Random();
 
     public Game(int numberOfPlayers, String prefix, int size) {
         setNumberOfPlayers(numberOfPlayers);
@@ -221,25 +221,22 @@ public class Game {
         ccCards.add(new ReceiveCC("Life insurance matures. Collect $100", 100));
         ccCards.add(new ReceiveCC("Receive $25 consultancy fee", 25));
         ccCards.add(new ReceiveCC("You inherit $100", 100));
+        ccCards.add(new ReceiveCC("You have won second prize in a beauty contest. Collect $10", 10));
         ccCards.add(new GoToJailCC("Go to Jail. Go directly to jail, do not pass Go, do not collect $200"));
         ccCards.add(new GoToGoCC("Advance to Go (Collect $200)"));
         ccCards.add(new GetOutOfJailFreeCardCC("Get Out of Jail Free"));
         ccCards.add(new CollectFromEveryPlayerCC("It is your birthday. Collect $10 from every player", 10));
+        ccCards.add(new StreetRepairCC("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115));
     }
 
-    public void getRandomCommunityCardAction(String playerName){
-        System.out.println(ccCards.get(12));
-        ccCards.get(12).communityCardAction(this, playerName);
+    public void getRandomCommunityCardAction(Player player){
+        int randomNumber = random.nextInt(ccCards.size());
+        ccCards.get(randomNumber).communityCardAction(this, player);
     }
 
-    public void doCommunityCard(int key, String playerName){
-        ccCards.get(key).communityCardAction(this, playerName);
+    public void doCommunityCard(int key, Player player){
+        ccCards.get(key).communityCardAction(this, player);
     }
-
-
-
-
-
 
     public static List<Tile> getGameTiles(){
         return List.of(

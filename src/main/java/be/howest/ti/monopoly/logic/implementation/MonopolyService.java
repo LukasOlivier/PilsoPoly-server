@@ -20,21 +20,21 @@ public class MonopolyService extends ServiceAdapter {
     @Override
     public List<String> getCommunityCards() {
         return List.of(
-                "Advance to Go (Collect $200)",             // done but dubbelcheck
-                "Bank error in your favor. Collect $200",   // done
-                "Doctor's fee. Pay $50",                    // done
-                "From sale of stock you get $50",           // done
-                "Get Out of Jail Free",                     // done
+                "Advance to Go (Collect $200)",
+                "Bank error in your favor. Collect $200",
+                "Doctor's fee. Pay $50",
+                "From sale of stock you get $50",
+                "Get Out of Jail Free",
                 "Go to Jail. Go directly to jail, do not pass Go, do not collect $200",  // done
                 "Holiday fund matures. Receive $100",       // done
                 "Income tax refund. Collect $20",           // done
-                "It is your birthday. Collect $10 from every player",
+                "It is your birthday. Collect $10 from every player",   // done
                 "Life insurance matures. Collect $100",     // done
                 "Pay hospital fees of $100",                // done
                 "Pay school fees of $50",                   // done
                 "Receive $25 consultancy fee",              // done
                 "You are assessed for street repair. $40 per house. $115 per hotel",
-                "You have won second prize in a beauty contest. Collect $10",
+                "You have won second prize in a beauty contest. Collect $10", // done
                 "You inherit $100");                        // done
     }
 
@@ -113,7 +113,7 @@ public class MonopolyService extends ServiceAdapter {
             checkIfTileCanBeBought(propertyName,player,tileToBuy);
             Property tileToProperty = (Property) tileToBuy;
             PlayerProperty boughtProperty = new PlayerProperty(tileToProperty);
-            player.addProperties(boughtProperty);
+            player.addProperty(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
             checkIfPlayerCanRollAgain(game,player);

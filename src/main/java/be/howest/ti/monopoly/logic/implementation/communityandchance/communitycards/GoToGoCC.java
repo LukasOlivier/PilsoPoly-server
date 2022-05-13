@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation.communityandchance.communitycards;
 
+import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityCard;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
@@ -11,8 +12,7 @@ public class GoToGoCC extends CommunityCard {
     }
 
     @Override
-    public void communityCardAction(Game game, String playerName){
-        game.getSpecificPlayer(playerName).setCurrentTile(new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"));
-        game.getSpecificPlayer(playerName).addMoney(200);
+    public void communityCardAction(Game game, Player player){
+        player.setCurrentTile(new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"));
     }
 }

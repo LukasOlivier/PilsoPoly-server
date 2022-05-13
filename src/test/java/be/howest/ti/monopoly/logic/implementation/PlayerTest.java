@@ -5,8 +5,6 @@ import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +34,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player testPlayer = new Player("Sibren", "Beer");
 
-        testPlayer.addProperties(testPlayerProperty);
+        testPlayer.addProperty(testPlayerProperty);
 
         assertEquals(List.of(testPlayerProperty), testPlayer.getProperties());
 

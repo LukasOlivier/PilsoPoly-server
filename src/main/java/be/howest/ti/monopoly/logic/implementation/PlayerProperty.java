@@ -39,7 +39,7 @@ public class PlayerProperty {
     }
 
     public void addHouse(Player player, List<PlayerProperty> otherProperties) {
-        if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties) ) {
+        if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true) ) {
             houseCount += 1;
             withdrawHousePrice(player);
         } else {
@@ -70,16 +70,23 @@ public class PlayerProperty {
         return amount == groupSize;
     }
 
-    public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties) {
-        int maxDifferenceInHouses = 1;
+    public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties, boolean buy) {
+        int maxHouseDifference = 1;
+        int housesOnCurrentProperty = getHouseCount();
+        int currentHousesAfterAction = getHouseCount();
+        if (buy) {
+            currentHousesAfterAction += 1;
+        } else {
+            currentHousesAfterAction -= 1;
+        }
         for ( PlayerProperty p : playerProperties ) {
-            int differenceInHouses = Math.abs( ( getHouseCount() ) - p.getHouseCount() );
-            if ( differenceInHouses == maxDifferenceInHouses ) {
+            if ( Math.abs(currentHousesAfterAction - p.getHouseCount()) > maxHouseDifference ) {
                 return false;
             }
         }
         return true;
     }
+
 
     public void removeHouse() {
         if ( getHouseCount() > 0 ) {

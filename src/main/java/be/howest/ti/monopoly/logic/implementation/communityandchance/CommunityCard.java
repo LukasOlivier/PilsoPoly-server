@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation.communityandchance;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.Player;
 
 public class CommunityCard {
 
@@ -10,7 +11,7 @@ public class CommunityCard {
         this.description = description;
     }
 
-    public void communityCardAction(Game game, String playerName){
+    public void communityCardAction(Game game, Player player){
 
     }
 
