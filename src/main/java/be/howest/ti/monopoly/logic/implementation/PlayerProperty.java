@@ -82,8 +82,8 @@ public class PlayerProperty {
         int amount = 0;
         int groupSize = property.getGroupSize();
         String streetColor = property.getColor();
-        for ( PlayerProperty p : playerProperties ) {
-            if ( p.property.getColor().equals(streetColor) ) {
+        for ( PlayerProperty prop : playerProperties ) {
+            if ( prop.property.getColor().equals(streetColor) ) {
                 amount += 1;
             }
         }
@@ -99,8 +99,8 @@ public class PlayerProperty {
         } else {
             currentHousesAfterAction -= 1;
         }
-        for ( PlayerProperty p : playerProperties ) {
-            if ( Math.abs(currentHousesAfterAction - p.getHouseCount()) > maxHouseDifference ) {
+        for ( PlayerProperty prop : playerProperties ) {
+            if ( Math.abs(currentHousesAfterAction - prop.getHouseCount()) > maxHouseDifference ) {
                 return false;
             }
         }
