@@ -7,15 +7,20 @@ public class Turn {
     private List<Integer> roll;
     private String player;
     private String type;
-    private Move moves;
+    private List<Move> moves = new ArrayList<>();
 
-    public Turn( String player, String type, Move moves, int diceOne, int diceTwo) {
+    public Turn( String player, String type) {
         this.roll = new ArrayList<>();
         this.player = player;
         this.type = type;
-        this.moves = moves;
-        roll.add(diceOne);
-        roll.add(diceTwo);
+    }
+
+    public void setRoll(List<Integer> roll) {
+        this.roll = roll;
+    }
+
+    public void addMove(Move move){
+        this.moves.add(move);
     }
 
     public List<Integer> getRoll() {
@@ -30,7 +35,7 @@ public class Turn {
         return type;
     }
 
-    public Move getMoves() {
+    public List<Move> getMoves() {
         return moves;
     }
 }

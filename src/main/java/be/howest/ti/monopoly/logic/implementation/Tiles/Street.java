@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation;
+package be.howest.ti.monopoly.logic.implementation.Tiles;
 
 public class Street extends Property {
     private int rentWithOneHouse;

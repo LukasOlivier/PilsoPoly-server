@@ -10,15 +10,13 @@ class OpenApiPrisonTests extends OpenApiTestsBase {
     @Test
     void getOutOfJailFine(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
-
             @Override
-            public void fine(Request request) {}
-
+            public void fine(String playerName,String gameId) {}
         });
         post(
                 testContext,
-                "/games/game-id/prison/Alice/fine",
-                "some-token",
+                "/games/PilsoPoly/prison/Alice/fine",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }
@@ -38,13 +36,12 @@ class OpenApiPrisonTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void free(Request request) {}
-
+            public void getOutOfJailFree(String playerName,String gameId) {}
         });
         post(
                 testContext,
-                "/games/game-id/prison/Alice/free",
-                "some-token",
+                "/games/PilsoPoly/prison/Alice/free",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }

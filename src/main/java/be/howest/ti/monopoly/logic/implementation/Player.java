@@ -1,6 +1,13 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+
+import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -22,10 +29,9 @@ public class Player {
     private int debt;
     private final String icon;
 
-    public Tile previousTile = null;
+    public Tile previousTile;
     private boolean firstThrow = true;
     private int turnsInJail = 0;
-
     private int amountOfDoubleThrows = 0;
 
     public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
@@ -37,10 +43,15 @@ public class Player {
         this.getOutOfJailFreeCards = getOutOfJailFreeCards;
         this.debt = debt;
         this.icon = icon;
+        this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
+    }
+
+    public boolean getFirstThrow(){
+        return this.firstThrow;
     }
 
     public Player(String name, String icon) {
-        this(name, new Tile("Go", 0, "Go","passes 'GO!' and receives 200 for it", "go"), false, 1500, false, 0, 0, icon);
+        this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), false, 1500, false, 0, 0, icon);
     }
 
 
@@ -68,6 +79,7 @@ public class Player {
         return bankrupt;
     }
 
+
     public void setBankrupt() {
         this.bankrupt = true;
     }
@@ -92,70 +104,74 @@ public class Player {
         return icon;
     }
 
-    public int removeMoney(int amount){
-        money -= amount;
-        return amount;
-    }
     public void addMoney(int amount){money += amount;}
 
-    public int payRent(PlayerProperty playerProperty, Property property, Game game){
-        int rentToReceive = 0;
+    public void transfer(Player debtPlayer, int amount){
+        removeMoney(amount);
+        debtPlayer.addMoney(amount);
+    }
+
+    public void payRent(PlayerProperty playerProperty, Property property, Game game, Player debtPlayer){
         switch (currentTile.getType()){
             case ("utility"):
-                rentToReceive = payRentUtility(game);
+                payRentUtility(game, debtPlayer);
                 break;
             case ("street"):
-                rentToReceive = paySRentStreet(playerProperty, property);
+                paySRentStreet(playerProperty, property, debtPlayer);
                 break;
             case ("railroad"):
-                rentToReceive = checkHowManyUtilitys("street");
-                removeMoney(25 * rentToReceive);
+                transfer(debtPlayer, (25 * checkHowManyUtilitys("street")));
                 break;
             default:
                 throw new IllegalArgumentException("you can not ask rent for any other type");
         }
-        return rentToReceive;
     }
 
-    public int payRentUtility(Game game){
+
+    public void payRentUtility(Game game, Player debtPlayer){
         int indexOfLastTurn = game.getTurns().size() - 1;
         int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().get(0);
         int lastDiceRollTwo =  + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
         int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
         if (checkHowManyUtilitys("utility") > 1){
-            return removeMoney(10 * lastDiceRoll);
+            transfer(debtPlayer,10 * lastDiceRoll);
         }else{
-            return removeMoney(4 * lastDiceRoll);
+            transfer(debtPlayer, 4 * lastDiceRoll);
         }
     }
 
-    public int paySRentStreet(PlayerProperty playerProperty, Property property){
+    public int paySRentStreet(PlayerProperty playerProperty, Property property, Player debtPlayer){
         switch (playerProperty.getHouseCount()){
             case 1:
-                return removeMoney(property.getRentWithOneHouse());
+                transfer(debtPlayer, property.getRentWithOneHouse());
             case 2:
-                return removeMoney(property.getRentWithTwoHouses());
+                transfer(debtPlayer, property.getRentWithTwoHouses());
             case 3:
-                return removeMoney(property.getRentWithThreeHouses());
+                transfer(debtPlayer, property.getRentWithThreeHouses());
             case 4:
-                return removeMoney(property.getRentWithFourHouses());
+                transfer(debtPlayer, property.getRentWithFourHouses());
             default:
                 if (playerProperty.getHotelCount() > 0){
-                    return removeMoney(property.getRentWithHotel());
+                    transfer(debtPlayer,property.getRentWithHotel());
                 }else{
-                    return removeMoney(property.getRent());
+                    transfer(debtPlayer,property.getRent());
                 }
         }
     }
 
     private int checkHowManyUtilitys(String type) {
         int countTheTypes = 0;
-        for (PlayerProperty playerProperty : this.properties){
-            if (playerProperty.getType() == type){
+        for (PlayerProperty playerProperty : this.properties) {
+            if (playerProperty.getType() == type) {
                 countTheTypes += 1;
             }
         }
         return countTheTypes;
+    }
+
+    public void removeMoney(int amount) {
+        money -= amount;
+
     }
 
     public void fine() {
@@ -166,6 +182,7 @@ public class Player {
             throw new IllegalStateException("Not enough money");
         }
     }
+
 
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
@@ -194,10 +211,15 @@ public class Player {
     }
 
     private void checkIfPassedGo() {
-        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go","passes 'GO!' and receives 200 for it", "go")))){
+        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go")))) {
             addMoney(200);
         }
     }
+
+    public void addGetOutOfJailFreeCard(){
+        getOutOfJailFreeCards++;
+    }
+
 
     public void free() {
         if (this.getOutOfJailFreeCards >= 1) {
@@ -208,77 +230,32 @@ public class Player {
         }
     }
 
-
     public void setTaxSystem(String preferredTaxSystem) {
         this.taxSystem = preferredTaxSystem;
     }
 
 
-    public Turn rollDice(List<Tile> tiles) {
-        int diceOne = 3;
-        int diceTwo = 3;
-        if (!isJailed(diceOne,diceTwo)){
-            int currentPosition = (currentTile.getPosition() + (diceOne + diceTwo)) % 40;
-            currentTile = Tile.getTileFromPosition(tiles, currentPosition);
-            takeTileAction(currentTile);
-            checkIfPassedGo();
-        }
-        previousTile = currentTile;
-        firstThrow = false;
-        return new Turn(getName(),"DEFAULT",new Move(currentTile.getName(),currentTile.getDescription(), currentTile.getActionType()),diceOne,diceTwo);
-    }
-
-    private boolean isJailed(int diceOne, int diceTwo){
-        if (!jailed){
-            return false;
-        }
-        if (diceOne == diceTwo){
-            jailed = false;
-            return false;
-        }
-        if(turnsInJail >= 3){
-            jailed = false;
-            removeMoney(50);
-            return false;
-        }
-        turnsInJail++;
-        return true;
-    }
-
-    private void takeTileAction(Tile tile) {
-        switch (tile.getType()) {
-            case "Go to Jail":
-                setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
-                jailed = true;
-                break;
-            case "Luxury Tax":
-                removeMoney(100);
-                break;
-            case "Tax Income":
-                if (Objects.equals(getTaxSystem(), "ESTIMATE")) {
-                    removeMoney(200);
-                } else {
-                    removeMoney(calculateTax());
-                }
-                break;
-            default:
-                // code block
-        }
-    }
-
     public void setJailed(boolean jailed) {
         this.jailed = jailed;
     }
 
-    public void addDoubleThrow(){
+    public int getTurnsInJail() {
+        return turnsInJail;
+    }
+
+    public void addTurnInJail(){
+        turnsInJail++;
+    }
+
+    public void addDoubleThrow() {
         amountOfDoubleThrows++;
     }
 
-    public void resetDoubleThrows(){
+    public void resetDoubleThrows() {
         amountOfDoubleThrows = 0;
     }
 
-    public int getAmountOfDoubleThrows(){
+    public int getAmountOfDoubleThrows() {
         return amountOfDoubleThrows;
     }
 }

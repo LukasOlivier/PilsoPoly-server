@@ -12,16 +12,18 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         service.setDelegate(new ServiceAdapter(){
             @Override
             public Game getGameById(String gameId){
-                return new Game();
+                return new Game(2,"PilsoPoly",1);
             }
+
         });
         get(
                 testContext,
-                "/games/game-id",
-                "some-token",
+                "/games/PilsoPoly",
+                "PilsoPoly",
                 this::assertOkResponse
         );
     }
+
 
     @Test
     void getGameUnauthorized(final VertxTestContext testContext) {
@@ -30,24 +32,6 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
                 "/games/game-id",
                 null,
                 response -> assertErrorResponse(response, 401)
-        );
-    }
-
-
-    @Test
-    void getDummyGame(final VertxTestContext testContext) {
-        service.setDelegate(new ServiceAdapter(){
-            public Game getDummyGame(){
-                return new Game();
-
-            }
-
-        });
-        get(
-                testContext,
-                "/games/dummy",
-                null,
-                this::assertOkResponse
         );
     }
 }

@@ -4,8 +4,7 @@ import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
-import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.Tile;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import io.vertx.core.json.JsonObject;
 
 import java.util.List;
@@ -26,20 +25,23 @@ public class TestService implements IService {
     }
 
     @Override
-    public List<String > getCommunityCards() {
+    public List<String> getCommunityCards() {
         return delegate.getCommunityCards();
     }
 
     public List<Tile> getTiles() {
         return delegate.getTiles();
     }
+
     @Override
     public Tile getTile(int position) {
         return delegate.getTile(position);
     }
 
     @Override
-    public Game getGame() {return delegate.getGame();}
+    public Game getGame() {
+        return delegate.getGame();
+    }
 
     @Override
     public void addGame(Game game) {
@@ -57,8 +59,13 @@ public class TestService implements IService {
     }
 
     @Override
-    public void rollDice(Request request) {
-        delegate.rollDice(request);
+    public Game rollDice(String playerName, String gameId) {
+        return delegate.rollDice(playerName, gameId);
+    }
+
+    @Override
+    public void buyHouse(String gameId, String playerName, String propertyName) {
+        delegate.buyHouse(gameId, playerName, propertyName);
     }
 
     @Override
@@ -86,21 +93,6 @@ public class TestService implements IService {
     }
 
     @Override
-    public Map<String, Game> filterGamesByNumberOfPlayers(int aInt, Map<String, Game> mapToFilter) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByPrefix(String aString, Map<String, Game> mapToFilter) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Game> filterGamesByStarted(boolean aBoolean, Map<String, Game> mapToFilter) {
-        return null;
-    }
-
-    @Override
     public List<JsonObject> filterGamesBy(String isStarted, String numberPlayers, String prefix) {
         return delegate.filterGamesBy(isStarted, numberPlayers, prefix);
     }
@@ -115,8 +107,9 @@ public class TestService implements IService {
     }
 
     @Override
-    public void startPlayerAuction(Request request) {
-        delegate.startPlayerAuction(request);
+    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
+        delegate.startPlayerAuction(gameId,playerName,propertyName,startBid,duration);
+
     }
 
     @Override
@@ -125,42 +118,42 @@ public class TestService implements IService {
     }
 
     @Override
-    public Auction getPlayerAuctions(Request request) {
-        return delegate.getPlayerAuctions(request);
+    public Auction getPlayerAuctions(String gameId) {
+        return delegate.getPlayerAuctions(gameId);
     }
 
     @Override
-    public Player collectDebt(String gameName,String playerName, String debtPlayerName,String tileName) {
-        return delegate.collectDebt(gameName,playerName,debtPlayerName,tileName);
+    public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName) {
+        delegate.collectDebt(gameName,playerName,debtPlayerName,tileName);
     }
 
-    public void fine(Request request) {
-        delegate.fine(request);
-    }
-
-    @Override
-    public void free(Request request) {
-        delegate.free(request);
+    public void fine(String playerName, String gameId) {
+        delegate.fine(playerName, gameId);
     }
 
     @Override
-    public void setBankrupt(Request request) {
-        delegate.setBankrupt(request);
+    public void setBankrupt(String playerName, String gameId) {
+        delegate.setBankrupt(playerName, gameId);
     }
 
     @Override
-    public void useComputeTax(Request request) {
-
+    public void useComputeTax(String playerName, String gameId) {
+        delegate.useComputeTax(playerName, gameId);
     }
 
     @Override
-    public void useEstimateTax(Request request) {
-
+    public void getOutOfJailFine(String gameId, String playerName) {
+        delegate.getOutOfJailFine(gameId, playerName);
     }
 
     @Override
-    public Game createGame(Request request) {
-        return delegate.createGame(request);
+    public void getOutOfJailFree(String gameId, String playerName) {
+        delegate.getOutOfJailFree(gameId, playerName);
+    }
+
+    @Override
+    public void useEstimateTax(String playerName, String gameId) {
+        delegate.useEstimateTax(playerName, gameId);
     }
 
     @Override
@@ -169,8 +162,9 @@ public class TestService implements IService {
     }
 
     @Override
-    public void buyProperty(String gameName,String playerName,String propertyName) {
-         delegate.buyProperty(gameName,playerName,propertyName);
+    public void buyProperty(String gameId, String playerName, String propertyName) {
+        delegate.buyProperty(gameId,playerName,propertyName);
     }
+
 }
 

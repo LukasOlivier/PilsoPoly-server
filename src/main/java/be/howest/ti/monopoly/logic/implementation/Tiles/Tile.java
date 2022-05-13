@@ -1,4 +1,7 @@
-package be.howest.ti.monopoly.logic.implementation;
+package be.howest.ti.monopoly.logic.implementation.Tiles;
+
+import be.howest.ti.monopoly.logic.implementation.Player;
+import be.howest.ti.monopoly.logic.implementation.Tax;
 
 import java.util.List;
 import java.util.Objects;
@@ -54,7 +57,7 @@ public class Tile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tile tile = (Tile) o;
-        return position == tile.position && name.equals(tile.name) && type.equals(tile.type);
+        return position == tile.position;
     }
 
     @Override
@@ -72,4 +75,31 @@ public class Tile {
         return null;
     }
 
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
+    }
+
+    public static void takeTileAction(Tile tile, Player player) {
+        switch (tile.getActionType()) {
+            case "jail":
+                player.currentTile = new Tile("Jail", 10, "Jail", "In jail", "jailed");
+                player.setJailed(true);
+                break;
+            case "luxtax":
+                player.removeMoney(Tax.getIncomeTax());
+                break;
+            case "incometax":
+                if (Objects.equals(player.getTaxSystem(), "ESTIMATE")) {
+                    player.removeMoney(Tax.getEstimateTax());
+                } else {
+                    player.removeMoney(Tax.getComputeTax(player));
+                }
+                break;
+            default:
+        }
+    }
+
+    public boolean isBought() {
+        return false;
+    }
 }
