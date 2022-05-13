@@ -117,7 +117,7 @@ public class Player {
                 payRentUtility(game, debtPlayer);
                 break;
             case ("street"):
-                paySRentStreet(playerProperty, property, debtPlayer);
+                payRentStreet(playerProperty, property, debtPlayer);
                 break;
             case ("railroad"):
                 transfer(debtPlayer, (25 * checkHowManyUtilitys("street")));
@@ -140,7 +140,7 @@ public class Player {
         }
     }
 
-    public int paySRentStreet(PlayerProperty playerProperty, Property property, Player debtPlayer){
+    public void payRentStreet(PlayerProperty playerProperty, Property property, Player debtPlayer){
         switch (playerProperty.getHouseCount()){
             case 1:
                 transfer(debtPlayer, property.getRentWithOneHouse());
