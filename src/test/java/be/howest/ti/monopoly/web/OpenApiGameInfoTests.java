@@ -12,14 +12,15 @@ class OpenApiGameInfoTests extends OpenApiTestsBase {
         service.setDelegate(new ServiceAdapter(){
             @Override
             public Game getGameById(String gameId){
-                return new Game(2,"PilsoPoly",1);
+                Game game = new Game(2,"PilsoPoly",1);
+                game.addPlayer("Robin", "icon");
+                return game;
             }
-
         });
         get(
                 testContext,
-                "/games/PilsoPoly",
-                "PilsoPoly",
+                "/games/PilsoPoly_2",
+                "PilsoPoly_2-Robin",
                 this::assertOkResponse
         );
     }
