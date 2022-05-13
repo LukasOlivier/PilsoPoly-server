@@ -81,7 +81,6 @@ public class Tile {
     }
     // Added Game here
     public static void takeTileAction(Tile tile, Player player, Game game) {
-        System.out.print(tile.actionType);
         switch (tile.getActionType()) {
             case "jail":
                 player.currentTile = new Tile("Jail", 10, "Jail", "In jail", "jailed");
@@ -99,10 +98,9 @@ public class Tile {
                 break;
             case "chance":
                 break;
-            case "community chest":
+            case "community":
                 // this is stupid lmao (de name azo meegeven?
-                System.out.println(tile.actionType);
-                game.doCard(player.getName());
+                game.getRandomCommunityCardAction(player.getName());
                 break;
             default:
         }

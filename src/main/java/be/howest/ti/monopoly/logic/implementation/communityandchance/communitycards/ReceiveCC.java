@@ -1,8 +1,9 @@
-package be.howest.ti.monopoly.logic.implementation.CommunityAndChance;
+package be.howest.ti.monopoly.logic.implementation.communityandchance.communitycards;
 
+import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityCard;
 import be.howest.ti.monopoly.logic.implementation.Game;
 
-public class ReceiveCC extends CommunityCard{
+public class ReceiveCC extends CommunityCard {
 
     private int amountToReceive;
 

@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-import be.howest.ti.monopoly.logic.implementation.CommunityAndChance.CommunityCard;
-import be.howest.ti.monopoly.logic.implementation.CommunityAndChance.PayCC;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.*;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.communitycards.*;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
@@ -211,14 +211,29 @@ public class Game {
 
 
     public static void createCommunityCards(){
-        ccCards.add( new PayCC("Doctor's fee. Pay $50", 50));
+        ccCards.add(new PayCC("Doctor's fee. Pay $50", 50));
         ccCards.add(new PayCC("Pay hospital fees of $100", 100));
         ccCards.add(new PayCC("Pay school fees of $50", 50));
+        ccCards.add(new ReceiveCC("Bank error in your favor. Collect $200", 200));
+        ccCards.add(new ReceiveCC("From sale of stock you get $50", 50));
+        ccCards.add(new ReceiveCC("Holiday fund matures. Receive $100", 100));
+        ccCards.add(new ReceiveCC("Income tax refund. Collect $20", 20));
+        ccCards.add(new ReceiveCC("Life insurance matures. Collect $100", 100));
+        ccCards.add(new ReceiveCC("Receive $25 consultancy fee", 25));
+        ccCards.add(new ReceiveCC("You inherit $100", 100));
+        ccCards.add(new GoToJailCC("Go to Jail. Go directly to jail, do not pass Go, do not collect $200"));
+        ccCards.add(new GoToGoCC("Advance to Go (Collect $200)"));
+        ccCards.add(new GetOutOfJailFreeCardCC("Get Out of Jail Free"));
+        ccCards.add(new CollectFromEveryPlayerCC("It is your birthday. Collect $10 from every player", 10));
     }
 
-    public void doCard(String playerName){
-        System.out.println(ccCards.get(1));
-        ccCards.get(1).communityCardAction(this, playerName);
+    public void getRandomCommunityCardAction(String playerName){
+        System.out.println(ccCards.get(12));
+        ccCards.get(12).communityCardAction(this, playerName);
+    }
+
+    public void doCommunityCard(int key, String playerName){
+        ccCards.get(key).communityCardAction(this, playerName);
     }
 
 

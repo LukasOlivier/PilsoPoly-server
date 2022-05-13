@@ -119,6 +119,10 @@ public class Player {
         this.currentTile = currentTile;
     }
 
+    public void setCurrentTile(int location){
+        //
+    }
+
     public void free() {
         if (this.getOutOfJailFreeCards >= 1) {
             this.getOutOfJailFreeCards--;

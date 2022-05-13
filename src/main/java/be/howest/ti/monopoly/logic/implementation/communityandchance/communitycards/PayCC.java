@@ -1,6 +1,6 @@
-package be.howest.ti.monopoly.logic.implementation.CommunityAndChance;
+package be.howest.ti.monopoly.logic.implementation.communityandchance.communitycards;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityCard;
 import be.howest.ti.monopoly.logic.implementation.Game;
-import be.howest.ti.monopoly.logic.implementation.Player;
 
 public class PayCC extends CommunityCard {
 

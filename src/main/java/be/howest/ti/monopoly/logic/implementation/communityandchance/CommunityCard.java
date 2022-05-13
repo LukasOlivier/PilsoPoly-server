@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation.CommunityAndChance;
+package be.howest.ti.monopoly.logic.implementation.communityandchance;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 
