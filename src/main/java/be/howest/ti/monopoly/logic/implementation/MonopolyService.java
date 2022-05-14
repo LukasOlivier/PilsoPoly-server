@@ -117,6 +117,7 @@ public class MonopolyService extends ServiceAdapter {
             player.addProperties(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
+            tileToBuy.setActionType("rent");
             checkIfPlayerCanRollAgain(game,player);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("failed to buy property");
@@ -174,15 +175,15 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         Player debtPlayer = game.getSpecificPlayer(debtPlayerName);
         Tile tile = getTile(tileName);
+        Property tileToProperty = (Property) tile;
+        PlayerProperty playerProperty = findBoughtPropertyByOwner(tileName, debtPlayerName, game);
         if (tile.getName() != player.currentTile.getName()){
             throw new IllegalArgumentException("player is not on the tile.");
-        } if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
+        }if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
             throw new IllegalArgumentException("the tile is not you're property");
-        }if (!(Objects.equals(player.currentTile.getActionType(), "rent"))){
+        }if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
             throw new IllegalArgumentException("This tile is not bought yet");
         }
-        PlayerProperty playerProperty = findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName, game);
-        Property tileToProperty = (Property) tile;
         player.payRent(playerProperty,tileToProperty,game,debtPlayer);
     }
 

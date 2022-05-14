@@ -52,20 +52,6 @@ public class Tile {
         return getName();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tile tile = (Tile) o;
-        return position == tile.position;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, position, type);
-
-    }
-
     public static Tile getTileFromPosition(List<Tile> tiles, int position) {
         for (Tile tile : tiles) {
             if (tile.getPosition() == position) {
@@ -101,5 +87,18 @@ public class Tile {
 
     public boolean isBought() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tile tile = (Tile) o;
+        return position == tile.position && Objects.equals(name, tile.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, position);
     }
 }
