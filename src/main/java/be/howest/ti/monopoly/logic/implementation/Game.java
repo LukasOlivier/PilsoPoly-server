@@ -213,17 +213,17 @@ public class Game {
 
 
     public static void createCommunityCards(){
-        communityCards.add(new PayCC("Doctor's fee. Pay $50", 50));
-        communityCards.add(new PayCC("Pay hospital fees of $100", 100));
-        communityCards.add(new PayCC("Pay school fees of $50", 50));
-        communityCards.add(new ReceiveCC("Bank error in your favor. Collect $200", 200));
-        communityCards.add(new ReceiveCC("From sale of stock you get $50", 50));
-        communityCards.add(new ReceiveCC("Holiday fund matures. Receive $100", 100));
-        communityCards.add(new ReceiveCC("Income tax refund. Collect $20", 20));
-        communityCards.add(new ReceiveCC("Life insurance matures. Collect $100", 100));
-        communityCards.add(new ReceiveCC("Receive $25 consultancy fee", 25));
-        communityCards.add(new ReceiveCC("You inherit $100", 100));
-        communityCards.add(new ReceiveCC("You have won second prize in a beauty contest. Collect $10", 10));
+        communityCards.add(new PayOrReceive("Doctor's fee. Pay $50", -50));
+        communityCards.add(new PayOrReceive("Pay hospital fees of $100", -100));
+        communityCards.add(new PayOrReceive("Pay school fees of $50", -50));
+        communityCards.add(new PayOrReceive("Bank error in your favor. Collect $200", 200));
+        communityCards.add(new PayOrReceive("From sale of stock you get $50", 50));
+        communityCards.add(new PayOrReceive("Holiday fund matures. Receive $100", 100));
+        communityCards.add(new PayOrReceive("Income tax refund. Collect $20", 20));
+        communityCards.add(new PayOrReceive("Life insurance matures. Collect $100", 100));
+        communityCards.add(new PayOrReceive("Receive $25 consultancy fee", 25));
+        communityCards.add(new PayOrReceive("You inherit $100", 100));
+        communityCards.add(new PayOrReceive("You have won second prize in a beauty contest. Collect $10", 10));
         communityCards.add(new GoToJailCC("Go to Jail. Go directly to jail, do not pass Go, do not collect $200"));
         communityCards.add(new GoToGo("Advance to Go (Collect $200)"));
         communityCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
@@ -233,8 +233,8 @@ public class Game {
 
     public static void createChanceCards(){
         chanceCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
-        chanceCards.add(new PayCC("Speeding fine $15", 15));
-        chanceCards.add(new ReceiveCC("Your building loan matures. Collect $150", 150));
+        chanceCards.add(new PayOrReceive("Speeding fine $15", -15));
+        chanceCards.add(new PayOrReceive("Your building loan matures. Collect $150", 150));
         chanceCards.add(new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11));
         chanceCards.add(new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24));
         chanceCards.add(new GoToTile("Take a trip to Reading Railroad. If you pass Go, collect $200",5));

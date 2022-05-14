@@ -30,10 +30,11 @@ public class CommunityAndChanceCardTests {
         Player Sibren = testGame.getSpecificPlayer("Sibren");
         Player Robin = testGame.getSpecificPlayer("Robin");
 
-        new PayCC("pay the bank 100 dollars", 100).cardAction(testGame, Sibren);
+
+        new PayOrReceive("pay the bank 100 dollars", -100).cardAction(testGame, Sibren);
         assertEquals(1400, Sibren.getMoney());
 
-        new ReceiveCC("You won 250 dollars", 200).cardAction(testGame, Niels);
+        new PayOrReceive("You won 250 dollars", 200).cardAction(testGame, Niels);
         assertEquals(1700, Niels.getMoney());
         assertEquals(1500, Lukas.getMoney());
     }
@@ -65,18 +66,6 @@ public class CommunityAndChanceCardTests {
         testGame.doCommunityCard(11, testGame.getSpecificPlayer("Sibren"));
         assertTrue(testGame.getSpecificPlayer("Sibren").isJailed());
         assertEquals(1500, testGame.getSpecificPlayer("Sibren").getMoney());
-    }
-
-    @Test
-    void ccReceiveFromEveryone(){
-        testGame.addPlayer("Sibren", "icon");
-        testGame.addPlayer("Robin", "icon");
-        testGame.addPlayer("Niels", "icon");
-        Game.createCommunityCards();
-        testGame.doCommunityCard(14, testGame.getSpecificPlayer("Sibren"));
-        assertEquals(1520, testGame.getSpecificPlayer("Sibren").getMoney());
-        assertEquals(1490, testGame.getSpecificPlayer("Robin").getMoney());
-        assertEquals(1490, testGame.getSpecificPlayer("Niels").getMoney());
     }
 
     @Test
