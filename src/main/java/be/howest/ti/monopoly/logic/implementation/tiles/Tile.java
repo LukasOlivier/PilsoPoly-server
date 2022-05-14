@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation.Tiles;
+package be.howest.ti.monopoly.logic.implementation.tiles;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
@@ -98,7 +98,7 @@ public class Tile {
             case "chance":
                 break;
             case "community":
-                game.getRandomCommunityCardAction(player);
+                game.doRandomCommunityCardAction(player);
                 break;
             default:
         }

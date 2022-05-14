@@ -1,7 +1,5 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

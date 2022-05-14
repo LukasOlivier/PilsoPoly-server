@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation.Tiles;
+package be.howest.ti.monopoly.logic.implementation.tiles;
 
 public class Property extends Tile {
     private int cost;

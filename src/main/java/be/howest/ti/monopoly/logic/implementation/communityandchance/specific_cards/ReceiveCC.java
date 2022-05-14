@@ -1,10 +1,10 @@
-package be.howest.ti.monopoly.logic.implementation.communityandchance.communitycards;
+package be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards;
 
 import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityCard;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 import be.howest.ti.monopoly.logic.implementation.Game;
 
-public class ReceiveCC extends CommunityCard {
+public class ReceiveCC extends CommunityOrChanceCard {
 
     private int amountToReceive;
 
@@ -14,7 +14,7 @@ public class ReceiveCC extends CommunityCard {
     }
 
     @Override
-    public void communityCardAction(Game game, Player player){
+    public void cardAction(Game game, Player player){
         player.addMoney(amountToReceive);
     }
 }

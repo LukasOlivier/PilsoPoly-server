@@ -1,11 +1,11 @@
-package be.howest.ti.monopoly.logic.implementation.communityandchance.communitycards;
+package be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityCard;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 
-public class StreetRepairCC extends CommunityCard {
+public class StreetRepairCC extends CommunityOrChanceCard {
 
     public int amountPerHotel;
     public int amountPerHouse;
@@ -17,7 +17,7 @@ public class StreetRepairCC extends CommunityCard {
     }
 
     @Override
-    public void communityCardAction(Game game, Player player){
+    public void cardAction(Game game, Player player){
         int amountOfHouses = 0;
         int amountOfHotels = 0;
         for (PlayerProperty playerProperty : player.getProperties()) {

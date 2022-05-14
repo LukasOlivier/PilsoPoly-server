@@ -2,17 +2,18 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.*;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.communitycards.*;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
+import be.howest.ti.monopoly.logic.implementation.tiles.Railroad;
+import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.*;
 
 @JsonIgnoreProperties({""})
 public class Game {
+
     private int numberOfPlayers;
     private boolean started;
     private List<Player> players;
@@ -26,7 +27,8 @@ public class Game {
     private boolean ended;
     private String currentPlayer;
     private String winner;
-    private static List<CommunityCard> ccCards = new ArrayList<>();
+    private static List<CommunityOrChanceCard> chanceCards = new ArrayList<>();
+    private static List<CommunityOrChanceCard> communityCards = new ArrayList<>();
     private List<Integer> lastDiceRoll = new ArrayList<>();
     private final Random random = new Random();
 
@@ -211,31 +213,41 @@ public class Game {
 
 
     public static void createCommunityCards(){
-        ccCards.add(new PayCC("Doctor's fee. Pay $50", 50));
-        ccCards.add(new PayCC("Pay hospital fees of $100", 100));
-        ccCards.add(new PayCC("Pay school fees of $50", 50));
-        ccCards.add(new ReceiveCC("Bank error in your favor. Collect $200", 200));
-        ccCards.add(new ReceiveCC("From sale of stock you get $50", 50));
-        ccCards.add(new ReceiveCC("Holiday fund matures. Receive $100", 100));
-        ccCards.add(new ReceiveCC("Income tax refund. Collect $20", 20));
-        ccCards.add(new ReceiveCC("Life insurance matures. Collect $100", 100));
-        ccCards.add(new ReceiveCC("Receive $25 consultancy fee", 25));
-        ccCards.add(new ReceiveCC("You inherit $100", 100));
-        ccCards.add(new ReceiveCC("You have won second prize in a beauty contest. Collect $10", 10));
-        ccCards.add(new GoToJailCC("Go to Jail. Go directly to jail, do not pass Go, do not collect $200"));
-        ccCards.add(new GoToGoCC("Advance to Go (Collect $200)"));
-        ccCards.add(new GetOutOfJailFreeCardCC("Get Out of Jail Free"));
-        ccCards.add(new CollectFromEveryPlayerCC("It is your birthday. Collect $10 from every player", 10));
-        ccCards.add(new StreetRepairCC("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115));
+        communityCards.add(new PayCC("Doctor's fee. Pay $50", 50));
+        communityCards.add(new PayCC("Pay hospital fees of $100", 100));
+        communityCards.add(new PayCC("Pay school fees of $50", 50));
+        communityCards.add(new ReceiveCC("Bank error in your favor. Collect $200", 200));
+        communityCards.add(new ReceiveCC("From sale of stock you get $50", 50));
+        communityCards.add(new ReceiveCC("Holiday fund matures. Receive $100", 100));
+        communityCards.add(new ReceiveCC("Income tax refund. Collect $20", 20));
+        communityCards.add(new ReceiveCC("Life insurance matures. Collect $100", 100));
+        communityCards.add(new ReceiveCC("Receive $25 consultancy fee", 25));
+        communityCards.add(new ReceiveCC("You inherit $100", 100));
+        communityCards.add(new ReceiveCC("You have won second prize in a beauty contest. Collect $10", 10));
+        communityCards.add(new GoToJailCC("Go to Jail. Go directly to jail, do not pass Go, do not collect $200"));
+        communityCards.add(new GoToGo("Advance to Go (Collect $200)"));
+        communityCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
+        communityCards.add(new CollectFromEveryPlayer("It is your birthday. Collect $10 from every player", 10));
+        communityCards.add(new StreetRepairCC("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115));
     }
 
-    public void getRandomCommunityCardAction(Player player){
-        int randomNumber = random.nextInt(ccCards.size());
-        ccCards.get(randomNumber).communityCardAction(this, player);
+    public static void createChanceCards(){
+        chanceCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
+        chanceCards.add(new PayCC("Speeding fine $15", 15));
+    }
+
+    public void doRandomCommunityCardAction(Player player){
+        int randomNumber = random.nextInt(communityCards.size());
+        communityCards.get(randomNumber).cardAction(this, player);
+    }
+
+    public void doRandomChanceCardAction(Player player){
+        int randomNumber = random.nextInt(chanceCards.size());
+        chanceCards.get(randomNumber).cardAction(this, player);
     }
 
     public void doCommunityCard(int key, Player player){
-        ccCards.get(key).communityCardAction(this, player);
+        communityCards.get(key).cardAction(this, player);
     }
 
     public static List<Tile> getGameTiles(){
