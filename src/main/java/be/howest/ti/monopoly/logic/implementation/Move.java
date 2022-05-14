@@ -26,13 +26,13 @@ public class Move {
     public String getActionType() {
         return actionType;
     }
-    // Added Game here
+
     public static Move makeMove(Player player, int placesToMove, Game game) {
         if (!player.isJailed()){
             int endOfBoardPosition = 40;
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % endOfBoardPosition;
             player.currentTile = Tile.getTileFromPosition(Game.getGameTiles(), currentPosition);
-            // Added Game here
+
             System.out.println(player.currentTile);
             Tile.takeTileAction(player.currentTile, player, game);
             checkIfPassedGo(player);
@@ -41,7 +41,7 @@ public class Move {
     }
 
 
-    private static void checkIfPassedGo(Player player) {
+    public static void checkIfPassedGo(Player player) {
         Tile goTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
         int rewardForPassingGo = 200;
         if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.previousTile, goTile)))) {

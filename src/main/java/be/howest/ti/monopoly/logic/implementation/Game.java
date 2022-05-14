@@ -228,12 +228,17 @@ public class Game {
         communityCards.add(new GoToGo("Advance to Go (Collect $200)"));
         communityCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
         communityCards.add(new CollectOrGiveEveryPlayer("It is your birthday. Collect $10 from every player", 10));
-        communityCards.add(new StreetRepairCC("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115));
+        communityCards.add(new Repairs("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115));
     }
 
     public static void createChanceCards(){
         chanceCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
         chanceCards.add(new PayCC("Speeding fine $15", 15));
+        chanceCards.add(new ReceiveCC("Your building loan matures. Collect $150", 150));
+        chanceCards.add(new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11));
+        chanceCards.add(new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24));
+        chanceCards.add(new GoToTile("Take a trip to Reading Railroad. If you pass Go, collect $200",5));
+        chanceCards.add(new Repairs("Make general repairs on all your property. For each house pay $25. For each hotel pay $100", 25, 100));
     }
 
     public void doRandomCommunityCardAction(Player player){

@@ -76,6 +76,15 @@ public class Tile {
         return null;
     }
 
+    public static Tile getTileFromPosition(int position) {
+        for (Tile tile : Game.getGameTiles()) {
+            if (tile.getPosition() == position) {
+                return tile;
+            }
+        }
+        return null;
+    }
+
     public void setActionType(String actionType) {
         this.actionType = actionType;
     }

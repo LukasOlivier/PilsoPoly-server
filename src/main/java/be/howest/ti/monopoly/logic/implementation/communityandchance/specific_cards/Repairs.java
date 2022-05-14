@@ -5,12 +5,12 @@ import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 
-public class StreetRepairCC extends CommunityOrChanceCard {
+public class Repairs extends CommunityOrChanceCard {
 
     public int amountPerHotel;
     public int amountPerHouse;
 
-    public StreetRepairCC(String description, int amountPerHouse,int amountPerHotel) {
+    public Repairs(String description, int amountPerHouse, int amountPerHotel) {
         super(description);
         this.amountPerHotel = amountPerHotel;
         this.amountPerHouse = amountPerHouse;

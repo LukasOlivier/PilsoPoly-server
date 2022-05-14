@@ -1,10 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.CollectOrGiveEveryPlayer;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.GetOutOfJailFreeCard;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.PayCC;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.ReceiveCC;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ public class CommunityAndChanceCardTests {
 
     Property Mediterranean = new Street("Mediterranean", 1, "street", 2, "PURPLE", 10, 30, 90, 160, 250, 50, 2, 30, 60);
     Property Baltic = new Street("Baltic", 3, "street", 2, "PURPLE", 20, 60, 180, 320, 450, 50, 4, 30, 60);
-
 
     @Test
     void PayAndReceive(){
@@ -91,7 +88,8 @@ public class CommunityAndChanceCardTests {
         Player Lukas = testGame.getSpecificPlayer("Lukas");
         Player Niels = testGame.getSpecificPlayer("Niels");
         Player Sibren = testGame.getSpecificPlayer("Sibren");
-        Player Robin = testGame.getSpecificPlayer("Robin");
+
+
         new CollectOrGiveEveryPlayer("Collect $10 from everyone", 10).cardAction(testGame, Lukas);
         assertEquals(1530,Lukas.getMoney());
         assertEquals(1490, Niels.getMoney());
@@ -101,9 +99,7 @@ public class CommunityAndChanceCardTests {
     }
 
     @Test
-    void ccStreetRepair(){
-        Game.createCommunityCards();
-
+    void Repairs(){
         List<PlayerProperty> listOfPlayerProperties = new ArrayList<>();
         PlayerProperty playerPropertyMed = new PlayerProperty(Mediterranean);
         PlayerProperty playerPropertyBal = new PlayerProperty(Baltic);
@@ -111,6 +107,9 @@ public class CommunityAndChanceCardTests {
         listOfPlayerProperties.add(playerPropertyBal);
 
         testGame.addPlayer("Sibren", "icon");
+        testGame.addPlayer("Robin", "icon");
+        testGame.addPlayer("Lukas", "icon");
+        testGame.addPlayer("Niels", "icon");
         Player Sibren = testGame.getSpecificPlayer("Sibren");
 
         Sibren.setCurrentTile(Mediterranean);
@@ -119,12 +118,42 @@ public class CommunityAndChanceCardTests {
         Sibren.setCurrentTile(Baltic);
         Sibren.addProperty(playerPropertyBal);
 
+        // Balance is down 150 after buying these houses. (1350)
         playerPropertyMed.addHouse(Sibren, listOfPlayerProperties);
         playerPropertyBal.addHouse(Sibren, listOfPlayerProperties);
 
         playerPropertyMed.addHouse(Sibren, listOfPlayerProperties);
 
-        testGame.doCommunityCard(15, testGame.getSpecificPlayer("Sibren"));
+        new Repairs("$40 per house. $115 per hotel", 40, 115).cardAction(testGame, Sibren);
         assertEquals(1230,Sibren.getMoney());
+
+        new Repairs("$25 per house. $100 per hotel", 25, 100).cardAction(testGame, Sibren);
+        assertEquals(1155,Sibren.getMoney());
+    }
+
+    @Test
+    void GoToTile(){
+        testGame.addPlayer("Sibren", "icon");
+        testGame.addPlayer("Robin", "icon");
+        testGame.addPlayer("Lukas", "icon");
+        testGame.addPlayer("Niels", "icon");
+        Player Lukas = testGame.getSpecificPlayer("Lukas");
+        Player Niels = testGame.getSpecificPlayer("Niels");
+        Player Sibren = testGame.getSpecificPlayer("Sibren");
+        Player Robin = testGame.getSpecificPlayer("Robin");
+
+        // Does not pass Go
+        new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24).cardAction(testGame, Lukas);
+        assertEquals("Illinois Avenue", Lukas.getCurrentTile());
+        assertEquals(1500, Lukas.getMoney());
+
+        // Does pass Go
+        System.out.println(Niels.currentTile);
+        Niels.setCurrentTile(Tile.getTileFromPosition(35));
+        System.out.println(Niels.currentTile);
+        new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11).cardAction(testGame, Niels);
+        System.out.println(Niels.currentTile);
+        assertEquals("Saint Charles Place", Niels.getCurrentTile());
+        assertEquals(1700, Niels.getMoney());
     }
 }
