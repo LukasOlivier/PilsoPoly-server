@@ -4,11 +4,11 @@ import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 
-public class CollectFromEveryPlayer extends CommunityOrChanceCard {
+public class CollectOrGiveEveryPlayer extends CommunityOrChanceCard {
 
     int amount;
 
-    public CollectFromEveryPlayer(String description, int amount) {
+    public CollectOrGiveEveryPlayer(String description, int amount) {
         super(description);
         this.amount = amount;
     }

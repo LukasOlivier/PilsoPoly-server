@@ -1,4 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.CollectOrGiveEveryPlayer;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.GetOutOfJailFreeCard;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.PayCC;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.ReceiveCC;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import org.junit.jupiter.api.Test;
@@ -6,37 +10,45 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CommunityAndChanceCardTests {
 
     int gameMapSize = 5;
-    Game testGame = new Game(3, "PilsoPoly", gameMapSize);
+    Game testGame = new Game(4, "PilsoPoly", gameMapSize);
+
     Property Mediterranean = new Street("Mediterranean", 1, "street", 2, "PURPLE", 10, 30, 90, 160, 250, 50, 2, 30, 60);
     Property Baltic = new Street("Baltic", 3, "street", 2, "PURPLE", 20, 60, 180, 320, 450, 50, 4, 30, 60);
 
 
     @Test
-    void ccPayAndReceive(){
+    void PayAndReceive(){
+        testGame.addPlayer("Sibren", "icon");
+        testGame.addPlayer("Robin", "icon");
         testGame.addPlayer("Lukas", "icon");
+        testGame.addPlayer("Niels", "icon");
         Player Lukas = testGame.getSpecificPlayer("Lukas");
-        Game.createCommunityCards();
+        Player Niels = testGame.getSpecificPlayer("Niels");
+        Player Sibren = testGame.getSpecificPlayer("Sibren");
+        Player Robin = testGame.getSpecificPlayer("Robin");
+
+        new PayCC("pay the bank 100 dollars", 100).cardAction(testGame, Sibren);
+        assertEquals(1400, Sibren.getMoney());
+
+        new ReceiveCC("You won 250 dollars", 200).cardAction(testGame, Niels);
+        assertEquals(1700, Niels.getMoney());
         assertEquals(1500, Lukas.getMoney());
-        testGame.doCommunityCard(0, Lukas);
-        assertEquals(1450, Lukas.getMoney());
-        testGame.doCommunityCard(7, Lukas);
-        assertEquals(1550, Lukas.getMoney());
     }
 
     @Test
-    void ccGetOutOfJail(){
-        testGame.addPlayer("Lukas", "icon");
-        Game.createCommunityCards();
-        assertEquals(0, testGame.getSpecificPlayer("Lukas").getGetOutOfJailFreeCards());
-        testGame.doCommunityCard(13, testGame.getSpecificPlayer("Lukas"));
-        assertEquals(1, testGame.getSpecificPlayer("Lukas").getGetOutOfJailFreeCards());
+    void GetOutOfJailFreeCard(){
+        testGame.addPlayer("Niels", "icon");
+        Player Niels = testGame.getSpecificPlayer("Niels");
+
+        assertEquals(0, Niels.getGetOutOfJailFreeCards());
+        new GetOutOfJailFreeCard("Get out of jail for  free").cardAction(testGame, Niels);
+        assertEquals(1, Niels.getGetOutOfJailFreeCards());
     }
 
     @Test
@@ -68,6 +80,24 @@ public class CommunityAndChanceCardTests {
         assertEquals(1520, testGame.getSpecificPlayer("Sibren").getMoney());
         assertEquals(1490, testGame.getSpecificPlayer("Robin").getMoney());
         assertEquals(1490, testGame.getSpecificPlayer("Niels").getMoney());
+    }
+
+    @Test
+    void fromEveryone(){
+        testGame.addPlayer("Sibren", "icon");
+        testGame.addPlayer("Robin", "icon");
+        testGame.addPlayer("Lukas", "icon");
+        testGame.addPlayer("Niels", "icon");
+        Player Lukas = testGame.getSpecificPlayer("Lukas");
+        Player Niels = testGame.getSpecificPlayer("Niels");
+        Player Sibren = testGame.getSpecificPlayer("Sibren");
+        Player Robin = testGame.getSpecificPlayer("Robin");
+        new CollectOrGiveEveryPlayer("Collect $10 from everyone", 10).cardAction(testGame, Lukas);
+        assertEquals(1530,Lukas.getMoney());
+        assertEquals(1490, Niels.getMoney());
+        new CollectOrGiveEveryPlayer("Give everyone $10", -10).cardAction(testGame, Lukas);
+        assertEquals(1500, Lukas.getMoney());
+        assertEquals(1500, Sibren.getMoney());
     }
 
     @Test

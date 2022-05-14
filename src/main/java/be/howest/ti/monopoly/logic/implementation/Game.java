@@ -227,7 +227,7 @@ public class Game {
         communityCards.add(new GoToJailCC("Go to Jail. Go directly to jail, do not pass Go, do not collect $200"));
         communityCards.add(new GoToGo("Advance to Go (Collect $200)"));
         communityCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
-        communityCards.add(new CollectFromEveryPlayer("It is your birthday. Collect $10 from every player", 10));
+        communityCards.add(new CollectOrGiveEveryPlayer("It is your birthday. Collect $10 from every player", 10));
         communityCards.add(new StreetRepairCC("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115));
     }
 

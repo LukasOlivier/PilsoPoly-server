@@ -79,6 +79,7 @@ public class Tile {
     public void setActionType(String actionType) {
         this.actionType = actionType;
     }
+
     public static void takeTileAction(Tile tile, Player player, Game game) {
         switch (tile.getActionType()) {
             case "jail":
