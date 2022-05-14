@@ -113,7 +113,7 @@ public class MonopolyService extends ServiceAdapter {
         try {
             checkIfTileCanBeBought(propertyName,player,tileToBuy);
             Property tileToProperty = (Property) tileToBuy;
-            PlayerProperty boughtProperty = new PlayerProperty(tileToProperty, tileToProperty.getType());
+            PlayerProperty boughtProperty = new PlayerProperty(tileToProperty);
             player.addProperties(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
@@ -273,6 +273,17 @@ public class MonopolyService extends ServiceAdapter {
         for (PlayerProperty property : player.getProperties()) {
             if (property.getProperty().equals(propertyName)) {
                 property.addHouse( player, player.getProperties() );
+            }
+        }
+    }
+
+    @Override
+    public void sellHouse(String gameId, String playerName, String propertyName) {
+        Game game =getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        for (PlayerProperty property : player.getProperties()) {
+            if (property.getProperty().equals(propertyName)) {
+                property.sellHouse( player, player.getProperties() );
             }
         }
     }
