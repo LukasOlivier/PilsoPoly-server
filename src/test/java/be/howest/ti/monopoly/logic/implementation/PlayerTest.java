@@ -105,4 +105,16 @@ class PlayerTest {
         testPlayer.addDoubleThrow();
         assertEquals(1,testPlayer.getAmountOfDoubleThrows());
     }
+
+    @Test
+    void payRent(){
+        Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", 100, 300, 750, 925, 1100, 150, 20, 120, 240);
+        PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
+        Player debtPlayer = new Player("Sibren", "Beer");
+        Player player = new Player("Robin", "test");
+        debtPlayer.addProperties(testPlayerProperty);
+        player.payRentStreet(testPlayerProperty,testProperty,debtPlayer);
+
+        assertEquals(1480, player.getMoney());
+    }
 }
