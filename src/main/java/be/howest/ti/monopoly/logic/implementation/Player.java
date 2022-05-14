@@ -34,6 +34,9 @@ public class Player {
     private int turnsInJail = 0;
     private int amountOfDoubleThrows = 0;
 
+    private static final int MULTIPLIER_FOR_ONE_UTILITY_TILE = 4;
+    private static final int MULTIPLIER_FOR_TWO_UTILITY_TILES    = 10;
+
     public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
         this.name = name;
         this.currentTile = currentTile;
@@ -129,14 +132,15 @@ public class Player {
 
 
     public void payRentUtility(Game game, Player debtPlayer){
+        int oneUtilityTile = 1;
         int indexOfLastTurn = game.getTurns().size() - 1;
         int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().get(0);
         int lastDiceRollTwo =  + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
         int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
-        if (checkHowManyUtilitys("utility") > 1){
-            transfer(debtPlayer,10 * lastDiceRoll);
+        if (checkHowManyUtilitys("utility") > oneUtilityTile){
+            transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * lastDiceRoll);
         }else{
-            transfer(debtPlayer, 4 * lastDiceRoll);
+            transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * lastDiceRoll);
         }
     }
 
@@ -161,9 +165,10 @@ public class Player {
 
     private int checkHowManyUtilitys(String type) {
         int countTheTypes = 0;
+        int addPropertyType = 0;
         for (PlayerProperty playerProperty : this.properties) {
             if (Objects.equals(playerProperty.getPropertyType(), type)) {
-                countTheTypes += 1;
+                countTheTypes += addPropertyType;
             }
         }
         return countTheTypes;
