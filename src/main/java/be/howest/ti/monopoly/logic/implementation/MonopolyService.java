@@ -174,7 +174,9 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         Player debtPlayer = game.getSpecificPlayer(debtPlayerName);
         Tile tile = getTile(tileName);
-        if (tile != player.currentTile){
+        System.out.println(tile);
+        System.out.println(player.currentTile);
+        if (tile.getName() != player.currentTile.getName()){
             throw new IllegalArgumentException("player is not on the tile.");
         }else if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
             throw new IllegalArgumentException("the tile is not you're property");
