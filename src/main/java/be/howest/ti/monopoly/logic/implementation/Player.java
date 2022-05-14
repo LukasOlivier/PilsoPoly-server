@@ -120,7 +120,7 @@ public class Player {
                 payRentStreet(playerProperty, property, debtPlayer);
                 break;
             case ("railroad"):
-                transfer(debtPlayer, (25 * checkHowManyUtilitys("street")));
+                transfer(debtPlayer, (25 * checkHowManyUtilitys("railroad")));
                 break;
             default:
                 throw new IllegalArgumentException("you can not ask rent for any other type");
@@ -162,7 +162,7 @@ public class Player {
     private int checkHowManyUtilitys(String type) {
         int countTheTypes = 0;
         for (PlayerProperty playerProperty : this.properties) {
-            if (playerProperty.getType() == type) {
+            if (Objects.equals(playerProperty.getPropertyType(), type)) {
                 countTheTypes += 1;
             }
         }

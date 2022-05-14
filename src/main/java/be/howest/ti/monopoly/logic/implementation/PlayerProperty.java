@@ -44,6 +44,8 @@ public class PlayerProperty {
         return property.getName();
     }
 
+    public String getPropertyType(){return property.getType();}
+
     public boolean isMortgage() {
         return mortgage;
     }
