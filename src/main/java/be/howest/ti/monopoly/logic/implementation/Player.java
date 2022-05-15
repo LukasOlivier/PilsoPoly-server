@@ -117,7 +117,7 @@ public class Player {
     public void payRent(PlayerProperty playerProperty, Property property, Game game, Player debtPlayer){
         switch (currentTile.getType()){
             case ("utility"):
-                payRentUtility(game, debtPlayer);
+                payRentUtilityGetDiceRoll(game, debtPlayer);
                 break;
             case ("street"):
                 payRentStreet(playerProperty, property, debtPlayer);
@@ -134,16 +134,20 @@ public class Player {
         transfer(debtPlayer, (25 * checkHowManyUtilitys("railroad", debtPlayer)));
     }
 
-    public void payRentUtility(Game game, Player debtPlayer){
-        int oneUtilityTile = 1;
+    public void payRentUtilityGetDiceRoll(Game game, Player debtPlayer){
         int indexOfLastTurn = game.getTurns().size() - 1;
         int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().get(0);
         int lastDiceRollTwo = game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
         int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
+        payRentUtility(lastDiceRoll, debtPlayer);
+    }
+
+    public void payRentUtility(int amountOfEyes, Player debtPlayer){
+        int oneUtilityTile = 1;
         if (checkHowManyUtilitys("utility", debtPlayer) > oneUtilityTile){
-            transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * lastDiceRoll);
+            transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * amountOfEyes);
         }else{
-            transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * lastDiceRoll);
+            transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * amountOfEyes);
         }
     }
 

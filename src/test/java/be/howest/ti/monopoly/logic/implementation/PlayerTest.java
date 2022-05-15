@@ -124,4 +124,15 @@ class PlayerTest {
         player.payRentRailRoad(debtPlayer);
         assertEquals(1475, player.getMoney());
     }
+
+    @Test
+    void payRentUtility(){
+        Property testProperty =  new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150);
+        PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
+        Player debtPlayer = new Player("Sibren", "Beer");
+        Player player = new Player("Robin", "test");
+        debtPlayer.addProperties(testPlayerProperty);
+        player.payRentUtility(10,debtPlayer);
+        assertEquals(1460, player.getMoney());
+    }
 }
