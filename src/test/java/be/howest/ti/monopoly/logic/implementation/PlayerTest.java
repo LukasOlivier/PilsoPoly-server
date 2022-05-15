@@ -91,7 +91,6 @@ class PlayerTest {
         Tile jail = new Tile("Jail", 10, "Jail", "In jail", "jailed");
     }
 
-
     @Test
     void addTurnInJail() {
         Player testPlayer = new Player("Sibren", "Beer");

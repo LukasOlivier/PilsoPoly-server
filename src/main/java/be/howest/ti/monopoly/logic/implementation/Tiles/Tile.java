@@ -12,8 +12,11 @@ public class Tile {
     private int position;
     private String type;
     private String description;
+    public String actionType;
 
-    private String actionType;
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Tile(String name, int position, String type, String description, String actionType) {
         this.name = name;

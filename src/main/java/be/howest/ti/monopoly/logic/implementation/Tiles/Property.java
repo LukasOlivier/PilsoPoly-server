@@ -68,6 +68,8 @@ public class Property extends Tile {
 }
     public void setBought(boolean bought) {
         this.bought = bought;
+        this.setActionType("rent");
+        this.setDescription("should pay rent");
     }
 
     public boolean isBought() {
