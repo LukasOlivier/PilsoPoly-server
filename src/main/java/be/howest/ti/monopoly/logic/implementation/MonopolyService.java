@@ -217,7 +217,6 @@ public class MonopolyService extends ServiceAdapter {
             game.getCurrentTurn().setRoll(diceRollResult);
             Move.checkIfPlayerCanRollAgain(game, player);
             game.setLastDiceRoll(diceRollResult);
-
             return game;
         } else {
             throw new IllegalMonopolyActionException("Not your turn!");
