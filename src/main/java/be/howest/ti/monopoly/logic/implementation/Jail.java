@@ -18,14 +18,14 @@ public class Jail {
         }
     }
 
-    public static boolean checkIfFreeByDoubleThrow(Player player) {
+    public static void checkIfFreeByDoubleThrow(Player player) {
         if (player.isJailed()) {
             player.setJailed(false);
             player.resetDoubleThrows();
-            return true;
         }
-        return false;
     }
+
+
 
     public static boolean checkIfJailedByDoubleThrow(Player player, Game game) {
         int maxDoubleThrowsBeforeJail = 3;
