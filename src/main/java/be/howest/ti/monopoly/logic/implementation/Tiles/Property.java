@@ -41,28 +41,6 @@ public class Property extends Tile {
         return rent;
     }
 
-
-    /*public int getRentWithOneHouse() {return getRentWithOneHouse();}
-
-    public int getRentWithTwoHouses() {return getRentWithTwoHouses();}
-
-
-
-    public int getRentWithThreeHouses() {
-        return getRentWithThreeHouses();
-    }
-
-    public int getRentWithFourHouses() {
-        return getRentWithFourHouses();
-    }
-
-
-    public int getRentWithHotel() {
-        return getRentWithHotel();
-    }*/
-
-
-
     public void setBought(boolean bought) {
         this.bought = bought;
         this.setActionType("rent");
