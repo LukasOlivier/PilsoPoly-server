@@ -110,10 +110,10 @@ public class Player {
     public void addMoney(int amount){money += amount;}
 
     public void transfer(Player debtPlayer, int amount){
+        System.out.println(amount);
         removeMoney(amount);
         debtPlayer.addMoney(amount);
     }
-
     public void payRent(PlayerProperty playerProperty, Property property, Game game, Player debtPlayer){
         switch (currentTile.getType()){
             case ("utility"):
@@ -123,21 +123,24 @@ public class Player {
                 payRentStreet(playerProperty, property, debtPlayer);
                 break;
             case ("railroad"):
-                transfer(debtPlayer, (25 * checkHowManyUtilitys("railroad")));
+                payRentRailRoad(debtPlayer);
                 break;
             default:
                 throw new IllegalArgumentException("you can not ask rent for any other type");
         }
     }
 
+    public void payRentRailRoad(Player debtPlayer){
+        transfer(debtPlayer, (25 * checkHowManyUtilitys("railroad", debtPlayer)));
+    }
 
     public void payRentUtility(Game game, Player debtPlayer){
         int oneUtilityTile = 1;
         int indexOfLastTurn = game.getTurns().size() - 1;
         int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().get(0);
-        int lastDiceRollTwo =  + game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
+        int lastDiceRollTwo = game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
         int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
-        if (checkHowManyUtilitys("utility") > oneUtilityTile){
+        if (checkHowManyUtilitys("utility", debtPlayer) > oneUtilityTile){
             transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * lastDiceRoll);
         }else{
             transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * lastDiceRoll);
@@ -164,10 +167,10 @@ public class Player {
         }
     }
 
-    private int checkHowManyUtilitys(String type) {
+    private int checkHowManyUtilitys(String type, Player player) {
         int countTheTypes = 0;
         int addPropertyType = 0;
-        for (PlayerProperty playerProperty : this.properties) {
+        for (PlayerProperty playerProperty : player.properties) {
             if (Objects.equals(playerProperty.getPropertyType(), type)) {
                 countTheTypes += addPropertyType;
             }

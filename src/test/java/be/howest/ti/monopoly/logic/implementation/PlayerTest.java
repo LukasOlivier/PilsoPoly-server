@@ -1,8 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.Tiles.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -113,7 +111,17 @@ class PlayerTest {
         Player player = new Player("Robin", "test");
         debtPlayer.addProperties(testPlayerProperty);
         player.payRentStreet(testPlayerProperty,testProperty,debtPlayer);
-
         assertEquals(1480, player.getMoney());
+    }
+
+    @Test
+    void payRentRailRoad(){
+        Property testProperty = new Railroad("Reading RR", 5, "railroad", 4, "BLACK", 25, 100, 200);
+        PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
+        Player debtPlayer = new Player("Sibren", "Beer");
+        Player player = new Player("Robin", "test");
+        debtPlayer.addProperties(testPlayerProperty);
+        player.payRentRailRoad(debtPlayer);
+        assertEquals(1475, player.getMoney());
     }
 }
