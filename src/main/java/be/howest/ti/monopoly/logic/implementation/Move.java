@@ -47,7 +47,6 @@ public class Move {
         int rewardForPassingGo = 200;
         if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.previousTile, goTile)))) {
             player.addMoney(rewardForPassingGo);
-            System.out.println("PASSED GO");
         }
     }
 
