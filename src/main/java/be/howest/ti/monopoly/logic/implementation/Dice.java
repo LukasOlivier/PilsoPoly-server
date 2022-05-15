@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Dice {
-    static int minvalue = 1;
-    static int maxvalue = 6;
+    static int minvalue = 2;
+    static int maxvalue = 2;
     static int amountOfDice = 2;
 
 

@@ -98,8 +98,4 @@ public class Tile {
             default:
         }
     }
-
-    public boolean isBought() {
-        return false;
-    }
 }

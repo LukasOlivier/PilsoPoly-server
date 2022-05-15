@@ -104,18 +104,19 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
-    public void buyProperty(String gameId, String playerName,String propertyName) {
+    @Override
+    public void buyProperty(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         Tile tileToBuy = player.currentTile;
         try {
-            checkIfTileCanBeBought(propertyName,player,tileToBuy);
+            checkIfTileCanBeBought(propertyName, player, tileToBuy);
             Property tileToProperty = (Property) tileToBuy;
             PlayerProperty boughtProperty = new PlayerProperty(tileToProperty);
             player.addProperties(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
-            checkIfPlayerCanRollAgain(game,player);
+            checkIfPlayerCanRollAgain(game, player);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("failed to buy property");
         }
@@ -166,7 +167,7 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void setBankrupt(String playerName,String gameId) {
+    public void setBankrupt(String playerName, String gameId) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         player.setBankrupt();
@@ -174,51 +175,55 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void useComputeTax(String playerName,String gameId) {
+    public void useComputeTax(String playerName, String gameId) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.setTaxSystem("COMPUTE");
     }
 
     @Override
-    public void useEstimateTax(String playerName,String gameId) {
+    public void useEstimateTax(String playerName, String gameId) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.setTaxSystem("ESTIMATE");
     }
 
     @Override
-    public void getOutOfJailFine(String gameId, String playerName){
+    public void getOutOfJailFine(String gameId, String playerName) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.fine();
     }
 
     @Override
-    public void getOutOfJailFree(String gameId, String playerName){
+    public void getOutOfJailFree(String gameId, String playerName) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.free();
     }
 
     @Override
-    public void startPlayerAuction(String gameId,String playerName, String propertyName, int startBid, int duration){
+    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
         Game game = getGameById(gameId);
-        game.startPlayerAuction(startBid,duration,playerName,propertyName);
+        game.startPlayerAuction(startBid, duration, playerName, propertyName);
     }
 
 
     @Override
-    public Game rollDice(String playerName,String gameId) {
+    public Game rollDice(String playerName, String gameId) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        if (Objects.equals(game.getCurrentPlayer(), player.getName())) {
-            game.addTurn(new Turn(player.getName(),"DEFAULT"));
+        if (Objects.equals(game.getCurrentPlayer(), player.getName()) && game.isCanRoll()) {
+            game.addTurn(new Turn(player.getName(), "DEFAULT"));
             player.previousTile = player.currentTile;
-            List<Integer> diceRollResult = Dice.rollDice();
+            //List<Integer> diceRollResult = Dice.rollDice();
+            List<Integer> diceRollResult = List.of(1,2);
             int placesToMove = calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
             game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));
             game.getCurrentTurn().setRoll(diceRollResult);
-            checkIfPlayerRolledDouble(player,diceRollResult, game);
-            checkIfPlayerCanRollAgain(game,player);
+            checkIfPlayerRolledDouble(player, diceRollResult, game);
+            System.out.println(player.currentTile.getName());
+            System.out.println(player.currentTile.getActionType());
+            checkIfPlayerCanRollAgain(game, player);
             game.setLastDiceRoll(diceRollResult);
+
             return game;
         } else {
             throw new IllegalMonopolyActionException("Not your turn!");
@@ -230,18 +235,18 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         for (PlayerProperty property : player.getProperties()) {
             if (property.getProperty().equals(propertyName)) {
-                property.addHouse( player, player.getProperties() );
+                property.addHouse(player, player.getProperties());
             }
         }
     }
 
     @Override
     public void sellHouse(String gameId, String playerName, String propertyName) {
-        Game game =getGameById(gameId);
+        Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         for (PlayerProperty property : player.getProperties()) {
             if (property.getProperty().equals(propertyName)) {
-                property.sellHouse( player, player.getProperties() );
+                property.sellHouse(player, player.getProperties());
             }
         }
     }
@@ -263,30 +268,30 @@ public class MonopolyService extends ServiceAdapter {
     }
 
 
-    public void checkIfPlayerRolledDouble(Player player, List<Integer> diceRollResult, Game game){
+    public void checkIfPlayerRolledDouble(Player player, List<Integer> diceRollResult, Game game) {
         if (Dice.checkIfRolledDouble(diceRollResult)) {
             player.addDoubleThrow();
             checkIfJailedByDoubleThrow(player, game);
-        }else{
+        } else {
             player.resetDoubleThrows();
         }
     }
-    public void checkIfPlayerCanRollAgain(Game game,Player player) {
-        if (Objects.equals(player.currentTile.getActionType(), "buy")){
+
+    public void checkIfPlayerCanRollAgain(Game game, Player player) {
+        if (Objects.equals(player.currentTile.getActionType(), "buy")) {
             game.setCanRoll(false);
-        }
-        else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)){
+        } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)) {
             game.setCurrentPlayer(player.getName());
             game.setCanRoll(true);
 
-        }else{
+        } else {
             game.setCanRoll(true);
-            setNextPlayer(game,player);
+            setNextPlayer(game, player);
         }
     }
 
     public boolean checkIfJailedByDoubleThrow(Player player, Game game) {
-        return Jail.checkIfFreeByDoubleThrow(player) || Jail.checkIfJailedByDoubleThrow(player,game);
+        return Jail.checkIfFreeByDoubleThrow(player) || Jail.checkIfJailedByDoubleThrow(player, game);
     }
 }
 
