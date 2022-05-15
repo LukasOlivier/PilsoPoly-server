@@ -10,14 +10,15 @@ public class Jail {
     public static void checkIfFreeByWaitingTurns(Player player) {
         int amountToPayToGetOutOfJail = 50;
         int maxTurnsInJail = 3;
-        if (player.getTurnsInJail() == maxTurnsInJail) {
-            player.setJailed(false);
-            player.removeMoney(amountToPayToGetOutOfJail);
-        } else {
-            player.setJailed(true);
-            player.addTurnInJail();
+        if (player.isJailed()){
+            if (player.getTurnsInJail() == maxTurnsInJail) {
+                player.setJailed(false);
+                player.removeMoney(amountToPayToGetOutOfJail);
+            } else {
+                player.setJailed(true);
+                player.addTurnInJail();
+            }
         }
-
     }
 
     public static void checkIfFreeByDoubleThrow(Player player) {
