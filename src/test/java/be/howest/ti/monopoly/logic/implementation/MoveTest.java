@@ -67,7 +67,6 @@ public class MoveTest {
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove);
-        System.out.println(alice.getAmountOfDoubleThrows());
         Move.checkIfPlayerCanRollAgain(testGame, alice);
 
         assertEquals("Alice", testGame.getCurrentPlayer());

@@ -59,19 +59,20 @@ public class JailTest {
     }
 
     @Test
-    void test) {
+    void testNotFreeByDiceRoll() {
         Game testGame = new Game(2, "PilsoPoly", 0);
         Player alice = new Player("Alice", "dummy");
         testGame.addPlayer("Alice", "dummy");
-        List<Integer> diceRollDouble = List.of(1,1);
+        List<Integer> diceRoll = List.of(1,1);
         alice.setJailed(true);
         alice.setCurrentTile(Tile.getTileFromPosition(Game.getGameTiles(),10)); //Jail tile
 
-        Dice.checkIfRolledDouble(testGame,alice,diceRollDouble);
-        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble));
+        Dice.checkIfRolledDouble(testGame,alice,diceRoll);
+        Jail.checkIfFreeByWaitingTurns(alice);
+        Move.makeMove(alice, Move.calculatePlacesToMove(diceRoll));
 
-        assertFalse(alice.isJailed());
-        assertEquals("Electric Company",alice.getCurrentTile());
+        assertTrue(alice.isJailed());
+        assertEquals("Jail",alice.getCurrentTile());
     }
 
     @Test
@@ -85,6 +86,7 @@ public class JailTest {
         assertFalse(testPlayer.isJailed());
     }
 
+
     @Test
     void free() {
         Player testPlayer = new Player("Sibren", "Beer");
@@ -95,5 +97,13 @@ public class JailTest {
 
         assertEquals(0, testPlayer.getGetOutOfJailFreeCards());
         assertFalse(testPlayer.isJailed());
+    }
+    @Test
+    void notEnoughGetOutOfJailFreeCards() {
+        Player testPlayer = new Player("Sibren", "Beer");
+        testPlayer.setJailed(true);
+
+        assertThrows(IllegalStateException.class, testPlayer::free);
+        assertTrue(testPlayer.isJailed());
     }
 }
