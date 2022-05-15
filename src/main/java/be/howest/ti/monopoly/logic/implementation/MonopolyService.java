@@ -116,7 +116,7 @@ public class MonopolyService extends ServiceAdapter {
             player.addProperties(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
-            checkIfPlayerCanRollAgain(game, player);
+            Move.checkIfPlayerCanRollAgain(game, player);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("failed to buy property");
         }
@@ -147,9 +147,6 @@ public class MonopolyService extends ServiceAdapter {
             throw new IllegalStateException("already started");
         }
         game.addPlayer(playerName, icon);
-        if (game.getCurrentPlayer() == null) {
-            game.setCurrentPlayer(playerName);
-        }
     }
 
     @Override
@@ -212,16 +209,13 @@ public class MonopolyService extends ServiceAdapter {
         if (Objects.equals(game.getCurrentPlayer(), player.getName()) && game.isCanRoll()) {
             game.addTurn(new Turn(player.getName(), "DEFAULT"));
             player.previousTile = player.currentTile;
-            //List<Integer> diceRollResult = Dice.rollDice();
-            List<Integer> diceRollResult = List.of(1,2);
-            int placesToMove = calculatePlacesToMove(diceRollResult);
+            List<Integer> diceRollResult = Dice.rollDice();
+            Dice.checkIfRolledDouble(game,player,diceRollResult);
+            int placesToMove = Move.calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
             game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));
             game.getCurrentTurn().setRoll(diceRollResult);
-            checkIfPlayerRolledDouble(player, diceRollResult, game);
-            System.out.println(player.currentTile.getName());
-            System.out.println(player.currentTile.getActionType());
-            checkIfPlayerCanRollAgain(game, player);
+            Move.checkIfPlayerCanRollAgain(game, player);
             game.setLastDiceRoll(diceRollResult);
 
             return game;
@@ -230,6 +224,7 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+    @Override
     public void buyHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
@@ -239,7 +234,6 @@ public class MonopolyService extends ServiceAdapter {
             }
         }
     }
-
     @Override
     public void sellHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
@@ -249,49 +243,6 @@ public class MonopolyService extends ServiceAdapter {
                 property.sellHouse(player, player.getProperties());
             }
         }
-    }
-
-    private int calculatePlacesToMove(List<Integer> diceRoll) {
-        int placesToMove = 0;
-        for (Integer diceNumber : diceRoll) {
-            placesToMove += diceNumber;
-        }
-        return placesToMove;
-    }
-
-    public void setNextPlayer(Game game, Player currentPlayer) {
-        int indexOfNextPlayer = game.getPlayers().indexOf(currentPlayer) + 1;
-        if (indexOfNextPlayer >= game.getPlayers().size()) {
-            indexOfNextPlayer = 0;
-        }
-        game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
-    }
-
-
-    public void checkIfPlayerRolledDouble(Player player, List<Integer> diceRollResult, Game game) {
-        if (Dice.checkIfRolledDouble(diceRollResult)) {
-            player.addDoubleThrow();
-            checkIfJailedByDoubleThrow(player, game);
-        } else {
-            player.resetDoubleThrows();
-        }
-    }
-
-    public void checkIfPlayerCanRollAgain(Game game, Player player) {
-        if (Objects.equals(player.currentTile.getActionType(), "buy")) {
-            game.setCanRoll(false);
-        } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)) {
-            game.setCurrentPlayer(player.getName());
-            game.setCanRoll(true);
-
-        } else {
-            game.setCanRoll(true);
-            setNextPlayer(game, player);
-        }
-    }
-
-    public boolean checkIfJailedByDoubleThrow(Player player, Game game) {
-        return Jail.checkIfFreeByDoubleThrow(player) || Jail.checkIfJailedByDoubleThrow(player, game);
     }
 }
 

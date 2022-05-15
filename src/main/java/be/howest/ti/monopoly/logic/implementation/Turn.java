@@ -19,6 +19,14 @@ public class Turn {
         this.roll = roll;
     }
 
+    public static void setNextPlayer(Game game, Player currentPlayer) {
+        int indexOfNextPlayer = game.getPlayers().indexOf(currentPlayer) + 1;
+        if (indexOfNextPlayer >= game.getPlayers().size()) {
+            indexOfNextPlayer = 0;
+        }
+        game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
+    }
+
     public void addMove(Move move){
         this.moves.add(move);
     }

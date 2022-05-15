@@ -2,7 +2,10 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 
+import java.util.List;
 import java.util.Objects;
+
+import static be.howest.ti.monopoly.logic.implementation.Jail.checkIfJailedByDoubleThrow;
 
 public class Move {
     private final String tile;
@@ -53,6 +56,14 @@ public class Move {
         return player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard;
     }
 
+    public static int calculatePlacesToMove(List<Integer> diceRoll) {
+        int placesToMove = 0;
+        for (Integer diceNumber : diceRoll) {
+            placesToMove += diceNumber;
+        }
+        return placesToMove;
+    }
+
     @Override
     public String toString() {
         return "Move{" +
@@ -60,6 +71,19 @@ public class Move {
                 ", description='" + description + '\'' +
                 ", actionType='" + actionType + '\'' +
                 '}';
+    }
+
+    public static void checkIfPlayerCanRollAgain(Game game, Player player) {
+        if (Objects.equals(player.currentTile.getActionType(), "buy")) {
+            game.setCanRoll(false);
+        } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)) {
+            game.setCurrentPlayer(player.getName());
+            game.setCanRoll(true);
+
+        } else {
+            game.setCanRoll(true);
+            Turn.setNextPlayer(game, player);
+        }
     }
 
     private static boolean passGoWithoutReward(Player player) {

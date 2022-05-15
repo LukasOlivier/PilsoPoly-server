@@ -160,4 +160,22 @@ public class Player {
     public void addMoney(int amount) {
         this.money += amount;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return amountOfDoubleThrows == player.amountOfDoubleThrows && Objects.equals(name, player.name) && Objects.equals(icon, player.icon);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, icon);
+    }
 }

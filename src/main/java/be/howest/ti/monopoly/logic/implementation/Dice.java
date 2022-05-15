@@ -21,9 +21,14 @@ public class Dice {
         return diceRoll;
     }
 
-    public static boolean checkIfRolledDouble(List<Integer> diceRoll) {
-        return Objects.equals(diceRoll.get(0), diceRoll.get(1));
-
+    public static void checkIfRolledDouble(Game game,Player player, List<Integer> diceRoll) {
+        if (Objects.equals(diceRoll.get(0), diceRoll.get(1))){
+            player.addDoubleThrow();
+            Jail.checkIfFreeByDoubleThrow(player);
+            Jail.checkIfJailedByDoubleThrow(player,game);
+        }else{
+            player.resetDoubleThrows();
+        }
     }
 
     private static int randomIntGenerator(int minvalue, int maxvalue) {

@@ -149,9 +149,13 @@ public class Game {
             }
         }
         players.add(new Player(name, icon));
+        if (getCurrentPlayer() == null) {
+            setCurrentPlayer(name);
+        }
         if (players.size() == numberOfPlayers) {
             this.started = true;
             this.canRoll = true;
+
         }
     }
 
