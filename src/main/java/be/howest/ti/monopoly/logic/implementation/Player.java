@@ -145,20 +145,21 @@ public class Player {
     }
 
     public void payRentStreet(PlayerProperty playerProperty, Property property, Player debtPlayer){
+        Street street = (Street) property;
         switch (playerProperty.getHouseCount()){
             case 1:
-                transfer(debtPlayer, property.getRentWithOneHouse());
+                transfer(debtPlayer, street.getRentWithOneHouse());
             case 2:
-                transfer(debtPlayer, property.getRentWithTwoHouses());
+                transfer(debtPlayer, street.getRentWithTwoHouses());
             case 3:
-                transfer(debtPlayer, property.getRentWithThreeHouses());
+                transfer(debtPlayer, street.getRentWithThreeHouses());
             case 4:
-                transfer(debtPlayer, property.getRentWithFourHouses());
+                transfer(debtPlayer, street.getRentWithFourHouses());
             default:
                 if (playerProperty.getHotelCount() > 0){
-                    transfer(debtPlayer,property.getRentWithHotel());
+                    transfer(debtPlayer,street.getRentWithHotel());
                 }else{
-                    transfer(debtPlayer,property.getRent());
+                    transfer(debtPlayer,street.getRent());
                 }
         }
     }
