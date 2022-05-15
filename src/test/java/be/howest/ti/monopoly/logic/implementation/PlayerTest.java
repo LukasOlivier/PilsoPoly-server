@@ -107,7 +107,7 @@ class PlayerTest {
     }
 
     @Test
-    void payRent(){
+    void payRentStreet(){
         Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", 100, 300, 750, 925, 1100, 150, 20, 120, 240);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
