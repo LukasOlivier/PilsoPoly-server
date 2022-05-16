@@ -21,7 +21,6 @@ public class Game {
     private boolean ended;
     private String currentPlayer;
     private String winner;
-
     private Dice lastDiceRoll;
 
 
@@ -33,7 +32,10 @@ public class Game {
     }
 
     public List<Integer> getLastDiceRoll() {
-        return List.of(lastDiceRoll.getDiceOne(), lastDiceRoll.getDiceTwo());
+        if (lastDiceRoll != null) {
+            return List.of(lastDiceRoll.getDiceOne(), lastDiceRoll.getDiceTwo());
+        }
+        return Collections.emptyList();
     }
 
     public void setLastDiceRoll(Dice lastDiceRoll) {
