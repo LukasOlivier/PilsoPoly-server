@@ -18,14 +18,19 @@ public class GoToTile extends CommunityOrChanceCard {
 
     @Override
     public void cardAction(Game game, Player player){
-        Tile tile = Tile.getTileFromPosition(position);
         int positionOfJail = 10;
-        player.setPreviousTile(player.currentTile);
-        if (position == positionOfJail){
-            player.setJailed(true);
-        }
-        player.setCurrentTile(tile);
-        Move.checkIfPassedGo(player);
-    }
+        int amountOfTiles = 40;
 
+        int placesToMove = position - player.currentTile.getPosition();
+        if (placesToMove < 0) {
+            placesToMove += amountOfTiles;
+        }
+        if (position == positionOfJail ){
+            player.setJailed(true);
+            player.setCurrentTile(Tile.getTileFromPosition(10));
+            player.setPreviousTile(Tile.getTileFromPosition(10));
+        } else {
+            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove, game));
+        }
+    }
 }

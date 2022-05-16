@@ -31,17 +31,19 @@ public class Move {
     }
 
     public static Move makeMove(Player player, int placesToMove, Game game) {
+        player.setPreviousTile(player.currentTile);
+        int amountOfTiles = 40;
         if (!player.isJailed()){
-
-            int amountOfTiles = 40;
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % amountOfTiles;
             player.currentTile = Tile.getTileFromPosition(currentPosition);
             Tile.takeTileAction(player.currentTile, player, game);
             checkIfPassedGo(player);
         }
+
         if (player.getFirstThrow()){
             player.setFirstThrow();
         }
+
         return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());
     }
 

@@ -37,7 +37,7 @@ public class Jail {
             player.setJailed(true);
             player.setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
             player.resetDoubleThrows();
-
+            player.setPreviousTile(Tile.getTileFromPosition(10));
             return true;
         }
         return false;

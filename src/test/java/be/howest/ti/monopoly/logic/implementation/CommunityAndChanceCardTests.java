@@ -96,7 +96,7 @@ class CommunityAndChanceCardTests {
     void GoToTile(){
         Niels.setFirstThrow();
         Lukas.setFirstThrow();
-
+        testGame.addTurn(new Turn(Niels.getName(), "DEFAULT"));
         // Does not pass Go
         new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24).cardAction(testGame, Niels);
         assertEquals("Illinois Avenue", Niels.getCurrentTile());
@@ -118,6 +118,7 @@ class CommunityAndChanceCardTests {
         assertEquals(1900, Niels.getMoney());
         assertTrue(Niels.isJailed());
 
+        testGame.addTurn(new Turn(Lukas.getName(), "DEFAULT"));
         // Does not pass Go
         new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24).cardAction(testGame, Lukas);
         assertEquals("Illinois Avenue", Lukas.getCurrentTile());
@@ -128,5 +129,15 @@ class CommunityAndChanceCardTests {
         assertTrue(Lukas.isJailed());
         assertEquals("Jail", Lukas.getCurrentTile());
         assertEquals(1500, Lukas.getMoney());
+    }
+
+    @Test
+    void advanceToNearest(){
+        Niels.setFirstThrow();
+        Lukas.setFirstThrow();
+
+        testGame.addTurn(new Turn(Lukas.getName(), "DEFAULT"));
+        new AdvanceToNearest("Go to nearest railroad", "railroad").cardAction(testGame, Lukas);
+        assertEquals("railroad",Lukas.getCurrentTile());
     }
 }

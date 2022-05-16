@@ -99,6 +99,7 @@ public class Tile {
                 }
                 break;
             case "chance":
+                game.doRandomChanceCardAction(player);
                 break;
             case "community":
                 game.doRandomCommunityCardAction(player);
