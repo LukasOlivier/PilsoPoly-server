@@ -11,6 +11,11 @@ public class PlayerProperty {
     private int houseCount;
     private int hotelCount;
 
+    private final static int MIN_HOUSE_COUNT = 0;
+    private final static int MAX_HOUSE_COUNT = 4;
+    private final static int MAX_HOTEL_COUNT = 1;
+
+
     public PlayerProperty(Property property, boolean mortgage, int houseCount, int hotelCount) {
         this.property = property;
         this.mortgage = mortgage;
@@ -66,7 +71,6 @@ public class PlayerProperty {
     }
 
     public void sellHotel(Player player, List<PlayerProperty> properties) {
-        int MAX_HOUSE_COUNT = 4;
         if ( canSellHotel() ) {
             hotelCount = 0;
             houseCount = MAX_HOUSE_COUNT;
@@ -88,12 +92,10 @@ public class PlayerProperty {
     }
 
     private boolean canAddHouse() {
-        int MAX_HOUSE_COUNT = 4;
         return getHouseCount() < MAX_HOUSE_COUNT;
     }
 
     private boolean canRemoveHouse() {
-        int MIN_HOUSE_COUNT = 0;
         return getHouseCount() > MIN_HOUSE_COUNT;
     }
 
@@ -126,12 +128,10 @@ public class PlayerProperty {
     }
 
     private boolean canBuyHotel() {
-        int MAX_HOUSE_COUNT = 4;
         return houseCount == MAX_HOUSE_COUNT && hotelCount == 0;
     }
 
     private boolean canSellHotel() {
-        int MAX_HOTEL_COUNT = 1;
         return hotelCount == MAX_HOTEL_COUNT && houseCount == 0;
     }
 }
