@@ -56,29 +56,38 @@ public class PlayerProperty {
         }
     }
 
-    public void addHousePrice(Player player) {
+    public void buyHotel(Player player, List<PlayerProperty> otherProperties) {
+        if ( canBuyHotel() ) {
+            hotelCount = 1;
+            houseCount = 0;
+        } else {
+            throw new IllegalStateException("Cant buy hotel");
+        }
+    }
+
+    private void addHousePrice(Player player) {
         Street street = (Street) property;
         int housePrice = street.getHousePrice();
         player.addMoney(housePrice);
     }
 
-    public void withdrawHousePrice(Player player) {
+    private void withdrawHousePrice(Player player) {
         Street street = (Street) property;
         int housePrice = street.getHousePrice();
         player.removeMoney(housePrice);
     }
 
-    public boolean canAddHouse() {
+    private boolean canAddHouse() {
         int MAX_HOUSE_COUNT = 4;
         return getHouseCount() < MAX_HOUSE_COUNT;
     }
 
-    public boolean canRemoveHouse() {
+    private boolean canRemoveHouse() {
         int MIN_HOUSE_COUNT = 0;
         return getHouseCount() > MIN_HOUSE_COUNT;
     }
 
-    public boolean playerOwnsStreet(List<PlayerProperty> playerProperties) {
+    private boolean playerOwnsStreet(List<PlayerProperty> playerProperties) {
         int amount = 0;
         int groupSize = property.getGroupSize();
         String streetColor = property.getColor();
@@ -90,7 +99,7 @@ public class PlayerProperty {
         return amount == groupSize;
     }
 
-    public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties, boolean buy) {
+    private boolean houseCountIsCorrect(List<PlayerProperty> playerProperties, boolean buy) {
         int maxHouseDifference = 1;
         int housesOnCurrentProperty = getHouseCount();
         int currentHousesAfterAction = getHouseCount();
@@ -105,5 +114,10 @@ public class PlayerProperty {
             }
         }
         return true;
+    }
+
+    private boolean canBuyHotel() {
+        int MAX_HOUSE_COUNT = 4;
+        return houseCount == MAX_HOUSE_COUNT && hotelCount == 0;
     }
 }
