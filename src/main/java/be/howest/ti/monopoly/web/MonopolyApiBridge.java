@@ -457,9 +457,6 @@ public class MonopolyApiBridge {
 
     private void startPlayerAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        System.out.println(request.getIntFromBody("start-bid"));
-        System.out.println(request.getIntFromBody("duration"));
-
         String gameId = request.getPathParameterValue("gameId");
         String playerName = request.getPathParameterValue("playerName");
         String propertyName = request.getPathParameterValue("propertyName");

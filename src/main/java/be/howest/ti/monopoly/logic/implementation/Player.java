@@ -22,8 +22,8 @@ public class Player {
     private int debt;
     private final String icon;
 
-    public Tile previousTile;
-    private boolean firstThrow = true;
+    private Tile previousTile;
+    private boolean firstThrow;
     private int turnsInJail = 0;
     private int amountOfDoubleThrows = 0;
 
@@ -33,10 +33,19 @@ public class Player {
         this.jailed = jailed;
         this.money = money;
         this.bankrupt = bankrupt;
+        this.firstThrow = true;
         this.getOutOfJailFreeCards = getOutOfJailFreeCards;
         this.debt = debt;
         this.icon = icon;
         this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
+    }
+
+    public Tile getPreviousTile() {
+        return previousTile;
+    }
+
+    public void setPreviousTile(Tile previousTile) {
+        this.previousTile = previousTile;
     }
 
     public boolean getFirstThrow(){
@@ -97,6 +106,9 @@ public class Player {
         return icon;
     }
 
+    public void setFirstThrow() {
+        this.firstThrow = false;
+    }
 
     public void removeMoney(int amount) {
         money -= amount;
@@ -159,5 +171,23 @@ public class Player {
 
     public void addMoney(int amount) {
         this.money += amount;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return amountOfDoubleThrows == player.amountOfDoubleThrows && Objects.equals(name, player.name) && Objects.equals(icon, player.icon);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, icon);
     }
 }
