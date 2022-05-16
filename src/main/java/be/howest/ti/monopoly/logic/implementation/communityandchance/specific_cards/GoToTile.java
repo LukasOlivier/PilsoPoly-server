@@ -6,8 +6,6 @@ import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
-import java.util.Objects;
-
 public class GoToTile extends CommunityOrChanceCard {
 
     private final int position;
@@ -22,7 +20,7 @@ public class GoToTile extends CommunityOrChanceCard {
     public void cardAction(Game game, Player player){
         Tile tile = Tile.getTileFromPosition(position);
         int positionOfJail = 10;
-        player.previousTile = player.currentTile;
+        player.setPreviousTile(player.currentTile);
         if (position == positionOfJail){
             player.setJailed(true);
         }

@@ -1,5 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 
+import java.util.Objects;
+
 public class Street extends Property {
     private int rentWithOneHouse;
     private int rentWithTwoHouses;
@@ -44,5 +46,19 @@ public class Street extends Property {
 
     public int getRent(){
         return super.rent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Street street = (Street) o;
+        return rentWithOneHouse == street.rentWithOneHouse && rentWithTwoHouses == street.rentWithTwoHouses && rentWithThreeHouses == street.rentWithThreeHouses && rentWithFourHouses == street.rentWithFourHouses && rentWithHotel == street.rentWithHotel && housePrice == street.housePrice;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), rentWithOneHouse, rentWithTwoHouses, rentWithThreeHouses, rentWithFourHouses, rentWithHotel, housePrice);
     }
 }

@@ -348,7 +348,18 @@ public class MonopolyApiBridge {
     }
 
     private void takeMortgage(RoutingContext ctx) {
-        throw new NotYetImplementedException("takeMortgage");
+        Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getGameId();
+        String propertyName = request.getPropertyName();
+        try {
+            service.takeMortgage(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
+        }catch (IllegalStateException e){
+            throw new IllegalStateException("cant mortgage property");
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e);
+        }
     }
 
     private void settleMortgage(RoutingContext ctx) {
@@ -365,15 +376,30 @@ public class MonopolyApiBridge {
     }
 
     private void sellHouse(RoutingContext ctx) {
-        throw new NotYetImplementedException("sellHouse");
+        Request request = Request.from(ctx);
+        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValue("playerName");
+        String propertyName = request.getPropertyName();
+        service.sellHouse(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void buyHotel(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyHotel");
+        Request request = Request.from(ctx);
+        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValue("playerName");
+        String propertyName = request.getPropertyName();
+        service.buyHotel(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void sellHotel(RoutingContext ctx) {
-        throw new NotYetImplementedException("sellHotel");
+        Request request = Request.from(ctx);
+        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValue("playerName");
+        String propertyName = request.getPropertyName();
+        service.sellHotel(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void getOutOfJailFine(RoutingContext ctx) {
@@ -420,9 +446,6 @@ public class MonopolyApiBridge {
 
     private void startPlayerAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        System.out.println(request.getIntFromBody("start-bid"));
-        System.out.println(request.getIntFromBody("duration"));
-
         String gameId = request.getPathParameterValue("gameId");
         String playerName = request.getPathParameterValue("playerName");
         String propertyName = request.getPathParameterValue("propertyName");

@@ -1,36 +1,48 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class Dice {
-    static int minvalue = 2;
-    static int maxvalue = 2;
-    static int amountOfDice = 2;
+    static final int MIN_VALUE = 1;
+    static final int MAX_VALUE = 6;
+
+    private final int diceOne;
+    private final int diceTwo;
+    private static final Random random = new Random();
 
 
-    public static List<Integer> rollDice() {
-        List<Integer> diceRoll = new ArrayList<>();
-        for (int i = 0; i < amountOfDice; i++) {
-            diceRoll.add(randomIntGenerator(minvalue, maxvalue));
+    public int getDiceOne() {
+        return diceOne;
+    }
+
+    public int getDiceTwo() {
+        return diceTwo;
+    }
+
+
+    public Dice(){
+        this.diceOne = randomIntGenerator();
+        this.diceTwo = randomIntGenerator();
+    }
+
+    public Dice(int diceOne, int diceTwo){
+        this.diceOne = diceOne;
+        this.diceTwo = diceTwo;
+    }
+
+    public void checkIfRolledDouble(Game game,Player player) {
+        if (getDiceOne() == getDiceTwo()){
+            player.addDoubleThrow();
+            Jail.checkIfFreeByDoubleThrow(player);
+            Jail.checkIfJailedByDoubleThrow(player,game);
+        }else{
+            player.resetDoubleThrows();
         }
-        return diceRoll;
     }
 
-    public static boolean checkIfRolledDouble(List<Integer> diceRoll) {
-        return Objects.equals(diceRoll.get(0), diceRoll.get(1));
-
+    private int randomIntGenerator() {
+        int shiftResultByOne = 1;
+        return random.nextInt(MAX_VALUE) + shiftResultByOne;
     }
-
-    private static int randomIntGenerator(int minvalue, int maxvalue) {
-        int offByOne = 1;
-        maxvalue = maxvalue + offByOne;
-        return ThreadLocalRandom.current().nextInt(minvalue, maxvalue);
-    }
-
-
-
 
 }
