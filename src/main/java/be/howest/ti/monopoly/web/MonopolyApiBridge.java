@@ -358,6 +358,8 @@ public class MonopolyApiBridge {
             Response.sendOkResponse(ctx);
         }catch (IllegalStateException e){
             throw new IllegalStateException("cant mortgage property");
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e);
         }
     }
 

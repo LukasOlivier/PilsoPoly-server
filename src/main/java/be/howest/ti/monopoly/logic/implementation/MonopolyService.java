@@ -320,6 +320,8 @@ public class MonopolyService extends ServiceAdapter {
             playerProperty.mortgageTheProperty(property.getMortgage(), player);
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e);
+        }catch (IllegalStateException e){
+            throw new IllegalStateException(e);
         }
     }
 
@@ -327,7 +329,7 @@ public class MonopolyService extends ServiceAdapter {
         if (playerProperty == null){
             throw new IllegalArgumentException("trying to mortgage someone else's tile");
         }if (playerProperty.isMortgage()){
-            throw new IllegalArgumentException("property is already mortgaged");
+            throw new IllegalStateException("property is already mortgaged");
         }
     }
 
