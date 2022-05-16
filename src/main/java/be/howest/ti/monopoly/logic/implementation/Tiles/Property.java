@@ -1,5 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation.Tiles;
 
+import java.util.Objects;
+
 public class Property extends Tile {
     private int cost;
     private int mortgage;
@@ -61,5 +63,19 @@ public class Property extends Tile {
         } else {
             return "buy";
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Property property = (Property) o;
+        return cost == property.cost && mortgage == property.mortgage && rent == property.rent && groupSize == property.groupSize && Objects.equals(color, property.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), cost, mortgage, rent, groupSize, color);
     }
 }

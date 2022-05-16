@@ -2,7 +2,10 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 
+import java.util.List;
 import java.util.Objects;
+
+import static be.howest.ti.monopoly.logic.implementation.Jail.checkIfJailedByDoubleThrow;
 
 public class Move {
     private final String tile;
@@ -31,35 +34,47 @@ public class Move {
         if (!player.isJailed()){
             int endOfBoardPosition = 40;
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % endOfBoardPosition;
-            player.currentTile = Tile.getTileFromPosition(Game.getGameTiles(), currentPosition);
+            player.currentTile = Tile.getTileFromPosition(currentPosition);
             Tile.takeTileAction(player.currentTile, player);
             checkIfPassedGo(player);
+        }
+        if (player.getFirstThrow()){
+            player.setFirstThrow();
         }
         return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());
     }
 
 
-    private static void checkIfPassedGo(Player player) {
+    public static void checkIfPassedGo(Player player) {
         Tile goTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
         int rewardForPassingGo = 200;
-        if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.previousTile, goTile)))) {
+        if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.getPreviousTile(), goTile)))) {
             player.addMoney(rewardForPassingGo);
-            System.out.println("PASSED GO");
         }
     }
 
     private static boolean loopedTheBoard(Player player) {
         int positionOfFirstTileOfBoard = 1;
-        return player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard;
+        return player.currentTile.getPosition() - player.getPreviousTile().getPosition() < positionOfFirstTileOfBoard;
     }
 
-    @Override
-    public String toString() {
-        return "Move{" +
-                "tile='" + tile + '\'' +
-                ", description='" + description + '\'' +
-                ", actionType='" + actionType + '\'' +
-                '}';
+    public static int calculatePlacesToMove(Dice diceRoll) {
+        int placesToMove = 0;
+        placesToMove = placesToMove + diceRoll.getDiceOne() + diceRoll.getDiceTwo();
+        return placesToMove;
+    }
+
+    public static void checkIfPlayerCanRollAgain(Game game, Player player) {
+        if (Objects.equals(player.currentTile.getActionType(), "buy")) {
+            game.setCanRoll(false);
+        } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)) {
+            game.setCurrentPlayer(player.getName());
+            game.setCanRoll(true);
+
+        } else {
+            game.setCanRoll(true);
+            Turn.setNextPlayer(game, player);
+        }
     }
 
     private static boolean passGoWithoutReward(Player player) {

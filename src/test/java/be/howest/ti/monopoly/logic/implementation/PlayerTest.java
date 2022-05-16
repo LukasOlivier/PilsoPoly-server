@@ -52,29 +52,6 @@ class PlayerTest {
     }
 
     @Test
-    void fine() {
-        Player testPlayer = new Player("Sibren", "Beer");
-        testPlayer.setJailed(true);
-
-        testPlayer.fine();
-
-        assertEquals(1450, testPlayer.getMoney());
-        assertFalse(testPlayer.isJailed());
-    }
-
-    @Test
-    void free() {
-        Player testPlayer = new Player("Sibren", "Beer");
-        testPlayer.addGetOutOfJailFreeCard();
-        testPlayer.setJailed(true);
-
-        testPlayer.free();
-
-        assertEquals(0, testPlayer.getGetOutOfJailFreeCards());
-        assertFalse(testPlayer.isJailed());
-    }
-
-    @Test
     void testTaxSystem() {
         Player testPlayer = new Player("Sibren", "Beer");
 

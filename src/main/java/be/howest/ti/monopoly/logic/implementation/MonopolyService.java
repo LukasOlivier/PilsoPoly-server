@@ -40,7 +40,7 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public List<Tile> getTiles() {
-        return Game.getGameTiles();
+        return Tile.getGameTiles();
     }
 
     @Override
@@ -104,18 +104,19 @@ public class MonopolyService extends ServiceAdapter {
         throw new MonopolyResourceNotFoundException("No such tile");
     }
 
-    public void buyProperty(String gameId, String playerName,String propertyName) {
+    @Override
+    public void buyProperty(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         Tile tileToBuy = player.currentTile;
         try {
-            checkIfTileCanBeBought(propertyName,player,tileToBuy);
+            checkIfTileCanBeBought(propertyName, player, tileToBuy);
             Property tileToProperty = (Property) tileToBuy;
             PlayerProperty boughtProperty = new PlayerProperty(tileToProperty);
             player.addProperties(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
-            checkIfPlayerCanRollAgain(game,player);
+            Move.checkIfPlayerCanRollAgain(game, player);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("failed to buy property");
         }
@@ -146,9 +147,6 @@ public class MonopolyService extends ServiceAdapter {
             throw new IllegalStateException("already started");
         }
         game.addPlayer(playerName, icon);
-        if (game.getCurrentPlayer() == null) {
-            game.setCurrentPlayer(playerName);
-        }
     }
 
     @Override
@@ -166,7 +164,7 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void setBankrupt(String playerName,String gameId) {
+    public void setBankrupt(String playerName, String gameId) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         player.setBankrupt();
@@ -174,50 +172,50 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void useComputeTax(String playerName,String gameId) {
+    public void useComputeTax(String playerName, String gameId) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.setTaxSystem("COMPUTE");
     }
 
     @Override
-    public void useEstimateTax(String playerName,String gameId) {
+    public void useEstimateTax(String playerName, String gameId) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.setTaxSystem("ESTIMATE");
     }
 
     @Override
-    public void getOutOfJailFine(String gameId, String playerName){
+    public void getOutOfJailFine(String gameId, String playerName) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.fine();
     }
 
     @Override
-    public void getOutOfJailFree(String gameId, String playerName){
+    public void getOutOfJailFree(String gameId, String playerName) {
         Player player = getGameById(gameId).getSpecificPlayer(playerName);
         player.free();
     }
 
     @Override
-    public void startPlayerAuction(String gameId,String playerName, String propertyName, int startBid, int duration){
+    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
         Game game = getGameById(gameId);
-        game.startPlayerAuction(startBid,duration,playerName,propertyName);
+        game.startPlayerAuction(startBid, duration, playerName, propertyName);
     }
 
 
     @Override
-    public Game rollDice(String playerName,String gameId) {
+    public Game rollDice(String playerName, String gameId) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        if (Objects.equals(game.getCurrentPlayer(), player.getName())) {
-            game.addTurn(new Turn(player.getName(),"DEFAULT"));
-            player.previousTile = player.currentTile;
-            List<Integer> diceRollResult = Dice.rollDice();
-            int placesToMove = calculatePlacesToMove(diceRollResult);
+        if (Objects.equals(game.getCurrentPlayer(), player.getName()) && game.isCanRoll()) {
+            game.addTurn(new Turn(player.getName(), "DEFAULT"));
+            player.setPreviousTile(player.currentTile);
+            Dice diceRollResult = new Dice();
+            diceRollResult.checkIfRolledDouble(game, player);
+            int placesToMove = Move.calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
             game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));
             game.getCurrentTurn().setRoll(diceRollResult);
-            checkIfPlayerRolledDouble(player,diceRollResult, game);
-            checkIfPlayerCanRollAgain(game,player);
+            Move.checkIfPlayerCanRollAgain(game, player);
             game.setLastDiceRoll(diceRollResult);
             return game;
         } else {
@@ -230,7 +228,8 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.addHouse( player, player.getProperties() );
+        property.addHouse(player, player.getProperties());
+
     }
 
     @Override
@@ -238,7 +237,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.sellHouse( player, player.getProperties() );
+        property.sellHouse(player, player.getProperties());
     }
 
     @Override
@@ -246,7 +245,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.buyHotel( player, player.getProperties() );
+        property.buyHotel(player, player.getProperties());
     }
 
     @Override
@@ -254,81 +253,38 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.sellHotel( player, player.getProperties() );
+        property.sellHotel(player, player.getProperties());
     }
 
     public PlayerProperty getCorrectProperty(Player player, String propertyName) {
-        for ( PlayerProperty property : player.getProperties() ) {
-            if ( property.getProperty().equals(propertyName) ) {
+        for (PlayerProperty property : player.getProperties()) {
+            if (property.getProperty().equals(propertyName)) {
                 return property;
             }
         }
         return null;
     }
 
-    private int calculatePlacesToMove(List<Integer> diceRoll) {
-        int placesToMove = 0;
-        for (Integer diceNumber : diceRoll) {
-            placesToMove += diceNumber;
-        }
-        return placesToMove;
-    }
-
-    public void setNextPlayer(Game game, Player currentPlayer) {
-        int indexOfNextPlayer = game.getPlayers().indexOf(currentPlayer) + 1;
-        if (indexOfNextPlayer >= game.getPlayers().size()) {
-            indexOfNextPlayer = 0;
-        }
-        game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
-    }
-
-
-    public void checkIfPlayerRolledDouble(Player player, List<Integer> diceRollResult, Game game){
-        if (Dice.checkIfRolledDouble(diceRollResult)) {
-            player.addDoubleThrow();
-            checkIfJailedByDoubleThrow(player, game);
-        }else{
-            player.resetDoubleThrows();
-        }
-    }
-
-    public void checkIfPlayerCanRollAgain(Game game,Player player) {
-        if (Objects.equals(player.currentTile.getActionType(), "buy")){
-            game.setCanRoll(false);
-        }
-        else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)){
-            game.setCurrentPlayer(player.getName());
-            game.setCanRoll(true);
-
-        }else{
-            game.setCanRoll(true);
-            setNextPlayer(game,player);
-        }
-    }
-
-    public boolean checkIfJailedByDoubleThrow(Player player, Game game) {
-        return Jail.checkIfFreeByDoubleThrow(player) || Jail.checkIfJailedByDoubleThrow(player,game);
-    }
-
-    public void takeMortgage(String gameId,String playerName,String propertyName){
+    public void takeMortgage(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty playerProperty = findBoughtPropertyByOwner(propertyName, player.getName(), game);
         try {
-            checkIfTileCanBeMortgaged(game, player, propertyName, playerProperty);
+            checkIfTileCanBeMortgaged(playerProperty);
             Property property = (Property) getTile(propertyName);
             playerProperty.mortgageTheProperty(property.getMortgage(), player);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e);
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    public void checkIfTileCanBeMortgaged(Game game, Player player, String propertyName, PlayerProperty playerProperty){
-        if (playerProperty == null){
+    public void checkIfTileCanBeMortgaged(PlayerProperty playerProperty) {
+        if (playerProperty == null) {
             throw new IllegalArgumentException("trying to mortgage someone else's tile");
-        }if (playerProperty.isMortgage()){
+        }
+        if (playerProperty.isMortgage()) {
             throw new IllegalStateException("property is already mortgaged");
         }
     }

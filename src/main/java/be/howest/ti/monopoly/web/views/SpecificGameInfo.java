@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpecificGameInfo {
-    private final Game game ;
+    private final Game game;
 
     public SpecificGameInfo(Game game) {
         this.game = game;
@@ -18,7 +18,6 @@ public class SpecificGameInfo {
     public List<JsonObject> getPlayers() {
         List<JsonObject> listOfPlayerNames = new ArrayList<>();
         for (Player player : game.getPlayers()) {
-
             listOfPlayerNames.add(new JsonObject()
                     .put("name", player.getName())
                     .put("icon", player.getIcon()));
@@ -26,19 +25,19 @@ public class SpecificGameInfo {
         return listOfPlayerNames;
     }
 
-    public boolean isStarted(){
+    public boolean isStarted() {
         return game.isStarted();
     }
 
-    public int getNumberOfPlayers(){
+    public int getNumberOfPlayers() {
         return game.getNumberOfPlayers();
     }
 
-    public String getId(){
+    public String getId() {
         return game.getId();
     }
 
-    public String getPrefix(){
+    public String getPrefix() {
         return game.getId();
     }
 }
