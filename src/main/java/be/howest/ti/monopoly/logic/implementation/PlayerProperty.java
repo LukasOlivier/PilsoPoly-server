@@ -60,6 +60,8 @@ public class PlayerProperty {
         return hotelCount;
     }
 
+    public boolean getMortgage(){ return mortgage;}
+
 
     public void addHouse(Player player, List<PlayerProperty> otherProperties) {
         if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true) ) {

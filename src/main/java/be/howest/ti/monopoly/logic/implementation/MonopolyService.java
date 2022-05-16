@@ -192,6 +192,8 @@ public class MonopolyService extends ServiceAdapter {
             throw new IllegalArgumentException("the tile is not you're property");
         }if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
             throw new IllegalArgumentException("This tile is not bought yet");
+        }if (playerProperty.getMortgage() == true){
+            throw new IllegalArgumentException("this tile is mortgaged");
         }
     }
 
