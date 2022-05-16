@@ -146,4 +146,9 @@ public class PlayerProperty {
         return hotelCount == MAX_HOTEL_COUNT && houseCount == 0;
 
     }
+
+    public void settleMortgageTheProperty(int mortgage, Player player) {
+        player.removeMoney(mortgage);
+        setMortgage(false);
+    }
 }
