@@ -105,4 +105,28 @@ class PlayerPropertyTest {
         } );
         assertEquals(0, boardwalk.getHouseCount());
     }
+
+    @Test
+    public void sellHotel() {
+        final PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
+        final PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350));
+        Player player = new Player("niels", "beer");
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.buyHotel(player, List.of(boardwalk, parkPlace));
+        assertEquals(1, boardwalk.getHotelCount());
+        boardwalk.sellHotel(player, List.of(boardwalk, parkPlace));
+        assertEquals(0, boardwalk.getHotelCount());
+        assertThrows(IllegalStateException.class, () -> {
+           boardwalk.sellHotel(player, List.of(boardwalk, parkPlace));
+        });
+        assertEquals(4, boardwalk.getHouseCount());
+    }
+
 }
