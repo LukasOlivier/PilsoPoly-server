@@ -34,15 +34,18 @@ public class Move {
         if (!player.isJailed()){
             int endOfBoardPosition = 40;
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % endOfBoardPosition;
-            player.currentTile = Tile.getTileFromPosition(Game.getGameTiles(), currentPosition);
+            player.currentTile = Tile.getTileFromPosition(currentPosition);
             Tile.takeTileAction(player.currentTile, player);
             checkIfPassedGo(player);
+        }
+        if (player.getFirstThrow()){
+            player.setFirstThrow();
         }
         return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());
     }
 
 
-    private static void checkIfPassedGo(Player player) {
+    public static void checkIfPassedGo(Player player) {
         Tile goTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
         int rewardForPassingGo = 200;
         if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.previousTile, goTile)))) {

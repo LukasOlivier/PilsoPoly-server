@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -71,4 +72,24 @@ public class MoveTest {
 
         assertEquals("Alice", testGame.getCurrentPlayer());
     }
+
+    @Test
+    void checkPassedGo() {
+        Game testGame = new Game(2, "PilsoPoly", 0);
+        Player alice = new Player("Alice", "dummy");
+        testGame.addPlayer("Alice", "dummy");
+        List<Integer> diceRollResult = List.of(1, 2);
+
+        int placesToMove = Move.calculatePlacesToMove(diceRollResult);
+        Move.makeMove(alice, placesToMove);
+
+        assertEquals(1500, alice.getMoney());
+
+        alice.setCurrentTile(Tile.getTileFromPosition(39));
+        Move.makeMove(alice, placesToMove);
+
+        assertEquals(1700, alice.getMoney());
+    }
+
+
 }

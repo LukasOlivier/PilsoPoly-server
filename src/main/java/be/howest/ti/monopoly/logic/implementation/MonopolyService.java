@@ -40,7 +40,7 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public List<Tile> getTiles() {
-        return Game.getGameTiles();
+        return Tile.getGameTiles();
     }
 
     @Override

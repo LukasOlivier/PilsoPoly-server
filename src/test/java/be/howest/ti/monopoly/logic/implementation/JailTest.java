@@ -49,7 +49,7 @@ public class JailTest {
         testGame.addPlayer("Alice", "dummy");
         List<Integer> diceRollDouble = List.of(1,1);
         alice.setJailed(true);
-        alice.setCurrentTile(Tile.getTileFromPosition(Game.getGameTiles(),10)); //Jail tile
+        alice.setCurrentTile(Tile.getTileFromPosition(10)); //Jail tile
 
         Dice.checkIfRolledDouble(testGame,alice,diceRollDouble);
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble));
@@ -65,7 +65,7 @@ public class JailTest {
         testGame.addPlayer("Alice", "dummy");
         List<Integer> diceRoll = List.of(1,1);
         alice.setJailed(true);
-        alice.setCurrentTile(Tile.getTileFromPosition(Game.getGameTiles(),10)); //Jail tile
+        alice.setCurrentTile(Tile.getTileFromPosition(10)); //Jail tile
 
         Dice.checkIfRolledDouble(testGame,alice,diceRoll);
         Jail.checkIfFreeByWaitingTurns(alice);

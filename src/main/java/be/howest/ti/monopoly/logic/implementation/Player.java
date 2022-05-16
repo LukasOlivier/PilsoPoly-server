@@ -23,7 +23,7 @@ public class Player {
     private final String icon;
 
     public Tile previousTile;
-    private boolean firstThrow = true;
+    private boolean firstThrow;
     private int turnsInJail = 0;
     private int amountOfDoubleThrows = 0;
 
@@ -33,6 +33,7 @@ public class Player {
         this.jailed = jailed;
         this.money = money;
         this.bankrupt = bankrupt;
+        this.firstThrow = true;
         this.getOutOfJailFreeCards = getOutOfJailFreeCards;
         this.debt = debt;
         this.icon = icon;
@@ -97,6 +98,9 @@ public class Player {
         return icon;
     }
 
+    public void setFirstThrow() {
+        this.firstThrow = false;
+    }
 
     public void removeMoney(int amount) {
         money -= amount;
