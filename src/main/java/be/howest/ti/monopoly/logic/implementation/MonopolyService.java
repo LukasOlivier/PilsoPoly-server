@@ -25,17 +25,17 @@ public class MonopolyService extends ServiceAdapter {
                 "Doctor's fee. Pay $50",
                 "From sale of stock you get $50",
                 "Get Out of Jail Free",
-                "Go to Jail. Go directly to jail, do not pass Go, do not collect $200",  // done
-                "Holiday fund matures. Receive $100",       // done
-                "Income tax refund. Collect $20",           // done
-                "It is your birthday. Collect $10 from every player",   // done
-                "Life insurance matures. Collect $100",     // done
-                "Pay hospital fees of $100",                // done
-                "Pay school fees of $50",                   // done
-                "Receive $25 consultancy fee",              // done
+                "Go to Jail. Go directly to jail, do not pass Go, do not collect $200",
+                "Holiday fund matures. Receive $100",
+                "Income tax refund. Collect $20",
+                "It is your birthday. Collect $10 from every player",
+                "Life insurance matures. Collect $100",
+                "Pay hospital fees of $100",
+                "Pay school fees of $50",
+                "Receive $25 consultancy fee",
                 "You are assessed for street repair. $40 per house. $115 per hotel",
-                "You have won second prize in a beauty contest. Collect $10", // done
-                "You inherit $100");                        // done
+                "You have won second prize in a beauty contest. Collect $10",
+                "You inherit $100");
     }
 
     @Override

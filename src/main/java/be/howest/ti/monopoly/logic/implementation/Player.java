@@ -36,6 +36,10 @@ public class Player {
         this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
     }
 
+    public void setFirstThrow() {
+        this.firstThrow = false;
+    }
+
     public boolean getFirstThrow(){
         return this.firstThrow;
     }
@@ -68,7 +72,6 @@ public class Player {
     public boolean isBankrupt() {
         return bankrupt;
     }
-
 
     public void setBankrupt() {
         this.bankrupt = true;

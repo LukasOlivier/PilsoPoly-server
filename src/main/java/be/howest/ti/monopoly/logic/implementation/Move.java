@@ -29,11 +29,9 @@ public class Move {
 
     public static Move makeMove(Player player, int placesToMove, Game game) {
         if (!player.isJailed()){
-            int endOfBoardPosition = 40;
-            int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % endOfBoardPosition;
+            int amountOfTiles = 40;
+            int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % amountOfTiles;
             player.currentTile = Tile.getTileFromPosition(Game.getGameTiles(), currentPosition);
-
-            System.out.println(player.currentTile);
             Tile.takeTileAction(player.currentTile, player, game);
             checkIfPassedGo(player);
         }
@@ -42,17 +40,14 @@ public class Move {
 
 
     public static void checkIfPassedGo(Player player) {
-        Tile goTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
         int rewardForPassingGo = 200;
-        if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.previousTile, goTile)))) {
+        if (!passGoWithoutReward(player) && (loopedTheBoard(player))) {
             player.addMoney(rewardForPassingGo);
-            System.out.println("PASSED GO");
         }
     }
 
     private static boolean loopedTheBoard(Player player) {
-        int positionOfFirstTileOfBoard = 1;
-        System.out.println(player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard);
+        int positionOfFirstTileOfBoard = 0;
         return player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard;
     }
 

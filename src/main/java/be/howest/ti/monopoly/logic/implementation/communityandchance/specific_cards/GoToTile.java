@@ -21,9 +21,10 @@ public class GoToTile extends CommunityOrChanceCard {
     @Override
     public void cardAction(Game game, Player player){
         Tile tile = Tile.getTileFromPosition(position);
+        int positionOfJail = 10;
         player.previousTile = player.currentTile;
-        if (Objects.equals(tile.getActionType(), "Prison")){
-            // prison thing
+        if (position == positionOfJail){
+            player.setJailed(true);
         }
         player.setCurrentTile(tile);
         Move.checkIfPassedGo(player);
