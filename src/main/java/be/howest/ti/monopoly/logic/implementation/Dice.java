@@ -31,7 +31,7 @@ public class Dice {
     }
 
     public void checkIfRolledDouble(Game game,Player player) {
-        if (diceOne == diceTwo){
+        if (getDiceOne() == getDiceTwo()){
             player.addDoubleThrow();
             Jail.checkIfFreeByDoubleThrow(player);
             Jail.checkIfJailedByDoubleThrow(player,game);
