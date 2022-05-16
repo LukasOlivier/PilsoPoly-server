@@ -1,11 +1,11 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+
 import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
-import be.howest.ti.monopoly.web.Request;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.*;
@@ -14,19 +14,18 @@ import java.util.*;
 public class Game {
     private int numberOfPlayers;
     private boolean started;
-    private List<Player> players;
+    private final List<Player> players;
     private Auction auction;
     private String id;
     private String directSale;
     private int availableHouses;
     private int availableHotels;
     private List<Turn> turns = new ArrayList<>();
-    private boolean canRoll;
+    private boolean canRoll = true;
     private boolean ended;
     private String currentPlayer;
     private String winner;
-
-    private List<Integer> lastDiceRoll = new ArrayList<>();
+    private Dice lastDiceRoll;
 
 
     public Game(int numberOfPlayers, String prefix, int size) {
@@ -36,13 +35,23 @@ public class Game {
         setId(prefix, size);
     }
 
+    public List<Integer> getLastDiceRoll() {
+        if (lastDiceRoll != null) {
+            return List.of(lastDiceRoll.getDiceOne(), lastDiceRoll.getDiceTwo());
+        }
+        return Collections.emptyList();
+    }
+
+    public void setLastDiceRoll(Dice lastDiceRoll) {
+        this.lastDiceRoll = lastDiceRoll;
+    }
 
     public void setId(String id, int size) {
         int increasePrefixCount = 1;
         if (!Objects.equals(id, "PilsoPoly")) {
             throw new IllegalArgumentException();
         }
-        this.id = id + "_" + (size+increasePrefixCount);
+        this.id = id + "_" + (size + increasePrefixCount);
     }
 
     public void setNumberOfPlayers(int numberOfPlayers) {
@@ -74,14 +83,6 @@ public class Game {
         return started;
     }
 
-    public List<Integer> getLastDiceRoll() {
-        return lastDiceRoll;
-    }
-
-    public void setLastDiceRoll(List<Integer> lastDiceRoll) {
-        this.lastDiceRoll = lastDiceRoll;
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -95,16 +96,20 @@ public class Game {
     }
 
 
-    public void addPlayer(String name, String icon){
-        for (Player player : players){
+    public void addPlayer(String name, String icon) {
+        for (Player player : players) {
             if (Objects.equals(player.getName(), name)) {
                 throw new IllegalArgumentException("There is already a player with this name!");
             }
         }
         players.add(new Player(name, icon));
+        if (getCurrentPlayer() == null) {
+            setCurrentPlayer(name);
+        }
         if (players.size() == numberOfPlayers) {
             this.started = true;
             this.canRoll = true;
+
         }
     }
 
@@ -152,7 +157,7 @@ public class Game {
     public Turn getCurrentTurn() {
         if (!turns.isEmpty()) {
             return getTurns().get(getTurns().size() - 1);
-        }else{
+        } else {
             return null;
         }
     }
