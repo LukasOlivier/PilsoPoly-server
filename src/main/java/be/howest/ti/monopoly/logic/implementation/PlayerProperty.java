@@ -61,7 +61,17 @@ public class PlayerProperty {
             hotelCount = 1;
             houseCount = 0;
         } else {
-            throw new IllegalStateException("Cant buy hotel");
+            throw new IllegalStateException("could not buy hotel");
+        }
+    }
+
+    public void sellHotel(Player player, List<PlayerProperty> properties) {
+        int MAX_HOUSE_COUNT = 4;
+        if ( canSellHotel() ) {
+            hotelCount = 0;
+            houseCount = MAX_HOUSE_COUNT;
+        } else {
+            throw new IllegalStateException("could not sell hotel");
         }
     }
 
@@ -119,5 +129,10 @@ public class PlayerProperty {
     private boolean canBuyHotel() {
         int MAX_HOUSE_COUNT = 4;
         return houseCount == MAX_HOUSE_COUNT && hotelCount == 0;
+    }
+
+    private boolean canSellHotel() {
+        int MAX_HOTEL_COUNT = 1;
+        return hotelCount == MAX_HOTEL_COUNT && houseCount == 0;
     }
 }
