@@ -110,10 +110,10 @@ public class Player {
     public void addMoney(int amount){money += amount;}
 
     public void transfer(Player debtPlayer, int amount){
-        System.out.println(amount);
         removeMoney(amount);
         debtPlayer.addMoney(amount);
     }
+
     public void payRent(PlayerProperty playerProperty, Property property, Game game, Player debtPlayer){
         switch (currentTile.getType()){
             case ("utility"):
