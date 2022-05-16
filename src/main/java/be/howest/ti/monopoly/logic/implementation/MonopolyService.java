@@ -288,6 +288,12 @@ public class MonopolyService extends ServiceAdapter {
     public boolean checkIfJailedByDoubleThrow(Player player, Game game) {
         return Jail.checkIfFreeByDoubleThrow(player) || Jail.checkIfJailedByDoubleThrow(player,game);
     }
+
+    public void takeMortgage(String gameId,String playerName,String propertyName){
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        PlayerProperty playerProperty =
+    }
 }
 
 
