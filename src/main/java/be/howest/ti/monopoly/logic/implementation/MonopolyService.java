@@ -116,7 +116,6 @@ public class MonopolyService extends ServiceAdapter {
             player.addProperties(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
-            player.currentTile.setDescription("rent");
             Move.checkIfPlayerCanRollAgain(game, player);
         } catch (IllegalStateException e) {
             throw new IllegalStateException("failed to buy property");

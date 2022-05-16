@@ -152,12 +152,12 @@ public class Player {
         payRentUtility(lastDiceRoll, debtPlayer);
     }
 
-    public void payRentUtility(int amountOfEyes, Player debtPlayer){
+    public void payRentUtility(int thrownAmount, Player debtPlayer){
         int oneUtilityTile = 1;
         if (checkHowManyUtilitys("utility", debtPlayer) > oneUtilityTile){
-            transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * amountOfEyes);
+            transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * thrownAmount);
         }else{
-            transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * amountOfEyes);
+            transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * thrownAmount);
         }
     }
 
@@ -213,34 +213,6 @@ public class Player {
 
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
-    }
-
-    private int calculateTax() {
-        return (int) Math.round(0.1 * (getMoney() + getTotalTilesCost() + getTotalBuildingsCost()));
-    }
-
-    private int getTotalTilesCost() {
-        int totalCost = 0;
-        for (PlayerProperty playerProperty : getProperties()) {
-            totalCost += playerProperty.property.getCost();
-        }
-        return totalCost;
-    }
-
-    private int getTotalBuildingsCost() {
-        int totalCost = 0;
-        for (PlayerProperty playerProperty : getProperties()) {
-            Street street = (Street) playerProperty.property;
-            int houseCost = street.getHousePrice();
-            totalCost = totalCost + (playerProperty.getHouseCount() * houseCost) + (playerProperty.getHotelCount() * houseCost);
-        }
-        return totalCost;
-    }
-
-    private void checkIfPassedGo() {
-        if (!firstThrow && (currentTile.getPosition() - previousTile.getPosition() < 1 && !jailed || Objects.equals(previousTile, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go")))) {
-            addMoney(200);
-        }
     }
 
     public void addGetOutOfJailFreeCard(){
