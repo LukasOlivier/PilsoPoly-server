@@ -3,7 +3,6 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,7 +67,7 @@ class PlayerPropertyTest {
     }
 
     @Test
-    void seeIfMoneyIsRemoved() {
+    void seeIfHousePriceIsRemoved() {
         final PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
         final PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350));
         Player player = new Player("niels", "beer");
@@ -77,12 +76,33 @@ class PlayerPropertyTest {
     }
 
     @Test
-    void seeIfMoneyIsAdded() {
+    void seeIfHousePriceIsAdded() {
         final PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
         final PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350));
         Player player = new Player("niels", "beer");
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
         boardwalk.sellHouse(player, List.of(boardwalk, parkPlace));
         assertEquals(1500, player.getMoney());
+    }
+
+    @Test
+    void addHotel() {
+        final PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
+        final PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350));
+        Player player = new Player("niels", "beer");
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
+        parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
+        boardwalk.buyHotel(player, List.of(boardwalk, parkPlace));
+        assertEquals(1, boardwalk.getHotelCount());
+        assertThrows( IllegalStateException.class, () -> {
+            boardwalk.buyHotel(player, List.of(boardwalk, parkPlace));
+        } );
+        assertEquals(0, boardwalk.getHouseCount());
     }
 }

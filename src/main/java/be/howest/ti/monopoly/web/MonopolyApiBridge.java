@@ -375,7 +375,12 @@ public class MonopolyApiBridge {
     }
 
     private void buyHotel(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyHotel");
+        Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getGameId();
+        String propertyName = request.getPropertyName();
+        service.buyHotel(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void sellHotel(RoutingContext ctx) {

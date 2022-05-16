@@ -225,6 +225,7 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+    @Override
     public void buyHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
@@ -237,11 +238,22 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public void sellHouse(String gameId, String playerName, String propertyName) {
-        Game game =getGameById(gameId);
+        Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         for (PlayerProperty property : player.getProperties()) {
             if (property.getProperty().equals(propertyName)) {
                 property.sellHouse( player, player.getProperties() );
+            }
+        }
+    }
+
+    @Override
+    public void buyHotel(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        for (PlayerProperty property : player.getProperties()) {
+            if (property.getProperty().equals(propertyName)) {
+                property.buyHotel( player, player.getProperties() );
             }
         }
     }

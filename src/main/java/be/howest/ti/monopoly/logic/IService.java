@@ -63,4 +63,6 @@ public interface IService {
     void sellHouse(String gameId, String playerName, String propertyName);
 
     void rollDice(Request request);
+
+    void buyHotel(String gameId, String playerName, String propertyName);
 }
