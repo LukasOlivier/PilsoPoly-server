@@ -19,7 +19,6 @@ public class Player {
     private List<PlayerProperty> properties = new ArrayList<>();
     private int debt;
     private final String icon;
-
     public Tile previousTile;
     private boolean firstThrow = true;
     private int turnsInJail = 0;
@@ -95,7 +94,6 @@ public class Player {
         return icon;
     }
 
-
     public void removeMoney(int amount) {
         money -= amount;
     }
@@ -157,7 +155,6 @@ public class Player {
     public int getAmountOfDoubleThrows() {
         return amountOfDoubleThrows;
     }
-
 
     public void addMoney(int amount) {
         this.money += amount;

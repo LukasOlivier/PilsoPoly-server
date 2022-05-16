@@ -64,7 +64,6 @@ public class Tile {
     @Override
     public int hashCode() {
         return Objects.hash(name, position, type);
-
     }
 
     public static Tile getTileFromPosition(List<Tile> tiles, int position) {

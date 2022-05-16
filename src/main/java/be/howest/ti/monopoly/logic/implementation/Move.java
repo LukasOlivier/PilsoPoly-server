@@ -52,6 +52,7 @@ public class Move {
 
     private static boolean loopedTheBoard(Player player) {
         int positionOfFirstTileOfBoard = 1;
+        System.out.println(player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard);
         return player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard;
     }
 

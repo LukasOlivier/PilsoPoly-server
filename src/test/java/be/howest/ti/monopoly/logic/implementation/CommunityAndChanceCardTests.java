@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class CommunityAndChanceCardTests {
+class CommunityAndChanceCardTests {
 
     int gameMapSize = 5;
     Game testGame = new Game(4, "PilsoPoly", gameMapSize);
@@ -130,6 +130,7 @@ public class CommunityAndChanceCardTests {
         Player Niels = testGame.getSpecificPlayer("Niels");
         Player Sibren = testGame.getSpecificPlayer("Sibren");
         Player Robin = testGame.getSpecificPlayer("Robin");
+
 
         // Does not pass Go
         new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24).cardAction(testGame, Lukas);
