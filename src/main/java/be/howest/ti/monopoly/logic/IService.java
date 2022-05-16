@@ -42,6 +42,9 @@ public interface IService {
 
     Auction getPlayerAuctions(String gameId);
 
+    // RENT
+    void collectDebt(String gameName,String playerName, String debtPlayerName,String tileName);
+
     void fine(String playerName, String gameId);
 
     void setBankrupt(String playerName,String gameId);

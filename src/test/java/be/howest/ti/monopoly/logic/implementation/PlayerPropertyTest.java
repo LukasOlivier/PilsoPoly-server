@@ -26,7 +26,9 @@ class PlayerPropertyTest {
 
     @Test
     void testPlayerProperties() {
-        assertEquals("Mediterranean", mediterranean.getProperty());
+
+        PlayerProperty testProperty = new PlayerProperty(new Street("Mediterranean", 1, "street", 2, "PURPLE", 10, 30, 90, 160, 250, 50, 2, 30, 60));
+        assertEquals("Mediterranean", testProperty.getProperty());
     }
 
     @Test

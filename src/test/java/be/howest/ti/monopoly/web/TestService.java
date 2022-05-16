@@ -152,6 +152,10 @@ public class TestService implements IService {
     }
 
     @Override
+    public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName) {
+        delegate.collectDebt(gameName,playerName,debtPlayerName,tileName);
+    }
+
     public void fine(String playerName, String gameId) {
         delegate.fine(playerName, gameId);
     }

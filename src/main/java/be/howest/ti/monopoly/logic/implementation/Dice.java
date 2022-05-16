@@ -11,6 +11,7 @@ public class Dice {
     private static final Random random = new Random();
 
 
+
     public int getDiceOne() {
         return diceOne;
     }
