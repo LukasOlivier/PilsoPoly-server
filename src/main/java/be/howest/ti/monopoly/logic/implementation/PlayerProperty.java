@@ -111,7 +111,6 @@ public class PlayerProperty {
 
     private boolean houseCountIsCorrect(List<PlayerProperty> playerProperties, boolean buy) {
         int maxHouseDifference = 1;
-        int housesOnCurrentProperty = getHouseCount();
         int currentHousesAfterAction = getHouseCount();
         if (buy) {
             currentHousesAfterAction += 1;
