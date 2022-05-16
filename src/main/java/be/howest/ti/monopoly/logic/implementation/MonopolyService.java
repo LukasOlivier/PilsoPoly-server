@@ -205,17 +205,6 @@ public class MonopolyService extends ServiceAdapter {
         return null;
     }
 
-    public PlayerProperty getPlayerProperty(String name, Game game){
-                for (Player player : game.getPlayers()) {
-                    for (PlayerProperty playerProperty : player.getProperties()) {
-                        if (Objects.equals(playerProperty.getProperty(), name)) {
-                            return playerProperty;
-                        }
-                    }
-                }
-                return null;
-            }
-
     @Override
     public void setBankrupt(String playerName, String gameId) {
         Game game = getGameById(gameId);

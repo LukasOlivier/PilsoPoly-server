@@ -140,7 +140,8 @@ public class Player {
     }
 
     public void payRentRailRoad(Player debtPlayer){
-        transfer(debtPlayer, (25 * checkHowManyUtilitys("railroad", debtPlayer)));
+        int amountOfUtilitys = checkHowManyUtilitys("railroad", debtPlayer);
+        transfer(debtPlayer, (25 * amountOfUtilitys));
     }
 
     public void payRentUtilityGetDiceRoll(Game game, Player debtPlayer){
@@ -182,7 +183,7 @@ public class Player {
 
     private int checkHowManyUtilitys(String type, Player player) {
         int countTheTypes = 0;
-        int addPropertyType = 0;
+        int addPropertyType = 1;
         for (PlayerProperty playerProperty : player.properties) {
             if (Objects.equals(playerProperty.getPropertyType(), type)) {
                 countTheTypes += addPropertyType;

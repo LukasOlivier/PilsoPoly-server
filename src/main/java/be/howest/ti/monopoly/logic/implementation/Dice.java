@@ -13,11 +13,11 @@ public class Dice {
 
 
     public int getDiceOne() {
-        return diceOne;
+        return 5;
     }
 
     public int getDiceTwo() {
-        return diceTwo;
+        return 7;
     }
 
 
