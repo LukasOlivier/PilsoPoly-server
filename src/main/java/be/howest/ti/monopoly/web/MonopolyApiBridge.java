@@ -376,19 +376,29 @@ public class MonopolyApiBridge {
 
     private void sellHouse(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
         String gameId = request.getGameId();
+        String playerName = request.getPathParameterValue("playerName");
         String propertyName = request.getPropertyName();
         service.sellHouse(gameId, playerName, propertyName);
         Response.sendOkResponse(ctx);
     }
 
     private void buyHotel(RoutingContext ctx) {
-        throw new NotYetImplementedException("buyHotel");
+        Request request = Request.from(ctx);
+        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValue("playerName");
+        String propertyName = request.getPropertyName();
+        service.buyHotel(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void sellHotel(RoutingContext ctx) {
-        throw new NotYetImplementedException("sellHotel");
+        Request request = Request.from(ctx);
+        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValue("playerName");
+        String propertyName = request.getPropertyName();
+        service.sellHotel(gameId, playerName, propertyName);
+        Response.sendOkResponse(ctx);
     }
 
     private void getOutOfJailFine(RoutingContext ctx) {

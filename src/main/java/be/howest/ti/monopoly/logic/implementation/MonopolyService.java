@@ -225,25 +225,45 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+    @Override
     public void buyHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        for (PlayerProperty property : player.getProperties()) {
-            if (property.getProperty().equals(propertyName)) {
-                property.addHouse( player, player.getProperties() );
-            }
-        }
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.addHouse( player, player.getProperties() );
     }
 
     @Override
     public void sellHouse(String gameId, String playerName, String propertyName) {
-        Game game =getGameById(gameId);
+        Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        for (PlayerProperty property : player.getProperties()) {
-            if (property.getProperty().equals(propertyName)) {
-                property.sellHouse( player, player.getProperties() );
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.sellHouse( player, player.getProperties() );
+    }
+
+    @Override
+    public void buyHotel(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.buyHotel( player, player.getProperties() );
+    }
+
+    @Override
+    public void sellHotel(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.sellHotel( player, player.getProperties() );
+    }
+
+    public PlayerProperty getCorrectProperty(Player player, String propertyName) {
+        for ( PlayerProperty property : player.getProperties() ) {
+            if ( property.getProperty().equals(propertyName) ) {
+                return property;
             }
         }
+        return null;
     }
 
     private int calculatePlacesToMove(List<Integer> diceRoll) {

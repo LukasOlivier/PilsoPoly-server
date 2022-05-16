@@ -162,6 +162,16 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
+    public void buyHotel(String gameId, String playerName, String propertyName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void sellHotel(String gameId, String playerName, String propertyName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void rollDice(Request request) {
         throw new UnsupportedOperationException();
     }
