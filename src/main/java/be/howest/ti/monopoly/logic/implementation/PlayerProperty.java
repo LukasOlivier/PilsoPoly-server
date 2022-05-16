@@ -153,4 +153,5 @@ public class PlayerProperty {
         property.setMortgaged(false);
         setMortgage(false);
     }
+    /*test*/
 }
