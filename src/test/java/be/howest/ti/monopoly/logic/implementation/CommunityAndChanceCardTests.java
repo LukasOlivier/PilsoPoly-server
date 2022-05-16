@@ -138,6 +138,6 @@ class CommunityAndChanceCardTests {
 
         testGame.addTurn(new Turn(Lukas.getName(), "DEFAULT"));
         new AdvanceToNearest("Go to nearest railroad", "railroad").cardAction(testGame, Lukas);
-        assertEquals("railroad",Lukas.getCurrentTile());
+        assertEquals("Reading RR",Lukas.getCurrentTile());
     }
 }

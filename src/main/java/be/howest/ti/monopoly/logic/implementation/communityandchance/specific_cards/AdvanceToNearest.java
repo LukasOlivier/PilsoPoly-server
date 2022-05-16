@@ -24,7 +24,7 @@ public class AdvanceToNearest extends CommunityOrChanceCard {
         boolean found = false;
         int i = currentPos;
         while (!found){
-            if (Objects.equals(tiles.get(i).getActionType(), type)) {
+            if (Objects.equals(tiles.get(i).getType(), type)) {
                 found = true;
                 currentPos = i;
             }

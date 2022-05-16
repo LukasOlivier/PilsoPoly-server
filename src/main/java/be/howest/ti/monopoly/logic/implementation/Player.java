@@ -129,7 +129,7 @@ public class Player {
     }
 
     public void setCurrentTile(int location){
-        //
+        this.currentTile = Tile.getTileFromPosition(location);
     }
 
     public void free() {
