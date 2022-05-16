@@ -355,6 +355,7 @@ public class MonopolyApiBridge {
         String propertyName = request.getPropertyName();
         try {
             service.takeMortgage(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
         }catch (IllegalStateException e){
             throw new IllegalStateException("cant mortgage property");
         }
