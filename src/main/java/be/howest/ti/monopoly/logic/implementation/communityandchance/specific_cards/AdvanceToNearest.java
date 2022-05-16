@@ -36,6 +36,4 @@ public class AdvanceToNearest extends CommunityOrChanceCard {
         }
         player.setCurrentTile(currentPos);
     }
-
-
 }
