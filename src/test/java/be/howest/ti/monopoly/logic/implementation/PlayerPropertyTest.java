@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
 import org.junit.jupiter.api.Test;
 
@@ -86,6 +87,16 @@ class PlayerPropertyTest {
     }
 
     @Test
+    void testTakeMortgage(){
+        final PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
+        Player player = new Player("niels", "beer");
+        player.addProperties(boardwalk);
+        boardwalk.mortgageTheProperty(200, player);
+        assertEquals(1700, player.getMoney());
+        assertTrue(boardwalk.isMortgage());
+    }
+
+    @Test
     void addHotel() {
         final PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
         final PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", 175, 500, 1100, 1300, 1500, 200, 35, 175, 350));
@@ -128,5 +139,4 @@ class PlayerPropertyTest {
         });
         assertEquals(4, boardwalk.getHouseCount());
     }
-
 }

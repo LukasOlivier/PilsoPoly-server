@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
+import io.vertx.core.Handler;
 
 import java.util.List;
 
@@ -33,6 +34,10 @@ public class PlayerProperty {
 
     public boolean isMortgage() {
         return mortgage;
+    }
+
+    public void setMortgage(boolean mortgage) {
+        this.mortgage = mortgage;
     }
 
     public int getHouseCount() {
@@ -127,11 +132,18 @@ public class PlayerProperty {
         return true;
     }
 
+
+    public void mortgageTheProperty(int mortgage, Player player) {
+        player.addMoney(mortgage);
+        setMortgage(true);
+    }
+
     private boolean canBuyHotel() {
         return houseCount == MAX_HOUSE_COUNT && hotelCount == 0;
     }
 
     private boolean canSellHotel() {
         return hotelCount == MAX_HOTEL_COUNT && houseCount == 0;
+
     }
 }
