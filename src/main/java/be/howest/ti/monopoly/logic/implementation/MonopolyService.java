@@ -289,6 +289,15 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+    public void checkIfTileCanBeUnMortgaged(PlayerProperty playerProperty) {
+        if (playerProperty == null) {
+            throw new IllegalArgumentException("trying to mortgage someone else's tile");
+        }
+        if (!playerProperty.isMortgage()) {
+            throw new IllegalStateException("property is not mortgaged");
+        }
+    }
+
     public PlayerProperty findBoughtPropertyByOwner(String name, String playerName, Game game) {
         for (Player player : game.getPlayers()) {
             for (PlayerProperty playerProperty : player.getProperties()) {
@@ -305,6 +314,7 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty playerProperty = findBoughtPropertyByOwner(propertyName, player.getName(), game);
         try {
+            checkIfTileCanBeUnMortgaged(playerProperty);
             Property property = (Property) getTile(propertyName);
             playerProperty.settleMortgageTheProperty(property, player);
         }catch (IllegalArgumentException e){
