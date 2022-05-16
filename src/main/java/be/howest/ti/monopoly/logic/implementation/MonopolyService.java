@@ -209,8 +209,8 @@ public class MonopolyService extends ServiceAdapter {
         if (Objects.equals(game.getCurrentPlayer(), player.getName()) && game.isCanRoll()) {
             game.addTurn(new Turn(player.getName(), "DEFAULT"));
             player.setPreviousTile(player.currentTile);
-            List<Integer> diceRollResult = Dice.rollDice();
-            Dice.checkIfRolledDouble(game,player,diceRollResult);
+            Dice diceRollResult = new Dice();
+            diceRollResult.checkIfRolledDouble(game,player);
             int placesToMove = Move.calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
             game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));

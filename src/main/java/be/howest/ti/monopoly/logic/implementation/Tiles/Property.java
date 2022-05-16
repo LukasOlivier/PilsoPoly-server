@@ -12,7 +12,7 @@ public class Property extends Tile {
 
 
     public Property(String name, int position, String type, int groupSize, String color, int rent, int mortgage, int cost) {
-        super(name, position, type, "can buy this property in direct sale",null);
+        super(name, position, type, "can buy this property in direct sale","buy");
         this.groupSize = groupSize;
         this.color = color;
         this.rent = rent;

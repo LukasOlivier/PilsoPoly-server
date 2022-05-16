@@ -58,11 +58,9 @@ public class Move {
         return player.currentTile.getPosition() - player.getPreviousTile().getPosition() < positionOfFirstTileOfBoard;
     }
 
-    public static int calculatePlacesToMove(List<Integer> diceRoll) {
+    public static int calculatePlacesToMove(Dice diceRoll) {
         int placesToMove = 0;
-        for (Integer diceNumber : diceRoll) {
-            placesToMove += diceNumber;
-        }
+        placesToMove = placesToMove + diceRoll.getDiceOne() + diceRoll.getDiceTwo();
         return placesToMove;
     }
 

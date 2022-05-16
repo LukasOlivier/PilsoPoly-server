@@ -27,15 +27,15 @@ public class JailTest {
         testGame.addPlayer("Alice", "dummy");
         testGame.addPlayer("Bob", "dummy");
         testGame.addTurn(new Turn(alice.getName(), "DEFAULT"));
-        List<Integer> diceRollDouble = List.of(2, 2);
+        Dice diceRollDouble = new Dice(2,2);
 
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble)); //Tax
-        Dice.checkIfRolledDouble(testGame, alice,diceRollDouble);
+        diceRollDouble.checkIfRolledDouble(testGame, alice);
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble)); //Baltic
-        Dice.checkIfRolledDouble(testGame, alice,diceRollDouble);
+        diceRollDouble.checkIfRolledDouble(testGame, alice);
         alice.addProperties( new PlayerProperty((Property) alice.currentTile));
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble)); //Electric Company
-        Dice.checkIfRolledDouble(testGame, alice,diceRollDouble);
+        diceRollDouble.checkIfRolledDouble(testGame, alice);
         Jail.checkIfJailedByDoubleThrow(alice,testGame);
 
         assertEquals("Jail", alice.getCurrentTile());
@@ -47,11 +47,11 @@ public class JailTest {
         Game testGame = new Game(2, "PilsoPoly", 0);
         Player alice = new Player("Alice", "dummy");
         testGame.addPlayer("Alice", "dummy");
-        List<Integer> diceRollDouble = List.of(1,1);
+        Dice diceRollDouble = new Dice(1,1);
         alice.setJailed(true);
         alice.setCurrentTile(Tile.getTileFromPosition(10)); //Jail tile
 
-        Dice.checkIfRolledDouble(testGame,alice,diceRollDouble);
+        diceRollDouble.checkIfRolledDouble(testGame,alice);
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble));
 
         assertFalse(alice.isJailed());
@@ -63,11 +63,11 @@ public class JailTest {
         Game testGame = new Game(2, "PilsoPoly", 0);
         Player alice = new Player("Alice", "dummy");
         testGame.addPlayer("Alice", "dummy");
-        List<Integer> diceRoll = List.of(3,1);
+        Dice diceRoll = new Dice();
         alice.setJailed(true);
         alice.setCurrentTile(Tile.getTileFromPosition(10)); //Jail tile
 
-        Dice.checkIfRolledDouble(testGame,alice,diceRoll);
+        diceRoll.checkIfRolledDouble(testGame,alice);
         Jail.checkIfFreeByWaitingTurns(alice);
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRoll));
 

@@ -1,11 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
-import be.howest.ti.monopoly.web.Request;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.*;
@@ -14,7 +10,7 @@ import java.util.*;
 public class Game {
     private int numberOfPlayers;
     private boolean started;
-    private List<Player> players;
+    private final List<Player> players;
     private Auction auction;
     private String id;
     private String directSale;
@@ -25,7 +21,8 @@ public class Game {
     private boolean ended;
     private String currentPlayer;
     private String winner;
-    private List<Integer> lastDiceRoll = new ArrayList<>();
+
+    private Dice lastDiceRoll;
 
 
     public Game(int numberOfPlayers, String prefix, int size) {
@@ -35,7 +32,13 @@ public class Game {
         setId(prefix, size);
     }
 
+    public List<Integer> getLastDiceRoll() {
+        return List.of(lastDiceRoll.getDiceOne(), lastDiceRoll.getDiceTwo());
+    }
 
+    public void setLastDiceRoll(Dice lastDiceRoll) {
+        this.lastDiceRoll = lastDiceRoll;
+    }
 
     public void setId(String id, int size) {
         int increasePrefixCount = 1;
@@ -72,14 +75,6 @@ public class Game {
 
     public boolean isStarted() {
         return started;
-    }
-
-    public List<Integer> getLastDiceRoll() {
-        return lastDiceRoll;
-    }
-
-    public void setLastDiceRoll(List<Integer> lastDiceRoll) {
-        this.lastDiceRoll = lastDiceRoll;
     }
 
     public List<Player> getPlayers() {

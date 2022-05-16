@@ -17,8 +17,8 @@ public class MoveTest {
         testGame.addPlayer("Alice", "dummy");
         testGame.addPlayer("Bob", "dummy");
 
-        List<Integer> diceRollResult = List.of(2, 1);
-        int placesToMove = Move.calculatePlacesToMove(diceRollResult);
+        Dice diceRoll = new Dice(2,1);
+        int placesToMove = Move.calculatePlacesToMove(diceRoll);
         Move.makeMove(alice, placesToMove);
 
         assertEquals("Baltic", alice.getCurrentTile());
@@ -31,7 +31,8 @@ public class MoveTest {
         testGame.addPlayer("Alice", "dummy");
         testGame.addPlayer("Bob", "dummy");
 
-        List<Integer> diceRollResult = List.of(3, 1); //Tax tile
+
+        Dice diceRollResult = new Dice(3,1); //Tax tile
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove);
         Move.checkIfPlayerCanRollAgain(testGame, alice);
@@ -46,7 +47,7 @@ public class MoveTest {
         testGame.addPlayer("Alice", "dummy");
         testGame.addPlayer("Bob", "dummy");
 
-        List<Integer> diceRollResult = List.of(2, 1); //Baltic tile
+        Dice diceRollResult = new Dice(2,1); //Baltic tile
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove);
         Move.checkIfPlayerCanRollAgain(testGame, alice);
@@ -63,8 +64,8 @@ public class MoveTest {
         testGame.addPlayer("Alice", "dummy");
         testGame.addPlayer("Bob", "dummy");
 
-        List<Integer> diceRollResult = List.of(2, 2);
-        Dice.checkIfRolledDouble(testGame,alice, diceRollResult);
+        Dice diceRollResult = new Dice(2,2);
+        diceRollResult.checkIfRolledDouble(testGame,alice);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove);
@@ -78,7 +79,7 @@ public class MoveTest {
         Game testGame = new Game(2, "PilsoPoly", 0);
         Player alice = new Player("Alice", "dummy");
         testGame.addPlayer("Alice", "dummy");
-        List<Integer> diceRollResult = List.of(1, 2);
+        Dice diceRollResult = new Dice(1,2);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove);
