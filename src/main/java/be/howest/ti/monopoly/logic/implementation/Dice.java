@@ -15,11 +15,9 @@ public class Dice {
 
     public static List<Integer> rollDice() {
         List<Integer> diceRoll = new ArrayList<>();
-        /*for (int i = 0; i < amountOfDice; i++) {
+        for (int i = 0; i < amountOfDice; i++) {
             diceRoll.add(randomIntGenerator(minvalue, maxvalue));
-        }*/
-        diceRoll.add(1);
-        diceRoll.add(2);
+        }
         return diceRoll;
     }
 
