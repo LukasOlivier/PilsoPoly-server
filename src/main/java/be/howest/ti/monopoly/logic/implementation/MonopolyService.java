@@ -210,7 +210,7 @@ public class MonopolyService extends ServiceAdapter {
             game.addTurn(new Turn(player.getName(), "DEFAULT"));
             player.setPreviousTile(player.currentTile);
             Dice diceRollResult = new Dice();
-            diceRollResult.checkIfRolledDouble(game,player);
+            diceRollResult.checkIfRolledDouble(game, player);
             int placesToMove = Move.calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
             game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));
@@ -227,21 +227,77 @@ public class MonopolyService extends ServiceAdapter {
     public void buyHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-        for (PlayerProperty property : player.getProperties()) {
-            if (property.getProperty().equals(propertyName)) {
-                property.addHouse(player, player.getProperties());
-            }
-        }
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.addHouse(player, player.getProperties());
+
     }
+
     @Override
     public void sellHouse(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.sellHouse(player, player.getProperties());
+    }
+
+    @Override
+    public void buyHotel(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.buyHotel(player, player.getProperties());
+    }
+
+    @Override
+    public void sellHotel(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        PlayerProperty property = getCorrectProperty(player, propertyName);
+        property.sellHotel(player, player.getProperties());
+    }
+
+    public PlayerProperty getCorrectProperty(Player player, String propertyName) {
         for (PlayerProperty property : player.getProperties()) {
             if (property.getProperty().equals(propertyName)) {
-                property.sellHouse(player, player.getProperties());
+                return property;
             }
         }
+        return null;
+    }
+
+    public void takeMortgage(String gameId, String playerName, String propertyName) {
+        Game game = getGameById(gameId);
+        Player player = game.getSpecificPlayer(playerName);
+        PlayerProperty playerProperty = findBoughtPropertyByOwner(propertyName, player.getName(), game);
+        try {
+            checkIfTileCanBeMortgaged(playerProperty);
+            Property property = (Property) getTile(propertyName);
+            playerProperty.mortgageTheProperty(property.getMortgage(), player);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public void checkIfTileCanBeMortgaged(PlayerProperty playerProperty) {
+        if (playerProperty == null) {
+            throw new IllegalArgumentException("trying to mortgage someone else's tile");
+        }
+        if (playerProperty.isMortgage()) {
+            throw new IllegalStateException("property is already mortgaged");
+        }
+    }
+
+    public PlayerProperty findBoughtPropertyByOwner(String name, String playerName, Game game) {
+        for (Player player : game.getPlayers()) {
+            for (PlayerProperty playerProperty : player.getProperties()) {
+                if (Objects.equals(playerProperty.getProperty(), name) && Objects.equals(player.getName(), playerName)) {
+                    return playerProperty;
+                }
+            }
+        }
+        return null;
     }
 }
 
