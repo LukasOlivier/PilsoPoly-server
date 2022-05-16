@@ -133,8 +133,9 @@ public class PlayerProperty {
     }
 
 
-    public void mortgageTheProperty(int mortgage, Player player) {
-        player.addMoney(mortgage);
+    public void mortgageTheProperty(Property property, Player player) {
+        player.addMoney(property.getMortgage());
+        property.setMortgaged(true);
         setMortgage(true);
     }
 
@@ -145,5 +146,11 @@ public class PlayerProperty {
     private boolean canSellHotel() {
         return hotelCount == MAX_HOTEL_COUNT && houseCount == 0;
 
+    }
+
+    public void settleMortgageTheProperty(Property property, Player player) {
+        player.removeMoney(property.getMortgage());
+        property.setMortgaged(false);
+        setMortgage(false);
     }
 }

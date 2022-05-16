@@ -364,7 +364,17 @@ public class MonopolyApiBridge {
     }
 
     private void settleMortgage(RoutingContext ctx) {
-        throw new NotYetImplementedException("settleMortgage");
+        Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getGameId();
+        String propertyName = request.getPropertyName();
+        try {
+            service.settleMortgage(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
+        }catch (IllegalArgumentException e){
+            throw new IllegalStateException(e);
+        }
+
     }
 
     private void buyHouse(RoutingContext ctx) {

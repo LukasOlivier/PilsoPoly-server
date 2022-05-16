@@ -70,4 +70,5 @@ public interface IService {
 
     void sellHotel(String gameId, String playerName, String propertyName);
 
+    void settleMortgage(String gameId, String playerName, String propertyName);
 }

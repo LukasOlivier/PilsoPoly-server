@@ -88,12 +88,29 @@ class PlayerPropertyTest {
 
     @Test
     void testTakeMortgage(){
-        final PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400));
+        Street street = new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400);
+        Property property = (Property) street;
+        final PlayerProperty boardwalk = new PlayerProperty(street);
         Player player = new Player("niels", "beer");
         player.addProperties(boardwalk);
-        boardwalk.mortgageTheProperty(200, player);
+        boardwalk.mortgageTheProperty(property, player);
         assertEquals(1700, player.getMoney());
         assertTrue(boardwalk.isMortgage());
+    }
+
+    @Test
+    void testSettleMortgage(){
+        Street street = new Street("Boardwalk", 39, "street", 2, "DARKBLUE", 200, 600, 1400, 1700, 2000, 200, 50, 200, 400);
+        Property property = (Property) street;
+        final PlayerProperty boardwalk = new PlayerProperty(street);
+        Player player = new Player("niels", "beer");
+        player.addProperties(boardwalk);
+        boardwalk.mortgageTheProperty(property, player);
+        assertEquals(1700, player.getMoney());
+        assertTrue(boardwalk.isMortgage());
+        boardwalk.settleMortgageTheProperty(property, player);
+        assertEquals(1500, player.getMoney());
+        assertFalse(boardwalk.isMortgage());
     }
 
     @Test
