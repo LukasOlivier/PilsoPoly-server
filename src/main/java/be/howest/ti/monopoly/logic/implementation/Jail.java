@@ -37,7 +37,7 @@ public class Jail {
             player.setJailed(true);
             player.setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
             player.resetDoubleThrows();
-            game.getCurrentTurn().addMove(new Move("Jail", "In jail", "jailed"));
+
             return true;
         }
         return false;
