@@ -357,7 +357,7 @@ public class MonopolyApiBridge {
             service.collectDebt(game,player,debtPlayer,tileName);
             Response.sendOkResponse(ctx);
         }catch (IllegalArgumentException e){
-            throw e;
+            throw new IllegalStateException("Failed to pay rent");
         }
     }
 
