@@ -317,7 +317,7 @@ public class MonopolyService extends ServiceAdapter {
         try {
             checkIfTileCanBeMortgaged(game, player, propertyName, playerProperty);
             Property property = (Property) getTile(propertyName);
-            playerProperty.mortgageTheProperty(property.getMortgage(), player);
+            playerProperty.mortgageTheProperty(property, player);
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e);
         }catch (IllegalStateException e){
@@ -351,7 +351,7 @@ public class MonopolyService extends ServiceAdapter {
         try {
             checkIfTileCanBeMortgaged(game, player, propertyName, playerProperty);
             Property property = (Property) getTile(propertyName);
-            playerProperty.settleMortgageTheProperty(property.getMortgage(), player);
+            playerProperty.settleMortgageTheProperty(property, player);
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e);
         }

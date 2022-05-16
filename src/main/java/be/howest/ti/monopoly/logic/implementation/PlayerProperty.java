@@ -133,8 +133,9 @@ public class PlayerProperty {
     }
 
 
-    public void mortgageTheProperty(int mortgage, Player player) {
-        player.addMoney(mortgage);
+    public void mortgageTheProperty(Property property, Player player) {
+        player.addMoney(property.getMortgage());
+        property.setActionType("mortgage");
         setMortgage(true);
     }
 
@@ -147,8 +148,9 @@ public class PlayerProperty {
 
     }
 
-    public void settleMortgageTheProperty(int mortgage, Player player) {
-        player.removeMoney(mortgage);
+    public void settleMortgageTheProperty(Property property, Player player) {
+        player.removeMoney(property.getMortgage());
+        property.setActionType("rent");
         setMortgage(false);
     }
 }
