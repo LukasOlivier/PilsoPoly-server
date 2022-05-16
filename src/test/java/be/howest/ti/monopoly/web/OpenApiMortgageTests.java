@@ -35,11 +35,17 @@ class OpenApiMortgageTests extends OpenApiTestsBase {
 
     @Test
     void settleMortgage(final VertxTestContext testContext) {
+        service.setDelegate( new ServiceAdapter() {
+
+            @Override
+            public void settleMortgage(String  gameId,String  playerName,String propertyName) {}
+
+        });
         delete(
                 testContext,
                 "/games/game-id/players/Alice/properties/some-property/mortgage",
                 "some-token",
-                response -> assertNotYetImplemented(response, "settleMortgage")
+                response -> assertOkResponse(response)
         );
     }
 

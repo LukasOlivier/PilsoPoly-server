@@ -93,6 +93,11 @@ public class TestService implements IService {
     }
 
     @Override
+    public void settleMortgage(String gameId, String playerName, String propertyName) {
+        delegate.settleMortgage(gameId, playerName, propertyName);
+    }
+
+    @Override
     public void clearGameList() {
         delegate.clearGameList();
     }
