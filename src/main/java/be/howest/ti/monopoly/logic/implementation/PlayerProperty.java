@@ -106,4 +106,8 @@ public class PlayerProperty {
         }
         return true;
     }
+
+    public void mortgageTheProperty(int mortgage, Player player) {
+
+    }
 }

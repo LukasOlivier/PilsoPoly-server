@@ -292,15 +292,15 @@ public class MonopolyService extends ServiceAdapter {
     public void takeMortgage(String gameId,String playerName,String propertyName){
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
+
         PlayerProperty playerProperty = findBoughtPropertyByOwner(propertyName, player.getName(), game);
         try {
             checkIfTileCanBeMortgaged(game, player, propertyName, playerProperty);
-            playerProperty.mortgageTheProperty();
+            Property property = (Property) getTile(propertyName);
+            playerProperty.mortgageTheProperty(property.getMortgage(), player);
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e);
         }
-
-
     }
 
     public void checkIfTileCanBeMortgaged(Game game, Player player, String propertyName, PlayerProperty playerProperty){
