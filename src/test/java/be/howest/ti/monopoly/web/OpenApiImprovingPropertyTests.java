@@ -109,7 +109,7 @@ class OpenApiImprovingPropertyTests extends OpenApiTestsBase {
                 testContext,
                 "/games/game-id/players/Alice/properties/some-property/hotel",
                 "some-token",
-                response -> assertNotYetImplemented(response, "sellHotel")
+                this::assertOkResponse
         );
     }
 
