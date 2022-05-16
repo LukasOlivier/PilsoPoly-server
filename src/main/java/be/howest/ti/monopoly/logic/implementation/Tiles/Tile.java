@@ -109,7 +109,7 @@ public class Tile {
     private static List<Tile> createGameTiles() {
         return List.of(
                 new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"),
-                new Street("365", 1, "street", 2, "PURPLE", 10, 30, 90, 160, 250, 50, 2, 30, 60),
+                new Street("Delhaize 365", 1, "street", 2, "PURPLE", 10, 30, 90, 160, 250, 50, 2, 30, 60),
                 new Tile("Community Chest I", 2, "community chest", "Draw a card", "community"),
                 new Street("Cara", 3, "street", 2, "PURPLE", 20, 60, 180, 320, 450, 50, 4, 30, 60),
                 new Tile("Tax Income", 4, "Tax Income", "Pay taxes", "incometax"),
