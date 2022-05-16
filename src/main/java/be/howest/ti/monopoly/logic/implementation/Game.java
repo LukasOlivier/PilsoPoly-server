@@ -224,7 +224,7 @@ public class Game {
         communityCards.add(new PayOrReceive("Receive $25 consultancy fee", 25));
         communityCards.add(new PayOrReceive("You inherit $100", 100));
         communityCards.add(new PayOrReceive("You have won second prize in a beauty contest. Collect $10", 10));
-        communityCards.add(new GoToJailCC("Go to Jail. Go directly to jail, do not pass Go, do not collect $200"));
+        communityCards.add(new GoToTile("Go to Jail. Go directly to jail, do not pass Go, do not collect $200", 0));
         communityCards.add(new GoToTile("Advance to Go (Collect $200)", 0));
         communityCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
         communityCards.add(new CollectOrGiveEveryPlayer("It is your birthday. Collect $10 from every player", 10));
