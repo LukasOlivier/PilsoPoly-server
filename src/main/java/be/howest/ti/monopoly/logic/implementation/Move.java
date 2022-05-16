@@ -48,14 +48,14 @@ public class Move {
     public static void checkIfPassedGo(Player player) {
         Tile goTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
         int rewardForPassingGo = 200;
-        if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.previousTile, goTile)))) {
+        if (!passGoWithoutReward(player) && ((loopedTheBoard(player) || Objects.equals(player.getPreviousTile(), goTile)))) {
             player.addMoney(rewardForPassingGo);
         }
     }
 
     private static boolean loopedTheBoard(Player player) {
         int positionOfFirstTileOfBoard = 1;
-        return player.currentTile.getPosition() - player.previousTile.getPosition() < positionOfFirstTileOfBoard;
+        return player.currentTile.getPosition() - player.getPreviousTile().getPosition() < positionOfFirstTileOfBoard;
     }
 
     public static int calculatePlacesToMove(List<Integer> diceRoll) {
@@ -64,15 +64,6 @@ public class Move {
             placesToMove += diceNumber;
         }
         return placesToMove;
-    }
-
-    @Override
-    public String toString() {
-        return "Move{" +
-                "tile='" + tile + '\'' +
-                ", description='" + description + '\'' +
-                ", actionType='" + actionType + '\'' +
-                '}';
     }
 
     public static void checkIfPlayerCanRollAgain(Game game, Player player) {

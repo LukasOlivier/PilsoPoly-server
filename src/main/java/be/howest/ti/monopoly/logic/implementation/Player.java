@@ -22,7 +22,7 @@ public class Player {
     private int debt;
     private final String icon;
 
-    public Tile previousTile;
+    private Tile previousTile;
     private boolean firstThrow;
     private int turnsInJail = 0;
     private int amountOfDoubleThrows = 0;
@@ -38,6 +38,14 @@ public class Player {
         this.debt = debt;
         this.icon = icon;
         this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
+    }
+
+    public Tile getPreviousTile() {
+        return previousTile;
+    }
+
+    public void setPreviousTile(Tile previousTile) {
+        this.previousTile = previousTile;
     }
 
     public boolean getFirstThrow(){

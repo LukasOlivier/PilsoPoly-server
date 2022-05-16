@@ -63,7 +63,7 @@ public class JailTest {
         Game testGame = new Game(2, "PilsoPoly", 0);
         Player alice = new Player("Alice", "dummy");
         testGame.addPlayer("Alice", "dummy");
-        List<Integer> diceRoll = List.of(1,1);
+        List<Integer> diceRoll = List.of(3,1);
         alice.setJailed(true);
         alice.setCurrentTile(Tile.getTileFromPosition(10)); //Jail tile
 
