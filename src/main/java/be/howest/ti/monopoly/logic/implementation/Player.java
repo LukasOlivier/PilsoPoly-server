@@ -29,8 +29,8 @@ public class Player {
     private int debt;
     private final String icon;
 
-    public Tile previousTile;
-    private boolean firstThrow = true;
+    private Tile previousTile;
+    private boolean firstThrow;
     private int turnsInJail = 0;
     private int amountOfDoubleThrows = 0;
 
@@ -43,10 +43,19 @@ public class Player {
         this.jailed = jailed;
         this.money = money;
         this.bankrupt = bankrupt;
+        this.firstThrow = true;
         this.getOutOfJailFreeCards = getOutOfJailFreeCards;
         this.debt = debt;
         this.icon = icon;
         this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
+    }
+
+    public Tile getPreviousTile() {
+        return previousTile;
+    }
+
+    public void setPreviousTile(Tile previousTile) {
+        this.previousTile = previousTile;
     }
 
     public boolean getFirstThrow(){
@@ -136,8 +145,8 @@ public class Player {
 
     public void payRentUtilityGetDiceRoll(Game game, Player debtPlayer){
         int indexOfLastTurn = game.getTurns().size() - 1;
-        int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().get(0);
-        int lastDiceRollTwo = game.getTurns().get(indexOfLastTurn).getRoll().get(1) ;
+        int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().getDiceOne();
+        int lastDiceRollTwo = game.getTurns().get(indexOfLastTurn).getRoll().getDiceTwo();
         int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
         payRentUtility(lastDiceRoll, debtPlayer);
     }
@@ -180,6 +189,10 @@ public class Player {
             }
         }
         return countTheTypes;
+    }
+
+    public void setFirstThrow() {
+        this.firstThrow = false;
     }
 
     public void removeMoney(int amount) {
@@ -270,5 +283,10 @@ public class Player {
 
     public int getAmountOfDoubleThrows() {
         return amountOfDoubleThrows;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

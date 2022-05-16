@@ -9,6 +9,7 @@ public class Property extends Tile {
     private int groupSize;
     private String color;
     private boolean bought;
+    private boolean mortgaged;
 
 
 
@@ -68,20 +69,46 @@ public class Property extends Tile {
     @Override
     public String getDescription() {
         if (isBought()) {
+            if (isMortgaged()){
+                return "no need to pay rent, the tile is mortgaged";
+            }
             return "should pay rent";
         } else {
             return "can buy this property in direct sale";
         }
     }
 
+    public boolean isMortgaged() {
+        return mortgaged;
+    }
 
+    public void setMortgaged(boolean mortgaged) {
+        this.mortgaged = mortgaged;
+    }
 
     @Override
     public String getActionType() {
         if (isBought()) {
+            if (isMortgaged()){
+                return "mortgage";
+            }
             return "rent";
         } else {
             return "buy";
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Property property = (Property) o;
+        return cost == property.cost && mortgage == property.mortgage && rent == property.rent && groupSize == property.groupSize && Objects.equals(color, property.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), cost, mortgage, rent, groupSize, color);
     }
 }
