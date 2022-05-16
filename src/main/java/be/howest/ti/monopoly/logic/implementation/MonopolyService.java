@@ -271,6 +271,7 @@ public class MonopolyService extends ServiceAdapter {
             player.resetDoubleThrows();
         }
     }
+
     public void checkIfPlayerCanRollAgain(Game game,Player player) {
         if (Objects.equals(player.currentTile.getActionType(), "buy")){
             game.setCanRoll(false);
@@ -292,7 +293,6 @@ public class MonopolyService extends ServiceAdapter {
     public void takeMortgage(String gameId,String playerName,String propertyName){
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
-
         PlayerProperty playerProperty = findBoughtPropertyByOwner(propertyName, player.getName(), game);
         try {
             checkIfTileCanBeMortgaged(game, player, propertyName, playerProperty);
