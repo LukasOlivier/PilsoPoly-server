@@ -2,6 +2,7 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.Tiles.StreetHouseRent;
 import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class TileTest {
 
     @Test
     public void testStreetTile() {
-        Street indiana = new Street("Indiana Avenue", 23, "street", 3,  "RED", 100, 300, 750, 925, 1100, 150, 20, 120, 240);
+        Street indiana = new Street("Indiana Avenue", 23, "street", 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         assertEquals("Indiana Avenue", indiana.getName());
         assertEquals(23, indiana.getPosition());
     }
