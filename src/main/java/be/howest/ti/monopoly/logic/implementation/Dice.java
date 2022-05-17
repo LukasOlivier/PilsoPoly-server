@@ -1,14 +1,15 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class Dice {
-    static final int MIN_VALUE = 1;
+
     static final int MAX_VALUE = 6;
 
     private final int diceOne;
     private final int diceTwo;
-    private static final Random random = new Random();
+    private static final Random random = new SecureRandom();
 
 
     public int getDiceOne() {

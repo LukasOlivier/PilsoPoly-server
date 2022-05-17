@@ -6,44 +6,44 @@ import java.util.Objects;
 
 public class Auction {
 
-    private int highest_bid;
+    private int highestBid;
     private final int duration;
-    private String last_bidder;
+    private String lastBidder;
     private final String property;
 
-    public Auction(int highest_bid, int duration, String bidder, String property) {
-        this.highest_bid = highest_bid;
+    public Auction(int highestBid, int duration, String bidder, String property) {
+        this.highestBid = highestBid;
         this.duration = duration;
-        this.last_bidder = bidder;
+        this.lastBidder = bidder;
         this.property = property;
     }
 
-    public void setLast_bidder(String last_bidder) {
-        if ( this.last_bidder.equals(last_bidder) ) {
+    public void setLastBidder(String lastBidder) {
+        if ( this.lastBidder.equals(lastBidder) ) {
             throw new IllegalMonopolyActionException("Wait for another player to bid!");
         } else {
-            this.last_bidder = last_bidder;
+            this.lastBidder = lastBidder;
         }
     }
 
-    public void setHighest_bid(int amount) {
-        if ( this.highest_bid >= amount ) {
+    public void setHighestBid(int amount) {
+        if ( this.highestBid >= amount ) {
             throw new IllegalMonopolyActionException("Amount must be higher than previous bid!");
         } else {
-            this.highest_bid = amount;
+            this.highestBid = amount;
         }
     }
 
-    public int getHighest_bid() {
-        return highest_bid;
+    public int getHighestBid() {
+        return highestBid;
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public String getLast_bidder() {
-        return last_bidder;
+    public String getLastBidder() {
+        return lastBidder;
     }
 
     public String getProperty() {
@@ -56,16 +56,16 @@ public class Auction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auction auction = (Auction) o;
-        return highest_bid == auction.highest_bid && duration == auction.duration && Objects.equals(last_bidder, auction.last_bidder) && Objects.equals(property, auction.property);
+        return highestBid == auction.highestBid && duration == auction.duration && Objects.equals(lastBidder, auction.lastBidder) && Objects.equals(property, auction.property);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(highest_bid, duration, last_bidder, property);
+        return Objects.hash(highestBid, duration, lastBidder, property);
     }
 
     @Override
     public String toString(){
-        return "Property: " + property + "\nHighest bid: " + highest_bid + "\nlast bidder: " + last_bidder;
+        return "Property: " + property + "\nHighest bid: " + highestBid + "\nlast bidder: " + lastBidder;
     }
 }

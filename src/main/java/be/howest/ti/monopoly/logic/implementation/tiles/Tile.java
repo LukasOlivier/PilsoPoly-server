@@ -3,6 +3,7 @@ package be.howest.ti.monopoly.logic.implementation.tiles;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tax;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 
 import java.util.List;
 import java.util.Objects;
@@ -82,6 +83,10 @@ public class Tile {
         this.actionType = actionType;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public static void takeTileAction(Tile tile, Player player, Game game) {
         switch (tile.getActionType()) {
             case "jail":
@@ -99,10 +104,14 @@ public class Tile {
                 }
                 break;
             case "chance":
-                game.doRandomChanceCardAction(player);
+                CommunityOrChanceCard chanceCard = Game.getRandomChanceCardAction();
+                tile.setDescription(chanceCard.toString());
+                chanceCard.cardAction(game, player);
                 break;
             case "community":
-                game.doRandomCommunityCardAction(player);
+                CommunityOrChanceCard communityCard = Game.getRandomCommunityCardAction();
+                tile.setDescription(communityCard.toString());
+                communityCard.cardAction(game, player);
                 break;
             default:
         }

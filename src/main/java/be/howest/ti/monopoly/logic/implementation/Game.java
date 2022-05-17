@@ -3,12 +3,9 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.*;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
-import be.howest.ti.monopoly.logic.implementation.tiles.Railroad;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 @JsonIgnoreProperties({""})
@@ -29,7 +26,7 @@ public class Game {
     private String winner;
     private static final List<CommunityOrChanceCard> chanceCards = createChanceCards();
     private static List<CommunityOrChanceCard> communityCards = createCommunityCards();
-    private final Random random = new Random();
+    private static final Random random = new SecureRandom();
     private Dice lastDiceRoll;
 
 
@@ -72,8 +69,8 @@ public class Game {
     }
 
     public void placeBidOnPlayerAuction(String bidder, int amount) {
-        auction.setHighest_bid(amount);
-        auction.setLast_bidder(bidder);
+        auction.setHighestBid(amount);
+        auction.setLastBidder(bidder);
     }
 
     public Auction getAuction() {
@@ -259,13 +256,14 @@ public class Game {
         );
     }
 
-    public void doRandomCommunityCardAction(Player player){
+    public static CommunityOrChanceCard getRandomCommunityCardAction(){
         int randomNumber = random.nextInt(communityCards.size());
-        communityCards.get(randomNumber).cardAction(this, player);
+        return communityCards.get(randomNumber);
+
     }
 
-    public void doRandomChanceCardAction(Player player){
+    public static CommunityOrChanceCard getRandomChanceCardAction(){
         int randomNumber = random.nextInt(chanceCards.size());
-        chanceCards.get(randomNumber).cardAction(this, player);
+        return chanceCards.get(randomNumber);
     }
 }
