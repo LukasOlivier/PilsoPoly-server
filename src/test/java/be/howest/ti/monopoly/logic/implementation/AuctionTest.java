@@ -12,7 +12,7 @@ class AuctionTest {
         Auction testAuction = new Auction(100, 30, "niels", "tile");
         assertEquals("niels", testAuction.getLast_bidder());
         assertThrows(IllegalMonopolyActionException.class, () -> {
-           testAuction.setLast_bidder("niels");
+           testAuction.addBid("niels", 150);
         });
     }
 
@@ -21,7 +21,7 @@ class AuctionTest {
         Auction testAuction = new Auction(100, 30, "niels", "tile");
         assertEquals(100, testAuction.getHighest_bid());
         assertThrows(IllegalMonopolyActionException.class, () -> {
-            testAuction.setHighest_bid(50);
+            testAuction.addBid("robin", 50);
         });
     }
 }

@@ -22,6 +22,8 @@ public class Auction {
         if ( !last_bidder.equals(bidder) && amount > highest_bid) {
             last_bidder = bidder;
             highest_bid = amount;
+        } else {
+            throw new IllegalMonopolyActionException("Could not add bid");
         }
     }
 
