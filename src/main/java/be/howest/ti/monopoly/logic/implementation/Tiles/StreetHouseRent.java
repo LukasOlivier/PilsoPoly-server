@@ -2,14 +2,14 @@ package be.howest.ti.monopoly.logic.implementation.Tiles;
 
 import java.util.Objects;
 
-public class Rent {
+public class StreetHouseRent {
     private int rentWithOneHouse;
     private int rentWithTwoHouses;
     private int rentWithThreeHouses;
     private int rentWithFourHouses;
     private int rentWithHotel;
 
-    public Rent(int rentWithOneHouse, int rentWithTwoHouses, int rentWithThreeHouses, int rentWithFourHouses, int rentWithHotel) {
+    public StreetHouseRent(int rentWithOneHouse, int rentWithTwoHouses, int rentWithThreeHouses, int rentWithFourHouses, int rentWithHotel) {
         this.rentWithOneHouse = rentWithOneHouse;
         this.rentWithTwoHouses = rentWithTwoHouses;
         this.rentWithThreeHouses = rentWithThreeHouses;
@@ -61,7 +61,7 @@ public class Rent {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Rent rent = (Rent) o;
+        StreetHouseRent rent = (StreetHouseRent) o;
         return rentWithOneHouse == rent.rentWithOneHouse && rentWithTwoHouses == rent.rentWithTwoHouses && rentWithThreeHouses == rent.rentWithThreeHouses && rentWithFourHouses == rent.rentWithFourHouses && rentWithHotel == rent.rentWithHotel;
     }
 

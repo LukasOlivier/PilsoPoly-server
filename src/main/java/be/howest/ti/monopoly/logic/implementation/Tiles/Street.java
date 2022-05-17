@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Street extends Property {
     private int housePrice;
-    private Rent rentOfHouses;
+    private StreetHouseRent rentOfHouses;
 
-    public Street(String name, int position, String type, int groupSize, String color,Rent rentOfHouses,int housePrice, int rent, int mortgage, int cost) {
+    public Street(String name, int position, String type, int groupSize, String color, StreetHouseRent rentOfHouses, int housePrice, int rent, int mortgage, int cost) {
         super(name, position, type, groupSize, color,rent,mortgage,cost);
         this.rentOfHouses = rentOfHouses;
         this.housePrice = housePrice;
