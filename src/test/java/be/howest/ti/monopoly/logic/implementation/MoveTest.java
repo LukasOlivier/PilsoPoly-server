@@ -86,9 +86,6 @@ class MoveTest {
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove, testGame);
 
-        System.out.println(alice.getPreviousTile());
-        System.out.println(alice.getCurrentTile());
-
         assertEquals("Baltic", alice.getCurrentTile());
         assertEquals(1500, alice.getMoney());
 
