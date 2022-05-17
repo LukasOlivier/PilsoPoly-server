@@ -27,8 +27,8 @@ public class Game {
     private boolean ended;
     private String currentPlayer;
     private String winner;
-    private static List<CommunityOrChanceCard> chanceCards = new ArrayList<>();
-    private static List<CommunityOrChanceCard> communityCards = new ArrayList<>();
+    private static final List<CommunityOrChanceCard> chanceCards = createChanceCards();
+    private static List<CommunityOrChanceCard> communityCards = createCommunityCards();
     private final Random random = new Random();
     private Dice lastDiceRoll;
 
@@ -54,7 +54,7 @@ public class Game {
     public void setId(String id, int size) {
         int increasePrefixCount = 1;
         if (!Objects.equals(id, "PilsoPoly")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Prefix is not allowed!");
         }
         this.id = id + "_" + (size + increasePrefixCount);
     }
@@ -218,39 +218,45 @@ public class Game {
         }
     }
 
-    public static void createCommunityCards(){
-        communityCards.add(new PayOrReceive("Doctor's fee. Pay $50", -50));
-        communityCards.add(new PayOrReceive("Pay hospital fees of $100", -100));
-        communityCards.add(new PayOrReceive("Pay school fees of $50", -50));
-        communityCards.add(new PayOrReceive("Bank error in your favor. Collect $200", 200));
-        communityCards.add(new PayOrReceive("From sale of stock you get $50", 50));
-        communityCards.add(new PayOrReceive("Holiday fund matures. Receive $100", 100));
-        communityCards.add(new PayOrReceive("Income tax refund. Collect $20", 20));
-        communityCards.add(new PayOrReceive("Life insurance matures. Collect $100", 100));
-        communityCards.add(new PayOrReceive("Receive $25 consultancy fee", 25));
-        communityCards.add(new PayOrReceive("You inherit $100", 100));
-        communityCards.add(new PayOrReceive("You have won second prize in a beauty contest. Collect $10", 10));
-        communityCards.add(new GoToTile("Go to Jail. Go directly to jail, do not pass Go, do not collect $200", 0));
-        communityCards.add(new GoToTile("Advance to Go (Collect $200)", 0));
-        communityCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
-        communityCards.add(new CollectOrGiveEveryPlayer("It is your birthday. Collect $10 from every player", 10));
-        communityCards.add(new Repairs("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115));
+    public static List<CommunityOrChanceCard> createCommunityCards(){
+        return List.of(
+            new PayOrReceive("Doctor's fee. Pay $50", -50),
+            new PayOrReceive("Pay hospital fees of $100", -100),
+            new PayOrReceive("Pay school fees of $50", -50),
+            new PayOrReceive("Bank error in your favor. Collect $200", 200),
+            new PayOrReceive("From sale of stock you get $50", 50),
+            new PayOrReceive("Holiday fund matures. Receive $100", 100),
+            new PayOrReceive("Income tax refund. Collect $20", 20),
+            new PayOrReceive("Life insurance matures. Collect $100", 100),
+            new PayOrReceive("Receive $25 consultancy fee", 25),
+            new PayOrReceive("You inherit $100", 100),
+            new PayOrReceive("You have won second prize in a beauty contest. Collect $10", 10),
+            new GoToTile("Go to Jail. Go directly to jail, do not pass Go, do not collect $200", 0),
+            new GoToTile("Advance to Go (Collect $200)", 0),
+            new GetOutOfJailFreeCard("Get Out of Jail Free"),
+            new CollectOrGiveEveryPlayer("It is your birthday. Collect $10 from every player", 10),
+            new Repairs("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115)
+        );
     }
 
-    public static void createChanceCards(){
-        chanceCards.add(new GetOutOfJailFreeCard("Get Out of Jail Free"));
-        chanceCards.add(new PayOrReceive("Your building loan matures. Collect $150", 150));
-        chanceCards.add(new PayOrReceive("Speeding fine $15", -15));
-        chanceCards.add(new PayOrReceive("Bank pays you dividend of $50", 50));
-        chanceCards.add(new PayOrReceive("Your building loan matures. Collect $150", 150));
-        chanceCards.add(new GoToTile("Go to Jail. Go directly to Jail, do not pass Go, do not collect $200", 10));
-        chanceCards.add(new GoToTile("Advance to Go (Collect $200)", 0));
-        chanceCards.add(new GoToTile("Advance to Boardwalk", 39));
-        chanceCards.add(new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11));
-        chanceCards.add(new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24));
-        chanceCards.add(new GoToTile("Take a trip to Reading Railroad. If you pass Go, collect $200",5));
-        chanceCards.add(new CollectOrGiveEveryPlayer("You have been elected Chairman of the Board. Pay each player $50", 50));
-        chanceCards.add(new Repairs("Make general repairs on all your property. For each house pay $25. For each hotel pay $100", 25, 100));
+    public static List<CommunityOrChanceCard> createChanceCards(){
+        return List.of(
+            new GetOutOfJailFreeCard("Get Out of Jail Free"),
+            new PayOrReceive("Your building loan matures. Collect $150", 150),
+            new PayOrReceive("Speeding fine $15", -15),
+            new PayOrReceive("Bank pays you dividend of $50", 50),
+            new PayOrReceive("Your building loan matures. Collect $150", 150),
+            new GoToTile("Go to Jail. Go directly to Jail, do not pass Go, do not collect $200", 10),
+            new GoToTile("Advance to Go (Collect $200)", 0),
+            new GoToTile("Advance to Boardwalk", 39),
+            new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11),
+            new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24),
+            new GoToTile("Take a trip to Reading Railroad. If you pass Go, collect $200",5),
+            new CollectOrGiveEveryPlayer("You have been elected Chairman of the Board. Pay each player $50", 50),
+            new Repairs("Make general repairs on all your property. For each house pay $25. For each hotel pay $100", 25, 100),
+            new AdvanceToNearest("Advance to the nearest Utility. If unowned, you may buy it from the Bank", "utility"),
+            new AdvanceToNearest("Advance to the nearest Railroad. If unowned, you may buy it from the Bank", "railroad")
+        );
     }
 
     public void doRandomCommunityCardAction(Player player){
@@ -261,9 +267,5 @@ public class Game {
     public void doRandomChanceCardAction(Player player){
         int randomNumber = random.nextInt(chanceCards.size());
         chanceCards.get(randomNumber).cardAction(this, player);
-    }
-
-    public void doCommunityCard(int key, Player player){
-        communityCards.get(key).cardAction(this, player);
     }
 }

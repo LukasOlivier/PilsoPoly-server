@@ -28,7 +28,7 @@ public class Auction {
 
     public void setHighest_bid(int amount) {
         if ( this.highest_bid >= amount ) {
-            throw new IllegalMonopolyActionException("Amount mus be higher than previous bid!");
+            throw new IllegalMonopolyActionException("Amount must be higher than previous bid!");
         } else {
             this.highest_bid = amount;
         }

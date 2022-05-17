@@ -60,6 +60,7 @@ class CommunityAndChanceCardTests {
         new CollectOrGiveEveryPlayer("Collect $10 from everyone", 10).cardAction(testGame, Lukas);
         assertEquals(1530,Lukas.getMoney());
         assertEquals(1490, Niels.getMoney());
+
         new CollectOrGiveEveryPlayer("Give everyone $10", -10).cardAction(testGame, Lukas);
         assertEquals(1500, Lukas.getMoney());
         assertEquals(1500, Sibren.getMoney());
@@ -97,6 +98,7 @@ class CommunityAndChanceCardTests {
         Niels.setFirstThrow();
         Lukas.setFirstThrow();
         testGame.addTurn(new Turn(Niels.getName(), "DEFAULT"));
+
         // Does not pass Go
         new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24).cardAction(testGame, Niels);
         assertEquals("Illinois Avenue", Niels.getCurrentTile());
@@ -139,5 +141,14 @@ class CommunityAndChanceCardTests {
         testGame.addTurn(new Turn(Lukas.getName(), "DEFAULT"));
         new AdvanceToNearest("Go to nearest railroad", "railroad").cardAction(testGame, Lukas);
         assertEquals("Reading RR",Lukas.getCurrentTile());
+
+        // Advance To Nearest with passing GO
+        testGame.addTurn(new Turn(Niels.getName(), "DEFAULT"));
+        Move.makeMove(Niels, 35, testGame);
+        System.out.println(Niels.getCurrentTile());
+        System.out.println(Niels.getPreviousTile());
+        new AdvanceToNearest("Go to nearest utility", "utility").cardAction(testGame, Niels);
+        assertEquals("Electric Company",Niels.getCurrentTile());
+        assertEquals(1700, Lukas.getMoney());
     }
 }
