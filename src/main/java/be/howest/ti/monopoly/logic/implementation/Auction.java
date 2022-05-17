@@ -18,19 +18,10 @@ public class Auction {
         this.property = property;
     }
 
-    public void setLast_bidder(String last_bidder) {
-        if ( this.last_bidder.equals(last_bidder) ) {
-            throw new IllegalMonopolyActionException("Wait for another player to bid!");
-        } else {
-            this.last_bidder = last_bidder;
-        }
-    }
-
-    public void setHighest_bid(int amount) {
-        if ( this.highest_bid >= amount ) {
-            throw new IllegalMonopolyActionException("Amount mus be higher than previous bid!");
-        } else {
-            this.highest_bid = amount;
+    public void addBid(String bidder, int amount) {
+        if ( !last_bidder.equals(bidder) && amount > highest_bid) {
+            last_bidder = bidder;
+            highest_bid = amount;
         }
     }
 

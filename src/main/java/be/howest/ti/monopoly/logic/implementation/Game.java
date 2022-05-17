@@ -67,8 +67,7 @@ public class Game {
     }
 
     public void placeBidOnPlayerAuction(String bidder, int amount) {
-        auction.setHighest_bid(amount);
-        auction.setLast_bidder(bidder);
+        auction.addBid(bidder, amount);
     }
 
     public Auction getAuction() {
