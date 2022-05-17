@@ -28,7 +28,7 @@ class PlayerTest {
 
     @Test
     void buyProperty() {
-        Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", 100, 300, 750, 925, 1100, 150, 20, 120, 240);
+        Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player testPlayer = new Player("Sibren", "Beer");
 
@@ -80,7 +80,7 @@ class PlayerTest {
 
     @Test
     void payRentStreet(){
-        Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", 100, 300, 750, 925, 1100, 150, 20, 120, 240);
+        Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
         Player player = new Player("Robin", "test");

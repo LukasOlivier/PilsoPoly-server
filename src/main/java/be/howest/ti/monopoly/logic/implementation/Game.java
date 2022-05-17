@@ -28,8 +28,6 @@ public class Game {
     private List<Tile> gameTiles;
 
 
-
-
     public Game(int numberOfPlayers, String prefix, int size) {
         setNumberOfPlayers(numberOfPlayers);
         this.started = false;
