@@ -11,7 +11,8 @@ class OpenApiBuyingPropertyTests extends OpenApiTestsBase {
     void buyProperty(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
             @Override
-            public void buyProperty(String gameId, String playerName, String propertyName) {}
+            public void buyProperty(String gameName,String playerName,String propertyName) {}
+
         });
         post(
                 testContext,

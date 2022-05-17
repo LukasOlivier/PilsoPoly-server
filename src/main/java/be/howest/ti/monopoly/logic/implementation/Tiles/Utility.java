@@ -8,7 +8,4 @@ public class Utility extends Property {
         this.utilityRent = "4 or 10 times the dice roll";
     }
 
-    public String getRent() {
-        return utilityRent;
-    }
 }

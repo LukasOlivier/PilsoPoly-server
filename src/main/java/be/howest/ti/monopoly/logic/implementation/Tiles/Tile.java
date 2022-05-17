@@ -12,8 +12,11 @@ public class Tile {
     private int position;
     private String type;
     private String description;
+    public String actionType;
 
-    private String actionType;
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     private static final List<Tile> gameTiles = createGameTiles();
 

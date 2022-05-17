@@ -20,6 +20,7 @@ public class Street extends Property {
         this.housePrice = housePrice;
     }
 
+
     public int getRentWithOneHouse() {
         return rentWithOneHouse;
     }
@@ -49,11 +50,11 @@ public class Street extends Property {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Street street = (Street) o;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        if (!super.equals(other)) return false;
+        Street street = (Street) other;
         return rentWithOneHouse == street.rentWithOneHouse && rentWithTwoHouses == street.rentWithTwoHouses && rentWithThreeHouses == street.rentWithThreeHouses && rentWithFourHouses == street.rentWithFourHouses && rentWithHotel == street.rentWithHotel && housePrice == street.housePrice;
     }
 

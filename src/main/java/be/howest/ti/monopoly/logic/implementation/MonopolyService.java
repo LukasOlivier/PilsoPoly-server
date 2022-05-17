@@ -163,6 +163,35 @@ public class MonopolyService extends ServiceAdapter {
         return game.getAuction();
     }
 
+
+    @Override
+    public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName){
+        Game game = getGameById(gameName);
+        Player player = game.getSpecificPlayer(playerName);
+        Player debtPlayer = game.getSpecificPlayer(debtPlayerName);
+        Tile tile = getTile(tileName);
+        Property tileToProperty = (Property) tile;
+        PlayerProperty playerProperty = findBoughtPropertyByOwner(tileName, debtPlayerName, game);
+        try {
+            checkIfPlayerNeedsToPayRent(tile, player, debtPlayerName, game, playerProperty);
+            player.payRent(playerProperty,tileToProperty,game,debtPlayer);
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public void checkIfPlayerNeedsToPayRent(Tile tile, Player player, String debtPlayerName, Game game, PlayerProperty playerProperty){
+        if (tile.getName() != player.currentTile.getName()){
+            throw new IllegalArgumentException("player is not on the tile.");
+        }if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
+            throw new IllegalArgumentException("the tile is not you're property");
+        }if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
+            throw new IllegalArgumentException("This tile is not bought yet");
+        }if (playerProperty.getMortgage()){
+            throw new IllegalArgumentException("this tile is mortgaged");
+        }
+    }
+
     @Override
     public void setBankrupt(String playerName, String gameId) {
         Game game = getGameById(gameId);
@@ -289,6 +318,7 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 
+
     public void checkIfTileCanBeUnMortgaged(PlayerProperty playerProperty) {
         if (playerProperty == null) {
             throw new IllegalArgumentException("trying to mortgage someone else's tile");
@@ -322,5 +352,3 @@ public class MonopolyService extends ServiceAdapter {
         }
     }
 }
-
-

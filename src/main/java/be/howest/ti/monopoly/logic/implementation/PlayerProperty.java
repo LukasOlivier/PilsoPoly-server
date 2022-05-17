@@ -6,15 +6,32 @@ import io.vertx.core.Handler;
 import java.util.List;
 
 
+import java.util.Objects;
+
 public class PlayerProperty {
     public final Property property;
     private boolean mortgage;
     private int houseCount;
     private int hotelCount;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerProperty that = (PlayerProperty) o;
+        return mortgage == that.mortgage && Objects.equals(property, that.property);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(property, mortgage);
+    }
+
     private final static int MIN_HOUSE_COUNT = 0;
     private final static int MAX_HOUSE_COUNT = 4;
     private final static int MAX_HOTEL_COUNT = 1;
+
 
 
     public PlayerProperty(Property property, boolean mortgage, int houseCount, int hotelCount) {
@@ -24,13 +41,18 @@ public class PlayerProperty {
         this.hotelCount = hotelCount;
     }
 
+
     public PlayerProperty(Property property) {
-        this(property, false,0,0);
-    }
+            this(property, false, 0, 0);
+        }
 
     public String getProperty() {
         return property.getName();
     }
+
+    public String getPropertyType(){return property.getType();}
+
+    public String getPropertActionType(){return property.getActionType();}
 
     public boolean isMortgage() {
         return mortgage;
@@ -47,6 +69,9 @@ public class PlayerProperty {
     public int getHotelCount() {
         return hotelCount;
     }
+
+    public boolean getMortgage(){ return mortgage;}
+
 
     public void addHouse(Player player, List<PlayerProperty> otherProperties) {
         if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true) ) {
