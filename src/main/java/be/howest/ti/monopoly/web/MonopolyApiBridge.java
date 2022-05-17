@@ -7,7 +7,9 @@ import be.howest.ti.monopoly.logic.exceptions.InsufficientFundsException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.MonopolyService;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+
 import be.howest.ti.monopoly.logic.implementation.Player;
+
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
@@ -344,7 +346,17 @@ public class MonopolyApiBridge {
     }
 
     private void collectDebt(RoutingContext ctx) {
-        throw new NotYetImplementedException("collectDebt");
+        Request request = Request.from(ctx);
+        try {
+            String game = request.getGameId();
+            String  player = request.getPathParameterValue("playerName");
+            String  debtPlayer = request.getPathParameterValue("debtorName");
+            String tileName = request.getPropertyName();
+            service.collectDebt(game,player,debtPlayer,tileName);
+            Response.sendOkResponse(ctx);
+        }catch (IllegalArgumentException e){
+            throw new IllegalStateException("Failed to pay rent");
+        }
     }
 
     private void takeMortgage(RoutingContext ctx) {
@@ -363,7 +375,17 @@ public class MonopolyApiBridge {
     }
 
     private void settleMortgage(RoutingContext ctx) {
-        throw new NotYetImplementedException("settleMortgage");
+        Request request = Request.from(ctx);
+        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getGameId();
+        String propertyName = request.getPropertyName();
+        try {
+            service.settleMortgage(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
+        }catch (IllegalArgumentException e){
+            throw new IllegalStateException(e);
+        }
+
     }
 
     private void buyHouse(RoutingContext ctx) {

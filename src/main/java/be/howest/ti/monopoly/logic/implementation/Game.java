@@ -3,6 +3,10 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.*;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
+import be.howest.ti.monopoly.logic.implementation.tiles.Railroad;
+import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Utility;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.security.SecureRandom;
@@ -25,7 +29,7 @@ public class Game {
     private String currentPlayer;
     private String winner;
     private static final List<CommunityOrChanceCard> chanceCards = createChanceCards();
-    private static List<CommunityOrChanceCard> communityCards = createCommunityCards();
+    private static final List<CommunityOrChanceCard> communityCards = createCommunityCards();
     private static final Random random = new SecureRandom();
     private Dice lastDiceRoll;
 
@@ -262,8 +266,12 @@ public class Game {
 
     }
 
-    public static CommunityOrChanceCard getRandomChanceCardAction(){
+    public static CommunityOrChanceCard getRandomChanceCardAction() {
         int randomNumber = random.nextInt(chanceCards.size());
         return chanceCards.get(randomNumber);
+    }
+
+    public static List<Tile> getGameTiles(){
+        return Tile.getGameTiles();
     }
 }

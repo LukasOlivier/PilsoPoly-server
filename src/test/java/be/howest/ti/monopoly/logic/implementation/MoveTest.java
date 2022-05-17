@@ -21,7 +21,7 @@ class MoveTest {
         int placesToMove = Move.calculatePlacesToMove(diceRoll);
         Move.makeMove(alice, placesToMove, testGame);
 
-        assertEquals("Baltic", alice.getCurrentTile());
+        assertEquals("Cara", alice.getCurrentTile());
     }
 
     @Test

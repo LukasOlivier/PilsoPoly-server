@@ -12,6 +12,7 @@ public class Dice {
     private static final Random random = new SecureRandom();
 
 
+
     public int getDiceOne() {
         return diceOne;
     }

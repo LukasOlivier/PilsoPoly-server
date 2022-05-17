@@ -3,41 +3,34 @@ package be.howest.ti.monopoly.logic.implementation.tiles;
 import java.util.Objects;
 
 public class Street extends Property {
-    private int rentWithOneHouse;
-    private int rentWithTwoHouses;
-    private int rentWithThreeHouses;
-    private int rentWithFourHouses;
-    private int rentWithHotel;
     private int housePrice;
+    private StreetHouseRent rentOfHouses;
 
-    public Street(String name, int position, String type, int groupSize, String color, int rentWithOneHouse, int rentWithTwoHouses, int rentWithThreeHouses, int rentWithFourHouses, int rentWithHotel, int housePrice, int rent, int mortgage, int cost) {
+    public Street(String name, int position, String type, int groupSize, String color, StreetHouseRent rentOfHouses, int housePrice, int rent, int mortgage, int cost) {
         super(name, position, type, groupSize, color,rent,mortgage,cost);
-        this.rentWithOneHouse = rentWithOneHouse;
-        this.rentWithTwoHouses = rentWithTwoHouses;
-        this.rentWithThreeHouses = rentWithThreeHouses;
-        this.rentWithFourHouses = rentWithFourHouses;
-        this.rentWithHotel = rentWithHotel;
+        this.rentOfHouses = rentOfHouses;
         this.housePrice = housePrice;
     }
 
+
     public int getRentWithOneHouse() {
-        return rentWithOneHouse;
+        return rentOfHouses.getRentWithOneHouse();
     }
 
     public int getRentWithTwoHouses() {
-        return rentWithTwoHouses;
+        return rentOfHouses.getRentWithTwoHouses();
     }
 
     public int getRentWithThreeHouses() {
-        return rentWithThreeHouses;
+        return rentOfHouses.getRentWithThreeHouses();
     }
 
     public int getRentWithFourHouses() {
-        return rentWithFourHouses;
+        return rentOfHouses.getRentWithFourHouses();
     }
 
     public int getRentWithHotel() {
-        return rentWithHotel;
+        return rentOfHouses.getRentWithHotel();
     }
 
     public int getHousePrice() {
@@ -54,11 +47,11 @@ public class Street extends Property {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Street street = (Street) o;
-        return rentWithOneHouse == street.rentWithOneHouse && rentWithTwoHouses == street.rentWithTwoHouses && rentWithThreeHouses == street.rentWithThreeHouses && rentWithFourHouses == street.rentWithFourHouses && rentWithHotel == street.rentWithHotel && housePrice == street.housePrice;
+        return housePrice == street.housePrice && Objects.equals(rentOfHouses, street.rentOfHouses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), rentWithOneHouse, rentWithTwoHouses, rentWithThreeHouses, rentWithFourHouses, rentWithHotel, housePrice);
+        return Objects.hash(super.hashCode(), housePrice, rentOfHouses);
     }
 }

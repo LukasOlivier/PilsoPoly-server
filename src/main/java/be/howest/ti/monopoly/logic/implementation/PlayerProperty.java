@@ -7,6 +7,8 @@ import io.vertx.core.Handler;
 import java.util.List;
 
 
+import java.util.Objects;
+
 public class PlayerProperty {
     public final Property property;
     private boolean mortgage;
@@ -17,6 +19,18 @@ public class PlayerProperty {
     private static final int MAX_HOUSE_COUNT = 4;
     private static final int MAX_HOTEL_COUNT = 1;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerProperty that = (PlayerProperty) o;
+        return mortgage == that.mortgage && Objects.equals(property, that.property);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(property, mortgage);
+    }
 
     public PlayerProperty(Property property, boolean mortgage, int houseCount, int hotelCount) {
         this.property = property;
@@ -26,12 +40,16 @@ public class PlayerProperty {
     }
 
     public PlayerProperty(Property property) {
-        this(property, false,0,0);
-    }
+            this(property, false, 0, 0);
+        }
 
     public String getProperty() {
         return property.getName();
     }
+
+    public String getPropertyType(){return property.getType();}
+
+    public String getPropertActionType(){return property.getActionType();}
 
     public boolean isMortgage() {
         return mortgage;
@@ -48,6 +66,9 @@ public class PlayerProperty {
     public int getHotelCount() {
         return hotelCount;
     }
+
+    public boolean getMortgage(){ return mortgage;}
+
 
     public void addHouse(Player player, List<PlayerProperty> otherProperties) {
         if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true) ) {
@@ -141,8 +162,9 @@ public class PlayerProperty {
         }
     }
 
-    public void mortgageTheProperty(int mortgage, Player player) {
-        player.addMoney(mortgage);
+    public void mortgageTheProperty(Property property, Player player) {
+        player.addMoney(property.getMortgage());
+        property.setMortgaged(true);
         setMortgage(true);
     }
 
@@ -152,5 +174,11 @@ public class PlayerProperty {
 
     private boolean canSellHotel() {
         return hotelCount == MAX_HOTEL_COUNT && houseCount == 0;
+    }
+
+    public void settleMortgageTheProperty(Property property, Player player) {
+        player.removeMoney(property.getMortgage());
+        property.setMortgaged(false);
+        setMortgage(false);
     }
 }
