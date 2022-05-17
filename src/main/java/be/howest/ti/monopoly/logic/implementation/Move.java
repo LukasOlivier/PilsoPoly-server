@@ -1,8 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
-import java.util.List;
 import java.util.Objects;
 
 import static be.howest.ti.monopoly.logic.implementation.Jail.checkIfJailedByDoubleThrow;
@@ -30,12 +29,12 @@ public class Move {
         return actionType;
     }
 
-    public static Move makeMove(Player player, int placesToMove) {
+    public static Move makeMove(Player player, int placesToMove,Game game) {
         if (!player.isJailed()){
             int endOfBoardPosition = 40;
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % endOfBoardPosition;
-            player.currentTile = Tile.getTileFromPosition(currentPosition);
-            Tile.takeTileAction(player.currentTile, player);
+            player.currentTile = Tile.getTileFromPosition(game,currentPosition);
+            Tile.takeTileAction(player.currentTile, player,game);
             checkIfPassedGo(player);
         }
         if (player.getFirstThrow()){
