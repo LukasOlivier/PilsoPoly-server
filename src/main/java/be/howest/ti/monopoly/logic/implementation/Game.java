@@ -2,15 +2,13 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 
-import be.howest.ti.monopoly.logic.implementation.Tiles.Railroad;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Utility;
+import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.*;
 
-@JsonIgnoreProperties({""})
+@JsonIgnoreProperties({"getGameTiles"})
 public class Game {
     private int numberOfPlayers;
     private boolean started;
@@ -27,12 +25,17 @@ public class Game {
     private String winner;
     private Dice lastDiceRoll;
 
+    private List<Tile> gameTiles;
+
+
+
 
     public Game(int numberOfPlayers, String prefix, int size) {
         setNumberOfPlayers(numberOfPlayers);
         this.started = false;
         this.players = new LinkedList<>();
         setId(prefix, size);
+        this.gameTiles = AllGameTiles.createGameTiles();
     }
 
     public List<Integer> getLastDiceRoll() {
@@ -89,6 +92,10 @@ public class Game {
 
     public String getId() {
         return id;
+    }
+
+    public List<Tile> getGameTiles() {
+        return gameTiles;
     }
 
     public void setStarted() {
@@ -213,7 +220,4 @@ public class Game {
         }
     }
 
-    public static List<Tile> getGameTiles(){
-        return Tile.getGameTiles();
-    }
 }

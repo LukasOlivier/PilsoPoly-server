@@ -1,9 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +16,7 @@ public class MoveTest {
 
         Dice diceRoll = new Dice(2,1);
         int placesToMove = Move.calculatePlacesToMove(diceRoll);
-        Move.makeMove(alice, placesToMove);
+        Move.makeMove(alice, placesToMove,testGame);
 
         assertEquals("Cara", alice.getCurrentTile());
     }
@@ -34,7 +31,7 @@ public class MoveTest {
 
         Dice diceRollResult = new Dice(3,1); //Tax tile
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
-        Move.makeMove(alice, placesToMove);
+        Move.makeMove(alice, placesToMove,testGame);
         Move.checkIfPlayerCanRollAgain(testGame, alice);
 
         assertEquals("Bob", testGame.getCurrentPlayer());
@@ -49,7 +46,7 @@ public class MoveTest {
 
         Dice diceRollResult = new Dice(2,1); //Baltic tile
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
-        Move.makeMove(alice, placesToMove);
+        Move.makeMove(alice, placesToMove,testGame);
         Move.checkIfPlayerCanRollAgain(testGame, alice);
 
         assertEquals("Alice", testGame.getCurrentPlayer());
@@ -68,7 +65,7 @@ public class MoveTest {
         diceRollResult.checkIfRolledDouble(testGame,alice);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
-        Move.makeMove(alice, placesToMove);
+        Move.makeMove(alice, placesToMove,testGame);
         Move.checkIfPlayerCanRollAgain(testGame, alice);
 
         assertEquals("Alice", testGame.getCurrentPlayer());
@@ -82,12 +79,12 @@ public class MoveTest {
         Dice diceRollResult = new Dice(1,2);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
-        Move.makeMove(alice, placesToMove);
+        Move.makeMove(alice, placesToMove,testGame);
 
         assertEquals(1500, alice.getMoney());
 
-        alice.setCurrentTile(Tile.getTileFromPosition(39));
-        Move.makeMove(alice, placesToMove);
+        alice.setCurrentTile(Tile.getTileFromPosition(testGame,39));
+        Move.makeMove(alice, placesToMove,testGame);
 
         assertEquals(1700, alice.getMoney());
     }

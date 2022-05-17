@@ -3,7 +3,7 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-import be.howest.ti.monopoly.logic.implementation.Tiles.*;
+import be.howest.ti.monopoly.logic.implementation.tiles.*;
 import be.howest.ti.monopoly.web.Request;
 
 import java.util.*;
@@ -40,7 +40,7 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public List<Tile> getTiles() {
-        return Tile.getGameTiles();
+        return Tile.createGameTiles();
     }
 
     @Override
@@ -130,6 +130,7 @@ public class MonopolyService extends ServiceAdapter {
             throw new IllegalStateException("you can not buy a tile of any other type");
         }
         Property tileToProperty = (Property) tileToBuy;
+
         if (player.getMoney() < tileToProperty.getCost()) {
             throw new IllegalStateException("you do not have enough money");
         }
@@ -254,7 +255,7 @@ public class MonopolyService extends ServiceAdapter {
             diceRollResult.checkIfRolledDouble(game, player);
             int placesToMove = Move.calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
-            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove));
+            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove,game));
             game.getCurrentTurn().setRoll(diceRollResult);
             Move.checkIfPlayerCanRollAgain(game, player);
             game.setLastDiceRoll(diceRollResult);
