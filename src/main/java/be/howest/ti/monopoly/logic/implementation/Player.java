@@ -1,8 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
@@ -10,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" })
-
 public class Player {
     private final String name;
     public Tile currentTile;
@@ -26,9 +23,6 @@ public class Player {
     private boolean firstThrow;
     private int turnsInJail = 0;
     private int amountOfDoubleThrows = 0;
-
-    private static final int MULTIPLIER_FOR_ONE_UTILITY_TILE = 4;
-    private static final int MULTIPLIER_FOR_TWO_UTILITY_TILES    = 10;
 
     public Player(String name, Tile currentTile, String icon) {
         this.name = name;
@@ -115,48 +109,9 @@ public class Player {
         debtPlayer.addMoney(amount);
     }
 
-    public void payRent(PlayerProperty playerProperty, Property property, Game game, Player debtPlayer){
-        int rent = property.computeRent(game, playerProperty, debtPlayer, this);
+    public void payRent(PlayerProperty playerProperty, Game game, Player debtPlayer){
+        int rent = playerProperty.getProperty().computeRent(game, playerProperty, debtPlayer, this);
         transfer(debtPlayer, rent);
-        switch (currentTile.getType()){
-            case ("street"):
-                payRentStreet(playerProperty, property, debtPlayer);
-                break;
-            case ("railroad"):
-                payRentRailRoad(debtPlayer);
-                break;
-            default:
-                //throw new IllegalArgumentException("you can not ask rent for any other type");
-        }
-    }
-
-    public void payRentRailRoad(Player debtPlayer){
-        int amountOfUtilities = checkHowManyUtilities("railroad");
-        transfer(debtPlayer, (25 * amountOfUtilities));
-    }
-
-    public void payRentStreet(PlayerProperty playerProperty, Property property, Player debtPlayer){
-        Street street = (Street) property;
-        switch (playerProperty.getHouseCount()){
-            case 1:
-                transfer(debtPlayer, street.getRentWithOneHouse());
-                break;
-            case 2:
-                transfer(debtPlayer, street.getRentWithTwoHouses());
-                break;
-            case 3:
-                transfer(debtPlayer, street.getRentWithThreeHouses());
-                break;
-            case 4:
-                transfer(debtPlayer, street.getRentWithFourHouses());
-                break;
-            default:
-                if (playerProperty.getHotelCount() > 0){
-                    transfer(debtPlayer,street.getRentWithHotel());
-                }else{
-                    transfer(debtPlayer,street.getRent());
-                }
-        }
     }
 
     public int checkHowManyUtilities(String type) {

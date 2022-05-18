@@ -46,7 +46,6 @@ public class Tile {
         return name;
     }
 
-
     public int getPosition() {
         return position;
     }

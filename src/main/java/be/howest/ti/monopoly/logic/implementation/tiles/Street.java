@@ -4,6 +4,7 @@ import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,13 +12,19 @@ public class Street extends Property {
 
     private final int housePrice;
     private final StreetHouseRent rentOfHouses;
+    private final List<Integer> listOfRents = new ArrayList<>();
 
     public Street(String name, int position, String type, int groupSize, String color, StreetHouseRent rentOfHouses, int housePrice, int rent, int mortgage, int cost) {
         super(name, position, type, groupSize, color,rent,mortgage,cost);
         this.rentOfHouses = rentOfHouses;
         this.housePrice = housePrice;
+        listOfRents.add(getRent());
+        listOfRents.add(getRentWithOneHouse());
+        listOfRents.add(getRentWithTwoHouses());
+        listOfRents.add(getRentWithThreeHouses());
+        listOfRents.add(getRentWithFourHouses());
+        listOfRents.add(getRentWithHotel());
     }
-
 
     public int getRentWithOneHouse() {
         return rentOfHouses.getRentWithOneHouse();
@@ -64,7 +71,10 @@ public class Street extends Property {
 
     @Override
     public int computeRent(Game game, PlayerProperty playerProperty, Player debtPlayer, Player player) {
-        return 0;
+        if (playerProperty.getHotelCount() == 1) {
+            return listOfRents.get(5);
+        }
+        return listOfRents.get(playerProperty.getHouseCount());
     }
 
 }

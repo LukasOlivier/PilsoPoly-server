@@ -1,13 +1,14 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 
+import java.util.List;
 import java.util.Objects;
 
 public class StreetHouseRent {
-    private int rentWithOneHouse;
-    private int rentWithTwoHouses;
-    private int rentWithThreeHouses;
-    private int rentWithFourHouses;
-    private int rentWithHotel;
+    private final int rentWithOneHouse;
+    private final int rentWithTwoHouses;
+    private final int rentWithThreeHouses;
+    private final int rentWithFourHouses;
+    private final int rentWithHotel;
 
     public StreetHouseRent(int rentWithOneHouse, int rentWithTwoHouses, int rentWithThreeHouses, int rentWithFourHouses, int rentWithHotel) {
         this.rentWithOneHouse = rentWithOneHouse;
@@ -27,26 +28,6 @@ public class StreetHouseRent {
 
     public int getRentWithThreeHouses() {
         return rentWithThreeHouses;
-    }
-
-    public void setRentWithOneHouse(int rentWithOneHouse) {
-        this.rentWithOneHouse = rentWithOneHouse;
-    }
-
-    public void setRentWithTwoHouses(int rentWithTwoHouses) {
-        this.rentWithTwoHouses = rentWithTwoHouses;
-    }
-
-    public void setRentWithThreeHouses(int rentWithThreeHouses) {
-        this.rentWithThreeHouses = rentWithThreeHouses;
-    }
-
-    public void setRentWithFourHouses(int rentWithFourHouses) {
-        this.rentWithFourHouses = rentWithFourHouses;
-    }
-
-    public void setRentWithHotel(int rentWithHotel) {
-        this.rentWithHotel = rentWithHotel;
     }
 
     public int getRentWithFourHouses() {

@@ -4,7 +4,6 @@ import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Property extends Tile {
@@ -94,6 +93,13 @@ public abstract class Property extends Tile {
         if (!super.equals(o)) return false;
         Property property = (Property) o;
         return cost == property.cost && mortgage == property.mortgage && rent == property.rent && groupSize == property.groupSize && Objects.equals(color, property.color);
+    }
+
+    @Override
+    public String toString() {
+        return "Property{" +
+                "color='" + color + '\'' +
+                '}';
     }
 
     @Override

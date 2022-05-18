@@ -2,9 +2,15 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.util.List;
 import java.util.Objects;
 
+@JsonIgnoreProperties({"getProperty"})
 public class PlayerProperty {
     public final Property property;
     private boolean mortgage;
@@ -37,9 +43,15 @@ public class PlayerProperty {
 
     public PlayerProperty(Property property) {
             this(property, false, 0, 0);
-        }
+    }
 
-    public String getProperty() {
+    @JsonIgnore
+    public Property getProperty(){
+        return property;
+    }
+
+    @JsonProperty("property")
+    public String getPropertyName() {
         return property.getName();
     }
 
@@ -65,7 +77,6 @@ public class PlayerProperty {
 
     public boolean getMortgage(){ return mortgage;}
 
-
     public void addHouse(Player player, List<PlayerProperty> otherProperties) {
         if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true) ) {
             houseCount += 1;
@@ -83,7 +94,7 @@ public class PlayerProperty {
             throw new IllegalStateException("could not sell house");
         }
     }
-
+    // todo this shit
     public void buyHotel(Player player, List<PlayerProperty> otherProperties) {
         if ( canBuyHotel() ) {
             hotelCount = 1;

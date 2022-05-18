@@ -104,23 +104,60 @@ class PlayerTest {
     @Test
     void payRentStreet(){
         Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
-        PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
-        Player debtPlayer = new Player("Sibren", "Beer");
-        Player player = new Player("Robin", "test");
-        debtPlayer.addProperty(testPlayerProperty);
-        player.payRentStreet(testPlayerProperty,testProperty,debtPlayer);
-        assertEquals(1480, player.getMoney());
+
+        // No houses
+        PlayerProperty playerProperty = new PlayerProperty(testProperty, false, 0, 0);
+        Robin.addProperty(playerProperty);
+        Sibren.payRent(playerProperty, testGame, Robin);
+        assertEquals(1480, Sibren.getMoney());
+
+        // 1 house
+        PlayerProperty playerPropertyOneHouse = new PlayerProperty(testProperty, false, 1, 0);
+        Sibren.addMoney(20);
+        Robin.addProperty(playerPropertyOneHouse);
+        Sibren.payRent(playerPropertyOneHouse, testGame, Robin);
+        assertEquals(1400, Sibren.getMoney());
+
+        // 2 houses
+        PlayerProperty playerPropertyTwoHouses = new PlayerProperty(testProperty, false, 2, 0);
+        Sibren.addMoney(100);
+        Robin.addProperty(playerPropertyTwoHouses);
+        Sibren.payRent(playerPropertyTwoHouses, testGame, Robin);
+        assertEquals(1200, Sibren.getMoney());
+
+        // 3 houses
+        PlayerProperty playerPropertyThreeHouses = new PlayerProperty(testProperty, false, 3, 0);
+        Sibren.addMoney(300);
+        Robin.addProperty(playerPropertyThreeHouses);
+        Sibren.payRent(playerPropertyThreeHouses, testGame, Robin);
+        assertEquals(750, Sibren.getMoney());
+
+        // 4 houses
+        PlayerProperty playerPropertyFourHouses = new PlayerProperty(testProperty, false, 4, 0);
+        Sibren.addMoney(750);
+        Robin.addProperty(playerPropertyFourHouses);
+        Sibren.payRent(playerPropertyFourHouses, testGame, Robin);
+        assertEquals(575, Sibren.getMoney());
+
+        // with Hotel
+        PlayerProperty playerPropertyHotel = new PlayerProperty(testProperty, false, 0, 1);
+        Sibren.addMoney(925);
+        Robin.addProperty(playerPropertyHotel);
+        Sibren.payRent(playerPropertyHotel, testGame, Robin);
+        assertEquals(400, Sibren.getMoney());
+
     }
 
     @Test
     void payRentRailRoad(){
+        Dice diceRoll = new Dice();
         Property testProperty = new Railroad("Reading RR", 5, "railroad", 4, "BLACK", 25, 100, 200);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
-        Player debtPlayer = new Player("Sibren", "Beer");
-        Player player = new Player("Robin", "test");
-        debtPlayer.addProperty(testPlayerProperty);
-        player.payRentRailRoad(debtPlayer);
-        assertEquals(1475, player.getMoney());
+
+        testGame.setLastDiceRoll(diceRoll);
+        Sibren.addProperty(testPlayerProperty);
+        Robin.payRent(testPlayerProperty, testGame, Sibren);
+        assertEquals(1475, Robin.getMoney());
     }
 
     @Test
@@ -128,10 +165,12 @@ class PlayerTest {
         Dice diceRoll = new Dice();
         Property testProperty =  new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
+
         Sibren.addProperty(testPlayerProperty);
         testGame.setLastDiceRoll(diceRoll);
+
         int expectedAmount = testGame.getLastDiceRollFullAmount()*4;
-        Robin.payRent(testPlayerProperty, testProperty, testGame, Sibren);
+        Robin.payRent(testPlayerProperty, testGame, Sibren);
         assertEquals(1500-expectedAmount, Robin.getMoney());
     }
 }

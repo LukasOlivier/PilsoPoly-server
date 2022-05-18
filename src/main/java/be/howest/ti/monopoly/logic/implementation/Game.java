@@ -6,12 +6,12 @@ import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_ca
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.security.SecureRandom;
 import java.util.*;
 
-@JsonIgnoreProperties({"getGameTiles"})
 public class Game {
 
     private int numberOfPlayers;
@@ -34,7 +34,6 @@ public class Game {
 
     private List<Tile> gameTiles;
 
-
     public Game(int numberOfPlayers, String prefix, int size) {
         setNumberOfPlayers(numberOfPlayers);
         this.started = false;
@@ -50,8 +49,12 @@ public class Game {
         return Collections.emptyList();
     }
 
+    @JsonIgnore
     public int getLastDiceRollFullAmount(){
-        return lastDiceRoll.getDiceOne() + lastDiceRoll.getDiceTwo();
+        if (lastDiceRoll != null) {
+            return lastDiceRoll.getDiceOne() + lastDiceRoll.getDiceTwo();
+        }
+        return -1;
     }
 
     public void setLastDiceRoll(Dice lastDiceRoll) {
@@ -103,6 +106,7 @@ public class Game {
         return id;
     }
 
+    @JsonIgnore
     public List<Tile> getGameTiles(){
         return this.gameTiles;
     }
