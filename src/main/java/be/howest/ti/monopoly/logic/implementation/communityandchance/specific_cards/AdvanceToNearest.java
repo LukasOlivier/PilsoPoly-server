@@ -22,23 +22,17 @@ public class AdvanceToNearest extends CommunityOrChanceCard {
     public void cardAction(Game game, Player player){
         int currentPos = player.currentTile.getPosition();
         List<Tile> tiles= game.getGameTiles();
-        boolean found = false;
-        int i = currentPos;
+        int positionOnBoard = currentPos;
         int placesToMove = 0;
         int sizeOfList = 39;
-        while (!found){
+        while (!Objects.equals(tiles.get(positionOnBoard).getType(), type)){
             placesToMove ++;
-            if (Objects.equals(tiles.get(i).getType(), type)) {
-                found = true;
-                currentPos = i;
-            }
-            if (i >= sizeOfList) {
-                i = 0;
+            if (positionOnBoard >= sizeOfList) {
+                positionOnBoard = 0;
             } else {
-                i ++;
+                positionOnBoard ++;
             }
         }
         game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove, game));
-        player.setCurrentTile(game, currentPos);
     }
 }
