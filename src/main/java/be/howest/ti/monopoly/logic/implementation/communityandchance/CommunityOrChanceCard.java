@@ -3,17 +3,15 @@ package be.howest.ti.monopoly.logic.implementation.communityandchance;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 
-public class CommunityOrChanceCard {
+public abstract class CommunityOrChanceCard {
 
-    private String description;
+    private final String description;
 
-    public CommunityOrChanceCard(String description) {
+    protected CommunityOrChanceCard(String description) {
         this.description = description;
     }
 
-    public void cardAction(Game game, Player player){
-
-    }
+    public abstract void cardAction(Game game, Player player);
 
     @Override
     public String toString() {

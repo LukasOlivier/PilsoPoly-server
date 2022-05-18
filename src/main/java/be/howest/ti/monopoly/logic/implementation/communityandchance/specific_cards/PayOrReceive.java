@@ -6,14 +6,13 @@ import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOr
 
 public class PayOrReceive extends CommunityOrChanceCard {
 
-    private int amount;
+    private final int amount;
 
     public PayOrReceive(String description, int amount) {
         super(description);
         this.amount = amount;
     }
 
-    // todo what happens with debt??
     @Override
     public void cardAction(Game game, Player player){
         player.addMoney(amount);
