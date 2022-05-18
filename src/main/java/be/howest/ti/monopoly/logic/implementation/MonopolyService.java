@@ -199,6 +199,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         player.setBankrupt();
+        player.setPropertyBuyable();
         game.isEveryoneBankrupt();
     }
 

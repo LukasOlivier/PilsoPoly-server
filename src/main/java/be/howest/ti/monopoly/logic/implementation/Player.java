@@ -211,4 +211,12 @@ public class Player {
     public int hashCode() {
         return Objects.hash(name, icon);
     }
+
+    public void setPropertyBuyable() {
+        for (PlayerProperty playerProperty : properties){
+            playerProperty.getProperty().setBought(false);
+            playerProperty.getProperty().setMortgaged(false);
+        }
+        properties.clear();
+    }
 }
