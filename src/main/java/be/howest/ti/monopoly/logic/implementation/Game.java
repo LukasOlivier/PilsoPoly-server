@@ -5,10 +5,7 @@ import be.howest.ti.monopoly.logic.implementation.communityandchance.*;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -78,15 +75,17 @@ public class Game {
     }
 
     public void startPlayerAuction(int bid, int duration, String bidder, String property) {
-        auction = new Auction(bid, duration, bidder, property);
+        auction = new Auction(bid, duration, bidder, property, this);
     }
 
     public void placeBidOnPlayerAuction(String bidder, int amount) {
-        auction.setHighestBid(amount);
-        auction.setLastBidder(bidder);
+        auction.addBid(bidder, amount);
     }
 
     public Auction getAuction() {
+        if ( auction != null && auction.getDuration() == 0 ) {
+            return null;
+        }
         return auction;
     }
 
