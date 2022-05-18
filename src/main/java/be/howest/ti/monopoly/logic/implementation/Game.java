@@ -50,6 +50,10 @@ public class Game {
         return Collections.emptyList();
     }
 
+    public int getLastDiceRollFullAmount(){
+        return lastDiceRoll.getDiceOne() + lastDiceRoll.getDiceTwo();
+    }
+
     public void setLastDiceRoll(Dice lastDiceRoll) {
         this.lastDiceRoll = lastDiceRoll;
     }

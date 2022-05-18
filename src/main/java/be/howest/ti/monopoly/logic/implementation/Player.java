@@ -116,10 +116,9 @@ public class Player {
     }
 
     public void payRent(PlayerProperty playerProperty, Property property, Game game, Player debtPlayer){
+        int rent = property.computeRent(game, playerProperty, debtPlayer, this);
+        transfer(debtPlayer, rent);
         switch (currentTile.getType()){
-            case ("utility"):
-                payRentUtilityGetDiceRoll(game, debtPlayer);
-                break;
             case ("street"):
                 payRentStreet(playerProperty, property, debtPlayer);
                 break;
@@ -127,30 +126,13 @@ public class Player {
                 payRentRailRoad(debtPlayer);
                 break;
             default:
-                throw new IllegalArgumentException("you can not ask rent for any other type");
+                //throw new IllegalArgumentException("you can not ask rent for any other type");
         }
     }
 
     public void payRentRailRoad(Player debtPlayer){
-        int amountOfUtilities = checkHowManyUtilitys("railroad", debtPlayer);
+        int amountOfUtilities = checkHowManyUtilities("railroad");
         transfer(debtPlayer, (25 * amountOfUtilities));
-    }
-
-    public void payRentUtilityGetDiceRoll(Game game, Player debtPlayer){
-        int indexOfLastTurn = game.getTurns().size() - 1;
-        int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().getDiceOne();
-        int lastDiceRollTwo = game.getTurns().get(indexOfLastTurn).getRoll().getDiceTwo();
-        int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
-        payRentUtility(lastDiceRoll, debtPlayer);
-    }
-
-    public void payRentUtility(int thrownAmount, Player debtPlayer){
-        int oneUtilityTile = 1;
-        if (checkHowManyUtilitys("utility", debtPlayer) > oneUtilityTile){
-            transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * thrownAmount);
-        }else{
-            transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * thrownAmount);
-        }
     }
 
     public void payRentStreet(PlayerProperty playerProperty, Property property, Player debtPlayer){
@@ -177,10 +159,10 @@ public class Player {
         }
     }
 
-    private int checkHowManyUtilitys(String type, Player player) {
+    public int checkHowManyUtilities(String type) {
         int countTheTypes = 0;
         int addPropertyType = 1;
-        for (PlayerProperty playerProperty : player.properties) {
+        for (PlayerProperty playerProperty : this.properties) {
             if (Objects.equals(playerProperty.getPropertyType(), type)) {
                 countTheTypes += addPropertyType;
             }

@@ -4,12 +4,33 @@ import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+
+    int gameMapSize = 5;
+    Game testGame = new Game(4, "PilsoPoly", gameMapSize);
+
+    Player Lukas;
+    Player Niels;
+    Player Sibren;
+    Player Robin;
+
+    @BeforeEach
+    void addPlayers(){
+        testGame.addPlayer("Sibren", "icon");
+        testGame.addPlayer("Robin", "icon");
+        testGame.addPlayer("Lukas", "icon");
+        testGame.addPlayer("Niels", "icon");
+        Lukas = testGame.getSpecificPlayer("Lukas");
+        Niels = testGame.getSpecificPlayer("Niels");
+        Sibren = testGame.getSpecificPlayer("Sibren");
+        Robin = testGame.getSpecificPlayer("Robin");
+    }
 
     @Test
     void testPlayer() {
@@ -104,12 +125,13 @@ class PlayerTest {
 
     @Test
     void payRentUtility(){
+        Dice diceRoll = new Dice();
         Property testProperty =  new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
-        Player debtPlayer = new Player("Sibren", "Beer");
-        Player player = new Player("Robin", "test");
-        debtPlayer.addProperty(testPlayerProperty);
-        player.payRentUtility(10,debtPlayer);
-        assertEquals(1460, player.getMoney());
+        Sibren.addProperty(testPlayerProperty);
+        testGame.setLastDiceRoll(diceRoll);
+        int expectedAmount = testGame.getLastDiceRollFullAmount()*4;
+        Robin.payRent(testPlayerProperty, testProperty, testGame, Sibren);
+        assertEquals(1500-expectedAmount, Robin.getMoney());
     }
 }
