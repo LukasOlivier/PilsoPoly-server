@@ -42,9 +42,14 @@ public class Auction {
             Player winner = findWinner(lastBidder);
             Tile foundTile = findTile(winner, property);
             PlayerProperty wonProperty = new PlayerProperty((Property) makeFoundTileBought(foundTile));
-            winner.addProperty(wonProperty);
+            updatePlayer(winner, wonProperty);
             resumeGame();
         }
+    }
+
+    public void updatePlayer(Player player, PlayerProperty property) {
+        player.addProperty(property);
+        player.removeMoney(highestBid);
     }
 
     public void resumeGame() {
