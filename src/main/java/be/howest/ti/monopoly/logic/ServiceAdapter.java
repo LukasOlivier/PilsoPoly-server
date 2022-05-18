@@ -97,10 +97,6 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
-    public void startPlayerAuction(Request request) {
-        throw new UnsupportedOperationException();
-    }
-
     @Override
     public void placeBidOnPlayerAuction(Request request) {
         throw new UnsupportedOperationException();
@@ -133,7 +129,7 @@ public class ServiceAdapter implements IService {
 
     @Override
     public void getOutOfJailFine(String gameId, String playerName) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
