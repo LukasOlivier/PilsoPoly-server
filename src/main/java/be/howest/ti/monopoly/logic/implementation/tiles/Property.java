@@ -12,7 +12,6 @@ public class Property extends Tile {
     private boolean mortgaged;
 
 
-
     public Property(String name, int position, String type, int groupSize, String color, int rent, int mortgage, int cost) {
         super(name, position, type, "can buy this property in direct sale","buy");
         this.groupSize = groupSize;

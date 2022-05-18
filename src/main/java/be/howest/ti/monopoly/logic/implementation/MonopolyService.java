@@ -14,7 +14,7 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public String getVersion() {
-        return "0.0.1";
+        return "0.2.0";
     }
 
     @Override
@@ -70,11 +70,10 @@ public class MonopolyService extends ServiceAdapter {
                 "Advance to Go (Collect $200)",
                 "Advance to Illinois Avenue. If you pass Go, collect $200",
                 "Advance to St. Charles Place. If you pass Go, collect $200",
-                "Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled",
-                "Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times amount thrown.",
+                "Advance to the nearest Railroad. If unowned, you may buy it from the Bank.",
+                "Advance token to nearest Utility. If unowned, you may buy it from the Bank.",
                 "Bank pays you dividend of $50",
                 "Get Out of Jail Free",
-                "Go Back 3 Spaces",
                 "Go to Jail. Go directly to Jail, do not pass Go, do not collect $200",
                 "Make general repairs on all your property. For each house pay $25. For each hotel pay $100",
                 "Speeding fine $15",
@@ -113,7 +112,7 @@ public class MonopolyService extends ServiceAdapter {
             checkIfTileCanBeBought(propertyName, player, tileToBuy);
             Property tileToProperty = (Property) tileToBuy;
             PlayerProperty boughtProperty = new PlayerProperty(tileToProperty);
-            player.addProperties(boughtProperty);
+            player.addProperty(boughtProperty);
             player.removeMoney(tileToProperty.getCost());
             tileToProperty.setBought(true);
             Move.checkIfPlayerCanRollAgain(game, player);
@@ -182,13 +181,16 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     public void checkIfPlayerNeedsToPayRent(Tile tile, Player player, String debtPlayerName, Game game, PlayerProperty playerProperty){
-        if (tile.getName() != player.currentTile.getName()){
+        if (!Objects.equals(tile.getName(), player.currentTile.getName())){
             throw new IllegalArgumentException("player is not on the tile.");
-        }if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
+        }
+        if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
             throw new IllegalArgumentException("the tile is not you're property");
-        }if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
+        }
+        if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
             throw new IllegalArgumentException("This tile is not bought yet");
-        }if (playerProperty.getMortgage()){
+        }
+        if (playerProperty.getMortgage()){
             throw new IllegalArgumentException("this tile is mortgaged");
         }
     }
@@ -238,12 +240,11 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         if (Objects.equals(game.getCurrentPlayer(), player.getName()) && game.isCanRoll()) {
             game.addTurn(new Turn(player.getName(), "DEFAULT"));
-            player.setPreviousTile(player.currentTile);
             Dice diceRollResult = new Dice();
             diceRollResult.checkIfRolledDouble(game, player);
             int placesToMove = Move.calculatePlacesToMove(diceRollResult);
             Jail.checkIfFreeByWaitingTurns(player);
-            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove,game));
+            game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove, game));
             game.getCurrentTurn().setRoll(diceRollResult);
             Move.checkIfPlayerCanRollAgain(game, player);
             game.setLastDiceRoll(diceRollResult);

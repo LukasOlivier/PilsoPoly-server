@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JailTest {
+class JailTest {
     @Test
     void testJailed() {
         Game testGame = new Game(2, "PilsoPoly", 0);
@@ -27,12 +27,14 @@ public class JailTest {
         testGame.addTurn(new Turn(alice.getName(), "DEFAULT"));
         Dice diceRollDouble = new Dice(2,2);
 
-        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble),testGame); //Tax
+        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Tax
         diceRollDouble.checkIfRolledDouble(testGame, alice);
-        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble),testGame); //Baltic
+
+        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Baltic
         diceRollDouble.checkIfRolledDouble(testGame, alice);
-        alice.addProperties( new PlayerProperty((Property) alice.currentTile));
-        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble),testGame); //Electric Company
+
+        alice.addProperty(new PlayerProperty((Property) alice.currentTile));
+        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Electric Company
         diceRollDouble.checkIfRolledDouble(testGame, alice);
         Jail.checkIfJailedByDoubleThrow(alice,testGame);
 
@@ -50,7 +52,7 @@ public class JailTest {
         alice.setCurrentTile(Tile.getTileFromPosition(testGame,10)); //Jail tile
 
         diceRollDouble.checkIfRolledDouble(testGame,alice);
-        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble),testGame);
+        Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame);
 
         assertFalse(alice.isJailed());
         assertEquals("Electric Company",alice.getCurrentTile());
@@ -67,7 +69,8 @@ public class JailTest {
 
         diceRoll.checkIfRolledDouble(testGame,alice);
         Jail.checkIfFreeByWaitingTurns(alice);
-        Move.makeMove(alice, Move.calculatePlacesToMove(diceRoll),testGame);
+
+        Move.makeMove(alice, Move.calculatePlacesToMove(diceRoll), testGame);
 
         assertTrue(alice.isJailed());
         assertEquals("Jail",alice.getCurrentTile());

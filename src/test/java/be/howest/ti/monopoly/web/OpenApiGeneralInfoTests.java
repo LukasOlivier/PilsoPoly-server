@@ -47,7 +47,7 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
                 testContext,
                 "/tiles",
                 null,
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 
@@ -64,7 +64,7 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
                 testContext,
                 "/tiles/Go",
                 null,
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 
@@ -80,7 +80,7 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
                 testContext,
                 "/tiles/0",
                 null,
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 
@@ -97,7 +97,7 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
                 testContext,
                 "/chance",
                 null,
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 
@@ -114,7 +114,7 @@ class OpenApiGeneralInfoTests extends OpenApiTestsBase {
                 testContext,
                 "/community-chest",
                 null,
-                response -> assertOkResponse(response)
+                this::assertOkResponse
         );
     }
 

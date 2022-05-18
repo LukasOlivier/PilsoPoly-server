@@ -3,15 +3,16 @@ package be.howest.ti.monopoly.logic.implementation.tiles;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tax;
+import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 
 import java.util.List;
 import java.util.Objects;
 
 public class Tile {
 
-    private String name;
-    private int position;
-    private String type;
+    private final String name;
+    private final int position;
+    private final String type;
     private String description;
     public String actionType;
 
@@ -45,6 +46,7 @@ public class Tile {
         return name;
     }
 
+
     public int getPosition() {
         return position;
     }
@@ -69,7 +71,6 @@ public class Tile {
     @Override
     public int hashCode() {
         return Objects.hash(name, position, type);
-
     }
 
     public static Tile getTileFromPosition(Game game, int position) {
@@ -101,11 +102,17 @@ public class Tile {
                     player.removeMoney(Tax.getComputeTax(player));
                 }
                 break;
+            case "chance":
+                CommunityOrChanceCard chanceCard = Game.getRandomChanceCardAction();
+                tile.setDescription(chanceCard.toString());
+                chanceCard.cardAction(game, player);
+                break;
+            case "community":
+                CommunityOrChanceCard communityCard = Game.getRandomCommunityCardAction();
+                tile.setDescription(communityCard.toString());
+                communityCard.cardAction(game, player);
+                break;
             default:
         }
-    }
-
-    public List<Tile> getGameTiles() {
-        return gameTiles;
     }
 }
