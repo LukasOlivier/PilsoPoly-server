@@ -63,7 +63,7 @@ public class Game {
     }
 
     public void startPlayerAuction(int bid, int duration, String bidder, String property) {
-        auction = new Auction(bid, duration, bidder, property);
+        auction = new Auction(bid, duration, bidder, property, this.players);
     }
 
     public void placeBidOnPlayerAuction(String bidder, int amount) {
