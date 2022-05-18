@@ -1,7 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
-import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import java.util.Objects;
@@ -39,10 +38,10 @@ public class Auction {
         if ( duration > 0 ) {
             decreaseTimer();
         } else {
-            Player winner = findWinner(lastBidder);
-            Tile foundTile = findTile(winner, property);
+            Player AuctionWinner = findAuctionWinner(lastBidder);
+            Tile foundTile = findTile(AuctionWinner, property);
             PlayerProperty wonProperty = new PlayerProperty((Property) makeFoundTileBought(foundTile));
-            updatePlayer(winner, wonProperty);
+            updatePlayer(AuctionWinner, wonProperty);
             resumeGame();
         }
     }
@@ -63,7 +62,7 @@ public class Auction {
         return foundProperty;
     }
 
-    public Player findWinner(String name) {
+    public Player findAuctionWinner(String name) {
         for (Player player : game.getPlayers()) {
             if (player.getName().equals(lastBidder)) {
                 return player;
