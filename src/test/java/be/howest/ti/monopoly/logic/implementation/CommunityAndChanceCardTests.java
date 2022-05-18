@@ -1,7 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles1.StreetHouseRent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +21,8 @@ class CommunityAndChanceCardTests {
     Player Niels;
     Player Sibren;
     Player Robin;
-    Property Mediterranean = new Street("Mediterranean", 1, "street", 2, "PURPLE", 10, 30, 90, 160, 250, 50, 2, 30, 60);
-    Property Baltic = new Street("Baltic", 3, "street", 2, "PURPLE", 20, 60, 180, 320, 450, 50, 4, 30, 60);
+    Property Mediterranean = new Street("Mediterranean", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60);
+    Property Baltic = new Street("Baltic", 3, "street", 2, "PURPLE", new StreetHouseRent(20, 60, 180, 320, 450), 50, 4, 30, 60);
 
     @BeforeEach
     void addPlayers(){
@@ -99,13 +100,13 @@ class CommunityAndChanceCardTests {
         testGame.addTurn(new Turn(Niels.getName(), "DEFAULT"));
 
         // Does not pass Go
-        new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24).cardAction(testGame, Niels);
-        assertEquals("Illinois Avenue", Niels.getCurrentTile());
+        new GoToTile("Advance to Kasteel Rouge. If you pass Go, collect $200", 24).cardAction(testGame, Niels);
+        assertEquals("Kasteel Rouge", Niels.getCurrentTile());
         assertEquals(1500, Niels.getMoney());
 
         // Does pass Go
         new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11).cardAction(testGame, Niels);
-        assertEquals("Saint Charles Place", Niels.getCurrentTile());
+        assertEquals("Primus", Niels.getCurrentTile());
         assertEquals(1700, Niels.getMoney());
 
         // Go to Go tile
@@ -122,7 +123,7 @@ class CommunityAndChanceCardTests {
         testGame.addTurn(new Turn(Lukas.getName(), "DEFAULT"));
         // Does not pass Go
         new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24).cardAction(testGame, Lukas);
-        assertEquals("Illinois Avenue", Lukas.getCurrentTile());
+        assertEquals("Kasteel Rouge", Lukas.getCurrentTile());
         assertEquals(1500, Lukas.getMoney());
 
         // Go To Jail with passing Go
@@ -138,16 +139,18 @@ class CommunityAndChanceCardTests {
         Lukas.setFirstThrow();
 
         testGame.addTurn(new Turn(Lukas.getName(), "DEFAULT"));
-        new AdvanceToNearest("Go to nearest railroad", "railroad").cardAction(testGame, Lukas);
-        assertEquals("Reading RR",Lukas.getCurrentTile());
+        new AdvanceToNearest("Go to nearest brewery", "railroad").cardAction(testGame, Lukas);
+        assertEquals("Brewery Artois",Lukas.getCurrentTile());
 
         // Advance To Nearest with passing GO
         testGame.addTurn(new Turn(Niels.getName(), "DEFAULT"));
         Move.makeMove(Niels, 35, testGame);
+
         System.out.println(Niels.getCurrentTile());
-        System.out.println(Niels.getPreviousTile());
+        System.out.println(Niels.getMoney());
         new AdvanceToNearest("Go to nearest utility", "utility").cardAction(testGame, Niels);
         assertEquals("Electric Company",Niels.getCurrentTile());
-        assertEquals(1700, Lukas.getMoney());
+        System.out.println(Niels.getCurrentTile());
+        assertEquals(1700, Niels.getMoney());
     }
 }

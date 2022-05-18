@@ -3,16 +3,15 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.*;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
-import be.howest.ti.monopoly.logic.implementation.tiles.Railroad;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles.Utility;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.AllGameTiles;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.security.SecureRandom;
 import java.util.*;
 
-@JsonIgnoreProperties({""})
+@JsonIgnoreProperties({"getGameTiles"})
 public class Game {
 
     private int numberOfPlayers;
@@ -33,12 +32,15 @@ public class Game {
     private static final Random random = new SecureRandom();
     private Dice lastDiceRoll;
 
+    private List<Tile> gameTiles;
+
 
     public Game(int numberOfPlayers, String prefix, int size) {
         setNumberOfPlayers(numberOfPlayers);
         this.started = false;
         this.players = new LinkedList<>();
         setId(prefix, size);
+        this.gameTiles = AllGameTiles.createGameTiles();
     }
 
     public List<Integer> getLastDiceRoll() {
@@ -97,10 +99,13 @@ public class Game {
         return id;
     }
 
+    public List<Tile> getGameTiles(){
+        return this.gameTiles;
+    }
+
     public void setStarted() {
         this.started = true;
     }
-
 
     public void addPlayer(String name, String icon) {
         for (Player player : players) {
@@ -269,9 +274,5 @@ public class Game {
     public static CommunityOrChanceCard getRandomChanceCardAction() {
         int randomNumber = random.nextInt(chanceCards.size());
         return chanceCards.get(randomNumber);
-    }
-
-    public static List<Tile> getGameTiles(){
-        return Tile.getGameTiles();
     }
 }

@@ -1,8 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
 
-import java.util.List;
 
 public class Jail {
 
@@ -37,7 +36,7 @@ public class Jail {
             player.setJailed(true);
             player.setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
             player.resetDoubleThrows();
-            player.setPreviousTile(Tile.getTileFromPosition(10));
+            player.setPreviousTile(Tile.getTileFromPosition(game,10));
             return true;
         }
         return false;

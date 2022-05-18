@@ -1,6 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
 
 import java.util.Objects;
 
@@ -34,7 +34,7 @@ public class Move {
         int amountOfTiles = 40;
         if (!player.isJailed()){
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % amountOfTiles;
-            player.currentTile = Tile.getTileFromPosition(currentPosition);
+            player.currentTile = Tile.getTileFromPosition(game, currentPosition);
             Tile.takeTileAction(player.currentTile, player, game);
             checkIfPassedGo(player);
         }

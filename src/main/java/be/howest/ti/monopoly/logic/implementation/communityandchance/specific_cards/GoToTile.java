@@ -4,7 +4,7 @@ import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Move;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
 
 public class GoToTile extends CommunityOrChanceCard {
 
@@ -27,8 +27,8 @@ public class GoToTile extends CommunityOrChanceCard {
         }
         if (position == positionOfJail ){
             player.setJailed(true);
-            player.setCurrentTile(Tile.getTileFromPosition(10));
-            player.setPreviousTile(Tile.getTileFromPosition(10));
+            player.setCurrentTile(Tile.getTileFromPosition(game, 10));
+            player.setPreviousTile(Tile.getTileFromPosition(game, 10));
         } else {
             game.getCurrentTurn().addMove(Move.makeMove(player, placesToMove, game));
         }

@@ -1,11 +1,9 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Street;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,12 +158,16 @@ public class Player {
         switch (playerProperty.getHouseCount()){
             case 1:
                 transfer(debtPlayer, street.getRentWithOneHouse());
+                break;
             case 2:
                 transfer(debtPlayer, street.getRentWithTwoHouses());
+                break;
             case 3:
                 transfer(debtPlayer, street.getRentWithThreeHouses());
+                break;
             case 4:
                 transfer(debtPlayer, street.getRentWithFourHouses());
+                break;
             default:
                 if (playerProperty.getHotelCount() > 0){
                     transfer(debtPlayer,street.getRentWithHotel());
@@ -207,8 +209,8 @@ public class Player {
         this.currentTile = currentTile;
     }
 
-    public void setCurrentTile(int location){
-        this.currentTile = Tile.getTileFromPosition(location);
+    public void setCurrentTile(Game game, int location){
+        this.currentTile = Tile.getTileFromPosition(game, location);
     }
 
     public void addGetOutOfJailFreeCard(){

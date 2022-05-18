@@ -1,12 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import io.vertx.core.Handler;
-
+import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Street;
 import java.util.List;
-
-
 import java.util.Objects;
 
 public class PlayerProperty {

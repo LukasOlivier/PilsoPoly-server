@@ -1,10 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,8 +29,10 @@ class JailTest {
 
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Tax
         diceRollDouble.checkIfRolledDouble(testGame, alice);
+
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Baltic
         diceRollDouble.checkIfRolledDouble(testGame, alice);
+
         alice.addProperty(new PlayerProperty((Property) alice.currentTile));
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Electric Company
         diceRollDouble.checkIfRolledDouble(testGame, alice);
@@ -49,7 +49,7 @@ class JailTest {
         testGame.addPlayer("Alice", "dummy");
         Dice diceRollDouble = new Dice(1,1);
         alice.setJailed(true);
-        alice.setCurrentTile(Tile.getTileFromPosition(10)); //Jail tile
+        alice.setCurrentTile(Tile.getTileFromPosition(testGame,10)); //Jail tile
 
         diceRollDouble.checkIfRolledDouble(testGame,alice);
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame);
@@ -65,10 +65,11 @@ class JailTest {
         testGame.addPlayer("Alice", "dummy");
         Dice diceRoll = new Dice();
         alice.setJailed(true);
-        alice.setCurrentTile(Tile.getTileFromPosition(10)); //Jail tile
+        alice.setCurrentTile(Tile.getTileFromPosition(testGame,10)); //Jail tile
 
         diceRoll.checkIfRolledDouble(testGame,alice);
         Jail.checkIfFreeByWaitingTurns(alice);
+
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRoll), testGame);
 
         assertTrue(alice.isJailed());

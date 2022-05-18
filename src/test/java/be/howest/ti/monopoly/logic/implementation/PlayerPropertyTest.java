@@ -1,18 +1,11 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-<<<<<<< HEAD
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-=======
-import be.howest.ti.monopoly.logic.implementation.Tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.Tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.Tiles.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Street;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
->>>>>>> 0094bbd74c51db85c0494e5a2ce8498430aacb2a
+import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles1.StreetHouseRent;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerPropertyTest {
@@ -99,7 +92,7 @@ class PlayerPropertyTest {
         Property property = (Property) street;
         final PlayerProperty boardwalk = new PlayerProperty(street);
         Player player = new Player("niels", "beer");
-        player.addProperties(boardwalk);
+        player.addProperty(boardwalk);
         boardwalk.mortgageTheProperty(property, player);
         assertEquals(1700, player.getMoney());
         assertTrue(boardwalk.isMortgage());
@@ -108,19 +101,13 @@ class PlayerPropertyTest {
     @Test
     void testSettleMortgage(){
         Street street = new Street("Boardwalk", 39, "street", 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
-        Property property = (Property) street;
         final PlayerProperty boardwalk = new PlayerProperty(street);
         Player player = new Player("niels", "beer");
-<<<<<<< HEAD
         player.addProperty(boardwalk);
-        boardwalk.mortgageTheProperty(200, player);
-=======
-        player.addProperties(boardwalk);
-        boardwalk.mortgageTheProperty(property, player);
->>>>>>> 0094bbd74c51db85c0494e5a2ce8498430aacb2a
+        boardwalk.mortgageTheProperty((Property) street, player);
         assertEquals(1700, player.getMoney());
         assertTrue(boardwalk.isMortgage());
-        boardwalk.settleMortgageTheProperty(property, player);
+        boardwalk.settleMortgageTheProperty((Property) street, player);
         assertEquals(1500, player.getMoney());
         assertFalse(boardwalk.isMortgage());
     }
@@ -145,7 +132,7 @@ class PlayerPropertyTest {
     }
 
     @Test
-    public void sellHotel() {
+     void sellHotel() {
         Player player = new Player("niels", "beer");
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
         parkPlace.addHouse(player, List.of(boardwalk, parkPlace));

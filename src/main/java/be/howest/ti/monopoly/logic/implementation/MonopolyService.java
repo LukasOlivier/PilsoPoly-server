@@ -3,7 +3,7 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-import be.howest.ti.monopoly.logic.implementation.tiles.*;
+import be.howest.ti.monopoly.logic.implementation.tiles1.*;
 import be.howest.ti.monopoly.web.Request;
 
 import java.util.*;
@@ -14,7 +14,7 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public String getVersion() {
-        return "0.0.1";
+        return "0.2.0";
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MonopolyService extends ServiceAdapter {
 
     @Override
     public List<Tile> getTiles() {
-        return Tile.getGameTiles();
+        return AllGameTiles.createGameTiles();
     }
 
     @Override
@@ -129,6 +129,7 @@ public class MonopolyService extends ServiceAdapter {
             throw new IllegalStateException("you can not buy a tile of any other type");
         }
         Property tileToProperty = (Property) tileToBuy;
+
         if (player.getMoney() < tileToProperty.getCost()) {
             throw new IllegalStateException("you do not have enough money");
         }
@@ -180,13 +181,16 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     public void checkIfPlayerNeedsToPayRent(Tile tile, Player player, String debtPlayerName, Game game, PlayerProperty playerProperty){
-        if (tile.getName() != player.currentTile.getName()){
+        if (!Objects.equals(tile.getName(), player.currentTile.getName())){
             throw new IllegalArgumentException("player is not on the tile.");
-        }if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
+        }
+        if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
             throw new IllegalArgumentException("the tile is not you're property");
-        }if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
+        }
+        if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
             throw new IllegalArgumentException("This tile is not bought yet");
-        }if (playerProperty.getMortgage()){
+        }
+        if (playerProperty.getMortgage()){
             throw new IllegalArgumentException("this tile is mortgaged");
         }
     }

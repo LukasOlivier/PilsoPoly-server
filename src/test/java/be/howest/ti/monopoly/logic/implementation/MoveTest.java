@@ -1,9 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
-
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +31,7 @@ class MoveTest {
 
         Dice diceRollResult = new Dice(3,1); //Tax tile
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
+
         Move.makeMove(alice, placesToMove, testGame);
         Move.checkIfPlayerCanRollAgain(testGame, alice);
 
@@ -50,6 +48,7 @@ class MoveTest {
         Dice diceRollResult = new Dice(2,1); //Baltic tile
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove, testGame);
+
         Move.checkIfPlayerCanRollAgain(testGame, alice);
 
         assertEquals("Alice", testGame.getCurrentPlayer());
@@ -68,6 +67,7 @@ class MoveTest {
         diceRollResult.checkIfRolledDouble(testGame,alice);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
+
         Move.makeMove(alice, placesToMove, testGame);
         Move.checkIfPlayerCanRollAgain(testGame, alice);
 
@@ -81,20 +81,17 @@ class MoveTest {
         Game testGame = new Game(2, "PilsoPoly", 0);
         Player alice = new Player("Alice", "dummy");
         testGame.addPlayer("Alice", "dummy");
-        Dice diceRollResult = new Dice(1,2);
+        Dice diceRollResult = new Dice(4,2);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove, testGame);
-
-        assertEquals("Baltic", alice.getCurrentTile());
+        assertEquals("Heineken", alice.getCurrentTile());
         assertEquals(1500, alice.getMoney());
 
-        alice.setCurrentTile(Tile.getTileFromPosition(38));
-        alice.setPreviousTile(Tile.getTileFromPosition(38));
+        alice.setCurrentTile(Tile.getTileFromPosition(testGame,39));
+        Move.makeMove(alice, placesToMove,testGame);
 
-        Move.makeMove(alice, placesToMove, testGame);
-
-        assertEquals("Mediterranean", alice.getCurrentTile());
+        System.out.println(alice.getCurrentTile());
         assertEquals(1700, alice.getMoney());
     }
 }

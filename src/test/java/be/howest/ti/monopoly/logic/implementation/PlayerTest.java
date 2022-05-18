@@ -1,14 +1,10 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-<<<<<<< HEAD
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-=======
-import be.howest.ti.monopoly.logic.implementation.Tiles.*;
->>>>>>> 0094bbd74c51db85c0494e5a2ce8498430aacb2a
+import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles1.*;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,7 +86,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
         Player player = new Player("Robin", "test");
-        debtPlayer.addProperties(testPlayerProperty);
+        debtPlayer.addProperty(testPlayerProperty);
         player.payRentStreet(testPlayerProperty,testProperty,debtPlayer);
         assertEquals(1480, player.getMoney());
     }
@@ -101,7 +97,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
         Player player = new Player("Robin", "test");
-        debtPlayer.addProperties(testPlayerProperty);
+        debtPlayer.addProperty(testPlayerProperty);
         player.payRentRailRoad(debtPlayer);
         assertEquals(1475, player.getMoney());
     }
@@ -112,7 +108,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
         Player player = new Player("Robin", "test");
-        debtPlayer.addProperties(testPlayerProperty);
+        debtPlayer.addProperty(testPlayerProperty);
         player.payRentUtility(10,debtPlayer);
         assertEquals(1460, player.getMoney());
     }
