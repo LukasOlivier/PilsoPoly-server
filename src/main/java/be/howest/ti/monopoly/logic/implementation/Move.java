@@ -71,7 +71,6 @@ public class Move {
         } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)) {
             game.setCurrentPlayer(player.getName());
             game.setCanRoll(true);
-
         } else {
             game.setCanRoll(true);
             Turn.setNextPlayer(game, player);

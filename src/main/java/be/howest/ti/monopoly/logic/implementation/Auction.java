@@ -4,9 +4,6 @@ import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Auction {
@@ -16,14 +13,14 @@ public class Auction {
     private int duration;
     private String lastBidder;
     private final String property;
-    private List<Player> players;
+    private Game game;
 
-    public Auction(int highestBid, int duration, String bidder, String property, List<Player> players) {
+    public Auction(int highestBid, int duration, String bidder, String property, Game game) {
         this.highestBid = highestBid;
         this.duration = duration;
         this.lastBidder = bidder;
         this.property = property;
-        this.players = new ArrayList<>(players);
+        this.game = game;
         checkTimer();
     }
 
@@ -44,13 +41,17 @@ public class Auction {
         } else {
             Player winner = findWinner(lastBidder);
             Tile foundTile = findTile(winner, property);
-            PlayerProperty wonProperty = new PlayerProperty((Property) foundTile);
+            Property foundProperty = (Property) foundTile;
+            foundProperty.setBought(true);
+            PlayerProperty wonProperty = new PlayerProperty((Property) foundProperty);
             winner.addProperty(wonProperty);
+            Player currentPlayer = game.getSpecificPlayer(game.getCurrentPlayer());
+            Move.checkIfPlayerCanRollAgain(game, currentPlayer);
         }
     }
 
     public Player findWinner(String name) {
-        for (Player player : players) {
+        for (Player player : game.getPlayers()) {
             if (player.getName().equals(lastBidder)) {
                 return player;
             }
@@ -59,7 +60,7 @@ public class Auction {
     }
 
     public Tile findTile(Player winner, String wonProperty) {
-        for ( Tile tile : AllGameTiles.createGameTiles() ) {
+        for ( Tile tile : game.getGameTiles() ) {
             if ( tile.getName().equals(wonProperty) ) {
                 return tile;
             }
