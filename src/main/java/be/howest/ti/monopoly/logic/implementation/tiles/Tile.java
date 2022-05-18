@@ -86,7 +86,7 @@ public class Tile {
     public static void takeTileAction(Tile tile, Player player, Game game) {
         switch (tile.getActionType()) {
             case "jail":
-                player.currentTile = new Tile("Jail", 10, "Jail", "In jail", "jailed");
+                player.currentTile = new Tile("Jail", 10, "Jail", "You are in jail", "jailed");
                 player.setJailed(true);
                 break;
             case "luxtax":
