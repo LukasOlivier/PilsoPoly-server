@@ -24,10 +24,10 @@ public class AdvanceToNearest extends CommunityOrChanceCard {
         List<Tile> tiles= game.getGameTiles();
         int positionOnBoard = currentPos;
         int placesToMove = 0;
-        int sizeOfList = 39;
+        int sizeOfBoard = 39;
         while (!Objects.equals(tiles.get(positionOnBoard).getType(), type)){
             placesToMove ++;
-            if (positionOnBoard >= sizeOfList) {
+            if (positionOnBoard >= sizeOfBoard) {
                 positionOnBoard = 0;
             } else {
                 positionOnBoard ++;
