@@ -1,5 +1,4 @@
 package be.howest.ti.monopoly.logic.implementation;
-
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import java.util.List;

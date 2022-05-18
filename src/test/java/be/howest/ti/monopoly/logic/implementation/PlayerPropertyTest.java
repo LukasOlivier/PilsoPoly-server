@@ -1,9 +1,9 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import org.junit.jupiter.api.AfterEach;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.tiles.StreetHouseRent;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;

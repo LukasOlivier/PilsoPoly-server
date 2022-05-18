@@ -471,7 +471,7 @@ public class MonopolyApiBridge {
         String propertyName = request.getPathParameterValue("propertyName");
         int startBid = request.getIntFromBody("start-bid");
         int duration = request.getIntFromBody("duration");
-        service.startPlayerAuction(gameId,playerName,propertyName,startBid,duration);
+        service.startPlayerAuction(gameId, playerName, propertyName, startBid, duration);
         Response.sendOkResponse(ctx);
     }
 

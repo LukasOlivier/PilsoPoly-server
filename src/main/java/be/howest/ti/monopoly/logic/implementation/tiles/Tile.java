@@ -1,10 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
-
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tax;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
-
 import java.util.List;
 import java.util.Objects;
 

@@ -1,36 +1,91 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
-
+import be.howest.ti.monopoly.logic.implementation.tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import java.util.Objects;
 
 public class Auction {
 
+
     private int highestBid;
-    private final int duration;
+    private int duration;
     private String lastBidder;
     private final String property;
+    private Game game;
 
-    public Auction(int highestBid, int duration, String bidder, String property) {
+    public Auction(int highestBid, int duration, String bidder, String property, Game game) {
         this.highestBid = highestBid;
         this.duration = duration;
         this.lastBidder = bidder;
         this.property = property;
+        this.game = game;
+        checkTimer();
     }
 
-    public void setLastBidder(String lastBidder) {
-        if ( this.lastBidder.equals(lastBidder) ) {
-            throw new IllegalMonopolyActionException("Wait for another player to bid!");
+    public void decreaseTimer() {
+        new Thread( new Runnable() {
+            public void run()  {
+                try  { Thread.sleep( 1000 ); }
+                catch (InterruptedException ie)  {}
+                duration--;
+                checkTimer();
+            }
+        } ).start();
+    }
+
+    public void checkTimer() {
+        if ( duration > 0 ) {
+            decreaseTimer();
         } else {
-            this.lastBidder = lastBidder;
+            Player AuctionWinner = findAuctionWinner(lastBidder);
+            Tile foundTile = findTile(AuctionWinner, property);
+            PlayerProperty wonProperty = new PlayerProperty((Property) makeFoundTileBought(foundTile));
+            updatePlayer(AuctionWinner, wonProperty);
+            resumeGame();
         }
     }
 
-    public void setHighestBid(int amount) {
-        if ( this.highestBid >= amount ) {
-            throw new IllegalMonopolyActionException("Amount must be higher than previous bid!");
+    public void updatePlayer(Player player, PlayerProperty property) {
+        player.addProperty(property);
+        player.removeMoney(highestBid);
+    }
+
+    public void resumeGame() {
+        Player currentPlayer = game.getSpecificPlayer(game.getCurrentPlayer());
+        Move.checkIfPlayerCanRollAgain(game, currentPlayer);
+    }
+
+    public Property makeFoundTileBought(Tile property) {
+        Property foundProperty = (Property) property;
+        foundProperty.setBought(true);
+        return foundProperty;
+    }
+
+    public Player findAuctionWinner(String name) {
+        for (Player player : game.getPlayers()) {
+            if (player.getName().equals(lastBidder)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Tile findTile(Player winner, String wonProperty) {
+        for ( Tile tile : game.getGameTiles() ) {
+            if ( tile.getName().equals(wonProperty) ) {
+                return tile;
+            }
+        }
+        return null;
+    }
+
+    public void addBid(String bidder, int amount) {
+        if (!lastBidder.equals(bidder) && amount > highestBid) {
+            lastBidder = bidder;
+            highestBid = amount;
         } else {
-            this.highestBid = amount;
+            throw new IllegalMonopolyActionException("Could not add bid");
         }
     }
 
@@ -49,7 +104,6 @@ public class Auction {
     public String getProperty() {
         return property;
     }
-
 
     @Override
     public boolean equals(Object o) {
