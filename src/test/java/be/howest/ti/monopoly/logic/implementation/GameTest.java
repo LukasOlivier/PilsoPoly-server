@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import org.junit.jupiter.api.Test;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,8 +10,6 @@ class GameTest {
 
     int gameMapSize = 5;
     Game testGame = new Game(3, "PilsoPoly", gameMapSize);
-
-
 
     @Test
     void createGame(){

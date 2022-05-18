@@ -1,13 +1,12 @@
 package be.howest.ti.monopoly.logic.implementation;
-
-
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,6 @@ public class Player {
     private List<PlayerProperty> properties = new ArrayList<>();
     private int debt;
     private final String icon;
-
     private Tile previousTile;
     private boolean firstThrow;
     private int turnsInJail = 0;
@@ -65,7 +63,7 @@ public class Player {
     }
 
 
-    public void addProperties(PlayerProperty newProperty) {
+    public void addProperty(PlayerProperty newProperty) {
         properties.add(newProperty);
     }
 
@@ -88,7 +86,6 @@ public class Player {
     public boolean isBankrupt() {
         return bankrupt;
     }
-
 
     public void setBankrupt() {
         this.bankrupt = true;
@@ -164,12 +161,16 @@ public class Player {
         switch (playerProperty.getHouseCount()){
             case 1:
                 transfer(debtPlayer, street.getRentWithOneHouse());
+                break;
             case 2:
                 transfer(debtPlayer, street.getRentWithTwoHouses());
+                break;
             case 3:
                 transfer(debtPlayer, street.getRentWithThreeHouses());
+                break;
             case 4:
                 transfer(debtPlayer, street.getRentWithFourHouses());
+                break;
             default:
                 if (playerProperty.getHotelCount() > 0){
                     transfer(debtPlayer,street.getRentWithHotel());
@@ -196,7 +197,6 @@ public class Player {
 
     public void removeMoney(int amount) {
         money -= amount;
-
     }
 
     public void fine() {
@@ -208,15 +208,17 @@ public class Player {
         }
     }
 
-
     public void setCurrentTile(Tile currentTile) {
         this.currentTile = currentTile;
+    }
+
+    public void setCurrentTile(Game game, int location){
+        this.currentTile = Tile.getTileFromPosition(game, location);
     }
 
     public void addGetOutOfJailFreeCard(){
         getOutOfJailFreeCards++;
     }
-
 
     public void free() {
         if (this.getOutOfJailFreeCards >= 1) {
@@ -230,7 +232,6 @@ public class Player {
     public void setTaxSystem(String preferredTaxSystem) {
         this.taxSystem = preferredTaxSystem;
     }
-
 
     public void setJailed(boolean jailed) {
         this.jailed = jailed;

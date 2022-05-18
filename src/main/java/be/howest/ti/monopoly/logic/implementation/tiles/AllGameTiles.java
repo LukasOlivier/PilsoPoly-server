@@ -1,5 +1,4 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
-
 import java.util.List;
 
 public class AllGameTiles {

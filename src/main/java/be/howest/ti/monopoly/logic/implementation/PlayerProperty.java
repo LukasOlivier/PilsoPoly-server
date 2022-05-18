@@ -1,10 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-
 import java.util.List;
-
-
 import java.util.Objects;
 
 public class PlayerProperty {
@@ -13,6 +10,9 @@ public class PlayerProperty {
     private int houseCount;
     private int hotelCount;
 
+    private static final int MIN_HOUSE_COUNT = 0;
+    private static final int MAX_HOUSE_COUNT = 4;
+    private static final int MAX_HOTEL_COUNT = 1;
 
     @Override
     public boolean equals(Object o) {
@@ -27,19 +27,12 @@ public class PlayerProperty {
         return Objects.hash(property, mortgage);
     }
 
-    private final static int MIN_HOUSE_COUNT = 0;
-    private final static int MAX_HOUSE_COUNT = 4;
-    private final static int MAX_HOTEL_COUNT = 1;
-
-
-
     public PlayerProperty(Property property, boolean mortgage, int houseCount, int hotelCount) {
         this.property = property;
         this.mortgage = mortgage;
         this.houseCount = houseCount;
         this.hotelCount = hotelCount;
     }
-
 
     public PlayerProperty(Property property) {
             this(property, false, 0, 0);
@@ -140,7 +133,7 @@ public class PlayerProperty {
         return amount == groupSize;
     }
 
-    private boolean houseCountIsCorrect(List<PlayerProperty> playerProperties, boolean buy) {
+    public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties, boolean buy) {
         int maxHouseDifference = 1;
         int currentHousesAfterAction = getHouseCount();
         if (buy) {
@@ -156,6 +149,13 @@ public class PlayerProperty {
         return true;
     }
 
+    public void removeHouse() {
+        if ( getHouseCount() > 0 ) {
+            houseCount -= 1;
+        } else {
+            throw new IllegalStateException("Can not have less than 0 houses");
+        }
+    }
 
     public void mortgageTheProperty(Property property, Player player) {
         player.addMoney(property.getMortgage());
@@ -169,7 +169,6 @@ public class PlayerProperty {
 
     private boolean canSellHotel() {
         return hotelCount == MAX_HOTEL_COUNT && houseCount == 0;
-
     }
 
     public void settleMortgageTheProperty(Property property, Player player) {

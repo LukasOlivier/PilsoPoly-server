@@ -32,7 +32,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player testPlayer = new Player("Sibren", "Beer");
 
-        testPlayer.addProperties(testPlayerProperty);
+        testPlayer.addProperty(testPlayerProperty);
 
         assertEquals(List.of(testPlayerProperty), testPlayer.getProperties());
 
@@ -84,7 +84,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
         Player player = new Player("Robin", "test");
-        debtPlayer.addProperties(testPlayerProperty);
+        debtPlayer.addProperty(testPlayerProperty);
         player.payRentStreet(testPlayerProperty,testProperty,debtPlayer);
         assertEquals(1480, player.getMoney());
     }
@@ -95,7 +95,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
         Player player = new Player("Robin", "test");
-        debtPlayer.addProperties(testPlayerProperty);
+        debtPlayer.addProperty(testPlayerProperty);
         player.payRentRailRoad(debtPlayer);
         assertEquals(1475, player.getMoney());
     }
@@ -106,7 +106,7 @@ class PlayerTest {
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player debtPlayer = new Player("Sibren", "Beer");
         Player player = new Player("Robin", "test");
-        debtPlayer.addProperties(testPlayerProperty);
+        debtPlayer.addProperty(testPlayerProperty);
         player.payRentUtility(10,debtPlayer);
         assertEquals(1460, player.getMoney());
     }

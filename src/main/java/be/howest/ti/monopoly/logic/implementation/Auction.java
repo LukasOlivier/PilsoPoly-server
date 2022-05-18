@@ -1,6 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
+import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
@@ -10,16 +11,17 @@ import java.util.Objects;
 
 public class Auction {
 
-    private int highest_bid;
+
+    private int highestBid;
     private int duration;
-    private String last_bidder;
+    private String lastBidder;
     private final String property;
     private List<Player> players;
 
-    public Auction(int highest_bid, int duration, String bidder, String property, List<Player> players) {
-        this.highest_bid = highest_bid;
+    public Auction(int highestBid, int duration, String bidder, String property, List<Player> players) {
+        this.highestBid = highestBid;
         this.duration = duration;
-        this.last_bidder = bidder;
+        this.lastBidder = bidder;
         this.property = property;
         this.players = new ArrayList<>(players);
         checkTimer();
@@ -40,18 +42,16 @@ public class Auction {
         if ( duration > 0 ) {
             decreaseTimer();
         } else {
-            Player winner = findWinner(last_bidder);
+            Player winner = findWinner(lastBidder);
             Tile foundTile = findTile(winner, property);
             PlayerProperty wonProperty = new PlayerProperty((Property) foundTile);
-            System.out.println(winner);
-            System.out.println(wonProperty);
-            winner.addProperties(wonProperty);
+            winner.addProperty(wonProperty);
         }
     }
 
     public Player findWinner(String name) {
         for (Player player : players) {
-            if (player.getName().equals(last_bidder)) {
+            if (player.getName().equals(lastBidder)) {
                 return player;
             }
         }
@@ -59,7 +59,7 @@ public class Auction {
     }
 
     public Tile findTile(Player winner, String wonProperty) {
-        for ( Tile tile : Game.getGameTiles() ) {
+        for ( Tile tile : AllGameTiles.createGameTiles() ) {
             if ( tile.getName().equals(wonProperty) ) {
                 return tile;
             }
@@ -68,24 +68,24 @@ public class Auction {
     }
 
     public void addBid(String bidder, int amount) {
-        if ( !last_bidder.equals(bidder) && amount > highest_bid) {
-            last_bidder = bidder;
-            highest_bid = amount;
+        if (!lastBidder.equals(bidder) && amount > highestBid) {
+            lastBidder = bidder;
+            highestBid = amount;
         } else {
             throw new IllegalMonopolyActionException("Could not add bid");
         }
     }
 
-    public int getHighest_bid() {
-        return highest_bid;
+    public int getHighestBid() {
+        return highestBid;
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public String getLast_bidder() {
-        return last_bidder;
+    public String getLastBidder() {
+        return lastBidder;
     }
 
     public String getProperty() {
@@ -97,16 +97,16 @@ public class Auction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auction auction = (Auction) o;
-        return highest_bid == auction.highest_bid && duration == auction.duration && Objects.equals(last_bidder, auction.last_bidder) && Objects.equals(property, auction.property);
+        return highestBid == auction.highestBid && duration == auction.duration && Objects.equals(lastBidder, auction.lastBidder) && Objects.equals(property, auction.property);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(highest_bid, duration, last_bidder, property);
+        return Objects.hash(highestBid, duration, lastBidder, property);
     }
 
     @Override
     public String toString(){
-        return "Property: " + property + "\nHighest bid: " + highest_bid + "\nlast bidder: " + last_bidder;
+        return "Property: " + property + "\nHighest bid: " + highestBid + "\nlast bidder: " + lastBidder;
     }
 }
