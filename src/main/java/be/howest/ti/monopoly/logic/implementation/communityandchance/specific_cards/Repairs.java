@@ -7,8 +7,8 @@ import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOr
 
 public class Repairs extends CommunityOrChanceCard {
 
-    public int amountPerHotel;
-    public int amountPerHouse;
+    private final int amountPerHotel;
+    private final int amountPerHouse;
 
     public Repairs(String description, int amountPerHouse, int amountPerHotel) {
         super(description);
@@ -28,7 +28,4 @@ public class Repairs extends CommunityOrChanceCard {
         int fullAmount = (amountOfHotels * amountPerHotel) + (amountOfHouses * amountPerHouse);
         player.removeMoney(fullAmount);
     }
-
-
-
 }

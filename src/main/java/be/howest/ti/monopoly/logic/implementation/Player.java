@@ -30,15 +30,15 @@ public class Player {
     private static final int MULTIPLIER_FOR_ONE_UTILITY_TILE = 4;
     private static final int MULTIPLIER_FOR_TWO_UTILITY_TILES    = 10;
 
-    public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
+    public Player(String name, Tile currentTile, String icon) {
         this.name = name;
         this.currentTile = currentTile;
-        this.jailed = jailed;
-        this.money = money;
-        this.bankrupt = bankrupt;
+        this.jailed = false;
+        this.money = 1500;
+        this.bankrupt = false;
         this.firstThrow = true;
-        this.getOutOfJailFreeCards = getOutOfJailFreeCards;
-        this.debt = debt;
+        this.getOutOfJailFreeCards = 0;
+        this.debt = 0;
         this.icon = icon;
         this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
     }
@@ -56,7 +56,7 @@ public class Player {
     }
 
     public Player(String name, String icon) {
-        this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), false, 1500, false, 0, 0, icon);
+        this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), icon);
     }
 
 
@@ -132,8 +132,8 @@ public class Player {
     }
 
     public void payRentRailRoad(Player debtPlayer){
-        int amountOfUtilitys = checkHowManyUtilitys("railroad", debtPlayer);
-        transfer(debtPlayer, (25 * amountOfUtilitys));
+        int amountOfUtilities = checkHowManyUtilitys("railroad", debtPlayer);
+        transfer(debtPlayer, (25 * amountOfUtilities));
     }
 
     public void payRentUtilityGetDiceRoll(Game game, Player debtPlayer){

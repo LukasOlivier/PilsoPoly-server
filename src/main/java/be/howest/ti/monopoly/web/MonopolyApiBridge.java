@@ -284,7 +284,7 @@ public class MonopolyApiBridge {
             service.useEstimateTax(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("something went wrong");
+            throw new InvalidRequestException("Something went wrong with useEstimateTax");
         }
     }
 
@@ -296,7 +296,7 @@ public class MonopolyApiBridge {
             service.useComputeTax(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("something went wrong");
+            throw new InvalidRequestException("something went wrong with useComputeTax");
         }
     }
 
@@ -315,7 +315,7 @@ public class MonopolyApiBridge {
             service.setBankrupt(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("something went wrong");
+            throw new InvalidRequestException("something went wrong with declareBankruptcy");
         }
     }
 
@@ -512,7 +512,6 @@ public class MonopolyApiBridge {
 
         Response.sendFailure(ctx, code, quote);
     }
-
 
     private CorsHandler createCorsHandler() {
         return CorsHandler.create(".*.")
