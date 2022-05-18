@@ -41,13 +41,21 @@ public class Auction {
         } else {
             Player winner = findWinner(lastBidder);
             Tile foundTile = findTile(winner, property);
-            Property foundProperty = (Property) foundTile;
-            foundProperty.setBought(true);
-            PlayerProperty wonProperty = new PlayerProperty((Property) foundProperty);
+            PlayerProperty wonProperty = new PlayerProperty((Property) makeFoundTileBought(foundTile));
             winner.addProperty(wonProperty);
-            Player currentPlayer = game.getSpecificPlayer(game.getCurrentPlayer());
-            Move.checkIfPlayerCanRollAgain(game, currentPlayer);
+            resumeGame();
         }
+    }
+
+    public void resumeGame() {
+        Player currentPlayer = game.getSpecificPlayer(game.getCurrentPlayer());
+        Move.checkIfPlayerCanRollAgain(game, currentPlayer);
+    }
+
+    public Property makeFoundTileBought(Tile property) {
+        Property foundProperty = (Property) property;
+        foundProperty.setBought(true);
+        return foundProperty;
     }
 
     public Player findWinner(String name) {
