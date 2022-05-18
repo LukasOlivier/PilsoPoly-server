@@ -1,5 +1,5 @@
 package be.howest.ti.monopoly.logic.implementation;
-import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

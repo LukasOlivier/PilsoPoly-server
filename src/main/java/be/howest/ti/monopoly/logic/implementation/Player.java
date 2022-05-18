@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles1.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;

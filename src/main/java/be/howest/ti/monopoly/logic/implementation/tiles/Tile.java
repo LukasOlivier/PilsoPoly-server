@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation.tiles1;
+package be.howest.ti.monopoly.logic.implementation.tiles;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;

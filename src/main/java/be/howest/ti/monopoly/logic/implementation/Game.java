@@ -3,8 +3,8 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.*;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
-import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles1.AllGameTiles;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

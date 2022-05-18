@@ -4,7 +4,7 @@ import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Move;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
-import be.howest.ti.monopoly.logic.implementation.tiles1.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
 import java.util.List;
 import java.util.Objects;

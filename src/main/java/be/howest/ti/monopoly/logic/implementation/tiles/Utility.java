@@ -1,4 +1,4 @@
-package be.howest.ti.monopoly.logic.implementation.tiles1;
+package be.howest.ti.monopoly.logic.implementation.tiles;
 
 public class Utility extends Property {
     String utilityRent;

@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
-import be.howest.ti.monopoly.logic.implementation.tiles1.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles1.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles1.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles.Property;
+import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.StreetHouseRent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
