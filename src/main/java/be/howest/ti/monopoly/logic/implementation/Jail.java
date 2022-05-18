@@ -2,9 +2,11 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
-
 public class Jail {
 
+    private Jail() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void checkIfFreeByWaitingTurns(Player player) {
         int amountToPayToGetOutOfJail = 50;
@@ -28,7 +30,6 @@ public class Jail {
             checkIfFreeByWaitingTurns(player);
         }
     }
-
 
     public static boolean checkIfJailedByDoubleThrow(Player player, Game game) {
         int maxDoubleThrowsBeforeJail = 3;
