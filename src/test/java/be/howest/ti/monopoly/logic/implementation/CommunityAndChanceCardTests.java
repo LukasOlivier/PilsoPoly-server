@@ -146,11 +146,9 @@ class CommunityAndChanceCardTests {
         testGame.addTurn(new Turn(Niels.getName(), "DEFAULT"));
         Move.makeMove(Niels, 35, testGame);
 
-        System.out.println(Niels.getCurrentTile());
-        System.out.println(Niels.getMoney());
         new AdvanceToNearest("Go to nearest utility", "utility").cardAction(testGame, Niels);
         assertEquals("Electric Company",Niels.getCurrentTile());
-        System.out.println(Niels.getCurrentTile());
+
         assertEquals(1700, Niels.getMoney());
     }
 }

@@ -91,7 +91,6 @@ class MoveTest {
         alice.setCurrentTile(Tile.getTileFromPosition(testGame,39));
         Move.makeMove(alice, placesToMove,testGame);
 
-        System.out.println(alice.getCurrentTile());
         assertEquals(1700, alice.getMoney());
     }
 }
