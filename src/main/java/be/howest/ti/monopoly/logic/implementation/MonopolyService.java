@@ -296,6 +296,7 @@ public class MonopolyService extends ServiceAdapter {
         return null;
     }
 
+    @Override
     public void takeMortgage(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
@@ -341,6 +342,7 @@ public class MonopolyService extends ServiceAdapter {
         return null;
     }
 
+    @Override
     public void settleMortgage(String gameId, String playerName, String propertyName){
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
