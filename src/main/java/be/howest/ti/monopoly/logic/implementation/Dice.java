@@ -11,8 +11,6 @@ public class Dice {
     private final int diceTwo;
     private static final Random random = new SecureRandom();
 
-
-
     public int getDiceOne() {
         return diceOne;
     }
@@ -46,5 +44,4 @@ public class Dice {
         int shiftResultByOne = 1;
         return random.nextInt(MAX_VALUE) + shiftResultByOne;
     }
-
 }
