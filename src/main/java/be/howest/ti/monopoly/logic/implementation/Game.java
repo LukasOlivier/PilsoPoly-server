@@ -13,7 +13,7 @@ public class Game {
 
     private int numberOfPlayers;
     private boolean started;
-    private final List<Player> players;
+    private List<Player> players;
     private Auction auction;
     private String id;
     private String directSale;
@@ -281,5 +281,13 @@ public class Game {
     public static CommunityOrChanceCard getRandomChanceCardAction() {
         int randomNumber = random.nextInt(chanceCards.size());
         return chanceCards.get(randomNumber);
+    }
+
+    public void calculateNewCurrentPlayer(Player player) {
+        this.numberOfPlayers -= 1;
+        if (Objects.equals(player.getName(), currentPlayer)){
+            setCurrentPlayer(players.get(players.indexOf(player) + 1).getName());
+        }
+        players.remove(player);
     }
 }
