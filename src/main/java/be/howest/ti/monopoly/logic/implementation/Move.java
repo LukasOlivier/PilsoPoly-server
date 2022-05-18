@@ -1,8 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
-import java.util.List;
 import java.util.Objects;
 
 import static be.howest.ti.monopoly.logic.implementation.Jail.checkIfJailedByDoubleThrow;

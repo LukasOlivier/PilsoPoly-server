@@ -1,8 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.Tiles.Tile;
-
-import java.util.List;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
 public class Jail {
 
