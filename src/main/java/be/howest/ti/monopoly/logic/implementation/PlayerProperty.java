@@ -93,7 +93,7 @@ public class PlayerProperty {
             throw new IllegalStateException("could not sell house");
         }
     }
-    // todo this shit
+
     public void buyHotel(Player player, List<PlayerProperty> otherProperties) {
         if ( canBuyHotel() ) {
             hotelCount = 1;
