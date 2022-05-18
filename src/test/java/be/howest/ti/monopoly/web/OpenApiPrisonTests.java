@@ -11,7 +11,7 @@ class OpenApiPrisonTests extends OpenApiTestsBase {
     void getOutOfJailFine(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
             @Override
-            public void fine(String playerName,String gameId) {}
+            public void getOutOfJailFine(String playerName,String gameId) {}
         });
         post(
                 testContext,
@@ -34,7 +34,6 @@ class OpenApiPrisonTests extends OpenApiTestsBase {
     @Test
     void getOutOfJailFree(final VertxTestContext testContext) {
         service.setDelegate( new ServiceAdapter() {
-
             @Override
             public void getOutOfJailFree(String playerName,String gameId) {}
         });

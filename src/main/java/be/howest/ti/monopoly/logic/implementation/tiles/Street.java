@@ -1,17 +1,30 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 
+import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.Player;
+import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Street extends Property {
-    private int housePrice;
-    private StreetHouseRent rentOfHouses;
+
+    private final int housePrice;
+    private final StreetHouseRent rentOfHouses;
+    private final List<Integer> listOfRents = new ArrayList<>();
 
     public Street(String name, int position, String type, int groupSize, String color, StreetHouseRent rentOfHouses, int housePrice, int rent, int mortgage, int cost) {
         super(name, position, type, groupSize, color,rent,mortgage,cost);
         this.rentOfHouses = rentOfHouses;
         this.housePrice = housePrice;
+        listOfRents.add(getRent());
+        listOfRents.add(getRentWithOneHouse());
+        listOfRents.add(getRentWithTwoHouses());
+        listOfRents.add(getRentWithThreeHouses());
+        listOfRents.add(getRentWithFourHouses());
+        listOfRents.add(getRentWithHotel());
     }
-
 
     public int getRentWithOneHouse() {
         return rentOfHouses.getRentWithOneHouse();
@@ -37,6 +50,7 @@ public class Street extends Property {
         return housePrice;
     }
 
+    @Override
     public int getRent(){
         return super.rent;
     }
@@ -54,4 +68,13 @@ public class Street extends Property {
     public int hashCode() {
         return Objects.hash(super.hashCode(), housePrice, rentOfHouses);
     }
+
+    @Override
+    public int computeRent(Game game, PlayerProperty playerProperty, Player debtPlayer, Player player) {
+        if (playerProperty.getHotelCount() == 1) {
+            return listOfRents.get(5);
+        }
+        return listOfRents.get(playerProperty.getHouseCount());
+    }
+
 }

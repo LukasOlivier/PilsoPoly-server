@@ -15,7 +15,6 @@ public class GoToTile extends CommunityOrChanceCard {
         this.position = position;
     }
 
-
     @Override
     public void cardAction(Game game, Player player){
         int positionOfJail = 10;

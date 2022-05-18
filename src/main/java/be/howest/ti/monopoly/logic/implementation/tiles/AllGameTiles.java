@@ -2,8 +2,8 @@ package be.howest.ti.monopoly.logic.implementation.tiles;
 import java.util.List;
 
 public class AllGameTiles {
-    public static List<Tile> gameTiles = createGameTiles();
 
+    public static List<Tile> gameTiles = createGameTiles();
 
     public static List<Tile> createGameTiles() {
         return List.of(

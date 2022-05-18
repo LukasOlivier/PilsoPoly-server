@@ -1,16 +1,19 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 
+import be.howest.ti.monopoly.logic.implementation.Game;
+import be.howest.ti.monopoly.logic.implementation.Player;
+import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
+
 import java.util.Objects;
 
-public class Property extends Tile {
-    private int cost;
-    private int mortgage;
+public abstract class Property extends Tile {
+    private final int cost;
+    private final int mortgage;
     protected int rent;
-    private int groupSize;
-    private String color;
+    private final int groupSize;
+    private final String color;
     private boolean bought;
     private boolean mortgaged;
-
 
     public Property(String name, int position, String type, int groupSize, String color, int rent, int mortgage, int cost) {
         super(name, position, type, "can buy this property in direct sale","buy");
@@ -93,7 +96,16 @@ public class Property extends Tile {
     }
 
     @Override
+    public String toString() {
+        return "Property{" +
+                "color='" + color + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), cost, mortgage, rent, groupSize, color);
     }
+
+    public abstract int computeRent(Game game, PlayerProperty playerProperty, Player debtPlayer, Player player);
 }

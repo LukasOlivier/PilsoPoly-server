@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ import java.util.List;
 import java.util.Objects;
 
 @JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" })
-
 public class Player {
     private final String name;
     public Tile currentTile;
@@ -30,18 +27,15 @@ public class Player {
     private int turnsInJail = 0;
     private int amountOfDoubleThrows = 0;
 
-    private static final int MULTIPLIER_FOR_ONE_UTILITY_TILE = 4;
-    private static final int MULTIPLIER_FOR_TWO_UTILITY_TILES    = 10;
-
-    public Player(String name, Tile currentTile, boolean jailed, int money, boolean bankrupt, int getOutOfJailFreeCards, int debt, String icon) {
+    public Player(String name, Tile currentTile, String icon) {
         this.name = name;
         this.currentTile = currentTile;
-        this.jailed = jailed;
-        this.money = money;
-        this.bankrupt = bankrupt;
+        this.jailed = false;
+        this.money = 1500;
+        this.bankrupt = false;
         this.firstThrow = true;
-        this.getOutOfJailFreeCards = getOutOfJailFreeCards;
-        this.debt = debt;
+        this.getOutOfJailFreeCards = 0;
+        this.debt = 0;
         this.icon = icon;
         this.previousTile = new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go");
     }
@@ -59,7 +53,7 @@ public class Player {
     }
 
     public Player(String name, String icon) {
-        this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), false, 1500, false, 0, 0, icon);
+        this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), icon);
     }
 
 
@@ -118,72 +112,15 @@ public class Player {
         debtPlayer.addMoney(amount);
     }
 
-    public void payRent(PlayerProperty playerProperty, Property property, Game game, Player debtPlayer){
-        switch (currentTile.getType()){
-            case ("utility"):
-                payRentUtilityGetDiceRoll(game, debtPlayer);
-                break;
-            case ("street"):
-                payRentStreet(playerProperty, property, debtPlayer);
-                break;
-            case ("railroad"):
-                payRentRailRoad(debtPlayer);
-                break;
-            default:
-                throw new IllegalArgumentException("you can not ask rent for any other type");
-        }
+    public void payRent(PlayerProperty playerProperty, Game game, Player debtPlayer){
+        int rent = playerProperty.getProperty().computeRent(game, playerProperty, debtPlayer, this);
+        transfer(debtPlayer, rent);
     }
 
-    public void payRentRailRoad(Player debtPlayer){
-        int amountOfUtilitys = checkHowManyUtilitys("railroad", debtPlayer);
-        transfer(debtPlayer, (25 * amountOfUtilitys));
-    }
-
-    public void payRentUtilityGetDiceRoll(Game game, Player debtPlayer){
-        int indexOfLastTurn = game.getTurns().size() - 1;
-        int lastDiceRollOne = game.getTurns().get(indexOfLastTurn).getRoll().getDiceOne();
-        int lastDiceRollTwo = game.getTurns().get(indexOfLastTurn).getRoll().getDiceTwo();
-        int lastDiceRoll = lastDiceRollOne + lastDiceRollTwo;
-        payRentUtility(lastDiceRoll, debtPlayer);
-    }
-
-    public void payRentUtility(int thrownAmount, Player debtPlayer){
-        int oneUtilityTile = 1;
-        if (checkHowManyUtilitys("utility", debtPlayer) > oneUtilityTile){
-            transfer(debtPlayer,MULTIPLIER_FOR_TWO_UTILITY_TILES * thrownAmount);
-        }else{
-            transfer(debtPlayer, MULTIPLIER_FOR_ONE_UTILITY_TILE * thrownAmount);
-        }
-    }
-
-    public void payRentStreet(PlayerProperty playerProperty, Property property, Player debtPlayer){
-        Street street = (Street) property;
-        switch (playerProperty.getHouseCount()){
-            case 1:
-                transfer(debtPlayer, street.getRentWithOneHouse());
-                break;
-            case 2:
-                transfer(debtPlayer, street.getRentWithTwoHouses());
-                break;
-            case 3:
-                transfer(debtPlayer, street.getRentWithThreeHouses());
-                break;
-            case 4:
-                transfer(debtPlayer, street.getRentWithFourHouses());
-                break;
-            default:
-                if (playerProperty.getHotelCount() > 0){
-                    transfer(debtPlayer,street.getRentWithHotel());
-                }else{
-                    transfer(debtPlayer,street.getRent());
-                }
-        }
-    }
-
-    private int checkHowManyUtilitys(String type, Player player) {
+    public int checkHowManyUtilities(String type) {
         int countTheTypes = 0;
         int addPropertyType = 1;
-        for (PlayerProperty playerProperty : player.properties) {
+        for (PlayerProperty playerProperty : this.properties) {
             if (Objects.equals(playerProperty.getPropertyType(), type)) {
                 countTheTypes += addPropertyType;
             }
