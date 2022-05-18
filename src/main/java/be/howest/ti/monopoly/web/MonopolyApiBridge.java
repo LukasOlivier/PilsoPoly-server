@@ -438,13 +438,10 @@ public class MonopolyApiBridge {
     private void getOutOfJailFree(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
-                throw new AuthenticationException();
-            }
+            authorizationCheck(request);
             String playerName = request.getPathParameterValue("playerName");
             String gameId = request.getPathParameterValue("gameId");
             service.getOutOfJailFree(gameId,playerName);
-
         } catch (AuthenticationException e) {
             throw new InvalidTokenException();
         }
