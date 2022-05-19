@@ -32,6 +32,7 @@ public class Request {
     private final RoutingContext ctx;
     private final RequestParameters params;
     private final MonopolyUser user;
+    private static final String TILE_ID = "tileId";
 
     private Request(RoutingContext ctx) {
         this.ctx = ctx;
@@ -64,15 +65,15 @@ public class Request {
     }
 
     public int getTilePosition() {
-        return params.pathParameter("tileId").getInteger();
+        return params.pathParameter(TILE_ID).getInteger();
     }
 
     public boolean hasTilePosition() {
-        return params.pathParameter("tileId").isNumber();
+        return params.pathParameter(TILE_ID).isNumber();
     }
 
     public String getTileName() {
-        return params.pathParameter("tileId").getString();
+        return params.pathParameter(TILE_ID).getString();
     }
 
     public String getGameId() {
