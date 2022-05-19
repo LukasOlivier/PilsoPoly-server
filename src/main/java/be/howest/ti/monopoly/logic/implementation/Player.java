@@ -27,7 +27,7 @@ public class Player {
         this.name = name;
         this.currentTile = currentTile;
         this.jailed = false;
-        this.money = 150;
+        this.money = 1500;
         this.bankrupt = false;
         this.firstThrow = true;
         this.getOutOfJailFreeCards = 0;

@@ -12,11 +12,11 @@ public class Dice {
     private static final Random random = new SecureRandom();
 
     public int getDiceOne() {
-        return 2;
+        return diceOne;
     }
 
     public int getDiceTwo() {
-        return 2;
+        return diceTwo;
     }
 
 
