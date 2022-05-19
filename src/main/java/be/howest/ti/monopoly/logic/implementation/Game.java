@@ -74,16 +74,16 @@ public class Game {
         }
     }
 
-    public void startPlayerAuction(int bid, int duration, String bidder, String property) {
-        auction = new Auction(bid, duration, bidder, property, this);
+    public void dontBuyProperty(String bidder, String property) {
+        auction = new Auction(bidder, property, this);
     }
 
-    public void placeBidOnPlayerAuction(String bidder, int amount) {
+    public void placeBidOnBankAuction(String bidder, int amount) {
         auction.addBid(bidder, amount);
     }
 
     public Auction getAuction() {
-        if ( auction != null && auction.getDuration() == 0 ) {
+        if ( auction != null && auction.auctionHasEnded() ) {
             return null;
         }
         return auction;

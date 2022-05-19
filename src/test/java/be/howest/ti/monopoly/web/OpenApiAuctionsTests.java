@@ -32,6 +32,14 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
     @Test
     void placeBidOnBankAuction(final VertxTestContext testContext) {
+
+        service.setDelegate( new ServiceAdapter() {
+
+            @Override
+            public void placeBidOnBankAuction(String gameId, String bidder, int amount) {}
+
+        });
+
         post(
                 testContext,
                 "/games/game-id/bank/auctions/some-property/bid",
@@ -39,7 +47,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 new JsonObject()
                         .put("bidder", "Alice")
                         .put("amount", 100),
-                response -> assertNotYetImplemented(response, "placeBidOnBankAuction")
+                this::assertOkResponse
         );
     }
 
@@ -105,14 +113,6 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
     @Test
     void startPlayerAuction(final VertxTestContext testContext) {
-
-        service.setDelegate( new ServiceAdapter() {
-
-            @Override
-            public void startPlayerAuction(String gameId,String playerName, String propertyName, int startBid, int duration) {}
-
-        });
-
         post(
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property",
@@ -121,7 +121,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                         .put("start-bid", 54)
                         .put("duration", 100)
                         .put("tradable", true),
-                this::assertOkResponse
+                response -> assertNotYetImplemented(response, "startPlayerAuction")
         );
     }
 
@@ -137,14 +137,6 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
     @Test
     void placeBidOnPlayerAuction(final VertxTestContext testContext) {
-
-        service.setDelegate( new ServiceAdapter() {
-
-            @Override
-            public void placeBidOnPlayerAuction(Request request) {}
-
-        });
-
         post(
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property/bid",
@@ -152,7 +144,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                 new JsonObject()
                         .put("bidder", "Bob")
                         .put("amount", 100),
-                this::assertOkResponse
+                response -> assertNotYetImplemented(response, "placeBidOnPlayerAuction")
         );
     }
 

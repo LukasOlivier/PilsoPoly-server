@@ -82,7 +82,7 @@ class PlayerTest {
     @Test
     void setCurrentTile() {
         Player testPlayer = new Player("Sibren", "Beer");
-        Tile jail = new Tile("Jail", 10, "Jail", "In jail", "jailed");
+        Tile jail = new Tile("Jail", 10, "Jail", "in jail", "jailed");
     }
 
     @Test

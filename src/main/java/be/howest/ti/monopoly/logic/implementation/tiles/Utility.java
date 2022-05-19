@@ -5,7 +5,7 @@ import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
+import java.util.Objects;
 
 public class Utility extends Property {
 
@@ -27,10 +27,24 @@ public class Utility extends Property {
     public int computeRent(Game game, PlayerProperty playerProperty, Player debtPlayer, Player player) {
         int thrownAmount = game.getLastDiceRollFullAmount();
         int oneUtilityTile = 1;
-        if (debtPlayer.checkHowManyUtilities("utility") > oneUtilityTile){
+        if (debtPlayer.checkHowManyUtilities("utility") > oneUtilityTile) {
             return(MULTIPLIER_FOR_TWO_UTILITY_TILES * thrownAmount);
-        }else{
+        } else {
             return(MULTIPLIER_FOR_ONE_UTILITY_TILE * thrownAmount);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Utility utility = (Utility) o;
+        return Objects.equals(utilityRent, utility.utilityRent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), utilityRent);
     }
 }

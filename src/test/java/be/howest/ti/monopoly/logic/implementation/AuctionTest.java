@@ -3,7 +3,6 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AuctionTest {
@@ -19,7 +18,7 @@ class AuctionTest {
 
     @Test
     public void getLastBidderTest() {
-        Auction testAuction = new Auction(100, 30, "niels", "tile", game);
+        Auction testAuction = new Auction("niels", "tile", game);
         assertEquals("niels", testAuction.getLastBidder());
         assertThrows(IllegalMonopolyActionException.class, () -> {
            testAuction.addBid("niels", 150);
@@ -28,10 +27,11 @@ class AuctionTest {
 
     @Test
     public void getHighestBidTest() {
-        Auction testAuction = new Auction(100, 30, "niels", "tile", game);;
-        assertEquals(100, testAuction.getHighestBid());
+        Auction testAuction = new Auction("niels", "tile", game);;
+        assertEquals(0, testAuction.getHighestBid());
+        testAuction.addBid("robin", 100);
         assertThrows(IllegalMonopolyActionException.class, () -> {
-            testAuction.addBid("robin", 50);
+            testAuction.addBid("niels", 50);
         });
     }
 }

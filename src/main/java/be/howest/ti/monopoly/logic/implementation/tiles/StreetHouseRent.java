@@ -1,6 +1,4 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
-
-import java.util.List;
 import java.util.Objects;
 
 public class StreetHouseRent {

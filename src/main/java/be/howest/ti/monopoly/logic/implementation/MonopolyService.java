@@ -4,8 +4,6 @@ import be.howest.ti.monopoly.logic.ServiceAdapter;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.logic.implementation.tiles.*;
-import be.howest.ti.monopoly.web.Request;
-
 import java.util.*;
 
 
@@ -150,11 +148,9 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void placeBidOnPlayerAuction(Request request) {
-        Game game = getGameById(request.getGameId());
-        String bidder = request.getBidder();
-        int amount = request.getAmount();
-        game.placeBidOnPlayerAuction(bidder, amount);
+    public void placeBidOnBankAuction(String gameId, String bidder, int amount) {
+        Game game = getGameById(gameId);
+        game.placeBidOnBankAuction(bidder, amount);
     }
 
     @Override
@@ -162,7 +158,6 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         return game.getAuction();
     }
-
 
     @Override
     public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName){
@@ -186,10 +181,10 @@ public class MonopolyService extends ServiceAdapter {
         if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
             throw new IllegalArgumentException("the tile is not you're property");
         }
-        if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
+        if (!Objects.equals(playerProperty.getPropertyActionType(), "rent")){
             throw new IllegalArgumentException("This tile is not bought yet");
         }
-        if (playerProperty.getMortgage()){
+        if (playerProperty.isMortgage()){
             throw new IllegalArgumentException("this tile is mortgaged");
         }
     }
@@ -229,11 +224,10 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
+    public void dontBuyProperty(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
-        game.startPlayerAuction(startBid, duration, playerName, propertyName);
+        game.dontBuyProperty(playerName, propertyName);
     }
-
 
     @Override
     public Game rollDice(String playerName, String gameId) {
@@ -280,7 +274,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.buyHotel(player, player.getProperties());
+        property.buyHotel(player);
     }
 
     @Override
@@ -288,7 +282,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.sellHotel(player, player.getProperties());
+        property.sellHotel(player);
     }
 
     public PlayerProperty getCorrectProperty(Player player, String propertyName) {

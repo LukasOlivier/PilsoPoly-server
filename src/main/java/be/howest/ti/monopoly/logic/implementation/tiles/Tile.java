@@ -3,7 +3,6 @@ import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tax;
 import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
-import java.util.List;
 import java.util.Objects;
 
 public class Tile {
@@ -12,13 +11,11 @@ public class Tile {
     private final int position;
     private final String type;
     private String description;
-    public String actionType;
+    private String actionType;
 
     public void setDescription(String description) {
         this.description = description;
     }
-
-    private List<Tile> gameTiles = AllGameTiles.gameTiles;
 
     public Tile(String name, int position, String type, String description, String actionType) {
         this.name = name;
@@ -86,7 +83,7 @@ public class Tile {
     public static void takeTileAction(Tile tile, Player player, Game game) {
         switch (tile.getActionType()) {
             case "jail":
-                player.currentTile = new Tile("Jail", 10, "Jail", "In jail", "jailed");
+                player.currentTile = new Tile("Jail", 10, "Jail", "You are in jail", "jailed");
                 player.setJailed(true);
                 break;
             case "luxtax":
