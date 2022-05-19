@@ -23,16 +23,10 @@ public class Turn {
         if (indexOfNextPlayer >= game.getPlayers().size()) {
             indexOfNextPlayer = 0;
         }
-        if (checkIfPlayerIsBankrupt(game, indexOfNextPlayer)){
-            game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
-        }
-    }
-
-    public static boolean checkIfPlayerIsBankrupt(Game game, int indexOfNextPlayer){
         if (game.getPlayers().get(indexOfNextPlayer).isBankrupt()){
-            checkIfPlayerIsBankrupt(game, (indexOfNextPlayer + 1));
+            setNextPlayer(game, game.getSpecificPlayer(game.getPlayers().get(indexOfNextPlayer).getName()));
         }
-        return true;
+        game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
     }
 
     public void addMove(Move move){
