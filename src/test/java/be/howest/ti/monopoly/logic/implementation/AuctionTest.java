@@ -1,6 +1,10 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
+import be.howest.ti.monopoly.logic.implementation.tiles.Colors;
+import be.howest.ti.monopoly.logic.implementation.tiles.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,11 +31,32 @@ class AuctionTest {
 
     @Test
     public void getHighestBidTest() {
-        Auction testAuction = new Auction("niels", "tile", game);;
+        Auction testAuction = new Auction("niels", "tile", game);
         assertEquals(0, testAuction.getHighestBid());
         testAuction.addBid("robin", 100);
         assertThrows(IllegalMonopolyActionException.class, () -> {
             testAuction.addBid("niels", 50);
         });
+    }
+
+    @Test
+    public void endAuction() {
+        Auction testAuction = new Auction("niels", "Kriek", game);
+        testAuction.endAuction();
+        assertTrue(testAuction.auctionHasEnded());
+    }
+
+    @Test
+    public void findAuctionWinner() {
+        Auction testAuction = new Auction("niels", "jupiler", game);
+        testAuction.addBid("lukas", 100);
+        assertEquals(game.getSpecificPlayer("lukas"), testAuction.findAuctionWinner());
+    }
+
+    @Test
+    public void findTile() {
+        Auction testAuction = new Auction("niels", "jupiler", game);
+        Tile tile = new Street("Bush12", 39, "street", 3, Colors.DARKBLUE.toString(), new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
+        assertEquals(testAuction.findTile("Bush12"), tile);
     }
 }
