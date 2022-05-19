@@ -112,8 +112,8 @@ public class PlayerProperty {
 
     private void addHousePrice(Player player) {
         Street street = (Street) property;
-        int housePrice = street.getHousePrice() / 2;
-        player.addMoney(housePrice);
+        int housePriceHalf = street.getHousePrice() / 2;
+        player.addMoney(housePriceHalf);
     }
 
     private void withdrawHousePrice(Player player) {
