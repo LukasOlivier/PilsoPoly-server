@@ -29,7 +29,6 @@ public class Turn {
         game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
     }
 
-
     public void addMove(Move move){
         this.moves.add(move);
     }
