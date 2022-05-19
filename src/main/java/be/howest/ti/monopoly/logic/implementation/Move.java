@@ -73,6 +73,7 @@ public class Move {
             game.setCanRoll(true);
         } else {
             game.setCanRoll(true);
+            System.out.println("van move");
             Turn.findNextPlayer(game, player);
         }
     }
