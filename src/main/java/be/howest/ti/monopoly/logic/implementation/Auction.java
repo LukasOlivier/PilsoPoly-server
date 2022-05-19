@@ -36,10 +36,10 @@ public class Auction {
         if ( duration > 0 ) {
             decreaseTimer();
         } else {
-            Player AuctionWinner = findAuctionWinner(lastBidder);
-            Tile foundTile = findTile(AuctionWinner, property);
-            PlayerProperty wonProperty = new PlayerProperty((Property) makeFoundTileBought(foundTile));
-            updatePlayer(AuctionWinner, wonProperty);
+            Player auctionWinner = findAuctionWinner();
+            Tile foundTile = findTile(property);
+            PlayerProperty wonProperty = new PlayerProperty(makeFoundTileBought(foundTile));
+            updatePlayer(auctionWinner, wonProperty);
             resumeGame();
         }
     }
@@ -60,7 +60,7 @@ public class Auction {
         return foundProperty;
     }
 
-    public Player findAuctionWinner(String name) {
+    public Player findAuctionWinner() {
         for (Player player : game.getPlayers()) {
             if (player.getName().equals(lastBidder)) {
                 return player;
@@ -69,7 +69,7 @@ public class Auction {
         return null;
     }
 
-    public Tile findTile(Player winner, String wonProperty) {
+    public Tile findTile(String wonProperty) {
         for ( Tile tile : game.getGameTiles() ) {
             if ( tile.getName().equals(wonProperty) ) {
                 return tile;
