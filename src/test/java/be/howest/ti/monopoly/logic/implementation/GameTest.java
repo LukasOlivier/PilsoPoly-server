@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 
@@ -58,8 +59,8 @@ class GameTest {
         testGame.addPlayer("Sibren", "icon");
         testGame.addPlayer("Robin", "icon");
         testGame.addPlayer("Lukas", "icon");
-        testGame.removePropertiesFromPlayer(testGame.getSpecificPlayer("Sibren"));
-        testGame.removePropertiesFromPlayer(testGame.getSpecificPlayer("Lukas"));
+        testGame.getSpecificPlayer(testGame.getSpecificPlayer("Sibren").getName()).setBankrupt();
+        testGame.getSpecificPlayer(testGame.getSpecificPlayer("Lukas").getName()).setBankrupt();
         testGame.isEveryoneBankrupt();
         assertFalse(testGame.getSpecificPlayer("Robin").isBankrupt());
         assertEquals("Robin" ,testGame.getWinner());

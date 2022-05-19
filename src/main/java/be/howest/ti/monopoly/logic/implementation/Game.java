@@ -216,10 +216,20 @@ public class Game {
         this.winner = winner;
     }
 
+
     public void isEveryoneBankrupt() {
-        if (numberOfPlayers == 1){
-            this.winner = players.get(0).getName();
-        }
+            int bankruptCounter = 0;
+            String possibleWinner = null;
+            for (Player player : getPlayers()) {
+                if (player.isBankrupt()) {
+                    bankruptCounter++;
+                } else {
+                    possibleWinner = player.getName();
+                }
+            }
+            if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null) {
+                this.winner = possibleWinner;
+            }
     }
 
 
@@ -280,5 +290,6 @@ public class Game {
             playerProperty.getProperty().setBought(false);
             playerProperty.getProperty().setMortgaged(false);
         }
+        player.setBankrupt();
     }
 }
