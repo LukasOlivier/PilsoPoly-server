@@ -13,7 +13,7 @@ public class Game {
 
     private int numberOfPlayers;
     private boolean started;
-    private List<Player> players;
+    private final List<Player> players;
     private Auction auction;
     private String id;
     private String directSale;
