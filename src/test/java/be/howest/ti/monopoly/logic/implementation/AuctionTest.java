@@ -40,6 +40,14 @@ class AuctionTest {
     }
 
     @Test
+    public void clientSendsBidToEndAuction() {
+        Auction testAuction = new Auction("niels", "Kriek", game);
+        assertThrows(IllegalStateException.class, () -> {
+            testAuction.addBid("niels", -1);
+        });
+    }
+
+    @Test
     public void endAuction() {
         Auction testAuction = new Auction("niels", "Kriek", game);
         testAuction.endAuction();
