@@ -7,7 +7,7 @@ import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 public class Auction {
     private int highestBid = 0;
     private final long startTime = System.currentTimeMillis();
-    private static final long DURATION = 30000;
+    private static final long DURATION = 29000;
     private String lastBidder;
     private String property;
     private Game game;
@@ -73,6 +73,10 @@ public class Auction {
 
     public void addBid(String bidder, int amount) {
         if (checkIfCanBid()) {
+            if ( amount == -1 ) {
+                endAuction();
+                throw new IllegalStateException("can't place a bid");
+            }
             if (!lastBidder.equals(bidder) && amount > highestBid) {
                 lastBidder = bidder;
                 highestBid = amount;
