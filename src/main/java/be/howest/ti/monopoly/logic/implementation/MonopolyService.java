@@ -184,7 +184,7 @@ public class MonopolyService extends ServiceAdapter {
         if (!Objects.equals(playerProperty.getPropertActionType(), "rent")){
             throw new IllegalArgumentException("This tile is not bought yet");
         }
-        if (playerProperty.getMortgage()){
+        if (playerProperty.isMortgage()){
             throw new IllegalArgumentException("this tile is mortgaged");
         }
     }
@@ -273,7 +273,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.buyHotel(player, player.getProperties());
+        property.buyHotel(player);
     }
 
     @Override
@@ -281,7 +281,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
-        property.sellHotel(player, player.getProperties());
+        property.sellHotel(player);
     }
 
     public PlayerProperty getCorrectProperty(Player player, String propertyName) {

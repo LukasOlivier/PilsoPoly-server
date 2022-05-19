@@ -24,7 +24,6 @@ class PlayerPropertyTest {
 
     @Test
     void testPlayerProperties() {
-
         PlayerProperty testProperty = new PlayerProperty(new Street("Mediterranean", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
         assertEquals("Mediterranean", testProperty.getPropertyName());
     }
@@ -83,7 +82,7 @@ class PlayerPropertyTest {
         Player player = new Player("niels", "beer");
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
         boardwalk.sellHouse(player, List.of(boardwalk, parkPlace));
-        assertEquals(1500, player.getMoney());
+        assertEquals(1400, player.getMoney());
     }
 
     @Test
@@ -123,10 +122,10 @@ class PlayerPropertyTest {
         parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
         parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
-        boardwalk.buyHotel(player, List.of(boardwalk, parkPlace));
+        boardwalk.buyHotel(player);
         assertEquals(1, boardwalk.getHotelCount());
         assertThrows( IllegalStateException.class, () -> {
-            boardwalk.buyHotel(player, List.of(boardwalk, parkPlace));
+            boardwalk.buyHotel(player);
         } );
         assertEquals(0, boardwalk.getHouseCount());
     }
@@ -142,12 +141,12 @@ class PlayerPropertyTest {
         parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
         parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
-        boardwalk.buyHotel(player, List.of(boardwalk, parkPlace));
+        boardwalk.buyHotel(player);
         assertEquals(1, boardwalk.getHotelCount());
-        boardwalk.sellHotel(player, List.of(boardwalk, parkPlace));
+        boardwalk.sellHotel(player);
         assertEquals(0, boardwalk.getHotelCount());
         assertThrows(IllegalStateException.class, () -> {
-           boardwalk.sellHotel(player, List.of(boardwalk, parkPlace));
+           boardwalk.sellHotel(player);
         });
         assertEquals(4, boardwalk.getHouseCount());
     }
