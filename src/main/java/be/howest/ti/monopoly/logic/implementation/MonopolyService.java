@@ -227,7 +227,6 @@ public class MonopolyService extends ServiceAdapter {
         game.dontBuyProperty(playerName, propertyName);
     }
 
-
     @Override
     public Game rollDice(String playerName, String gameId) {
         Game game = getGameById(gameId);
