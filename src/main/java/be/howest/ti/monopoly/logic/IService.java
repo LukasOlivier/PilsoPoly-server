@@ -75,5 +75,4 @@ public interface IService {
 
     void settleMortgage(String gameId, String playerName, String propertyName);
 
-    void checkIfBankrupt(Game game);
 }

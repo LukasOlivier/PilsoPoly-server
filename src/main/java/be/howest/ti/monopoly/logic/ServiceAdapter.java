@@ -182,10 +182,6 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void checkIfBankrupt(Game game) {
-        throw new UnsupportedOperationException();
-    }
 
     @Override
     public void rollDice(Request request) {
