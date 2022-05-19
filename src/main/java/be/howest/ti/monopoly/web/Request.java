@@ -32,7 +32,6 @@ public class Request {
     private final RoutingContext ctx;
     private final RequestParameters params;
     private final MonopolyUser user;
-    private static final String TILE_ID = "tileId";
 
     private Request(RoutingContext ctx) {
         this.ctx = ctx;
@@ -51,37 +50,20 @@ public class Request {
     public RequestParameters getRequestParameters() {
         return params;
     }
+
     public boolean isAuthorized(String expectedGameId, String expectedPlayerName) {
         return Objects.equals(expectedGameId, user.getGameId()) &&
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
-    public String getGameId() {
-        return params.pathParameter("gameId").getString();
-    }
-
-    public String getPropertyName() {
-        return params.pathParameter("propertyName").getString();
-    }
-
-    public int getAmount() {
-        return params.body().getJsonObject().getInteger("amount");
-    }
-
-    public String getBidder() {
-        return params.body().getJsonObject().getString("bidder");
-    }
-
-    public String getStringFromBody(String key){
+    public String getBodyValueString(String key) {
         return params.body().getJsonObject().getString(key);
     }
 
-    public int getIntFromBody(String key) {
+    public int getBodyValueInteger(String key) {
         return params.body().getJsonObject().getInteger(key);
     }
 
-
-    // ONLY THIS ONES
     public String getPathParameterValueString(String key){
         return params.pathParameter(key).getString();
     }
