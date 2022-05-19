@@ -82,13 +82,17 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public Game getGameById(String id) {throw new UnsupportedOperationException();}
+    public Game getGameById(String id) {
+        throw new UnsupportedOperationException();
+    }
 
 
-    public void buyProperty(String gameId, String playerName, String propertyName) {throw new UnsupportedOperationException();}
+    public void buyProperty(String gameId, String playerName, String propertyName) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
-    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
+    public void dontBuyProperty(String gameId, String playerName, String propertyName) {
         throw new UnsupportedOperationException();
     }
 
@@ -104,13 +108,14 @@ public class ServiceAdapter implements IService {
 
 
     @Override
-    public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName) {throw new UnsupportedOperationException();}
+    public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public Auction getPlayerAuctions(String gameId) {
         throw new UnsupportedOperationException();
     }
-
 
     @Override
     public void fine(String playerName,String gameId) {
@@ -181,7 +186,6 @@ public class ServiceAdapter implements IService {
     public void rollDice(Request request) {
         throw new UnsupportedOperationException();
     }
-
 
     @Override
     public void takeMortgage(String gameId, String playerName, String propertyName) {

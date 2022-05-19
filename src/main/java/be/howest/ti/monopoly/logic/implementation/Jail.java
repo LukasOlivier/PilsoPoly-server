@@ -35,7 +35,7 @@ public class Jail {
         int maxDoubleThrowsBeforeJail = 3;
         if (player.getAmountOfDoubleThrows() == maxDoubleThrowsBeforeJail) {
             player.setJailed(true);
-            player.setCurrentTile(new Tile("Jail", 10, "Jail", "In jail", "jailed"));
+            player.setCurrentTile(new Tile("Jail", 10, "Jail", "Your are in jail", "jailed"));
             player.resetDoubleThrows();
             player.setPreviousTile(Tile.getTileFromPosition(game,10));
             return true;

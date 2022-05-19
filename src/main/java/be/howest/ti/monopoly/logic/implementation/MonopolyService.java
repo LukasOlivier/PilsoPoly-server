@@ -227,9 +227,9 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void startPlayerAuction(String gameId, String playerName, String propertyName, int startBid, int duration) {
+    public void dontBuyProperty(String gameId, String playerName, String propertyName) {
         Game game = getGameById(gameId);
-        game.startPlayerAuction(startBid, duration, playerName, propertyName);
+        game.dontBuyProperty(playerName, propertyName);
     }
 
 

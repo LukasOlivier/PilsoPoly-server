@@ -8,15 +8,13 @@ import java.util.Objects;
 public class Auction {
 
 
-    private int highestBid;
-    private int duration;
+    private int highestBid = 0;
+    private int duration = 30;
     private String lastBidder;
     private final String property;
     private Game game;
 
-    public Auction(int highestBid, int duration, String bidder, String property, Game game) {
-        this.highestBid = highestBid;
-        this.duration = duration;
+    public Auction(String bidder, String property, Game game) {
         this.lastBidder = bidder;
         this.property = property;
         this.game = game;

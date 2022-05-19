@@ -106,13 +106,6 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     @Test
     void startPlayerAuction(final VertxTestContext testContext) {
 
-        service.setDelegate( new ServiceAdapter() {
-
-            @Override
-            public void startPlayerAuction(String gameId,String playerName, String propertyName, int startBid, int duration) {}
-
-        });
-
         post(
                 testContext,
                 "/games/game-id/players/Alice/auctions/some-property",
@@ -121,7 +114,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
                         .put("start-bid", 54)
                         .put("duration", 100)
                         .put("tradable", true),
-                this::assertOkResponse
+                response -> assertNotYetImplemented(response, "startPlayerAuction")
         );
     }
 
