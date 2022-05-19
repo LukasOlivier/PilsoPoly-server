@@ -67,4 +67,10 @@ class AuctionTest {
         Tile tile = new Street("Bush12", 39, "street", 3, Colors.DARKBLUE.toString(), new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
         assertEquals(testAuction.findTile("Bush12"), tile);
     }
+
+    @Test
+    public void getAuctionProperty() {
+        Auction testAuction = new Auction("niels", "jupiler", game);
+        assertEquals("jupiler", testAuction.getProperty());
+    }
 }
