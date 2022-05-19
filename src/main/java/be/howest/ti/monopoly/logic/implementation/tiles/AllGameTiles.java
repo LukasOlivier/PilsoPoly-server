@@ -7,7 +7,6 @@ public class AllGameTiles {
         throw new IllegalStateException("game tile class");
     }
 
-
     public static final String STREET = "street";
     public static final String RAILROAD = "railroad";
 
