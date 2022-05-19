@@ -3,45 +3,38 @@ package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import java.util.Objects;
 
 public class Auction {
-
-
     private int highestBid = 0;
-    private int duration = 30;
+    private final long startTime = System.currentTimeMillis();
+    private static final long DURATION = 30000;
     private String lastBidder;
-    private final String property;
+    private String property;
     private Game game;
+    private boolean ended = false;
 
     public Auction(String bidder, String property, Game game) {
         this.lastBidder = bidder;
         this.property = property;
         this.game = game;
-        checkTimer();
     }
 
-    public void decreaseTimer() {
-        new Thread( new Runnable() {
-            public void run()  {
-                try  { Thread.sleep( 1000 ); }
-                catch (InterruptedException ie)  {}
-                duration--;
-                checkTimer();
-            }
-        } ).start();
+    public void endAuction() {
+        ended = true;
+        Player auctionWinner = findAuctionWinner();
+        Tile foundTile = findTile(property);
+        PlayerProperty wonProperty = new PlayerProperty(makeFoundTileBought(foundTile));
+        updatePlayer(auctionWinner, wonProperty);
+        resumeGame();
     }
 
-    public void checkTimer() {
-        if ( duration > 0 ) {
-            decreaseTimer();
-        } else {
-            Player auctionWinner = findAuctionWinner();
-            Tile foundTile = findTile(property);
-            PlayerProperty wonProperty = new PlayerProperty(makeFoundTileBought(foundTile));
-            updatePlayer(auctionWinner, wonProperty);
-            resumeGame();
-        }
+    public boolean auctionHasEnded() {
+        return ended;
+    }
+
+    public boolean checkIfCanBid() {
+        long currentTime = System.currentTimeMillis();
+        return startTime + DURATION > currentTime;
     }
 
     public void updatePlayer(Player player, PlayerProperty property) {
@@ -79,20 +72,21 @@ public class Auction {
     }
 
     public void addBid(String bidder, int amount) {
-        if (!lastBidder.equals(bidder) && amount > highestBid) {
-            lastBidder = bidder;
-            highestBid = amount;
+        if (checkIfCanBid()) {
+            if (!lastBidder.equals(bidder) && amount > highestBid) {
+                lastBidder = bidder;
+                highestBid = amount;
+            } else {
+                throw new IllegalMonopolyActionException("Could not add bid");
+            }
         } else {
-            throw new IllegalMonopolyActionException("Could not add bid");
+            endAuction();
+            throw new IllegalStateException("can't place a bid");
         }
     }
 
     public int getHighestBid() {
         return highestBid;
-    }
-
-    public int getDuration() {
-        return duration;
     }
 
     public String getLastBidder() {
@@ -101,23 +95,5 @@ public class Auction {
 
     public String getProperty() {
         return property;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Auction auction = (Auction) o;
-        return highestBid == auction.highestBid && duration == auction.duration && Objects.equals(lastBidder, auction.lastBidder) && Objects.equals(property, auction.property);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(highestBid, duration, lastBidder, property);
-    }
-
-    @Override
-    public String toString(){
-        return "Property: " + property + "\nHighest bid: " + highestBid + "\nlast bidder: " + lastBidder;
     }
 }

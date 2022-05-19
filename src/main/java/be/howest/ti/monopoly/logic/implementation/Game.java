@@ -83,7 +83,7 @@ public class Game {
     }
 
     public Auction getAuction() {
-        if ( auction != null && auction.getDuration() == 0 ) {
+        if ( auction != null && auction.auctionHasEnded() ) {
             return null;
         }
         return auction;
