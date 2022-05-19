@@ -178,6 +178,11 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
+    public void checkIfBankrupt(Game game) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void rollDice(Request request) {
         throw new UnsupportedOperationException();
     }

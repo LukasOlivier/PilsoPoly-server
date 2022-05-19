@@ -58,8 +58,8 @@ class GameTest {
         testGame.addPlayer("Sibren", "icon");
         testGame.addPlayer("Robin", "icon");
         testGame.addPlayer("Lukas", "icon");
-        testGame.removePlayerWhenBankrupt(testGame.getSpecificPlayer("Sibren"),testGame.getPlayers().indexOf(testGame.getSpecificPlayer("Sibren")));
-        testGame.removePlayerWhenBankrupt(testGame.getSpecificPlayer("Lukas"),testGame.getPlayers().indexOf(testGame.getSpecificPlayer("Lukas")));
+        testGame.removePropertiesFromPlayer(testGame.getSpecificPlayer("Sibren"));
+        testGame.removePropertiesFromPlayer(testGame.getSpecificPlayer("Lukas"));
         testGame.isEveryoneBankrupt();
         assertFalse(testGame.getSpecificPlayer("Robin").isBankrupt());
         assertEquals("Robin" ,testGame.getWinner());

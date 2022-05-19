@@ -1,10 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
-import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +27,7 @@ public class Player {
         this.name = name;
         this.currentTile = currentTile;
         this.jailed = false;
-        this.money = 1500;
+        this.money = 150;
         this.bankrupt = false;
         this.firstThrow = true;
         this.getOutOfJailFreeCards = 0;
@@ -115,6 +111,9 @@ public class Player {
     public void payRent(PlayerProperty playerProperty, Game game, Player debtPlayer){
         int rent = playerProperty.getProperty().computeRent(game, playerProperty, debtPlayer, this);
         transfer(debtPlayer, rent);
+        if (money < 0){
+            game.removePropertiesFromPlayer(this);
+        }
     }
 
     public int checkHowManyUtilities(String type) {

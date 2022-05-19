@@ -275,28 +275,10 @@ public class Game {
         return chanceCards.get(randomNumber);
     }
 
-    public  void removePlayerWhenBankrupt(Player player, int indexOfPlayerInList) {
-        this.numberOfPlayers -= 1;
+    public  void removePropertiesFromPlayer(Player player) {
         for (PlayerProperty playerProperty : player.getProperties()){
             playerProperty.getProperty().setBought(false);
             playerProperty.getProperty().setMortgaged(false);
-        }
-        if (Objects.equals(currentPlayer, player.getName())){
-            players.remove(player);
-            if ((players.size() - 1) == indexOfPlayerInList){
-                this.currentPlayer = players.get(0).getName();
-            }else{
-                this.currentPlayer = players.get(indexOfPlayerInList).getName();
-            }
-        }
-        players.remove(player);
-    }
-
-    public void checkIfPlayerIsBankrupt() {
-        for (Player player : players){
-            if (player.getMoney() < 0){
-                removePlayerWhenBankrupt(player, players.indexOf(player));
-            }
         }
     }
 }

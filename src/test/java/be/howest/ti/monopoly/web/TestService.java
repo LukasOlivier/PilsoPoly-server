@@ -98,6 +98,11 @@ public class TestService implements IService {
     }
 
     @Override
+    public void checkIfBankrupt(Game game) {
+        delegate.checkIfBankrupt(game);
+    }
+
+    @Override
     public void clearGameList() {
         delegate.clearGameList();
     }
