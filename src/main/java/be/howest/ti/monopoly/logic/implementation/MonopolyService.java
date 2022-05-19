@@ -150,10 +150,8 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void placeBidOnPlayerAuction(Request request) {
-        Game game = getGameById(request.getGameId());
-        String bidder = request.getBidder();
-        int amount = request.getAmount();
+    public void placeBidOnPlayerAuction(String gameId, String bidder, int amount) {
+        Game game = getGameById(gameId);
         game.placeBidOnPlayerAuction(bidder, amount);
     }
 
@@ -162,7 +160,6 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         return game.getAuction();
     }
-
 
     @Override
     public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName){

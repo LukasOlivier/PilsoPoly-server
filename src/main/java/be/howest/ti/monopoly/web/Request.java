@@ -56,40 +56,12 @@ public class Request {
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
-    public int getNumberOfPlayersToStart() {
-        return params.body().getJsonObject().getInteger("numberOfPlayers");
-    }
-
-    public String getGamePrefix() {
-        return params.body().getJsonObject().getString("prefix");
-    }
-
-    public int getTilePosition() {
-        return params.pathParameter(TILE_ID).getInteger();
-    }
-
-    public boolean hasTilePosition() {
-        return params.pathParameter(TILE_ID).isNumber();
-    }
-
-    public String getTileName() {
-        return params.pathParameter(TILE_ID).getString();
-    }
-
     public String getGameId() {
         return params.pathParameter("gameId").getString();
     }
 
-    public String playerThatStartedAuction() {
-        return params.pathParameter("playerName").getString();
-    }
-
     public String getPropertyName() {
         return params.pathParameter("propertyName").getString();
-    }
-
-    public int getStartBid() {
-        return params.body().getJsonObject().getInteger("start-bid");
     }
 
     public int getAmount() {
@@ -100,10 +72,6 @@ public class Request {
         return params.body().getJsonObject().getString("bidder");
     }
 
-    public int getDuration() {
-        return params.body().getJsonObject().getInteger("duration");
-    }
-
     public String getStringFromBody(String key){
         return params.body().getJsonObject().getString(key);
     }
@@ -112,8 +80,18 @@ public class Request {
         return params.body().getJsonObject().getInteger(key);
     }
 
-    public String getPathParameterValue(String key){
+
+    // ONLY THIS ONES
+    public String getPathParameterValueString(String key){
         return params.pathParameter(key).getString();
+    }
+
+    public int getPathParameterValueInteger(String key) {
+        return params.pathParameter(key).getInteger();
+    }
+
+    public boolean isNumber(String key) {
+        return params.pathParameter(key).isNumber();
     }
 }
 

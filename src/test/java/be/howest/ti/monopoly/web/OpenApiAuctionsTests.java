@@ -134,7 +134,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
         service.setDelegate( new ServiceAdapter() {
 
             @Override
-            public void placeBidOnPlayerAuction(Request request) {}
+            public void placeBidOnPlayerAuction(String gameId, String bidder, int amount) {}
 
         });
 

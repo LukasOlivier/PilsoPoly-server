@@ -122,7 +122,7 @@ public class MonopolyApiBridge {
     }
 
     private void authorizationCheck(Request request) throws AuthenticationException {
-        if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
+        if (!request.isAuthorized(request.getPathParameterValueString("gameId"), request.getPathParameterValueString("playerName"))) {
             throw new AuthenticationException();
         }
     }
@@ -142,11 +142,11 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
 
         Tile tile;
-        if (request.hasTilePosition()) {
-            int position = request.getTilePosition();
+        if (request.isNumber("tileId")) {
+            int position = request.getPathParameterValueInteger("tileId");
             tile = service.getTile(position);
         } else {
-            String name = request.getTileName();
+            String name = request.getPathParameterValueString("tileId");
             tile = service.getTile(name);
         }
 
@@ -241,7 +241,7 @@ public class MonopolyApiBridge {
             Request request = Request.from(ctx);
             String playerName = request.getStringFromBody("playerName");
             String icon = request.getStringFromBody("icon");
-            String gameId = request.getPathParameterValue("gameId");
+            String gameId = request.getPathParameterValueString("gameId");
             service.joinGame(gameId, playerName, icon);
             String playerToken = tokenManager.createToken(
                     new MonopolyUser(gameId, playerName)
@@ -256,7 +256,7 @@ public class MonopolyApiBridge {
 
     private void getGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValue("gameId");
+        String gameId = request.getPathParameterValueString("gameId");
         Game game = service.getGameById(gameId);
         try {
             authenticateGetGame(request,game, gameId);
@@ -278,8 +278,8 @@ public class MonopolyApiBridge {
 
     private void useEstimateTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
-        String gameId = request.getPathParameterValue("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
         try {
             service.useEstimateTax(playerName,gameId);
             Response.sendOkResponse(ctx);
@@ -290,8 +290,8 @@ public class MonopolyApiBridge {
 
     private void useComputeTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
-        String gameId = request.getPathParameterValue("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
         try {
             service.useComputeTax(playerName,gameId);
             Response.sendOkResponse(ctx);
@@ -302,15 +302,15 @@ public class MonopolyApiBridge {
 
     private void rollDice(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
-        String gameId = request.getPathParameterValue("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
         Response.sendJsonResponse(ctx, 200, service.rollDice(playerName,gameId));
     }
 
     private void declareBankruptcy(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
-        String gameId = request.getPathParameterValue("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
         try {
             service.setBankrupt(playerName,gameId);
             Response.sendOkResponse(ctx);
@@ -322,11 +322,11 @@ public class MonopolyApiBridge {
     private void buyProperty(RoutingContext ctx) {
         try {
             Request request = Request.from(ctx);
-            if (!request.isAuthorized(request.getPathParameterValue("gameId"), request.getPathParameterValue("playerName"))) {
+            if (!request.isAuthorized(request.getPathParameterValueString("gameId"), request.getPathParameterValueString("playerName"))) {
                 throw new AuthenticationException();
             }
-            String gameId = request.getGameId();
-            String playerName = request.getPathParameterValue("playerName");
+            String gameId = request.getPathParameterValueString("gameId");
+            String playerName = request.getPathParameterValueString("playerName");
             String propertyName = request.getPropertyName();
             service.buyProperty(gameId,playerName,propertyName);
             Response.sendOkResponse(ctx);
@@ -341,9 +341,9 @@ public class MonopolyApiBridge {
 
     private void dontBuyProperty(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getGameId();
-        String playerName = request.getPathParameterValue("playerName");
-        String propertyName = request.getPathParameterValue("propertyName");
+        String gameId = request.getPathParameterValueString("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
+        String propertyName = request.getPathParameterValueString("propertyName");
         service.dontBuyProperty(gameId, playerName, propertyName);
         Response.sendOkResponse(ctx);
     }
@@ -351,9 +351,9 @@ public class MonopolyApiBridge {
     private void collectDebt(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            String game = request.getGameId();
-            String  player = request.getPathParameterValue("playerName");
-            String  debtPlayer = request.getPathParameterValue("debtorName");
+            String game = request.getPathParameterValueString("gameId");
+            String  player = request.getPathParameterValueString("playerName");
+            String  debtPlayer = request.getPathParameterValueString("debtorName");
             String tileName = request.getPropertyName();
             service.collectDebt(game,player,debtPlayer,tileName);
             Response.sendOkResponse(ctx);
@@ -364,8 +364,8 @@ public class MonopolyApiBridge {
 
     private void takeMortgage(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
-        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValueString("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
         String propertyName = request.getPropertyName();
         try {
             service.takeMortgage(gameId, playerName, propertyName);
@@ -379,8 +379,8 @@ public class MonopolyApiBridge {
 
     private void settleMortgage(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
-        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValueString("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
         String propertyName = request.getPropertyName();
         try {
             service.settleMortgage(gameId, playerName, propertyName);
@@ -393,8 +393,8 @@ public class MonopolyApiBridge {
 
     private void buyHouse(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValue("playerName");
-        String gameId = request.getGameId();
+        String playerName = request.getPathParameterValueString("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
         String propertyName = request.getPropertyName();
         service.buyHouse(gameId, playerName, propertyName);
         Response.sendOkResponse(ctx);
@@ -402,8 +402,8 @@ public class MonopolyApiBridge {
 
     private void sellHouse(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getGameId();
-        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
         String propertyName = request.getPropertyName();
         service.sellHouse(gameId, playerName, propertyName);
         Response.sendOkResponse(ctx);
@@ -411,8 +411,8 @@ public class MonopolyApiBridge {
 
     private void buyHotel(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getGameId();
-        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
         String propertyName = request.getPropertyName();
         service.buyHotel(gameId, playerName, propertyName);
         Response.sendOkResponse(ctx);
@@ -420,8 +420,8 @@ public class MonopolyApiBridge {
 
     private void sellHotel(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getGameId();
-        String playerName = request.getPathParameterValue("playerName");
+        String gameId = request.getPathParameterValueString("gameId");
+        String playerName = request.getPathParameterValueString("playerName");
         String propertyName = request.getPropertyName();
         service.sellHotel(gameId, playerName, propertyName);
         Response.sendOkResponse(ctx);
@@ -431,8 +431,8 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
         try {
             authorizationCheck(request);
-            String playerName = request.getPathParameterValue("playerName");
-            String gameId = request.getPathParameterValue("gameId");
+            String playerName = request.getPathParameterValueString("playerName");
+            String gameId = request.getPathParameterValueString("gameId");
             service.getOutOfJailFine(gameId,playerName);
         } catch (AuthenticationException e) {
             throw new InvalidTokenException();
@@ -444,8 +444,8 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
         try {
             authorizationCheck(request);
-            String playerName = request.getPathParameterValue("playerName");
-            String gameId = request.getPathParameterValue("gameId");
+            String playerName = request.getPathParameterValueString("playerName");
+            String gameId = request.getPathParameterValueString("gameId");
             service.getOutOfJailFree(gameId,playerName);
         } catch (AuthenticationException e) {
             throw new InvalidTokenException();
@@ -462,7 +462,7 @@ public class MonopolyApiBridge {
 
     private void getPlayerAuctions(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValue("gameId");
+        String gameId = request.getPathParameterValueString("gameId");
         Response.sendJsonResponse(ctx, 200, service.getPlayerAuctions(gameId));
     }
 
@@ -472,7 +472,10 @@ public class MonopolyApiBridge {
 
     private void placeBidOnPlayerAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        service.placeBidOnPlayerAuction(request);
+        String gameId = request.getPathParameterValueString("gameId");
+        String bidder = request.getPathParameterValueString("bidder");
+        int amount = request.getPathParameterValueInteger("amount");
+        service.placeBidOnPlayerAuction(gameId, bidder, amount);
         Response.sendOkResponse(ctx);
     }
 
