@@ -286,6 +286,10 @@ public class Game {
     }
 
     public  void removePropertiesFromPlayer(Player player) {
+        if (Objects.equals(currentPlayer, player.getName())){
+            int indexOfNextPlayer = players.indexOf(player) + 1;
+            setCurrentPlayer(players.get(indexOfNextPlayer).getName());
+        }
         for (PlayerProperty playerProperty : player.getProperties()){
             playerProperty.getProperty().setBought(false);
             playerProperty.getProperty().setMortgaged(false);
