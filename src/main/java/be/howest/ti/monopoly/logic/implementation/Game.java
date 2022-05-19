@@ -217,19 +217,11 @@ public class Game {
     }
 
     public void isEveryoneBankrupt() {
-        int bankruptCounter = 0;
-        String possibleWinner = null;
-        for (Player player : getPlayers()) {
-            if (player.isBankrupt()) {
-                bankruptCounter++;
-            } else {
-                possibleWinner = player.getName();
-            }
-        }
-        if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null) {
-            this.winner = possibleWinner;
+        if (numberOfPlayers == 1){
+            this.winner = players.get(0).getName();
         }
     }
+
 
     public static List<CommunityOrChanceCard> createCommunityCards(){
         return List.of(
@@ -283,11 +275,28 @@ public class Game {
         return chanceCards.get(randomNumber);
     }
 
-    public void calculateNewCurrentPlayer(Player player) {
+    public  void removePlayerWhenBankrupt(Player player, int indexOfPlayerInList) {
         this.numberOfPlayers -= 1;
-        if (Objects.equals(player.getName(), currentPlayer)){
-            setCurrentPlayer(players.get(players.indexOf(player) + 1).getName());
+        for (PlayerProperty playerProperty : player.getProperties()){
+            playerProperty.getProperty().setBought(false);
+            playerProperty.getProperty().setMortgaged(false);
+        }
+        if (Objects.equals(currentPlayer, player.getName())){
+            players.remove(player);
+            if ((players.size() - 1) == indexOfPlayerInList){
+                this.currentPlayer = players.get(0).getName();
+            }else{
+                this.currentPlayer = players.get(indexOfPlayerInList).getName();
+            }
         }
         players.remove(player);
+    }
+
+    public void checkIfPlayerIsBankrupt() {
+        for (Player player : players){
+            if (player.getMoney() < 0){
+                removePlayerWhenBankrupt(player, players.indexOf(player));
+            }
+        }
     }
 }
