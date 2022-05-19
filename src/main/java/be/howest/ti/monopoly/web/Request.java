@@ -50,69 +50,30 @@ public class Request {
     public RequestParameters getRequestParameters() {
         return params;
     }
+
     public boolean isAuthorized(String expectedGameId, String expectedPlayerName) {
         return Objects.equals(expectedGameId, user.getGameId()) &&
                 Objects.equals(expectedPlayerName, user.getPlayerName());
     }
 
-    public int getNumberOfPlayersToStart() {
-        return params.body().getJsonObject().getInteger("numberOfPlayers");
-    }
-
-    public String getGamePrefix() {
-        return params.body().getJsonObject().getString("prefix");
-    }
-
-    public int getTilePosition() {
-        return params.pathParameter("tileId").getInteger();
-    }
-
-    public boolean hasTilePosition() {
-        return params.pathParameter("tileId").isNumber();
-    }
-
-    public String getTileName() {
-        return params.pathParameter("tileId").getString();
-    }
-
-    public String getGameId() {
-        return params.pathParameter("gameId").getString();
-    }
-
-    public String playerThatStartedAuction() {
-        return params.pathParameter("playerName").getString();
-    }
-
-    public String getPropertyName() {
-        return params.pathParameter("propertyName").getString();
-    }
-
-    public int getStartBid() {
-        return params.body().getJsonObject().getInteger("start-bid");
-    }
-
-    public int getAmount() {
-        return params.body().getJsonObject().getInteger("amount");
-    }
-
-    public String getBidder() {
-        return params.body().getJsonObject().getString("bidder");
-    }
-
-    public int getDuration() {
-        return params.body().getJsonObject().getInteger("duration");
-    }
-
-    public String getStringFromBody(String key){
+    public String getBodyValueString(String key) {
         return params.body().getJsonObject().getString(key);
     }
 
-    public int getIntFromBody(String key) {
+    public int getBodyValueInteger(String key) {
         return params.body().getJsonObject().getInteger(key);
     }
 
-    public String getPathParameterValue(String key){
+    public String getPathParameterValueString(String key){
         return params.pathParameter(key).getString();
+    }
+
+    public int getPathParameterValueInteger(String key) {
+        return params.pathParameter(key).getInteger();
+    }
+
+    public boolean isNumber(String key) {
+        return params.pathParameter(key).isNumber();
     }
 }
 

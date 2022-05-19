@@ -38,7 +38,7 @@ public interface IService {
     // AUCTION
     void dontBuyProperty(String gameId, String playerName, String propertyName);
 
-    void placeBidOnPlayerAuction(Request request);
+    void placeBidOnBankAuction(String gameId, String bidder, int amount);
 
     Auction getPlayerAuctions(String gameId);
 

@@ -102,7 +102,7 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public void placeBidOnPlayerAuction(Request request) {
+    public void placeBidOnBankAuction(String gameId, String bidder, int amount) {
         throw new UnsupportedOperationException();
     }
 

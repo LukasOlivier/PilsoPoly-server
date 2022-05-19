@@ -78,12 +78,12 @@ public class Game {
         auction = new Auction(bidder, property, this);
     }
 
-    public void placeBidOnPlayerAuction(String bidder, int amount) {
+    public void placeBidOnBankAuction(String bidder, int amount) {
         auction.addBid(bidder, amount);
     }
 
     public Auction getAuction() {
-        if ( auction != null && auction.getDuration() == 0 ) {
+        if ( auction != null && auction.auctionHasEnded() ) {
             return null;
         }
         return auction;

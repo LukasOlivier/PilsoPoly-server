@@ -7,6 +7,9 @@ public class Tax {
     static int estimateTax = 200;
     static double computeTaxMultiplier = 0.1;
 
+    private Tax() {
+        throw new IllegalStateException("can not initiate");
+    }
 
     public static int getIncomeTax() {
         return incomeTax;
@@ -18,8 +21,7 @@ public class Tax {
 
     public static int getComputeTax(Player player) {
         int totalWorthToTheBank = player.getMoney() + getTotalTilesCost(player) + getTotalBuildingsCost(player);
-        int roundedToInt = (int) Math.round(computeTaxMultiplier * totalWorthToTheBank);
-        return roundedToInt;
+        return (int) Math.round(computeTaxMultiplier * totalWorthToTheBank);
     }
 
     private static int getTotalTilesCost(Player player) {

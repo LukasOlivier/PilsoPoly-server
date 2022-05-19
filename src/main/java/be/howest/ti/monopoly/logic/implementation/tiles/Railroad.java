@@ -14,7 +14,6 @@ public class Railroad extends Property{
 
     @Override
     public int computeRent(Game game, PlayerProperty playerProperty, Player debtPlayer, Player player) {
-        System.out.println(debtPlayer.checkHowManyUtilities("railroad"));
         return PRICE_ONE_RAILROAD * debtPlayer.checkHowManyUtilities("railroad");
     }
 }

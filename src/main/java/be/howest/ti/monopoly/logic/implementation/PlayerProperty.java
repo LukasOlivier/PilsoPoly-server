@@ -4,8 +4,6 @@ import be.howest.ti.monopoly.logic.implementation.tiles.Street;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -56,7 +54,7 @@ public class PlayerProperty {
 
     public String getPropertyType(){return property.getType();}
 
-    public String getPropertActionType(){return property.getActionType();}
+    public String getPropertyActionType(){return property.getActionType();}
 
     public boolean isMortgage() {
         return mortgage;
@@ -73,8 +71,6 @@ public class PlayerProperty {
     public int getHotelCount() {
         return hotelCount;
     }
-
-    public boolean getMortgage(){ return mortgage;}
 
     public void addHouse(Player player, List<PlayerProperty> otherProperties) {
         if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true) ) {
@@ -94,19 +90,21 @@ public class PlayerProperty {
         }
     }
 
-    public void buyHotel(Player player, List<PlayerProperty> otherProperties) {
+    public void buyHotel(Player player) {
         if ( canBuyHotel() ) {
             hotelCount = 1;
             houseCount = 0;
+            withdrawHousePrice(player);
         } else {
             throw new IllegalStateException("could not buy hotel");
         }
     }
 
-    public void sellHotel(Player player, List<PlayerProperty> properties) {
+    public void sellHotel(Player player) {
         if ( canSellHotel() ) {
             hotelCount = 0;
             houseCount = MAX_HOUSE_COUNT;
+            addHousePrice(player);
         } else {
             throw new IllegalStateException("could not sell hotel");
         }
@@ -114,8 +112,8 @@ public class PlayerProperty {
 
     private void addHousePrice(Player player) {
         Street street = (Street) property;
-        int housePrice = street.getHousePrice();
-        player.addMoney(housePrice);
+        int housePriceHalf = street.getHousePrice() / 2;
+        player.addMoney(housePriceHalf);
     }
 
     private void withdrawHousePrice(Player player) {
