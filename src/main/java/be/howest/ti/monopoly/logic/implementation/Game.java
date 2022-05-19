@@ -78,7 +78,7 @@ public class Game {
         auction = new Auction(bidder, property, this);
     }
 
-    public void placeBidOnPlayerAuction(String bidder, int amount) {
+    public void placeBidOnBankAuction(String bidder, int amount) {
         auction.addBid(bidder, amount);
     }
 

@@ -461,7 +461,12 @@ public class MonopolyApiBridge {
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
-        throw new NotYetImplementedException("placeBidOnBankAuction");
+        Request request = Request.from(ctx);
+        String gameId = request.getPathParameterValueString(GAME_ID);
+        String bidder = request.getBodyValueString("bidder");
+        int amount = request.getBodyValueInteger("amount");
+        service.placeBidOnBankAuction(gameId, bidder, amount);
+        Response.sendOkResponse(ctx);
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
@@ -475,12 +480,7 @@ public class MonopolyApiBridge {
     }
 
     private void placeBidOnPlayerAuction(RoutingContext ctx) {
-        Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String bidder = request.getBodyValueString("bidder");
-        int amount = request.getBodyValueInteger("amount");
-        service.placeBidOnPlayerAuction(gameId, bidder, amount);
-        Response.sendOkResponse(ctx);
+        throw new NotYetImplementedException("placeBidOnPlayerAuction");
     }
 
     private void trade(RoutingContext ctx) {

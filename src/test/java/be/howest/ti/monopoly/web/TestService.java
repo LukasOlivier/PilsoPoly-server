@@ -142,8 +142,8 @@ public class TestService implements IService {
     }
 
     @Override
-    public void placeBidOnPlayerAuction(String gameId, String bidder, int amount) {
-        delegate.placeBidOnPlayerAuction(gameId, bidder, amount);
+    public void placeBidOnBankAuction(String gameId, String bidder, int amount) {
+        delegate.placeBidOnBankAuction(gameId, bidder, amount);
     }
 
     @Override

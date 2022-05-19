@@ -148,9 +148,9 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void placeBidOnPlayerAuction(String gameId, String bidder, int amount) {
+    public void placeBidOnBankAuction(String gameId, String bidder, int amount) {
         Game game = getGameById(gameId);
-        game.placeBidOnPlayerAuction(bidder, amount);
+        game.placeBidOnBankAuction(bidder, amount);
     }
 
     @Override
