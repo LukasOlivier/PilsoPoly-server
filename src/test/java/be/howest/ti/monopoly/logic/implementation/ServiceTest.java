@@ -184,8 +184,7 @@ public class ServiceTest {
     public void buyPropertyTest() {
         game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
         service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
-        PlayerProperty boughtTile = new PlayerProperty(new Street("Delhaize 365", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
-
+        PlayerProperty boughtTile = service.findBoughtPropertyByOwner("Delhaize 365","Alice",game);
         assertEquals(game.getSpecificPlayer("Alice").getProperties(),List.of(boughtTile));
     }
 
@@ -221,7 +220,7 @@ public class ServiceTest {
         service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
         game.getSpecificPlayer("Bob").setCurrentTile(Tile.getTileFromPosition(game,1));
 
-        service.collectDebt("PilsoPoly_1", "Bob", service.findBoughtPropertyByOwner(), "Delhaize 365");
+        service.collectDebt("PilsoPoly_1", "Bob", "Alice", "Delhaize 365");
     }
 
     @Test void setBankruptTest(){
@@ -293,6 +292,7 @@ public class ServiceTest {
         service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
 
         service.takeMortgage("PilsoPoly_1","Alice","Delhaize 365");
+        assertTrue(service.findBoughtPropertyByOwner("Delhaize 365","Alice",game).isMortgage());
     }
 
     @Test
@@ -310,6 +310,29 @@ public class ServiceTest {
         });
     }
 
+    @Test
+    public void settleMortgageEdgeCases(){
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.settleMortgage("PilsoPoly_1","Alice","Delhaize 365");
+        });
 
+        service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
+        service.takeMortgage("PilsoPoly_1","Alice","Delhaize 365");
+        service.settleMortgage("PilsoPoly_1","Alice","Delhaize 365");
 
+        assertThrows(IllegalStateException.class, () -> {
+            service.settleMortgage("PilsoPoly_1","Alice","Delhaize 365");
+        });
+    }
+
+    @Test
+    public void settleMortgage() {
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
+        service.buyProperty("PilsoPoly_1", "Alice", "Delhaize 365");
+        service.takeMortgage("PilsoPoly_1", "Alice", "Delhaize 365");
+        service.settleMortgage("PilsoPoly_1", "Alice", "Delhaize 365");
+        assertFalse(service.findBoughtPropertyByOwner("Delhaize 365","Alice",game).isMortgage());
+
+    }
 }
