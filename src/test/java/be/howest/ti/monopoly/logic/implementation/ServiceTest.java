@@ -9,11 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ServiceTest {
+
+    MonopolyService service = new MonopolyService();
+    Game game = new Game(2, "PilsoPoly", 0);
+
+    @BeforeEach
+    public void initTest(){
+        service.addGame(game);
+        service.joinGame("PilsoPoly_1", "Alice","icon");
+        service.joinGame("PilsoPoly_1", "Bob","icon");
+    }
 
     @Test
     public void testCommunityCards() {
@@ -145,14 +154,14 @@ public class ServiceTest {
     void getTileFromPositionTest() {
         MonopolyService service = new MonopolyService();
         Tile parking = new Tile("Free Parking", 20, "Free Parking", "Nothing specials happens here", "parking");
-        assertEquals(parking,service.getTile(20));
+        assertEquals(parking, service.getTile(20));
     }
 
     @Test
     void getTileFromNameTest() {
         MonopolyService service = new MonopolyService();
         Tile parking = new Tile("Free Parking", 20, "Free Parking", "Nothing specials happens here", "parking");
-        assertEquals(parking,service.getTile("Free Parking"));
+        assertEquals(parking, service.getTile("Free Parking"));
     }
 
     @Test
@@ -172,15 +181,12 @@ public class ServiceTest {
     }
 
     @Test
-    public void buyPropertyTest(){
-        MonopolyService service = new MonopolyService();
-        Game game = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice","icon");
-        game.addPlayer("Alice","icon");
-        service.addGame(game);
-        alice.setCurrentTile(game,1);
-        System.out.println(alice.currentTile.getName());
+    public void buyPropertyTest() {
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
         service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
+        PlayerProperty boughtTile = new PlayerProperty(new Street("Delhaize 365", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
+
+        assertEquals(game.getSpecificPlayer("Alice").getProperties(),List.of(boughtTile));
     }
 
     @Test
@@ -188,7 +194,7 @@ public class ServiceTest {
         MonopolyService service = new MonopolyService();
         Game game = new Game(2, "PilsoPoly", 0);
         service.addGame(game);
-        assertEquals(game,service.getGameById("PilsoPoly_1"));
+        assertEquals(game, service.getGameById("PilsoPoly_1"));
     }
 
     @Test
@@ -196,34 +202,114 @@ public class ServiceTest {
         MonopolyService service = new MonopolyService();
         Game game = new Game(2, "PilsoPoly", 0);
         service.addGame(game);
-        Player alice = new Player("Alice","icon");
-
-        service.joinGame("PilsoPoly_1",alice.getName(),alice.getIcon());
-        assertEquals(List.of(alice),service.getGameById("PilsoPoly_1").getPlayers());
+        Player alice = new Player("Alice", "icon");
+        service.joinGame("PilsoPoly_1", alice.getName(), alice.getIcon());
+        assertEquals(List.of(alice), service.getGameById("PilsoPoly_1").getPlayers());
     }
 
     @Test
     public void dontBuyPropertyTest() {
-        MonopolyService service = new MonopolyService();
-        Game game = new Game(2, "PilsoPoly", 0);
-        service.addGame(game);
-        service.dontBuyProperty("PilsoPoly_1","Alice","BoardWalk");
-        assertEquals("Alice",service.getPlayerAuctions("PilsoPoly_1").getLastBidder());
-        service.placeBidOnBankAuction("PilsoPoly_1","Bob",100);
-        assertEquals("Bob",service.getPlayerAuctions("PilsoPoly_1").getLastBidder());
+        service.dontBuyProperty("PilsoPoly_1", "Alice", "BoardWalk");
+        assertEquals("Alice", service.getPlayerAuctions("PilsoPoly_1").getLastBidder());
+        service.placeBidOnBankAuction("PilsoPoly_1", "Bob", 100);
+        assertEquals("Bob", service.getPlayerAuctions("PilsoPoly_1").getLastBidder());
     }
 
     @Test
-    public void collectDebtTest(){
-        MonopolyService service = new MonopolyService();
-        Game game = new Game(2, "PilsoPoly", 0);
-        service.addGame(game);
-        Player alice = new Player("Alice","icon");
-        Player bob = new Player("Bob","icon");
-        game.addPlayer("Alice","icon");
-        game.addPlayer("Bob","icon");
+    public void collectDebtTest() {
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
+        service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
+        game.getSpecificPlayer("Bob").setCurrentTile(Tile.getTileFromPosition(game,1));
 
-        service.collectDebt("PilsoPoly","Alice","Bob","Delhaize 365");
-
+        service.collectDebt("PilsoPoly_1", "Bob", service.findBoughtPropertyByOwner(), "Delhaize 365");
     }
+
+    @Test void setBankruptTest(){
+        service.setBankrupt("Alice","PilsoPoly_1");
+        assertTrue(game.getSpecificPlayer("Alice").isBankrupt());
+    }
+
+    @Test
+    public void useComputeTaxTest() {
+        service.useComputeTax("Alice","PilsoPoly_1");
+        assertEquals("COMPUTE",game.getSpecificPlayer("Alice").getTaxSystem());
+    }
+
+    @Test
+    public void useEstimateTaxTest() {
+        service.useEstimateTax("Alice","PilsoPoly_1");
+        assertEquals("ESTIMATE",game.getSpecificPlayer("Alice").getTaxSystem());
+    }
+
+    @Test
+    public void getOutOfJailFineTest() {
+        game.getSpecificPlayer("Alice").setJailed(true);
+        service.getOutOfJailFine("PilsoPoly_1","Alice");
+        assertFalse(game.getSpecificPlayer("Alice").isJailed());
+    }
+    @Test
+    public void getOutOfJailFreeTest() {
+        game.getSpecificPlayer("Alice").setJailed(true);
+        game.getSpecificPlayer("Alice").addGetOutOfJailFreeCard();
+        service.getOutOfJailFree("PilsoPoly_1","Alice");
+        assertFalse(game.getSpecificPlayer("Alice").isJailed());
+    }
+
+    @Test
+    public void buyHouseTest() {
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
+        service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
+
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,3));
+        service.buyProperty("PilsoPoly_1","Alice","Cara");
+
+        service.buyHouse("PilsoPoly_1","Alice","Delhaize 365");
+        service.buyHouse("PilsoPoly_1","Alice","Cara");
+        service.buyHouse("PilsoPoly_1","Alice","Delhaize 365");
+
+        assertEquals(2,service.getCorrectProperty(game.getSpecificPlayer("Alice"),"Delhaize 365").getHouseCount());
+        assertEquals(1,service.getCorrectProperty(game.getSpecificPlayer("Alice"),"Cara").getHouseCount());
+    }
+
+    @Test
+    public void sellHouseTest() {
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
+        service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
+
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,3));
+        service.buyProperty("PilsoPoly_1","Alice","Cara");
+
+        service.buyHouse("PilsoPoly_1","Alice","Delhaize 365");
+        service.buyHouse("PilsoPoly_1","Alice","Cara");
+        service.sellHouse("PilsoPoly_1","Alice","Delhaize 365");
+
+        assertEquals(0,service.getCorrectProperty(game.getSpecificPlayer("Alice"),"Delhaize 365").getHouseCount());
+        assertEquals(1,service.getCorrectProperty(game.getSpecificPlayer("Alice"),"Cara").getHouseCount());
+    }
+
+    @Test
+    public void takeMortgageTest(){
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
+        service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
+
+        service.takeMortgage("PilsoPoly_1","Alice","Delhaize 365");
+    }
+
+    @Test
+    public void takeMortgageTestEdgeCases(){
+        game.getSpecificPlayer("Alice").setCurrentTile(Tile.getTileFromPosition(game,1));
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.takeMortgage("PilsoPoly_1","Alice","Delhaize 365");
+        });
+
+        service.buyProperty("PilsoPoly_1","Alice","Delhaize 365");
+        service.takeMortgage("PilsoPoly_1","Alice","Delhaize 365");
+
+        assertThrows(IllegalStateException.class, () -> {
+            service.takeMortgage("PilsoPoly_1","Alice","Delhaize 365");
+        });
+    }
+
+
+
 }

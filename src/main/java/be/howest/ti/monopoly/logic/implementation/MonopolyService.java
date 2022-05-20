@@ -106,6 +106,7 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         Tile tileToBuy = player.currentTile;
+        System.out.println(game);
         System.out.println(player.getName());
         System.out.print("Tile to buy: ");
         System.out.println(tileToBuy);
@@ -179,16 +180,16 @@ public class MonopolyService extends ServiceAdapter {
 
     public void checkIfPlayerNeedsToPayRent(Tile tile, Player player, String debtPlayerName, Game game, PlayerProperty playerProperty){
         if (!Objects.equals(tile.getName(), player.currentTile.getName())){
-            throw new IllegalArgumentException("player is not on the tile.");
+            throw new IllegalArgumentException("Player is not on the tile.");
         }
         if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
-            throw new IllegalArgumentException("the tile is not you're property");
+            throw new IllegalArgumentException("The tile is not your property");
         }
         if (!Objects.equals(playerProperty.getPropertyActionType(), "rent")){
             throw new IllegalArgumentException("This tile is not bought yet");
         }
         if (playerProperty.isMortgage()){
-            throw new IllegalArgumentException("this tile is mortgaged");
+            throw new IllegalArgumentException("This tile is mortgaged");
         }
     }
 
