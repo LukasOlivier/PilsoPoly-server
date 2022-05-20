@@ -1,12 +1,10 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
-import be.howest.ti.monopoly.logic.implementation.cummunityandchance.specific.community.or.chance.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles;
-import be.howest.ti.monopoly.logic.implementation.cummunityandchance.CommunityOrChanceCard;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.security.SecureRandom;
+
 import java.util.*;
 
 public class Game {
@@ -227,23 +225,6 @@ public class Game {
             if ((numberOfPlayersBankrupt == getNumberOfPlayers() - 1) && possibleWinner != null) {
                 this.winner = possibleWinner;
             }
-    }
-
-    public  void setPlayerBankrupt(Player player) {
-        if (Objects.equals(currentPlayer, player.getName())){
-            int indexOfNextPlayer = players.indexOf(player) + 1;
-            setCurrentPlayer(players.get(indexOfNextPlayer).getName());
-        }
-        player.setBankrupt();
-        removePropertiesFromPlayer(player);
-    }
-
-    private void removePropertiesFromPlayer(Player player) {
-        for (PlayerProperty playerProperty : player.getProperties()) {
-            playerProperty.getProperty().setBought(false);
-            playerProperty.getProperty().setMortgaged(false);
-        }
-        player.getProperties().clear();
     }
 
     @Override

@@ -78,6 +78,7 @@ public class Player {
 
     public void setBankrupt() {
         this.bankrupt = true;
+        removePropertiesFromPlayer();
     }
 
     public int getGetOutOfJailFreeCards() {
@@ -110,9 +111,7 @@ public class Player {
     public void payRent(PlayerProperty playerProperty, Game game, Player debtPlayer){
         int rent = playerProperty.getProperty().computeRent(game, playerProperty, debtPlayer, this);
         transfer(debtPlayer, rent);
-        if (money < 0){
-            game.setPlayerBankrupt(this);
-        }
+        checkIfPlayerIsBankrupt();
     }
 
     public int checkHowManyUtilities(String type) {
@@ -192,10 +191,18 @@ public class Player {
         return amountOfDoubleThrows;
     }
 
-    private boolean checkIfPlayerIsBankrupt(Game game) {
+    public void checkIfPlayerIsBankrupt() {
         if (this.getMoney() < 0){
-            game.setPlayerBankrupt(this);
+            this.setBankrupt();
         }
+    }
+
+    private void removePropertiesFromPlayer() {
+        for (PlayerProperty playerProperty : this.getProperties()) {
+            playerProperty.getProperty().setBought(false);
+            playerProperty.getProperty().setMortgaged(false);
+        }
+        this.getProperties().clear();
     }
 
     @Override

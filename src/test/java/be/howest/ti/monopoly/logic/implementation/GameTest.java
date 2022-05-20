@@ -62,7 +62,8 @@ class GameTest {
         testGame.addPlayer("Robin", "icon");
         testGame.addPlayer("Lukas", "icon");
         testGame.getSpecificPlayer(testGame.getSpecificPlayer("Sibren").getName()).addProperty(new PlayerProperty(property));
-        testGame.setPlayerBankrupt(testGame.getSpecificPlayer("Sibren"));
+        Player Sibren = testGame.getSpecificPlayer("Sibren");
+        Sibren.setBankrupt();
         testGame.getSpecificPlayer(testGame.getSpecificPlayer("Lukas").getName()).setBankrupt();
         testGame.isEveryoneBankrupt();
         assertFalse(testGame.getSpecificPlayer("Robin").isBankrupt());
