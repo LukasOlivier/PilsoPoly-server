@@ -44,7 +44,6 @@ public class Move {
         if (player.getFirstThrow()){
             player.setFirstThrow();
         }
-
         return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());
     }
 

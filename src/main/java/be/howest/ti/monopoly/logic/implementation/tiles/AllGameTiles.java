@@ -14,12 +14,6 @@ public class AllGameTiles {
         throw new IllegalStateException("game tile class");
     }
 
-    public static final String COMMUNITY = "community";
-    public static final String DRAW_A_CARD = "Draw a card";
-    public static final String CHANCE = "chance";
-
-    protected static final List<Tile> gameTiles = createGameTiles();
-
     public static List<Tile> createGameTiles() {
         return List.of(
                 new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"),
