@@ -58,26 +58,26 @@ class TileTest {
     }
 
     @Test
-    void checkDescriptionrent(){
+    void checkDescriptionRent(){
         Property property = new Street("Indiana Avenue", 23, "street", 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         property.setBought(true);
-        assertEquals("should pay rent", property.getDescription());
+        assertEquals("You need to pay rent", property.getDescription());
         assertEquals("rent", property.getActionType());
     }
 
     @Test
-    void checkDescriptionbuy(){
+    void checkDescriptionBuy(){
         Property property = new Street("Indiana Avenue", 23, "street", 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
-        assertEquals("can buy this property in direct sale", property.getDescription());
+        assertEquals("You can buy this property in direct sale", property.getDescription());
         assertEquals("buy",property.getActionType());
     }
 
     @Test
-    void checkDescriptionMortagae(){
+    void checkDescriptionMortgage(){
         Property property = new Street("Indiana Avenue", 23, "street", 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         property.setBought(true);
         property.setMortgaged(true);
-        assertEquals("no need to pay rent, the tile is mortgaged", property.getDescription());
+        assertEquals("No need to pay rent, the tile is mortgaged", property.getDescription());
         assertEquals("mortgage", property.getActionType());
     }
 
