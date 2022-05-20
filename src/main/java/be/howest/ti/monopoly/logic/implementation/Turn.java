@@ -24,7 +24,7 @@ public class Turn {
             indexOfNextPlayer = 0;
         }
         if (game.getPlayers().get(indexOfNextPlayer).isBankrupt()){
-            findNextPlayer(game, game.getSpecificPlayer(game.getPlayers().get(indexOfNextPlayer).getName()));
+            findNextPlayer(game, game.getPlayers().get(indexOfNextPlayer));
         }else{
             game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
         }
