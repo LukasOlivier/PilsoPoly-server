@@ -18,12 +18,16 @@ public class Turn {
         this.roll = diceRoll;
     }
 
-    public static void setNextPlayer(Game game, Player currentPlayer) {
+    public static void findNextPlayer(Game game, Player currentPlayer) {
         int indexOfNextPlayer = game.getPlayers().indexOf(currentPlayer) + 1;
         if (indexOfNextPlayer >= game.getPlayers().size()) {
             indexOfNextPlayer = 0;
         }
-        game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
+        if (game.getPlayers().get(indexOfNextPlayer).isBankrupt()){
+            findNextPlayer(game, game.getPlayers().get(indexOfNextPlayer));
+        }else{
+            game.setCurrentPlayer(game.getPlayers().get(indexOfNextPlayer).getName());
+        }
     }
 
     public void addMove(Move move){

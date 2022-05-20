@@ -182,6 +182,7 @@ public class ServiceAdapter implements IService {
         throw new UnsupportedOperationException();
     }
 
+
     @Override
     public void rollDice(Request request) {
         throw new UnsupportedOperationException();
