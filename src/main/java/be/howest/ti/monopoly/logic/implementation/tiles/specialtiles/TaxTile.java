@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation.tiles.specialtiles;
 
+import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
@@ -46,4 +47,8 @@ public class TaxTile extends Tile {
         return totalCost;
     }
 
+    @Override
+    public void tileAction(Game game, Player player){
+
+    }
 }
