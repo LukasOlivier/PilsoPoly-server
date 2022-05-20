@@ -106,10 +106,6 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         Tile tileToBuy = player.currentTile;
-        System.out.println(game);
-        System.out.println(player.getName());
-        System.out.print("Tile to buy: ");
-        System.out.println(tileToBuy);
         try {
             checkIfTileCanBeBought(propertyName, player, tileToBuy);
             Property tileToProperty = (Property) tileToBuy;
