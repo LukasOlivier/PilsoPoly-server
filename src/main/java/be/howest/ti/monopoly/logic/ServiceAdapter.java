@@ -2,9 +2,7 @@ package be.howest.ti.monopoly.logic;
 import be.howest.ti.monopoly.logic.implementation.Auction;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-import be.howest.ti.monopoly.web.Request;
 import io.vertx.core.json.JsonObject;
-
 import java.util.List;
 import java.util.Map;
 
@@ -118,11 +116,6 @@ public class ServiceAdapter implements IService {
     }
 
     @Override
-    public void fine(String playerName,String gameId) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void setBankrupt(String playerName,String gameId) {
         throw new UnsupportedOperationException();
     }
@@ -179,12 +172,6 @@ public class ServiceAdapter implements IService {
 
     @Override
     public void settleMortgage(String gameId, String playerName, String propertyName) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    @Override
-    public void rollDice(Request request) {
         throw new UnsupportedOperationException();
     }
 
