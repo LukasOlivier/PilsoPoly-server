@@ -8,6 +8,7 @@ import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRe
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Utility;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.ChanceTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.CommunityTile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.JailTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,7 +91,7 @@ public class ServiceTest {
                 new ChanceTile("Chance I", 7),
                 new Street("Sparta Pils", 8, 3, Colors.LIGHTBLUE.toString(), new StreetHouseRent(30, 90, 270, 400, 550), 50, 6, 50, 100),
                 new Street("Schuttenbrau", 9, 3, Colors.LIGHTBLUE.toString(), new StreetHouseRent(40, 100, 300, 450, 600), 50, 8, 50, 120),
-                new Tile("Jail", 10, "Jail", "Just visiting", "visiting"),
+                new JailTile("Jail", 10, "Just visiting", "visiting"),
                 new Street("Primus", 11, 3, Colors.VIOLET.toString(), new StreetHouseRent(50, 150, 450, 625, 750), 100, 10, 70, 140),
                 new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150),
                 new Street("Bavik", 13, 3, "VIOLET", new StreetHouseRent(50, 150, 450, 625, 750), 100, 10, 70, 140),

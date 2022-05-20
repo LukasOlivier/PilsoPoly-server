@@ -6,6 +6,7 @@ import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRe
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Utility;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.JailTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -114,8 +115,8 @@ class TileTest {
     @Test
     void takeTileAction(){
         System.out.println(testGame.getCurrentPlayer());
-        Tile jail = new Tile("Jail", 10, "Jail", "jailed", "jail");
-        Tile.takeTileAction(jail, Sibren, testGame);
+        Tile jail = new JailTile("Jail", 10, "jailed", "jail");
+        jail.tileAction(testGame, Sibren);
         assertTrue(Sibren.isJailed());
         Tile tax = new TaxTile("Luxury Tax", 38, "Luxury Tax", "luxtax");
         tax.tileAction(testGame, Sibren);

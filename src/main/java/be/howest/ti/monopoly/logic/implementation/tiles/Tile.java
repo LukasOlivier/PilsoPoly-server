@@ -78,10 +78,6 @@ public class Tile {
         this.actionType = actionType;
     }
 
-    public static void takeTileAction(Tile tile, Player player, Game game) {
-        checkIfPlayerIsBankrupt(player, game);
-    }
-
     private static void checkIfPlayerIsBankrupt(Player player, Game game) {
         if (player.getMoney() < 0){
             game.setPlayerBankrupt(player);

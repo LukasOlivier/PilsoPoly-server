@@ -38,7 +38,6 @@ public class Move {
             player.currentTile = Tile.getTileFromPosition(game, currentPosition);
             tileToGo.tileAction(game, player);
 
-            Tile.takeTileAction(player.currentTile, player, game);
             checkIfPassedGo(player);
         }
 
