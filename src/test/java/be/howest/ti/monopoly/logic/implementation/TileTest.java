@@ -1,9 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 
-import be.howest.ti.monopoly.logic.implementation.tiles.Railroad;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles.StreetHouseRent;
-import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,5 +25,11 @@ class TileTest {
         Railroad readingRR = new Railroad("Reading RR", 5, "railroad", 4, "BLACK", 25,100,200);
         assertEquals("Reading RR", readingRR.getName());
         assertEquals(5, readingRR.getPosition());
+    }
+
+    @Test
+    void checkPropertyGetters(){
+        Property property = new Street("Indiana Avenue", 23, "street", 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
+        assertEquals();
     }
 }
