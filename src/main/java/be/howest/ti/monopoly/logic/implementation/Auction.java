@@ -76,7 +76,7 @@ public class Auction {
             if ( amount == -1 ) {
                 endAuction();
             }
-            if (!lastBidder.equals(bidder) && amount > highestBid) {
+            else if (!lastBidder.equals(bidder) && amount > highestBid) {
                 lastBidder = bidder;
                 highestBid = amount;
             } else {
