@@ -295,5 +295,6 @@ public class Game {
             playerProperty.getProperty().setMortgaged(false);
         }
         player.setBankrupt();
+        player.getProperties().clear();
     }
 }
