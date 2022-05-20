@@ -6,7 +6,7 @@ import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRe
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Utility;
-import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.JailTile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.GoToJailTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ class TileTest {
 
     @Test
     void testRailroadTile() {
-        Railroad readingRR = new Railroad("Reading RR", 5, 4, "BLACK", 25,100,200);
+        Railroad readingRR = new Railroad("Reading RR", 5, 4, 25,100,200);
         assertEquals("Reading RR", readingRR.getName());
         assertEquals(5, readingRR.getPosition());
     }
@@ -115,9 +115,9 @@ class TileTest {
     @Test
     void takeTileAction(){
         System.out.println(testGame.getCurrentPlayer());
-        Tile jail = new JailTile("Jail", 10, "jailed", "jail");
+        Tile jail = new Tile("Jail", 10, "Just visiting", "Just visiting.", "visiting");
         jail.tileAction(testGame, Sibren);
-        assertTrue(Sibren.isJailed());
+        assertFalse(Sibren.isJailed());
         Tile tax = new TaxTile("Luxury Tax", 38, "Luxury Tax", "luxtax");
         tax.tileAction(testGame, Sibren);
         assertEquals(1300, Sibren.getMoney());
@@ -128,28 +128,27 @@ class TileTest {
 
     @Test
     void getRentDescription(){
-        Utility utility = new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150);
+        Utility utility = new Utility("Electric Company", 12, "utility", 2, 75, 150);
         assertEquals("4 or 10 times the dice roll", utility.getRentDescription());
     }
 
     @Test
     void testEqualsUtility(){
-        Utility uitlity = new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150);
-        Utility uitlityTwo = new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150);
+        Utility uitlity = new Utility("Electric Company", 12, "utility", 2, 75, 150);
+        Utility uitlityTwo = new Utility("Electric Company", 12, "utility", 2, 75, 150);
         assertEquals(uitlity, uitlityTwo);
     }
 
     @Test
     void computeRentUtility(){
-        Utility uitlity = new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150);
-        Utility utilityTwo = new Utility("Water Works", 28, "utility", 2, Colors.WHITE.toString(), 75, 150);
+        Utility uitlity = new Utility("Electric Company", 12, "utility", 2, 75, 150);
+        Utility utilityTwo = new Utility("Water Works", 28, "utility", 2, 75, 150);
         PlayerProperty playerProperty = new PlayerProperty(utilityTwo);
         PlayerProperty playerPropertyTwo = new PlayerProperty(uitlity);
         Sibren.addProperty(playerProperty);
         Sibren.addProperty(playerPropertyTwo);
         Robin.payRent(playerProperty, testGame, Sibren);
         assertEquals(1510, Robin.getMoney());
-
     }
 }
 

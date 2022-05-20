@@ -192,6 +192,12 @@ public class Player {
         return amountOfDoubleThrows;
     }
 
+    private boolean checkIfPlayerIsBankrupt(Game game) {
+        if (this.getMoney() < 0){
+            game.setPlayerBankrupt(this);
+        }
+    }
+
     @Override
     public String toString() {
         return name;

@@ -8,14 +8,12 @@ import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRe
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Utility;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.ChanceTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.CommunityTile;
-import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.JailTile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.GoToJailTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,17 +84,17 @@ public class ServiceTest {
                 new CommunityTile("Community Chest I", 2),
                 new Street("Cara", 3, 2, Colors.PURPLE.toString(), new StreetHouseRent(20, 60, 180, 320, 450), 50, 4, 30, 60),
                 new TaxTile("Tax Income", 4, "Tax Income", "incometax"),
-                new Railroad("Brewery Artois", 5, 4, Colors.BLACK.toString(), 25, 100, 200),
+                new Railroad("Brewery Artois", 5, 4, 25, 100, 200),
                 new Street("Heineken", 6, 3, Colors.LIGHTBLUE.toString(), new StreetHouseRent(30, 90, 270, 400, 550), 50, 6, 50, 100),
                 new ChanceTile("Chance I", 7),
                 new Street("Sparta Pils", 8, 3, Colors.LIGHTBLUE.toString(), new StreetHouseRent(30, 90, 270, 400, 550), 50, 6, 50, 100),
                 new Street("Schuttenbrau", 9, 3, Colors.LIGHTBLUE.toString(), new StreetHouseRent(40, 100, 300, 450, 600), 50, 8, 50, 120),
-                new JailTile("Jail", 10, "Just visiting", "visiting"),
+                new Tile("Jail", 10, "Just visiting", "Just visiting.", "visiting"),
                 new Street("Primus", 11, 3, Colors.VIOLET.toString(), new StreetHouseRent(50, 150, 450, 625, 750), 100, 10, 70, 140),
-                new Utility("Electric Company", 12, "utility", 2, "WHITE", 75, 150),
+                new Utility("Electric Company", 12, "utility", 2, 75, 150),
                 new Street("Bavik", 13, 3, "VIOLET", new StreetHouseRent(50, 150, 450, 625, 750), 100, 10, 70, 140),
                 new Street("Bockor", 14, 3, "VIOLET", new StreetHouseRent(60, 180, 500, 700, 900), 100, 12, 80, 160),
-                new Railroad("Brewery Rodenbach", 15, 4, Colors.BLACK.toString(), 25, 100, 200),
+                new Railroad("Brewery Rodenbach", 15, 4, 25, 100, 200),
                 new Street("Stella", 16, 3, Colors.ORANGE.toString(), new StreetHouseRent(70, 200, 550, 750, 950), 100, 14, 90, 180),
                 new CommunityTile("Community Chest II", 17),
                 new Street("Jupiler", 18, 3, Colors.ORANGE.toString(), new StreetHouseRent(70, 200, 550, 750, 950), 100, 14, 90, 180),
@@ -106,17 +104,17 @@ public class ServiceTest {
                 new ChanceTile("Chance II", 22),
                 new Street("Kriek", 23, 3, Colors.RED.toString(), new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240),
                 new Street("Kasteel Rouge", 24, 3, Colors.RED.toString(), new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240),
-                new Railroad("Brewery Lupulus", 25, 4, Colors.BLACK.toString(), 25, 100, 200),
+                new Railroad("Brewery Lupulus", 25, 4, 25, 100, 200),
                 new Street("Duvel", 26, 3, Colors.YELLOW.toString(), new StreetHouseRent(110, 330, 800, 975, 1150), 150, 22, 130, 260),
                 new Street("Omer", 27, 3, Colors.YELLOW.toString(), new StreetHouseRent(110, 330, 800, 975, 1150), 150, 22, 130, 260),
-                new Utility("Water Works", 28, "utility", 2, Colors.WHITE.toString(), 75, 150),
+                new Utility("Water Works", 28, "utility", 2, 75, 150),
                 new Street("Westmalle", 29, 3, Colors.YELLOW.toString(), new StreetHouseRent(120, 360, 850, 1025, 1200), 150, 24, 280, 280),
-                new Tile("Go to Jail", 30, "Go to Jail", "has to go to jail", "jail"),
+                new GoToJailTile("Go to Jail", 30),
                 new Street("Brugse zot", 31, 3, Colors.DARKGREEN.toString(), new StreetHouseRent(130, 390, 900, 1100, 1275), 200, 26, 150, 300),
                 new Street("Chimay", 32, 3, Colors.DARKGREEN.toString(), new StreetHouseRent(130, 390, 900, 1100, 1275), 200, 26, 150, 300),
                 new CommunityTile("Community Chest III", 33),
                 new Street("Westvleteren", 34, 3, Colors.DARKGREEN.toString(), new StreetHouseRent(150, 450, 1000, 1200, 1400), 200, 28, 160, 320),
-                new Railroad("Brewery Omer Vander Ghinste", 35, 4, Colors.BLACK.toString(), 25, 100, 200),
+                new Railroad("Brewery Omer Vander Ghinste", 35, 4,25, 100, 200),
                 new ChanceTile("Chance III", 36),
                 new Street("Cornet", 37, 2, Colors.DARKBLUE.toString(), new StreetHouseRent(175, 500, 1100, 1300, 1500), 200, 35, 175, 350),
                 new TaxTile("Luxury Tax", 38, "Luxury Tax", "luxtax"),

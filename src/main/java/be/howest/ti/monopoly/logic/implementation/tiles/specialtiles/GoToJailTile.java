@@ -4,9 +4,9 @@ import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
-public class JailTile extends Tile {
-    public JailTile(String name, int position, String description, String actionType) {
-        super(name, position, "Jail", description, actionType);
+public class GoToJailTile extends Tile {
+    public GoToJailTile(String name, int position) {
+        super(name, position, "Go to Jail", "has to go to jail", "jail");
     }
 
     @Override
