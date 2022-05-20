@@ -68,12 +68,12 @@ public class Move {
     public static void checkIfPlayerCanRollAgain(Game game, Player player) {
         if (Objects.equals(player.currentTile.getActionType(), "buy")) {
             game.setCanRoll(false);
-        } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game)) {
+        } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game) && !player.isBankrupt()) {
             game.setCurrentPlayer(player.getName());
             game.setCanRoll(true);
         } else {
             game.setCanRoll(true);
-            Turn.setNextPlayer(game, player);
+            Turn.findNextPlayer(game, player);
         }
     }
 

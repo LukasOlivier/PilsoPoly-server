@@ -1,9 +1,12 @@
 package be.howest.ti.monopoly.logic.implementation;
 
+import be.howest.ti.monopoly.logic.IService;
 import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
+import be.howest.ti.monopoly.logic.implementation.tiles.*;
 import org.junit.jupiter.api.Test;
 
 
+import static be.howest.ti.monopoly.logic.implementation.tiles.AllGameTiles.STREET;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -55,14 +58,16 @@ class GameTest {
 
     @Test
     void bankruptTest(){
+        Property property = new Street("Delhaize 365", 1, STREET, 2, Colors.PURPLE.toString(), new StreetHouseRent(10,30,90,160,250), 50, 2, 30, 60);
         testGame.addPlayer("Sibren", "icon");
         testGame.addPlayer("Robin", "icon");
         testGame.addPlayer("Lukas", "icon");
-        testGame.getSpecificPlayer("Sibren").setBankrupt();
-        testGame.getSpecificPlayer("Lukas").setBankrupt();
+        testGame.getSpecificPlayer(testGame.getSpecificPlayer("Sibren").getName()).addProperty(new PlayerProperty(property));
+        testGame.setPlayerBankrupt(testGame.getSpecificPlayer("Sibren"));
+        testGame.getSpecificPlayer(testGame.getSpecificPlayer("Lukas").getName()).setBankrupt();
         testGame.isEveryoneBankrupt();
         assertFalse(testGame.getSpecificPlayer("Robin").isBankrupt());
-        assertTrue(testGame.getSpecificPlayer("Lukas").isBankrupt());
         assertEquals("Robin" ,testGame.getWinner());
     }
+
 }

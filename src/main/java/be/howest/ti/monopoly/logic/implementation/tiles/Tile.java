@@ -108,5 +108,12 @@ public class Tile {
                 break;
             default:
         }
+        checkIfPlayerIsBankrupt(player, game);
+    }
+
+    private static void checkIfPlayerIsBankrupt(Player player, Game game) {
+        if (player.getMoney() < 0){
+            game.setPlayerBankrupt(player);
+        }
     }
 }
