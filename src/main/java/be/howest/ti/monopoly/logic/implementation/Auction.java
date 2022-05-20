@@ -75,9 +75,8 @@ public class Auction {
         if (checkIfCanBid()) {
             if ( amount == -1 ) {
                 endAuction();
-                throw new IllegalStateException("can't place a bid");
             }
-            if (!lastBidder.equals(bidder) && amount > highestBid) {
+            else if (!lastBidder.equals(bidder) && amount > highestBid) {
                 lastBidder = bidder;
                 highestBid = amount;
             } else {
@@ -85,7 +84,6 @@ public class Auction {
             }
         } else {
             endAuction();
-            throw new IllegalStateException("can't place a bid");
         }
     }
 

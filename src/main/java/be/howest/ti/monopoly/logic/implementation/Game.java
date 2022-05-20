@@ -216,19 +216,20 @@ public class Game {
         this.winner = winner;
     }
 
+
     public void isEveryoneBankrupt() {
-        int bankruptCounter = 0;
-        String possibleWinner = null;
-        for (Player player : getPlayers()) {
-            if (player.isBankrupt()) {
-                bankruptCounter++;
-            } else {
-                possibleWinner = player.getName();
+            int numberOfPlayersBankrupt = 0;
+            String possibleWinner = null;
+            for (Player player : getPlayers()) {
+                if (player.isBankrupt()) {
+                    numberOfPlayersBankrupt++;
+                } else {
+                    possibleWinner = player.getName();
+                }
             }
-        }
-        if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null) {
-            this.winner = possibleWinner;
-        }
+            if ((numberOfPlayersBankrupt == getNumberOfPlayers() - 1) && possibleWinner != null) {
+                this.winner = possibleWinner;
+            }
     }
 
     public static List<CommunityOrChanceCard> createCommunityCards(){
@@ -281,5 +282,22 @@ public class Game {
     public static CommunityOrChanceCard getRandomChanceCardAction() {
         int randomNumber = random.nextInt(chanceCards.size());
         return chanceCards.get(randomNumber);
+    }
+
+    public  void setPlayerBankrupt(Player player) {
+        if (Objects.equals(currentPlayer, player.getName())){
+            int indexOfNextPlayer = players.indexOf(player) + 1;
+            setCurrentPlayer(players.get(indexOfNextPlayer).getName());
+        }
+        player.setBankrupt();
+        removePropertiesFromPlayer(player);
+    }
+
+    private void removePropertiesFromPlayer(Player player){
+        for (PlayerProperty playerProperty : player.getProperties()){
+            playerProperty.getProperty().setBought(false);
+            playerProperty.getProperty().setMortgaged(false);
+        }
+        player.getProperties().clear();
     }
 }

@@ -42,9 +42,8 @@ class AuctionTest {
     @Test
     public void clientSendsBidToEndAuction() {
         Auction testAuction = new Auction("niels", "Kriek", game);
-        assertThrows(IllegalStateException.class, () -> {
-            testAuction.addBid("niels", -1);
-        });
+        testAuction.addBid("niels", -1);
+        assertTrue(testAuction.auctionHasEnded());
     }
 
     @Test
@@ -58,7 +57,7 @@ class AuctionTest {
     public void findAuctionWinner() {
         Auction testAuction = new Auction("niels", "jupiler", game);
         testAuction.addBid("lukas", 100);
-        assertEquals(game.getSpecificPlayer("lukas"), testAuction.findAuctionWinner());
+        assertEquals(game.getSpecificPlayer("lukas"), testAuction.findAuctionWinner());;
     }
 
     @Test
@@ -66,6 +65,7 @@ class AuctionTest {
         Auction testAuction = new Auction("niels", "jupiler", game);
         Tile tile = new Street("Bush12", 39, "street", 3, Colors.DARKBLUE.toString(), new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
         assertEquals(testAuction.findTile("Bush12"), tile);
+        assertNull(testAuction.findTile("randomTile"));
     }
 
     @Test

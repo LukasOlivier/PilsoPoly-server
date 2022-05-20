@@ -110,6 +110,9 @@ public class Player {
     public void payRent(PlayerProperty playerProperty, Game game, Player debtPlayer){
         int rent = playerProperty.getProperty().computeRent(game, playerProperty, debtPlayer, this);
         transfer(debtPlayer, rent);
+        if (money < 0){
+            game.setPlayerBankrupt(this);
+        }
     }
 
     public int checkHowManyUtilities(String type) {
