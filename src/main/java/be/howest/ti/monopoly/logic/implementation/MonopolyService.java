@@ -183,13 +183,13 @@ public class MonopolyService extends ServiceAdapter {
             throw new IllegalArgumentException("Player is not on the tile.");
         }
         if (findBoughtPropertyByOwner(player.currentTile.getName(), debtPlayerName,game) == null){
-            throw new IllegalArgumentException("The tile is not your property");
+            throw new IllegalArgumentException("The tile is not your property.");
         }
         if (!Objects.equals(playerProperty.getPropertyActionType(), "rent")){
-            throw new IllegalArgumentException("This tile is not bought yet");
+            throw new IllegalArgumentException("This tile is not bought yet.");
         }
         if (playerProperty.isMortgage()){
-            throw new IllegalArgumentException("This tile is mortgaged");
+            throw new IllegalArgumentException("This tile is mortgaged.");
         }
     }
 
@@ -314,20 +314,20 @@ public class MonopolyService extends ServiceAdapter {
 
     public void checkIfTileCanBeMortgaged(PlayerProperty playerProperty) {
         if (playerProperty == null) {
-            throw new IllegalArgumentException("trying to mortgage someone else's tile");
+            throw new IllegalArgumentException("Trying to mortgage someone else's tile");
         }
         if (playerProperty.isMortgage()) {
-            throw new IllegalStateException("property is already mortgaged");
+            throw new IllegalStateException("Property is already mortgaged");
         }
     }
 
 
     public void checkIfTileCanBeUnMortgaged(PlayerProperty playerProperty) {
         if (playerProperty == null) {
-            throw new IllegalArgumentException("trying to mortgage someone else's tile");
+            throw new IllegalArgumentException("Trying to mortgage someone else's tile");
         }
         if (!playerProperty.isMortgage()) {
-            throw new IllegalStateException("property is not mortgaged");
+            throw new IllegalStateException("Property is not mortgaged");
         }
     }
 

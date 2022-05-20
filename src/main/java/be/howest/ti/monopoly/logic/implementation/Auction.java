@@ -80,7 +80,7 @@ public class Auction {
                 lastBidder = bidder;
                 highestBid = amount;
             } else {
-                throw new IllegalMonopolyActionException("Could not add bid");
+                throw new IllegalMonopolyActionException("Could not add bid.");
             }
         } else {
             endAuction();
