@@ -88,31 +88,27 @@ public class Tile {
                 break;
             case "luxtax":
                 player.removeMoney(Tax.getIncomeTax());
-                checkIfPlayerIsBankrupt(player, game);
                 break;
             case "incometax":
                 if (Objects.equals(player.getTaxSystem(), "ESTIMATE")) {
                     player.removeMoney(Tax.getEstimateTax());
-                    checkIfPlayerIsBankrupt(player, game);
                 } else {
                     player.removeMoney(Tax.getComputeTax(player));
-                    checkIfPlayerIsBankrupt(player, game);
                 }
                 break;
             case "chance":
                 CommunityOrChanceCard chanceCard = Game.getRandomChanceCardAction();
                 tile.setDescription(chanceCard.toString());
                 chanceCard.cardAction(game, player);
-                checkIfPlayerIsBankrupt(player, game);
                 break;
             case "community":
                 CommunityOrChanceCard communityCard = Game.getRandomCommunityCardAction();
                 tile.setDescription(communityCard.toString());
                 communityCard.cardAction(game, player);
-                checkIfPlayerIsBankrupt(player, game);
                 break;
             default:
         }
+        checkIfPlayerIsBankrupt(player, game);
     }
 
     private static void checkIfPlayerIsBankrupt(Player player, Game game) {
