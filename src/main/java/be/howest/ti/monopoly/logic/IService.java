@@ -45,8 +45,6 @@ public interface IService {
     // RENT
     void collectDebt(String gameName,String playerName, String debtPlayerName,String tileName);
 
-    void fine(String playerName, String gameId);
-
     void setBankrupt(String playerName,String gameId);
 
     Map<String, Game> getGames();
@@ -64,8 +62,6 @@ public interface IService {
     void buyHouse(String gameId, String playerName, String propertyName);
 
     void sellHouse(String gameId, String playerName, String propertyName);
-
-    void rollDice(Request request);
 
     void takeMortgage(String gameId, String playerName, String propertyName);
 
