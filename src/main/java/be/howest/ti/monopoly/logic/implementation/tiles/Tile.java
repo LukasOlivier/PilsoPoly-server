@@ -86,16 +86,6 @@ public class Tile {
                 player.currentTile = new Tile("Jail", 10, "Jail", "You are in jail", "jailed");
                 player.setJailed(true);
                 break;
-            case "luxtax":
-                player.removeMoney(TaxTile.getIncomeTax());
-                break;
-            case "incometax":
-                if (Objects.equals(player.getTaxSystem(), "ESTIMATE")) {
-                    player.removeMoney(TaxTile.getEstimateTax());
-                } else {
-                    player.removeMoney(TaxTile.getComputeTax(player));
-                }
-                break;
             default:
         }
         checkIfPlayerIsBankrupt(player, game);

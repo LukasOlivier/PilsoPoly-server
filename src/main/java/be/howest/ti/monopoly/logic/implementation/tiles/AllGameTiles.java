@@ -5,6 +5,7 @@ import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRe
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Utility;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.ChanceTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.CommunityTile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class AllGameTiles {
                 new Street("Delhaize 365", 1, 2, Colors.PURPLE.toString(), new StreetHouseRent(10,30,90,160,250), 50, 2, 30, 60),
                 new CommunityTile("Community Chest I", 2),
                 new Street("Cara", 3, 2, Colors.PURPLE.toString(), new StreetHouseRent(20, 60, 180, 320, 450), 50, 4, 30, 60),
-                new Tile("Tax Income", 4, "Tax Income", "Pay taxes", "incometax"),
+                new TaxTile("Tax Income", 4, "Tax Income", "incometax"),
                 new Railroad("Brewery Artois", 5, 4, Colors.BLACK.toString(), 25, 100, 200),
                 new Street("Heineken", 6, 3, Colors.LIGHTBLUE.toString(), new StreetHouseRent(30, 90, 270, 400, 550), 50, 6, 50, 100),
                 new ChanceTile("Chance I", 7),
@@ -54,7 +55,7 @@ public class AllGameTiles {
                 new Railroad("Brewery Omer Vander Ghinste", 35, 4, Colors.BLACK.toString(), 25, 100, 200),
                 new ChanceTile("Chance III", 36),
                 new Street("Cornet", 37, 2, Colors.DARKBLUE.toString(), new StreetHouseRent(175, 500, 1100, 1300, 1500), 200, 35, 175, 350),
-                new Tile("Luxury Tax", 38, "Luxury Tax", "Pay taxes", "luxtax"),
+                new TaxTile("Luxury Tax", 38, "Luxury Tax", "luxtax"),
                 new Street("Bush12", 39, 3, Colors.DARKBLUE.toString(), new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400)
         );
     }

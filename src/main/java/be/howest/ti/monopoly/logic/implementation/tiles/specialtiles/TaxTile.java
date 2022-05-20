@@ -6,27 +6,25 @@ import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
 
+import java.util.Objects;
+
 public class TaxTile extends Tile {
-    static int incomeTax = 200;
-    static int estimateTax = 200;
-    static double computeTaxMultiplier = 0.1;
 
-    public TaxTile(String name, int position, String type, String description, String actionType) {
-        super(name, position, type, description, actionType);
+    static final int INCOME_TAX = 200;
+    static final int ESTIMATE_TAX = 200;
+    static final double COMPUTE_TAX_MULTIPLIER = 0.1;
+
+    public TaxTile(String name, int position, String type, String actionType) {
+        super(name, position, type, "Pay your taxes!" , actionType);
     }
-
 
     public static int getIncomeTax() {
-        return incomeTax;
-    }
-
-    public static int getEstimateTax() {
-        return estimateTax;
+        return INCOME_TAX;
     }
 
     public static int getComputeTax(Player player) {
         int totalWorthToTheBank = player.getMoney() + getTotalTilesCost(player) + getTotalBuildingsCost(player);
-        return (int) Math.round(computeTaxMultiplier * totalWorthToTheBank);
+        return (int) Math.round(COMPUTE_TAX_MULTIPLIER * totalWorthToTheBank);
     }
 
     private static int getTotalTilesCost(Player player) {
@@ -49,6 +47,14 @@ public class TaxTile extends Tile {
 
     @Override
     public void tileAction(Game game, Player player){
-
+        if (Objects.equals(this.getActionType(), "luxtax")) {
+            player.removeMoney(INCOME_TAX);
+        } else {
+            if (Objects.equals(player.getTaxSystem(), "ESTIMATE")) {
+                player.removeMoney(ESTIMATE_TAX);
+            } else {
+                player.removeMoney(TaxTile.getComputeTax(player));
+            }
+        }
     }
 }
