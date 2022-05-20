@@ -45,4 +45,5 @@ public class TaxTile extends Tile {
         }
         return totalCost;
     }
+
 }
