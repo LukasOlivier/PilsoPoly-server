@@ -1,4 +1,5 @@
 package be.howest.ti.monopoly.logic.implementation;
+
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,7 +40,7 @@ public class PlayerProperty {
     }
 
     public PlayerProperty(Property property) {
-            this(property, false, 0, 0);
+        this(property, false, 0, 0);
     }
 
     @JsonIgnore
@@ -151,8 +152,10 @@ public class PlayerProperty {
             currentHousesAfterAction -= 1;
         }
         for ( PlayerProperty prop : playerProperties ) {
-            if ( Math.abs(currentHousesAfterAction - prop.getHouseCount()) > maxHouseDifference ) {
-                return false;
+            if ( property.getColor().equals(prop.property.getColor()) ) {
+                if ( Math.abs(currentHousesAfterAction - prop.getHouseCount()) > maxHouseDifference ) {
+                    return false;
+                }
             }
         }
         return true;

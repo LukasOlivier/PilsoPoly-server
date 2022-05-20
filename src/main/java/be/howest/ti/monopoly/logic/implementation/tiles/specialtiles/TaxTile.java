@@ -1,15 +1,19 @@
-package be.howest.ti.monopoly.logic.implementation;
+package be.howest.ti.monopoly.logic.implementation.tiles.specialtiles;
 
+import be.howest.ti.monopoly.logic.implementation.Player;
+import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
+import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
 
-public class Tax {
+public class TaxTile extends Tile {
     static int incomeTax = 200;
     static int estimateTax = 200;
     static double computeTaxMultiplier = 0.1;
 
-    Tax() {
-        throw new IllegalStateException("can not initiate");
+    public TaxTile(String name, int position, String type, String description, String actionType) {
+        super(name, position, type, description, actionType);
     }
+
 
     public static int getIncomeTax() {
         return incomeTax;

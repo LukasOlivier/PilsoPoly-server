@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.Tax;
-import be.howest.ti.monopoly.logic.implementation.cummunityandchance.CommunityOrChanceCard;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
+
 import java.util.Objects;
 
 public class Tile {
@@ -87,13 +87,13 @@ public class Tile {
                 player.setJailed(true);
                 break;
             case "luxtax":
-                player.removeMoney(Tax.getIncomeTax());
+                player.removeMoney(TaxTile.getIncomeTax());
                 break;
             case "incometax":
                 if (Objects.equals(player.getTaxSystem(), "ESTIMATE")) {
-                    player.removeMoney(Tax.getEstimateTax());
+                    player.removeMoney(TaxTile.getEstimateTax());
                 } else {
-                    player.removeMoney(Tax.getComputeTax(player));
+                    player.removeMoney(TaxTile.getComputeTax(player));
                 }
                 break;
             default:
