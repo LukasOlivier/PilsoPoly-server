@@ -72,16 +72,7 @@ class PlayerTest {
         assertEquals(1000, testPlayer.getMoney());
     }
 
-    @Test
-    void testTaxSystem() {
-        Player testPlayer = new Player("Sibren", "Beer");
 
-        testPlayer.setTaxSystem("ESTIMATE");
-        assertEquals("ESTIMATE", testPlayer.getTaxSystem());
-
-        testPlayer.setTaxSystem("COMPUTE");
-        assertEquals("COMPUTE", testPlayer.getTaxSystem());
-    }
 
     @Test
     void setCurrentTile() {

@@ -238,11 +238,20 @@ public class Game {
         removePropertiesFromPlayer(player);
     }
 
-    private void removePropertiesFromPlayer(Player player){
-        for (PlayerProperty playerProperty : player.getProperties()){
+    private void removePropertiesFromPlayer(Player player) {
+        for (PlayerProperty playerProperty : player.getProperties()) {
             playerProperty.getProperty().setBought(false);
             playerProperty.getProperty().setMortgaged(false);
         }
         player.getProperties().clear();
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "numberOfPlayers=" + numberOfPlayers +
+                ", started=" + started +
+                ", id='" + id + '\'' +
+                '}';
     }
 }
