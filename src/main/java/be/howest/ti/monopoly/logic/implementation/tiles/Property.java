@@ -16,7 +16,7 @@ public abstract class Property extends Tile {
     private boolean mortgaged;
 
     public Property(String name, int position, String type, int groupSize, String color, int rent, int mortgage, int cost) {
-        super(name, position, type, "can buy this property in direct sale","buy");
+        super(name, position, type, "You can buy this property in direct sale","buy");
         this.groupSize = groupSize;
         this.color = color;
         this.rent = rent;
@@ -58,11 +58,11 @@ public abstract class Property extends Tile {
     public String getDescription() {
         if (isBought()) {
             if (isMortgaged()){
-                return "no need to pay rent, the tile is mortgaged";
+                return "No need to pay rent, the tile is mortgaged";
             }
-            return "should pay rent";
+            return "You need to pay rent";
         } else {
-            return "can buy this property in direct sale";
+            return "You can buy this property in direct sale";
         }
     }
 
