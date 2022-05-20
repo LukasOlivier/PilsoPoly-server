@@ -7,7 +7,7 @@ public class Tax {
     static int estimateTax = 200;
     static double computeTaxMultiplier = 0.1;
 
-    private Tax() {
+    Tax() {
         throw new IllegalStateException("can not initiate");
     }
 

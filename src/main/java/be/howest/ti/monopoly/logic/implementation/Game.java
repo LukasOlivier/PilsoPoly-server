@@ -282,4 +282,13 @@ public class Game {
         int randomNumber = random.nextInt(chanceCards.size());
         return chanceCards.get(randomNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "numberOfPlayers=" + numberOfPlayers +
+                ", started=" + started +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
