@@ -284,16 +284,20 @@ public class Game {
         return chanceCards.get(randomNumber);
     }
 
-    public  void removePropertiesFromPlayer(Player player) {
+    public  void setPlayerBankrupt(Player player) {
         if (Objects.equals(currentPlayer, player.getName())){
             int indexOfNextPlayer = players.indexOf(player) + 1;
             setCurrentPlayer(players.get(indexOfNextPlayer).getName());
         }
+        player.setBankrupt();
+        removePropertiesFromPlayer(player);
+    }
+
+    private void removePropertiesFromPlayer(Player player){
         for (PlayerProperty playerProperty : player.getProperties()){
             playerProperty.getProperty().setBought(false);
             playerProperty.getProperty().setMortgaged(false);
         }
-        player.setBankrupt();
         player.getProperties().clear();
     }
 }

@@ -113,7 +113,7 @@ public class Tile {
 
     private static void checkIfPlayerIsBankrupt(Player player, Game game) {
         if (player.getMoney() < 0){
-            game.removePropertiesFromPlayer(player);
+            game.setPlayerBankrupt(player);
         }
     }
 }

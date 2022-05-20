@@ -111,7 +111,7 @@ public class Player {
         int rent = playerProperty.getProperty().computeRent(game, playerProperty, debtPlayer, this);
         transfer(debtPlayer, rent);
         if (money < 0){
-            game.removePropertiesFromPlayer(this);
+            game.setPlayerBankrupt(this);
         }
     }
 
