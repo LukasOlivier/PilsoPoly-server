@@ -218,16 +218,16 @@ public class Game {
 
 
     public void isEveryoneBankrupt() {
-            int bankruptCounter = 0;
+            int numberOfPlayersBankrupt = 0;
             String possibleWinner = null;
             for (Player player : getPlayers()) {
                 if (player.isBankrupt()) {
-                    bankruptCounter++;
+                    numberOfPlayersBankrupt++;
                 } else {
                     possibleWinner = player.getName();
                 }
             }
-            if ((bankruptCounter == getNumberOfPlayers() - 1) && possibleWinner != null) {
+            if ((numberOfPlayersBankrupt == getNumberOfPlayers() - 1) && possibleWinner != null) {
                 this.winner = possibleWinner;
             }
     }
