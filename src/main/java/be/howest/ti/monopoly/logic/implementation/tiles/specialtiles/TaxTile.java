@@ -10,9 +10,9 @@ import java.util.Objects;
 
 public class TaxTile extends Tile {
 
-    static final int INCOME_TAX = 200;
-    static final int ESTIMATE_TAX = 200;
-    static final double COMPUTE_TAX_MULTIPLIER = 0.1;
+    private static final int INCOME_TAX = 200;
+    private static final int ESTIMATE_TAX = 200;
+    private static final double COMPUTE_TAX_MULTIPLIER = 0.1;
 
     public TaxTile(String name, int position, String type, String actionType) {
         super(name, position, type, "Pay your taxes!" , actionType);

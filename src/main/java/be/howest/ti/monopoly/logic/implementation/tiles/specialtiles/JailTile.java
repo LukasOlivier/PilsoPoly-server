@@ -11,6 +11,7 @@ public class JailTile extends Tile {
 
     @Override
     public void tileAction(Game game, Player player) {
+        player.setCurrentTile();
         player.setJailed(true);
     }
 }

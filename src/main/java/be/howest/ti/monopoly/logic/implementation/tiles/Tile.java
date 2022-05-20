@@ -1,8 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
-
 import java.util.Objects;
 
 public class Tile {
@@ -81,13 +79,6 @@ public class Tile {
     }
 
     public static void takeTileAction(Tile tile, Player player, Game game) {
-        switch (tile.getActionType()) {
-            case "jail":
-                player.currentTile = new Tile("Jail", 10, "Jail", "You are in jail", "jailed");
-                player.setJailed(true);
-                break;
-            default:
-        }
         checkIfPlayerIsBankrupt(player, game);
     }
 
