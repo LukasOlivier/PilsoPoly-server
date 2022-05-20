@@ -93,4 +93,12 @@ class MoveTest {
 
         assertEquals(1700, alice.getMoney());
     }
+
+    @Test
+    void testGetter(){
+        Move move = new Move("Cara","You can buy this property in direct sale","buy");
+        assertEquals("buy", move.getActionType());
+        assertEquals("You can buy this property in direct sale", move.getDescription());
+        assertEquals("Cara", move.getTile());
+    }
 }
