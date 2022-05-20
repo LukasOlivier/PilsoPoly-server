@@ -54,7 +54,6 @@ class GameTest {
         assertTrue(testGame.isStarted());
     }
 
-
     @Test
     void bankruptTest(){
         Property property = new Street("Delhaize 365", 1, 2, Colors.PURPLE.toString(), new StreetHouseRent(10,30,90,160,250), 50, 2, 30, 60);
