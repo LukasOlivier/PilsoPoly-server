@@ -232,7 +232,6 @@ public class Game {
             }
     }
 
-
     public static List<CommunityOrChanceCard> createCommunityCards(){
         return List.of(
             new PayOrReceive("Doctor's fee. Pay $50", -50),

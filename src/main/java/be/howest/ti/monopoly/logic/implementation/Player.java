@@ -1,7 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
