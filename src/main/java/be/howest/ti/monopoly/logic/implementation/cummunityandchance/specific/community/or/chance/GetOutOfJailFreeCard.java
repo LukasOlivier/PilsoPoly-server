@@ -1,7 +1,7 @@
-package be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards;
+package be.howest.ti.monopoly.logic.implementation.cummunityandchance.specific.community.or.chance;
 
 import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
+import be.howest.ti.monopoly.logic.implementation.cummunityandchance.CommunityOrChanceCard;
 import be.howest.ti.monopoly.logic.implementation.Game;
 
 public class GetOutOfJailFreeCard extends CommunityOrChanceCard {

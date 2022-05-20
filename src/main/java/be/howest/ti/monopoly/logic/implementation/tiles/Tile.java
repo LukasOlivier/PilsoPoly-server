@@ -2,7 +2,7 @@ package be.howest.ti.monopoly.logic.implementation.tiles;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.Tax;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
+import be.howest.ti.monopoly.logic.implementation.cummunityandchance.CommunityOrChanceCard;
 import java.util.Objects;
 
 public class Tile {
@@ -96,16 +96,6 @@ public class Tile {
                     player.removeMoney(Tax.getComputeTax(player));
                 }
                 break;
-            case "chance":
-                CommunityOrChanceCard chanceCard = Game.getRandomChanceCardAction();
-                tile.setDescription(chanceCard.toString());
-                chanceCard.cardAction(game, player);
-                break;
-            case "community":
-                CommunityOrChanceCard communityCard = Game.getRandomCommunityCardAction();
-                tile.setDescription(communityCard.toString());
-                communityCard.cardAction(game, player);
-                break;
             default:
         }
         checkIfPlayerIsBankrupt(player, game);
@@ -115,5 +105,9 @@ public class Tile {
         if (player.getMoney() < 0){
             game.setPlayerBankrupt(player);
         }
+    }
+
+    public void tileAction(Game game, Player player){
+        // make abstract or DO something
     }
 }

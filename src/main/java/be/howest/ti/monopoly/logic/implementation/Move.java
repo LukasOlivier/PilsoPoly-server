@@ -34,7 +34,9 @@ public class Move {
         int amountOfTiles = 40;
         if (!player.isJailed()){
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % amountOfTiles;
+            Tile tileToGo = Tile.getTileFromPosition(game, currentPosition);
             player.currentTile = Tile.getTileFromPosition(game, currentPosition);
+            tileToGo.tileAction(game, player);
             Tile.takeTileAction(player.currentTile, player, game);
             checkIfPassedGo(player);
         }

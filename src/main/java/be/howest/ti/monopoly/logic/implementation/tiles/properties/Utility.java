@@ -1,8 +1,9 @@
-package be.howest.ti.monopoly.logic.implementation.tiles;
+package be.howest.ti.monopoly.logic.implementation.tiles.properties;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
+import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;

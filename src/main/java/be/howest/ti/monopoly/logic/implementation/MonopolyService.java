@@ -256,7 +256,6 @@ public class MonopolyService extends ServiceAdapter {
         Player player = game.getSpecificPlayer(playerName);
         PlayerProperty property = getCorrectProperty(player, propertyName);
         property.addHouse(player, player.getProperties());
-
     }
 
     @Override

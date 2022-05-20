@@ -1,6 +1,10 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.tiles.*;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.Railroad;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.Utility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +53,7 @@ class PlayerTest {
 
     @Test
     void buyProperty() {
-        Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
+        Property testProperty = new Street("Indiana Avenue", 23, 3, "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
         Player testPlayer = new Player("Sibren", "Beer");
 
@@ -101,7 +105,7 @@ class PlayerTest {
 
     @Test
     void payRentStreet(){
-        Property testProperty = new Street("Indiana Avenue", 23, "street", 3, "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
+        Property testProperty = new Street("Indiana Avenue", 23, 3, "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
 
         // No houses
         PlayerProperty playerProperty = new PlayerProperty(testProperty, false, 0, 0);
@@ -149,7 +153,7 @@ class PlayerTest {
     @Test
     void payRentRailRoad(){
         Dice diceRoll = new Dice();
-        Property testProperty = new Railroad("Reading RR", 5, "railroad", 4, "BLACK", 25, 100, 200);
+        Property testProperty = new Railroad("Reading RR", 5, 4, "BLACK", 25, 100, 200);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
 
         testGame.setLastDiceRoll(diceRoll);

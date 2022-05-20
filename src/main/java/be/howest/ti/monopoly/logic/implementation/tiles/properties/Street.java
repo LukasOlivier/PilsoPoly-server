@@ -1,8 +1,9 @@
-package be.howest.ti.monopoly.logic.implementation.tiles;
+package be.howest.ti.monopoly.logic.implementation.tiles.properties;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
+import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,8 @@ public class Street extends Property {
     private final StreetHouseRent rentOfHouses;
     private final List<Integer> listOfRents = new ArrayList<>();
 
-    public Street(String name, int position, String type, int groupSize, String color, StreetHouseRent rentOfHouses, int housePrice, int rent, int mortgage, int cost) {
-        super(name, position, type, groupSize, color,rent,mortgage,cost);
+    public Street(String name, int position, int groupSize, String color, StreetHouseRent rentOfHouses, int housePrice, int rent, int mortgage, int cost) {
+        super(name, position, "street", groupSize, color,rent,mortgage,cost);
         this.rentOfHouses = rentOfHouses;
         this.housePrice = housePrice;
         listOfRents.add(getRent());
