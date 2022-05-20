@@ -106,6 +106,9 @@ public class MonopolyService extends ServiceAdapter {
         Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         Tile tileToBuy = player.currentTile;
+        System.out.println(player.getName());
+        System.out.print("Tile to buy: ");
+        System.out.println(tileToBuy);
         try {
             checkIfTileCanBeBought(propertyName, player, tileToBuy);
             Property tileToProperty = (Property) tileToBuy;
@@ -160,8 +163,8 @@ public class MonopolyService extends ServiceAdapter {
     }
 
     @Override
-    public void collectDebt(String gameName, String playerName, String debtPlayerName, String tileName){
-        Game game = getGameById(gameName);
+    public void collectDebt(String gameId, String playerName, String debtPlayerName, String tileName){
+        Game game = getGameById(gameId);
         Player player = game.getSpecificPlayer(playerName);
         Player debtPlayer = game.getSpecificPlayer(debtPlayerName);
         Tile tile = getTile(tileName);

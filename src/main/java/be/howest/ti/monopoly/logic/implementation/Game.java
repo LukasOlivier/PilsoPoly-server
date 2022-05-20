@@ -284,6 +284,7 @@ public class Game {
         return chanceCards.get(randomNumber);
     }
 
+
     public  void setPlayerBankrupt(Player player) {
         if (Objects.equals(currentPlayer, player.getName())){
             int indexOfNextPlayer = players.indexOf(player) + 1;
@@ -293,11 +294,20 @@ public class Game {
         removePropertiesFromPlayer(player);
     }
 
-    private void removePropertiesFromPlayer(Player player){
-        for (PlayerProperty playerProperty : player.getProperties()){
+    private void removePropertiesFromPlayer(Player player) {
+        for (PlayerProperty playerProperty : player.getProperties()) {
             playerProperty.getProperty().setBought(false);
             playerProperty.getProperty().setMortgaged(false);
         }
         player.getProperties().clear();
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "numberOfPlayers=" + numberOfPlayers +
+                ", started=" + started +
+                ", id='" + id + '\'' +
+                '}';
     }
 }
