@@ -18,6 +18,7 @@ public class ChanceTile extends Tile {
     public ChanceTile(String name, int position) {
         super(name, position, "chance", "Draw a chance card!", "chance");
     }
+
     public static List<CommunityOrChanceCard> createChanceCards(){
         return List.of(
                 new GetOutOfJailFreeCard("Get Out of Jail Free"),
@@ -38,7 +39,7 @@ public class ChanceTile extends Tile {
         );
     }
 
-    public static CommunityOrChanceCard getRandomChanceCardAction() {
+    private CommunityOrChanceCard getRandomChanceCardAction() {
         int randomNumber = random.nextInt(chanceCards.size());
         return chanceCards.get(randomNumber);
     }

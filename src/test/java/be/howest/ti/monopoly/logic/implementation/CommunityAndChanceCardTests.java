@@ -3,6 +3,8 @@ import be.howest.ti.monopoly.logic.implementation.community_and_chance.specific_
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.ChanceTile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.CommunityTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +36,28 @@ class CommunityAndChanceCardTests {
         Niels = testGame.getSpecificPlayer("Niels");
         Sibren = testGame.getSpecificPlayer("Sibren");
         Robin = testGame.getSpecificPlayer("Robin");
+    }
+
+    @Test
+    void chanceTileDescription() {
+        ChanceTile chanceTile = new ChanceTile("Chance tile!", 7);
+        testGame.addTurn(new Turn(Robin.getName(), "DEFAULT"));
+
+        String oldDescription = chanceTile.getDescription();
+        chanceTile.tileAction(testGame, Robin);
+
+        assertNotEquals(oldDescription, chanceTile.getDescription());
+    }
+
+    @Test
+    void communityTileDescription() {
+        CommunityTile communityTile = new CommunityTile("Community tile!", 7);
+        testGame.addTurn(new Turn(Robin.getName(), "DEFAULT"));
+
+        String oldDescription = communityTile.getDescription();
+        communityTile.tileAction(testGame, Robin);
+
+        assertNotEquals(oldDescription, communityTile.getDescription());
     }
 
     @Test
