@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -10,21 +10,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerPropertyTest {
 
-    private PlayerProperty mediterranean = new PlayerProperty(new Street("Mediterranean", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
-    public PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400));
-    public PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", new StreetHouseRent(175, 500, 1100, 1300,1500), 200, 35, 175, 350));
+    private PlayerProperty mediterranean = new PlayerProperty(new Street("Mediterranean", 1, 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
+    public PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400));
+    public PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, 2, "DARKBLUE", new StreetHouseRent(175, 500, 1100, 1300,1500), 200, 35, 175, 350));
 
 
     @AfterEach
     void createProperties() {
-        PlayerProperty mediterranean = new PlayerProperty(new Street("Mediterranean", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
-        PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, "street", 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400));
-        PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, "street", 2, "DARKBLUE", new StreetHouseRent(175, 500, 1100, 1300,1500), 200, 35, 175, 350));
+        PlayerProperty mediterranean = new PlayerProperty(new Street("Mediterranean", 1, 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
+        PlayerProperty boardwalk = new PlayerProperty(new Street("Boardwalk", 39, 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400));
+        PlayerProperty parkPlace = new PlayerProperty(new Street("Park Place", 37, 2, "DARKBLUE", new StreetHouseRent(175, 500, 1100, 1300,1500), 200, 35, 175, 350));
     }
 
     @Test
     void testPlayerProperties() {
-        PlayerProperty testProperty = new PlayerProperty(new Street("Mediterranean", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
+        PlayerProperty testProperty = new PlayerProperty(new Street("Mediterranean", 1, 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60));
         assertEquals("Mediterranean", testProperty.getPropertyName());
     }
 
@@ -87,7 +87,7 @@ class PlayerPropertyTest {
 
     @Test
     void testTakeMortgage(){
-        Street street = new Street("Boardwalk", 39, "street", 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
+        Street street = new Street("Boardwalk", 39, 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
         Property property = (Property) street;
         final PlayerProperty boardwalk = new PlayerProperty(street);
         Player player = new Player("niels", "beer");
@@ -99,7 +99,7 @@ class PlayerPropertyTest {
 
     @Test
     void testSettleMortgage(){
-        Street street = new Street("Boardwalk", 39, "street", 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
+        Street street = new Street("Boardwalk", 39, 2, "DARKBLUE", new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
         final PlayerProperty boardwalk = new PlayerProperty(street);
         Player player = new Player("niels", "beer");
         player.addProperty(boardwalk);

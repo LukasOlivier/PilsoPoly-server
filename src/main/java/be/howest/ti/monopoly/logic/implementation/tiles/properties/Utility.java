@@ -1,8 +1,10 @@
-package be.howest.ti.monopoly.logic.implementation.tiles;
+package be.howest.ti.monopoly.logic.implementation.tiles.properties;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
+import be.howest.ti.monopoly.logic.implementation.tiles.Colors;
+import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,8 +15,8 @@ public class Utility extends Property {
     private static final int MULTIPLIER_FOR_TWO_UTILITY_TILES = 10;
     String utilityRent;
 
-    public Utility(String name, int position, String type, int groupSize, String color, int mortgage, int cost) {
-        super(name, position, type, groupSize, color, -1, mortgage, cost);
+    public Utility(String name, int position) {
+        super(name, position, "utility", 2, Colors.WHITE.toString(), -1, 75, 150);
         this.utilityRent = "4 or 10 times the dice roll";
     }
 

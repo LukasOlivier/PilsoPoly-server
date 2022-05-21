@@ -132,6 +132,8 @@ public class MonopolyApiBridge {
         }
     }
 
+
+
     private void getInfo(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, new JsonObject()
                 .put("name", "monopoly")
@@ -393,7 +395,6 @@ public class MonopolyApiBridge {
         }catch (IllegalArgumentException e){
             throw new IllegalStateException(e);
         }
-
     }
 
     private void buyHouse(RoutingContext ctx) {

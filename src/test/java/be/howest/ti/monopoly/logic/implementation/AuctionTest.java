@@ -2,8 +2,8 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.exceptions.IllegalMonopolyActionException;
 import be.howest.ti.monopoly.logic.implementation.tiles.Colors;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRent;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,7 +63,7 @@ class AuctionTest {
     @Test
     public void findTile() {
         Auction testAuction = new Auction("niels", "jupiler", game);
-        Tile tile = new Street("Bush12", 39, "street", 3, Colors.DARKBLUE.toString(), new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
+        Tile tile = new Street("Bush12", 39, 3, Colors.DARKBLUE.toString(), new StreetHouseRent(200, 600, 1400, 1700, 2000), 200, 50, 200, 400);
         assertEquals(testAuction.findTile("Bush12"), tile);
         assertNull(testAuction.findTile("randomTile"));
     }
