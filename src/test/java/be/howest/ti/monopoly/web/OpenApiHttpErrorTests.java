@@ -17,11 +17,6 @@ import java.util.function.Supplier;
 class OpenApiHttpErrorTests extends OpenApiTestsBase {
 
     @Test
-    void throwInvalidTokenExeption(final VertxTestContext testContext) {
-        checkErrorResponse(testContext, 500, () -> new  InvalidTokenException("some-message"));
-    }
-
-    @Test
     void throwInvalidRequestException(final VertxTestContext testContext) {
         checkErrorResponse(testContext, 400, () -> new InvalidRequestException("some-message"));
     }

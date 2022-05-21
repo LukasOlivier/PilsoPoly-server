@@ -267,7 +267,7 @@ public class MonopolyApiBridge {
             authenticateGetGame(request,game, gameId);
             Response.sendJsonResponse(ctx, 200, game);
         } catch (InvalidTokenException exception) {
-            throw new InvalidTokenException(PROTECTED_ENDPOINT);
+            throw new InvalidTokenException();
         }
     }
 
@@ -278,7 +278,7 @@ public class MonopolyApiBridge {
                 return;
             }
         }
-        throw new InvalidTokenException(PROTECTED_ENDPOINT);
+        throw new InvalidTokenException();
     }
 
     private void useEstimateTax(RoutingContext ctx) {
