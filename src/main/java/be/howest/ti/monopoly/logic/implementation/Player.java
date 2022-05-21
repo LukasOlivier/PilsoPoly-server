@@ -115,7 +115,7 @@ public class Player {
     public void payRent(PlayerProperty playerProperty, Game game, Player debtPlayer){
         int rent = playerProperty.getProperty().computeRent(game, playerProperty, debtPlayer, this);
         transfer(debtPlayer, rent);
-        checkIfPlayerIsBankrupt();
+        checkIfPlayerIsBankrupt(game);
     }
 
     public int checkHowManyUtilities(String type) {
@@ -195,9 +195,10 @@ public class Player {
         return amountOfDoubleThrows;
     }
 
-    public void checkIfPlayerIsBankrupt() {
+    public void checkIfPlayerIsBankrupt(Game game) {
         if (this.getMoney() < 0){
             this.setBankrupt();
+            game.isEveryoneBankrupt();
         }
     }
 
