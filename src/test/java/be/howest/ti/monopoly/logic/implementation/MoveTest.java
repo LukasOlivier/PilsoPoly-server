@@ -47,6 +47,14 @@ class MoveTest {
 
         Alice.addDoubleThrow();
         Alice.addDoubleThrow();
+        Alice.addDoubleThrow();
+        Move.checkIfPlayerCanRollAgain(testGame, Alice);
+        assertTrue(Alice.isJailed());
+
+        testGame.setCurrentPlayer(David.getName());
+        David.setBankrupt();
+        Move.checkIfPlayerCanRollAgain(testGame, David);
+        assertNotEquals(David, testGame.getCurrentPlayer());
     }
 
     @Test
