@@ -43,6 +43,10 @@ public class Player {
         this.previousTile = previousTile;
     }
 
+    public void setPreviousTile(Game game, int location) {
+        this.previousTile = Tile.getTileFromPosition(game, location);
+    }
+
     public boolean getFirstThrow(){
         return this.firstThrow;
     }

@@ -47,7 +47,7 @@ public abstract class Property extends Tile {
     public void setBought(boolean bought) {
         this.bought = bought;
         this.setActionType("rent");
-        this.setDescription("should pay rent");
+        this.setDescription("You paid rent to: ");
     }
 
     public boolean isBought() {
@@ -58,11 +58,11 @@ public abstract class Property extends Tile {
     public String getDescription() {
         if (isBought()) {
             if (isMortgaged()){
-                return "No need to pay rent, the tile is mortgaged";
+                return "No need to pay rent, the tile is mortgaged.";
             }
-            return "You need to pay rent";
+            return "You need to pay rent to: ";
         } else {
-            return "You can buy this property in direct sale";
+            return "You can buy this property in direct sale.";
         }
     }
 
