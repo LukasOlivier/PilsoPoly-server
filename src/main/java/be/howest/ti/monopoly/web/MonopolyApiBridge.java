@@ -41,6 +41,7 @@ public class MonopolyApiBridge {
     private static final String GAME_ID = "gameId";
     private static final String PLAYER_NAME = "playerName";
     private static final String TILE_ID = "tileId";
+    private static final String PROTECTED_ENDPOINT = "This is a protected endpoint.";
 
     public MonopolyApiBridge(IService service, TokenManager tokenManager) {
         this.service = service;
@@ -406,6 +407,12 @@ public class MonopolyApiBridge {
 
     private void sellHouse(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        try {
+            authorizationCheck(request);
+        } catch (AuthenticationException e) {
+            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+            throw new InvalidRequestException("Authentication error in sellHouse.");
+        }
         String gameId = request.getPathParameterValueString(GAME_ID);
         String playerName = request.getPathParameterValueString(PLAYER_NAME);
         String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
@@ -415,6 +422,12 @@ public class MonopolyApiBridge {
 
     private void buyHotel(RoutingContext ctx) {
         Request request = Request.from(ctx);
+        try {
+            authorizationCheck(request);
+        } catch (AuthenticationException e) {
+            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+            throw new InvalidRequestException("Authentication error in sellHouse.");
+        }
         String gameId = request.getPathParameterValueString(GAME_ID);
         String playerName = request.getPathParameterValueString(PLAYER_NAME);
         String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
@@ -424,11 +437,17 @@ public class MonopolyApiBridge {
 
     private void sellHotel(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
-        service.sellHotel(gameId, playerName, propertyName);
-        Response.sendOkResponse(ctx);
+        try {
+            authorizationCheck(request);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
+            service.sellHotel(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
+        } catch (AuthenticationException e) {
+            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+            throw new InvalidRequestException("Authentication error in sellHotel.");
+        }
     }
 
     private void getOutOfJailFine(RoutingContext ctx) {
@@ -439,7 +458,8 @@ public class MonopolyApiBridge {
             String gameId = request.getPathParameterValueString(GAME_ID);
             service.getOutOfJailFine(gameId,playerName);
         } catch (AuthenticationException e) {
-            throw new InvalidTokenException();
+            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+            throw new InvalidRequestException("Authentication error in getOutOfJailFine.");
         }
         Response.sendOkResponse(ctx);
     }
@@ -452,27 +472,41 @@ public class MonopolyApiBridge {
             String gameId = request.getPathParameterValueString(GAME_ID);
             service.getOutOfJailFree(gameId,playerName);
         } catch (AuthenticationException e) {
-            throw new InvalidTokenException();
+            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+            throw new InvalidRequestException("Authentication error in getOutOfJailFree.");
         }
         Response.sendOkResponse(ctx);
     }
+
     private void getBankAuctions(RoutingContext ctx) {
         throw new NotYetImplementedException("getBankAuctions");
     }
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String bidder = request.getBodyValueString("bidder");
-        int amount = request.getBodyValueInteger("amount");
-        service.placeBidOnBankAuction(gameId, bidder, amount);
-        Response.sendOkResponse(ctx);
+        try {
+            authorizationCheck(request);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String bidder = request.getBodyValueString("bidder");
+            int amount = request.getBodyValueInteger("amount");
+            service.placeBidOnBankAuction(gameId, bidder, amount);
+            Response.sendOkResponse(ctx);
+        } catch (AuthenticationException e) {
+            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+            throw new InvalidRequestException("Authentication error in placeBidOnBankAuction");
+        }
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        Response.sendJsonResponse(ctx, 200, service.getPlayerAuctions(gameId));
+        try {
+            authorizationCheck(request);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            Response.sendJsonResponse(ctx, 200, service.getPlayerAuctions(gameId));
+        } catch (AuthenticationException e) {
+            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+            throw new InvalidRequestException("Authentication error in getPlayerAuctions");
+        }
     }
 
     private void startPlayerAuction(RoutingContext ctx) {
@@ -488,6 +522,7 @@ public class MonopolyApiBridge {
     }
 
     private void onFailedRequest(RoutingContext ctx) {
+        System.out.println("onFailed");
         Throwable cause = ctx.failure();
         int code = ctx.statusCode();
         String quote = Objects.isNull(cause) ? "" + code : cause.getMessage();
@@ -511,7 +546,6 @@ public class MonopolyApiBridge {
         } else {
             LOGGER.log(Level.WARNING, "Failed request", cause);
         }
-
         Response.sendFailure(ctx, code, quote);
     }
 
