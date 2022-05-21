@@ -1,6 +1,9 @@
 package be.howest.ti.monopoly.logic.implementation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +11,7 @@ import java.util.Objects;
 @JsonIgnoreProperties({ "previousTile", "amountOfDoubleThrows", "firstThrow" })
 public class Player {
     private final String name;
-    public Tile currentTile;
+    private Tile currentTile;
     private boolean jailed;
     private int money;
     private boolean bankrupt;
@@ -63,11 +66,12 @@ public class Player {
         return name;
     }
 
-
+    @JsonIgnore
     public Tile getCurrentTile() {
         return currentTile;
     }
 
+    @JsonProperty("CurrentTile")
     public String getCurrentTileName() {
         return currentTile.getName();
     }
