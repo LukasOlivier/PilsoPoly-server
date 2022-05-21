@@ -44,8 +44,8 @@ class OpenApiBuyingPropertyTests extends OpenApiTestsBase {
 
         delete(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/properties/some-property",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }

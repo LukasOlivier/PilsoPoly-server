@@ -316,48 +316,58 @@ public class MonopolyApiBridge {
 
     private void declareBankruptcy(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
         try {
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
             service.setBankrupt(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong with declareBankruptcy");
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
     private void buyProperty(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
         try {
-            if (!request.isAuthorized(gameId, playerName)) { throw new AuthenticationException(); }
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
             service.buyProperty(gameId, playerName, propertyName);
             Response.sendOkResponse(ctx);
         }
         catch (IllegalArgumentException e) {
-            throw new InvalidRequestException("failed to buy property");}
-
+            throw new InvalidRequestException("failed to buy property");
+        }
         catch (AuthenticationException e) {
-            throw new InvalidRequestException("failed to authenticate");}
-
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
+        }
         catch (IllegalStateException e) {
-            throw new IllegalStateException("failed to buy property");}
+            throw new IllegalStateException("failed to buy property");
+        }
     }
 
     private void dontBuyProperty(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
-        service.dontBuyProperty(gameId, playerName, propertyName);
-        Response.sendOkResponse(ctx);
+        try {
+            authorizationCheck(request);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
+            service.dontBuyProperty(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
+        }
     }
 
     private void collectDebt(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
+            authorizationCheck(request);
             String game = request.getPathParameterValueString(GAME_ID);
             String  player = request.getPathParameterValueString(PLAYER_NAME);
             String  debtPlayer = request.getPathParameterValueString("debtorName");
@@ -366,6 +376,8 @@ public class MonopolyApiBridge {
             Response.sendOkResponse(ctx);
         }catch (IllegalArgumentException e){
             throw new IllegalStateException("Failed to pay rent");
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
@@ -479,10 +491,10 @@ public class MonopolyApiBridge {
             String playerName = request.getPathParameterValueString(PLAYER_NAME);
             String gameId = request.getPathParameterValueString(GAME_ID);
             service.getOutOfJailFree(gameId,playerName);
+            Response.sendOkResponse(ctx);
         } catch (AuthenticationException e) {
             throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
-        Response.sendOkResponse(ctx);
     }
 
     private void getBankAuctions(RoutingContext ctx) {
