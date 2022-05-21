@@ -38,7 +38,7 @@ public class Move {
             player.currentTile = Tile.getTileFromPosition(game, currentPosition);
             tileToGo.tileAction(game, player);
             checkIfPassedGo(player);
-            player.checkIfPlayerIsBankrupt();
+            player.checkIfPlayerIsBankrupt(game);
         }
         if (player.getFirstThrow()){
             player.setFirstThrow();

@@ -5,6 +5,7 @@ import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -44,7 +45,7 @@ public class PlayerProperty {
     }
 
     @JsonIgnore
-    public Property getProperty(){
+    public Property getProperty() {
         return property;
     }
 
@@ -53,9 +54,13 @@ public class PlayerProperty {
         return property.getName();
     }
 
-    public String getPropertyType(){return property.getType();}
+    public String getPropertyType() {
+        return property.getType();
+    }
 
-    public String getPropertyActionType(){return property.getActionType();}
+    public String getPropertyActionType() {
+        return property.getActionType();
+    }
 
     public boolean isMortgage() {
         return mortgage;
@@ -74,7 +79,7 @@ public class PlayerProperty {
     }
 
     public void addHouse(Player player, List<PlayerProperty> otherProperties) {
-        if ( canAddHouse() && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true) ) {
+        if (canAddHouse(player) && playerOwnsStreet(otherProperties) && houseCountIsCorrect(otherProperties, true)) {
             houseCount += 1;
             withdrawHousePrice(player);
         } else {
@@ -83,7 +88,7 @@ public class PlayerProperty {
     }
 
     public void sellHouse(Player player, List<PlayerProperty> otherProperties) {
-        if ( canRemoveHouse() && houseCountIsCorrect(otherProperties, false) ) {
+        if (canRemoveHouse() && houseCountIsCorrect(otherProperties, false)) {
             houseCount -= 1;
             addHousePrice(player);
         } else {
@@ -92,7 +97,7 @@ public class PlayerProperty {
     }
 
     public void buyHotel(Player player) {
-        if ( canBuyHotel() ) {
+        if (canBuyHotel()) {
             hotelCount = 1;
             houseCount = 0;
             withdrawHousePrice(player);
@@ -102,7 +107,7 @@ public class PlayerProperty {
     }
 
     public void sellHotel(Player player) {
-        if ( canSellHotel() ) {
+        if (canSellHotel()) {
             hotelCount = 0;
             houseCount = MAX_HOUSE_COUNT;
             addHousePrice(player);
@@ -123,8 +128,10 @@ public class PlayerProperty {
         player.removeMoney(housePrice);
     }
 
-    private boolean canAddHouse() {
-        return getHouseCount() < MAX_HOUSE_COUNT;
+    private boolean canAddHouse(Player player) {
+        Street street = (Street) property;
+        int housePrice = street.getHousePrice();
+        return getHouseCount() < MAX_HOUSE_COUNT && player.getMoney() > housePrice;
     }
 
     private boolean canRemoveHouse() {
@@ -135,8 +142,8 @@ public class PlayerProperty {
         int amount = 0;
         int groupSize = property.getGroupSize();
         String streetColor = property.getColor();
-        for ( PlayerProperty prop : playerProperties ) {
-            if ( prop.property.getColor().equals(streetColor) ) {
+        for (PlayerProperty prop : playerProperties) {
+            if (prop.property.getColor().equals(streetColor)) {
                 amount += 1;
             }
         }
@@ -151,22 +158,14 @@ public class PlayerProperty {
         } else {
             currentHousesAfterAction -= 1;
         }
-        for ( PlayerProperty prop : playerProperties ) {
-            if ( property.getColor().equals(prop.property.getColor()) ) {
-                if ( Math.abs(currentHousesAfterAction - prop.getHouseCount()) > maxHouseDifference ) {
+        for (PlayerProperty prop : playerProperties) {
+            if (property.getColor().equals(prop.property.getColor())) {
+                if (Math.abs(currentHousesAfterAction - prop.getHouseCount()) > maxHouseDifference) {
                     return false;
                 }
             }
         }
         return true;
-    }
-
-    public void removeHouse() {
-        if ( getHouseCount() > 0 ) {
-            houseCount -= 1;
-        } else {
-            throw new IllegalStateException("Can not have less than 0 houses");
-        }
     }
 
     public void mortgageTheProperty(Property property, Player player) {
