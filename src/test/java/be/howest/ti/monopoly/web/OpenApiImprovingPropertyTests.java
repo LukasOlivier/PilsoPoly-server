@@ -22,7 +22,7 @@ class OpenApiImprovingPropertyTests extends OpenApiTestsBase {
 
         post(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property/houses",
+                "/games/PilsoPoly/players/Alice/properties/some-property/houses",
                 "some-token",
                 this::assertOkResponse
         );
@@ -50,8 +50,8 @@ class OpenApiImprovingPropertyTests extends OpenApiTestsBase {
 
         delete(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property/houses",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/properties/some-property/houses",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }
@@ -79,8 +79,8 @@ class OpenApiImprovingPropertyTests extends OpenApiTestsBase {
 
         post(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property/hotel",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/properties/some-property/hotel",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }
@@ -107,8 +107,8 @@ class OpenApiImprovingPropertyTests extends OpenApiTestsBase {
 
         delete(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property/hotel",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/properties/some-property/hotel",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }

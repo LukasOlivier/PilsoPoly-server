@@ -32,17 +32,13 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
     @Test
     void placeBidOnBankAuction(final VertxTestContext testContext) {
-
         service.setDelegate( new ServiceAdapter() {
-
             @Override
             public void placeBidOnBankAuction(String gameId, String bidder, int amount) {}
-
         });
-
         post(
                 testContext,
-                "/games/game-id/bank/auctions/some-property/bid",
+                "/games/PilsoPoly/bank/auctions/some-property/bid",
                 "some-token",
                 new JsonObject()
                         .put("bidder", "Alice")
@@ -95,8 +91,8 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
 
         get(
                 testContext,
-                "/games/game-id/players/Alice/auctions",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/auctions",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }
@@ -105,7 +101,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void getPlayerAuctionsUnauthorized(final VertxTestContext testContext) {
         get(
                 testContext,
-                "/games/game-id/players/Alice/auctions",
+                "/games/PilsoPoly/players/Alice/auctions",
                 null,
                 response -> assertErrorResponse(response, 401)
         );
@@ -115,7 +111,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void startPlayerAuction(final VertxTestContext testContext) {
         post(
                 testContext,
-                "/games/game-id/players/Alice/auctions/some-property",
+                "/games/PilsoPoly/players/Alice/auctions/some-property",
                 "some-token",
                 new JsonObject()
                         .put("start-bid", 54)
@@ -129,7 +125,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void startPlayerAuctionUnauthorized(final VertxTestContext testContext) {
         post(
                 testContext,
-                "/games/game-id/players/Alice/auctions/some-property",
+                "/games/PilsoPoly/players/Alice/auctions/some-property",
                 null,
                 response -> assertErrorResponse(response, 401)
         );
@@ -139,7 +135,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void placeBidOnPlayerAuction(final VertxTestContext testContext) {
         post(
                 testContext,
-                "/games/game-id/players/Alice/auctions/some-property/bid",
+                "/games/PilsoPoly/players/Alice/auctions/some-property/bid",
                 "some-token",
                 new JsonObject()
                         .put("bidder", "Bob")
@@ -152,7 +148,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void placeBidOnPlayerAuctionWithoutBody(final VertxTestContext testContext) {
         post(
                 testContext,
-                "/games/game-id/players/Alice/auctions/some-property/bid",
+                "/games/PilsoPoly/players/Alice/auctions/some-property/bid",
                 "some-token",
                 response -> assertErrorResponse(response, 400)
         );
@@ -162,7 +158,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void placeBidOnPlayerAuctionWithEmptyBody(final VertxTestContext testContext) {
         post(
                 testContext,
-                "/games/game-id/players/Alice/auctions/some-property/bid",
+                "/games/PilsoPoly/players/Alice/auctions/some-property/bid",
                 "some-token",
                 new JsonObject(),
                 response -> assertErrorResponse(response, 400)
@@ -173,7 +169,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
     void placeBidOnPlayerAuctionUnauthorized(final VertxTestContext testContext) {
         post(
                 testContext,
-                "/games/game-id/players/Alice/auctions/some-property/bid",
+                "/games/PilsoPoly/players/Alice/auctions/some-property/bid",
                 null,
                 response -> assertErrorResponse(response, 401)
         );

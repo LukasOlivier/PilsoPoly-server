@@ -371,39 +371,50 @@ public class MonopolyApiBridge {
 
     private void takeMortgage(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
         try {
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
             service.takeMortgage(gameId, playerName, propertyName);
             Response.sendOkResponse(ctx);
         }catch (IllegalStateException e){
             throw new IllegalStateException("cant mortgage property");
         }catch (IllegalArgumentException e){
             throw new IllegalArgumentException(e);
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
     private void settleMortgage(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
         try {
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
             service.settleMortgage(gameId, playerName, propertyName);
             Response.sendOkResponse(ctx);
         }catch (IllegalArgumentException e){
             throw new IllegalStateException(e);
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
     private void buyHouse(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
-        service.buyHouse(gameId, playerName, propertyName);
-        Response.sendOkResponse(ctx);
+        try {
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
+            service.buyHouse(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
+        }
     }
 
     private void sellHouse(RoutingContext ctx) {
@@ -488,17 +499,11 @@ public class MonopolyApiBridge {
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        try {
-            authorizationCheck(request);
-            String gameId = request.getPathParameterValueString(GAME_ID);
-            String bidder = request.getBodyValueString("bidder");
-            int amount = request.getBodyValueInteger("amount");
-            service.placeBidOnBankAuction(gameId, bidder, amount);
-            Response.sendOkResponse(ctx);
-        } catch (AuthenticationException e) {
-            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-            throw new InvalidRequestException("Authentication error in placeBidOnBankAuction");
-        }
+        String gameId = request.getPathParameterValueString(GAME_ID);
+        String bidder = request.getBodyValueString("bidder");
+        int amount = request.getBodyValueInteger("amount");
+        service.placeBidOnBankAuction(gameId, bidder, amount);
+        Response.sendOkResponse(ctx);
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
