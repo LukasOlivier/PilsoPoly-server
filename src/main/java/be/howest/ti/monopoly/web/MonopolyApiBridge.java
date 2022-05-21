@@ -410,15 +410,18 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
         try {
             authorizationCheck(request);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
+            service.sellHouse(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
         } catch (AuthenticationException e) {
-            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-            throw new InvalidRequestException("Authentication error in sellHouse.");
+
+            //Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
+
+            throw new InvalidRequestException("Failed to authenticate in sellHouse");
+           // throw new AuthenticationException("Failed to authenticate in sellHouse");
         }
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
-        service.sellHouse(gameId, playerName, propertyName);
-        Response.sendOkResponse(ctx);
     }
 
     private void buyHotel(RoutingContext ctx) {
@@ -523,8 +526,8 @@ public class MonopolyApiBridge {
     }
 
     private void onFailedRequest(RoutingContext ctx) {
-        System.out.println("onFailed");
         Throwable cause = ctx.failure();
+        System.out.println(cause);
         int code = ctx.statusCode();
         String quote = Objects.isNull(cause) ? "" + code : cause.getMessage();
 
@@ -534,6 +537,8 @@ public class MonopolyApiBridge {
             code = 400;
         } else if (cause instanceof IllegalArgumentException) {
             code = 400;
+        } else if (cause instanceof AuthenticationException) {
+            code = 401;
         } else if (cause instanceof InsufficientFundsException) {
             code = 402;
         } else if (cause instanceof ForbiddenAccessException) {
@@ -544,9 +549,10 @@ public class MonopolyApiBridge {
             code = 409;
         } else if (cause instanceof NotYetImplementedException) {
             code = 501;
-        } else {
+        }  else {
             LOGGER.log(Level.WARNING, "Failed request", cause);
         }
+        System.out.println(quote);
         Response.sendFailure(ctx, code, quote);
     }
 
