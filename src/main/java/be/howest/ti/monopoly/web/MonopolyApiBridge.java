@@ -427,11 +427,7 @@ public class MonopolyApiBridge {
             service.sellHouse(gameId, playerName, propertyName);
             Response.sendOkResponse(ctx);
         } catch (AuthenticationException e) {
-
-            //Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-
-            throw new InvalidRequestException("Failed to authenticate in sellHouse");
-           // throw new AuthenticationException("Failed to authenticate in sellHouse");
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
@@ -439,15 +435,14 @@ public class MonopolyApiBridge {
         Request request = Request.from(ctx);
         try {
             authorizationCheck(request);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
+            service.buyHotel(gameId, playerName, propertyName);
+            Response.sendOkResponse(ctx);
         } catch (AuthenticationException e) {
-            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-            throw new InvalidRequestException("Authentication error in sellHouse.");
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String propertyName = request.getPathParameterValueString(PROPERTY_NAME);
-        service.buyHotel(gameId, playerName, propertyName);
-        Response.sendOkResponse(ctx);
     }
 
     private void sellHotel(RoutingContext ctx) {
@@ -460,8 +455,7 @@ public class MonopolyApiBridge {
             service.sellHotel(gameId, playerName, propertyName);
             Response.sendOkResponse(ctx);
         } catch (AuthenticationException e) {
-            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-            throw new InvalidRequestException("Authentication error in sellHotel.");
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
@@ -472,11 +466,10 @@ public class MonopolyApiBridge {
             String playerName = request.getPathParameterValueString(PLAYER_NAME);
             String gameId = request.getPathParameterValueString(GAME_ID);
             service.getOutOfJailFine(gameId,playerName);
+            Response.sendOkResponse(ctx);
         } catch (AuthenticationException e) {
-            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-            throw new InvalidRequestException("Authentication error in getOutOfJailFine.");
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
-        Response.sendOkResponse(ctx);
     }
 
     private void getOutOfJailFree(RoutingContext ctx) {
@@ -487,8 +480,7 @@ public class MonopolyApiBridge {
             String gameId = request.getPathParameterValueString(GAME_ID);
             service.getOutOfJailFree(gameId,playerName);
         } catch (AuthenticationException e) {
-            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-            throw new InvalidRequestException("Authentication error in getOutOfJailFree.");
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
         Response.sendOkResponse(ctx);
     }
@@ -499,11 +491,16 @@ public class MonopolyApiBridge {
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        String bidder = request.getBodyValueString("bidder");
-        int amount = request.getBodyValueInteger("amount");
-        service.placeBidOnBankAuction(gameId, bidder, amount);
-        Response.sendOkResponse(ctx);
+        try {
+            authorizationCheck(request);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            String bidder = request.getBodyValueString("bidder");
+            int amount = request.getBodyValueInteger("amount");
+            service.placeBidOnBankAuction(gameId, bidder, amount);
+            Response.sendOkResponse(ctx);
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
+        }
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
@@ -532,7 +529,6 @@ public class MonopolyApiBridge {
 
     private void onFailedRequest(RoutingContext ctx) {
         Throwable cause = ctx.failure();
-        System.out.println(cause);
         int code = ctx.statusCode();
         String quote = Objects.isNull(cause) ? "" + code : cause.getMessage();
 
@@ -557,7 +553,6 @@ public class MonopolyApiBridge {
         }  else {
             LOGGER.log(Level.WARNING, "Failed request", cause);
         }
-        System.out.println(quote);
         Response.sendFailure(ctx, code, quote);
     }
 
