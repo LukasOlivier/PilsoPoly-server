@@ -55,7 +55,6 @@ public class Player {
         this(name, new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"), icon);
     }
 
-
     public void addProperty(PlayerProperty newProperty) {
         properties.add(newProperty);
     }
@@ -64,7 +63,12 @@ public class Player {
         return name;
     }
 
-    public String getCurrentTile() {
+
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
+    public String getCurrentTileName() {
         return currentTile.getName();
     }
 

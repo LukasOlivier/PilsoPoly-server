@@ -109,23 +109,6 @@ public class Game {
         this.started = true;
     }
 
-    public void addPlayer(String name, String icon) {
-        for (Player player : players) {
-            if (Objects.equals(player.getName(), name)) {
-                throw new IllegalArgumentException("There is already a player with this name!");
-            }
-        }
-        players.add(new Player(name, icon));
-        if (getCurrentPlayer() == null) {
-            setCurrentPlayer(name);
-        }
-        if (players.size() == numberOfPlayers) {
-            this.started = true;
-            this.canRoll = true;
-
-        }
-    }
-
     public void addTurn(Turn turn) {
         turns.add(turn);
     }
@@ -211,6 +194,22 @@ public class Game {
         this.winner = winner;
     }
 
+    public void addPlayer(String name, String icon) {
+        for (Player player : players) {
+            if (Objects.equals(player.getName(), name)) {
+                throw new IllegalArgumentException("There is already a player with this name!");
+            }
+        }
+        players.add(new Player(name, icon));
+        if (getCurrentPlayer() == null) {
+            setCurrentPlayer(name);
+        }
+        if (players.size() == numberOfPlayers) {
+            this.started = true;
+            this.canRoll = true;
+
+        }
+    }
 
     public void isEveryoneBankrupt() {
             int numberOfPlayersBankrupt = 0;

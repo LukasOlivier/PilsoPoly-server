@@ -46,12 +46,12 @@ class JailTest {
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Baltic
         diceRollDouble.checkIfRolledDouble(testGame, alice);
 
-        alice.addProperty(new PlayerProperty((Property) alice.currentTile));
+        alice.addProperty(new PlayerProperty((Property) alice.getCurrentTile()));
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Electric Company
         diceRollDouble.checkIfRolledDouble(testGame, alice);
         Jail.checkIfJailedByDoubleThrow(alice,testGame);
 
-        assertEquals("Jail", alice.getCurrentTile());
+        assertEquals("Jail", alice.getCurrentTileName());
         assertTrue(alice.isJailed());
     }
 
@@ -65,7 +65,7 @@ class JailTest {
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame);
 
         assertFalse(alice.isJailed());
-        assertEquals("Electric Company",alice.getCurrentTile());
+        assertEquals("Electric Company",alice.getCurrentTileName());
     }
 
     @Test
@@ -80,7 +80,7 @@ class JailTest {
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRoll), testGame);
 
         assertTrue(alice.isJailed());
-        assertEquals("Jail",alice.getCurrentTile());
+        assertEquals("Jail",alice.getCurrentTileName());
     }
 
     @Test

@@ -30,12 +30,12 @@ public class Move {
     }
 
     public static Move makeMove(Player player, int placesToMove, Game game) {
-        player.setPreviousTile(player.currentTile);
+        player.setPreviousTile(player.getCurrentTile());
         int amountOfTiles = 40;
         if (!player.isJailed()){
-            int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % amountOfTiles;
+            int currentPosition = (player.getCurrentTile().getPosition() + (placesToMove)) % amountOfTiles;
             Tile tileToGo = Tile.getTileFromPosition(game, currentPosition);
-            player.currentTile = Tile.getTileFromPosition(game, currentPosition);
+            player.setCurrentTile(game, currentPosition);
             tileToGo.tileAction(game, player);
             checkIfPassedGo(player);
             player.checkIfPlayerIsBankrupt();
@@ -43,7 +43,7 @@ public class Move {
         if (player.getFirstThrow()){
             player.setFirstThrow();
         }
-        return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());
+        return new Move(player.getCurrentTileName(), player.getCurrentTile().getDescription(), player.getCurrentTile().getActionType());
     }
 
 
@@ -56,7 +56,7 @@ public class Move {
 
     private static boolean loopedTheBoard(Player player) {
         int positionOfFirstTileOfBoard = 0;
-        return player.currentTile.getPosition() - player.getPreviousTile().getPosition() < positionOfFirstTileOfBoard;
+        return player.getCurrentTile().getPosition() - player.getPreviousTile().getPosition() < positionOfFirstTileOfBoard;
     }
 
     public static int calculatePlacesToMove(Dice diceRoll) {
@@ -66,7 +66,7 @@ public class Move {
     }
 
     public static void checkIfPlayerCanRollAgain(Game game, Player player) {
-        if (Objects.equals(player.currentTile.getActionType(), "buy")) {
+        if (Objects.equals(player.getCurrentTile().getActionType(), "buy")) {
             game.setCanRoll(false);
         } else if (player.getAmountOfDoubleThrows() >= 1 && !checkIfJailedByDoubleThrow(player, game) && !player.isBankrupt()) {
             game.setCurrentPlayer(player.getName());

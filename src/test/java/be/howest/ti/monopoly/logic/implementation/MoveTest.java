@@ -20,7 +20,7 @@ class MoveTest {
         int placesToMove = Move.calculatePlacesToMove(diceRoll);
         Move.makeMove(alice, placesToMove, testGame);
 
-        assertEquals("Cara", alice.getCurrentTile());
+        assertEquals("Cara", alice.getCurrentTileName());
     }
 
     @Test
@@ -87,7 +87,7 @@ class MoveTest {
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
         Move.makeMove(alice, placesToMove, testGame);
-        assertEquals("Heineken", alice.getCurrentTile());
+        assertEquals("Heineken", alice.getCurrentTileName());
         assertEquals(1500, alice.getMoney());
 
         alice.setCurrentTile(Tile.getTileFromPosition(testGame,39));
