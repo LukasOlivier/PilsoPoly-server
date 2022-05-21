@@ -50,7 +50,7 @@ class TileTest {
 
     @Test
     void testRailroadTile() {
-        Railroad readingRR = new Railroad("Reading RR", 5, 4, 25,100,200);
+        Railroad readingRR = new Railroad("Reading RR", 5);
         assertEquals("Reading RR", readingRR.getName());
         assertEquals(5, readingRR.getPosition());
     }
@@ -122,21 +122,21 @@ class TileTest {
 
     @Test
     void getRentDescription(){
-        Utility utility = new Utility("Electric Company", 12, "utility", 2, 75, 150);
+        Utility utility = new Utility("Electric Company", 12);
         assertEquals("4 or 10 times the dice roll", utility.getRentDescription());
     }
 
     @Test
     void testEqualsUtility(){
-        Utility utility = new Utility("Electric Company", 12, "utility", 2, 75, 150);
-        Utility utilityTwo = new Utility("Electric Company", 12, "utility", 2, 75, 150);
+        Utility utility = new Utility("Electric Company", 12);
+        Utility utilityTwo = new Utility("Electric Company", 12);
         assertEquals(utility, utilityTwo);
     }
 
     @Test
     void computeRentUtility(){
-        Utility uitlity = new Utility("Electric Company", 12, "utility", 2, 75, 150);
-        Utility utilityTwo = new Utility("Water Works", 28, "utility", 2, 75, 150);
+        Utility uitlity = new Utility("Electric Company", 12);
+        Utility utilityTwo = new Utility("Water Works", 28);
         PlayerProperty playerProperty = new PlayerProperty(utilityTwo);
         PlayerProperty playerPropertyTwo = new PlayerProperty(uitlity);
         Sibren.addProperty(playerProperty);

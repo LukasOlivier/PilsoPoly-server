@@ -144,7 +144,7 @@ class PlayerTest {
     @Test
     void payRentRailRoad(){
         Dice diceRoll = new Dice();
-        Property testProperty = new Railroad("Reading RR", 5, 4, 25, 100, 200);
+        Property testProperty = new Railroad("Reading RR", 5);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
 
         testGame.setLastDiceRoll(diceRoll);
@@ -156,7 +156,7 @@ class PlayerTest {
     @Test
     void payRentUtility(){
         Dice diceRoll = new Dice();
-        Property testProperty =  new Utility("Electric Company", 12, "utility", 2, 75, 150);
+        Property testProperty =  new Utility("Electric Company", 12);
         PlayerProperty testPlayerProperty = new PlayerProperty(testProperty, false, 0, 0);
 
         Sibren.addProperty(testPlayerProperty);

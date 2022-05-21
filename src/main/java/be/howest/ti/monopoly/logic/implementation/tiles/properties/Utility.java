@@ -15,8 +15,8 @@ public class Utility extends Property {
     private static final int MULTIPLIER_FOR_TWO_UTILITY_TILES = 10;
     String utilityRent;
 
-    public Utility(String name, int position, String type, int groupSize, int mortgage, int cost) {
-        super(name, position, type, groupSize, Colors.WHITE.toString(), -1, mortgage, cost);
+    public Utility(String name, int position) {
+        super(name, position, "utility", 2, Colors.WHITE.toString(), -1, 75, 150);
         this.utilityRent = "4 or 10 times the dice roll";
     }
 

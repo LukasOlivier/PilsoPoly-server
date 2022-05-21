@@ -10,8 +10,8 @@ public class Railroad extends Property {
 
     private static final int PRICE_ONE_RAILROAD = 25;
 
-    public Railroad(String name, int position, int groupSize, int rent, int mortgage, int cost) {
-        super(name, position, "railroad", groupSize, Colors.BLACK.toString(), rent,mortgage,cost);
+    public Railroad(String name, int position) {
+        super(name, position, "railroad", 4, Colors.BLACK.toString(), 4,100,200);
     }
 
     @Override
