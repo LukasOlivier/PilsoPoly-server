@@ -16,14 +16,14 @@ class MoveTest {
 
     @BeforeEach
     void addPlayers(){
-        testGame.addPlayer("Sibren", "icon");
-        testGame.addPlayer("Robin", "icon");
-        testGame.addPlayer("Lukas", "icon");
-        testGame.addPlayer("Niels", "icon");
-        Alice = testGame.getSpecificPlayer("Lukas");
-        Bob = testGame.getSpecificPlayer("Niels");
-        Carol = testGame.getSpecificPlayer("Sibren");
-        David = testGame.getSpecificPlayer("Robin");
+        testGame.addPlayer("Alice", "icon");
+        testGame.addPlayer("Bob", "icon");
+        testGame.addPlayer("Carol", "icon");
+        testGame.addPlayer("David", "icon");
+        Alice = testGame.getSpecificPlayer("Alice");
+        Bob = testGame.getSpecificPlayer("Bob");
+        Carol = testGame.getSpecificPlayer("Carol");
+        David = testGame.getSpecificPlayer("David");
     }
 
     @Test
@@ -43,7 +43,7 @@ class MoveTest {
         Move.makeMove(Bob, placesToMove, testGame);
         Move.checkIfPlayerCanRollAgain(testGame, Bob);
 
-        assertEquals("Sibren", testGame.getCurrentPlayer());
+        assertEquals("Carol", testGame.getCurrentPlayer());
     }
 
     @Test
