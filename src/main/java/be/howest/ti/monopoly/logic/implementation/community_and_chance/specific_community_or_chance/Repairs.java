@@ -1,9 +1,9 @@
-package be.howest.ti.monopoly.logic.implementation.cummunityandchance.specific.community.or.chance;
+package be.howest.ti.monopoly.logic.implementation.community_and_chance.specific_community_or_chance;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
 import be.howest.ti.monopoly.logic.implementation.PlayerProperty;
-import be.howest.ti.monopoly.logic.implementation.cummunityandchance.CommunityOrChanceCard;
+import be.howest.ti.monopoly.logic.implementation.community_and_chance.CommunityOrChanceCard;
 
 public class Repairs extends CommunityOrChanceCard {
 

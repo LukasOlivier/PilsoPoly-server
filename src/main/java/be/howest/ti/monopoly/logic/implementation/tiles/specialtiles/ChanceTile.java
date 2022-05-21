@@ -2,8 +2,8 @@ package be.howest.ti.monopoly.logic.implementation.tiles.specialtiles;
 
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.cummunityandchance.CommunityOrChanceCard;
-import be.howest.ti.monopoly.logic.implementation.cummunityandchance.specific.community.or.chance.*;
+import be.howest.ti.monopoly.logic.implementation.community_and_chance.CommunityOrChanceCard;
+import be.howest.ti.monopoly.logic.implementation.community_and_chance.specific_community_or_chance.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 
 import java.security.SecureRandom;
@@ -46,7 +46,7 @@ public class ChanceTile extends Tile {
     @Override
     public void tileAction(Game game, Player player){
         CommunityOrChanceCard chanceCard = getRandomChanceCardAction();
-        super.setDescription(chanceCard.toString());
+        super.setDescription(chanceCard.getDescription());
         chanceCard.cardAction(game, player);
     }
 }

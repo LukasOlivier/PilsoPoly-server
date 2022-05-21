@@ -1,5 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation;
-import be.howest.ti.monopoly.logic.implementation.cummunityandchance.specific.community.or.chance.*;
+import be.howest.ti.monopoly.logic.implementation.community_and_chance.specific.community.or.chance.*;
+import be.howest.ti.monopoly.logic.implementation.community_and_chance.specific_community_or_chance.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRent;
