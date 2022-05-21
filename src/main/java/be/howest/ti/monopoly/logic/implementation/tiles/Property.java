@@ -96,13 +96,6 @@ public abstract class Property extends Tile {
     }
 
     @Override
-    public String toString() {
-        return "Property{" +
-                "color='" + color + '\'' +
-                '}';
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), cost, mortgage, rent, groupSize, color);
     }

@@ -66,14 +66,14 @@ class TileTest {
     void checkDescriptionRent(){
         Property property = new Street("Indiana Avenue", 23, 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         property.setBought(true);
-        assertEquals("You need to pay rent", property.getDescription());
+        assertEquals("You need to pay rent to: ", property.getDescription());
         assertEquals("rent", property.getActionType());
     }
 
     @Test
     void checkDescriptionBuy(){
         Property property = new Street("Indiana Avenue", 23, 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
-        assertEquals("You can buy this property in direct sale", property.getDescription());
+        assertEquals("You can buy this property in direct sale.", property.getDescription());
         assertEquals("buy",property.getActionType());
     }
 
@@ -82,14 +82,8 @@ class TileTest {
         Property property = new Street("Indiana Avenue", 23, 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
         property.setBought(true);
         property.setMortgaged(true);
-        assertEquals("No need to pay rent, the tile is mortgaged", property.getDescription());
+        assertEquals("No need to pay rent, the tile is mortgaged.", property.getDescription());
         assertEquals("mortgage", property.getActionType());
-    }
-
-    @Test
-    void propertyToString(){
-        Property property = new Street("Indiana Avenue", 23, 3,  "RED", new StreetHouseRent(100, 300, 750, 925, 1100), 150, 20, 120, 240);
-        assertEquals("Property{color='RED'}", property.toString());
     }
 
     @Test
@@ -134,9 +128,9 @@ class TileTest {
 
     @Test
     void testEqualsUtility(){
-        Utility uitlity = new Utility("Electric Company", 12, "utility", 2, 75, 150);
-        Utility uitlityTwo = new Utility("Electric Company", 12, "utility", 2, 75, 150);
-        assertEquals(uitlity, uitlityTwo);
+        Utility utility = new Utility("Electric Company", 12, "utility", 2, 75, 150);
+        Utility utilityTwo = new Utility("Electric Company", 12, "utility", 2, 75, 150);
+        assertEquals(utility, utilityTwo);
     }
 
     @Test
