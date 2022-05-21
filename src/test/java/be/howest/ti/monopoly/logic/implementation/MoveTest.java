@@ -44,20 +44,18 @@ class MoveTest {
         Move.checkIfPlayerCanRollAgain(testGame, Bob);
 
         assertEquals("Carol", testGame.getCurrentPlayer());
+
+        Alice.addDoubleThrow();
+        Alice.addDoubleThrow();
     }
 
     @Test
     void testBuyBeforeNextTurn() {
-        Game testGame = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice", "dummy");
-        testGame.addPlayer("Alice", "dummy");
-        testGame.addPlayer("Bob", "dummy");
-
         Dice diceRollResult = new Dice(2,1); //Baltic tile
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
-        Move.makeMove(alice, placesToMove, testGame);
+        Move.makeMove(Alice, placesToMove, testGame);
 
-        Move.checkIfPlayerCanRollAgain(testGame, alice);
+        Move.checkIfPlayerCanRollAgain(testGame, Alice);
 
         assertEquals("Alice", testGame.getCurrentPlayer());
         assertFalse(testGame.isCanRoll());
@@ -66,38 +64,35 @@ class MoveTest {
 
     @Test
     void testDoubleThrow() {
-        Game testGame = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice", "dummy");
-        testGame.addPlayer("Alice", "dummy");
-        testGame.addPlayer("Bob", "dummy");
-
         Dice diceRollResult = new Dice(2,2);
-        diceRollResult.checkIfRolledDouble(testGame,alice);
+        diceRollResult.checkIfRolledDouble(testGame,Alice);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
 
-        Move.makeMove(alice, placesToMove, testGame);
-        Move.checkIfPlayerCanRollAgain(testGame, alice);
+        Move.makeMove(Alice, placesToMove, testGame);
+        Move.checkIfPlayerCanRollAgain(testGame, Alice);
 
         assertEquals("Alice", testGame.getCurrentPlayer());
     }
 
     @Test
     void checkPassedGo() {
-        Game testGame = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice", "dummy");
-        testGame.addPlayer("Alice", "dummy");
         Dice diceRollResult = new Dice(4,2);
 
         int placesToMove = Move.calculatePlacesToMove(diceRollResult);
-        Move.makeMove(alice, placesToMove, testGame);
-        assertEquals("Heineken", alice.getCurrentTileName());
-        assertEquals(1500, alice.getMoney());
+        Move.makeMove(Alice, placesToMove, testGame);
+        assertEquals("Heineken", Alice.getCurrentTileName());
+        assertEquals(1500, Alice.getMoney());
 
-        alice.setCurrentTile(Tile.getTileFromPosition(testGame,39));
-        Move.makeMove(alice, placesToMove,testGame);
+        Alice.setCurrentTile(Tile.getTileFromPosition(testGame,39));
+        Move.makeMove(Alice, placesToMove,testGame);
 
-        assertEquals(1700, alice.getMoney());
+        assertEquals(1700, Alice.getMoney());
+
+        Bob.setJailed(true);
+        Bob.setCurrentTile(testGame, 38);
+        Move.makeMove(Bob, placesToMove, testGame);
+        assertEquals(1500, Bob.getMoney());
     }
 
     @Test

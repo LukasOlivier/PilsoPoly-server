@@ -71,7 +71,7 @@ public class Player {
         return currentTile;
     }
 
-    @JsonProperty("CurrentTile")
+    @JsonProperty("currentTile")
     public String getCurrentTileName() {
         return currentTile.getName();
     }
