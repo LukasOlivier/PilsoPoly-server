@@ -131,7 +131,7 @@ public class PlayerProperty {
     private boolean canAddHouse(Player player) {
         Street street = (Street) property;
         int housePrice = street.getHousePrice();
-        return getHouseCount() < MAX_HOUSE_COUNT && player.getMoney() > housePrice;
+        return getHouseCount() < MAX_HOUSE_COUNT && player.getMoney() >= housePrice;
     }
 
     private boolean canRemoveHouse() {
