@@ -109,7 +109,7 @@ class TileTest {
     @Test
     void takeTileAction(){
         System.out.println(testGame.getCurrentPlayer());
-        Tile jail = new Tile("Jail", 10, "Just visiting", "Just visiting.", "visiting");
+        Tile jail = new Tile("Jail", 10, "Jail", "Just visiting.", "visiting");
         jail.tileAction(testGame, Sibren);
         assertFalse(Sibren.isJailed());
         Tile tax = new TaxTile("Luxury Tax", 38, "Luxury Tax", "luxtax");
