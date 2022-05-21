@@ -34,15 +34,15 @@ public class Move {
         int amountOfTiles = 40;
         if (!player.isJailed()){
             int currentPosition = (player.currentTile.getPosition() + (placesToMove)) % amountOfTiles;
+            Tile tileToGo = Tile.getTileFromPosition(game, currentPosition);
             player.currentTile = Tile.getTileFromPosition(game, currentPosition);
-            Tile.takeTileAction(player.currentTile, player, game);
+            tileToGo.tileAction(game, player);
             checkIfPassedGo(player);
+            player.checkIfPlayerIsBankrupt();
         }
-
         if (player.getFirstThrow()){
             player.setFirstThrow();
         }
-
         return new Move(player.getCurrentTile(), player.currentTile.getDescription(), player.currentTile.getActionType());
     }
 

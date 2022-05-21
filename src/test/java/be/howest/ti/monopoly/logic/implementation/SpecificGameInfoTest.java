@@ -16,11 +16,4 @@ public class SpecificGameInfoTest {
         testPlayer.setTaxSystem("COMPUTE");
         assertEquals("COMPUTE", testPlayer.getTaxSystem());
     }
-
-    @Test
-    void testPrivateConstructor() {
-        assertThrows(IllegalStateException.class, () -> {
-            Tax test = new Tax();
-        });
-    }
 }

@@ -1,8 +1,6 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 import be.howest.ti.monopoly.logic.implementation.Game;
 import be.howest.ti.monopoly.logic.implementation.Player;
-import be.howest.ti.monopoly.logic.implementation.Tax;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.CommunityOrChanceCard;
 import java.util.Objects;
 
 public class Tile {
@@ -80,40 +78,6 @@ public class Tile {
         this.actionType = actionType;
     }
 
-    public static void takeTileAction(Tile tile, Player player, Game game) {
-        switch (tile.getActionType()) {
-            case "jail":
-                player.currentTile = new Tile("Jail", 10, "Jail", "You are in jail", "jailed");
-                player.setJailed(true);
-                break;
-            case "luxtax":
-                player.removeMoney(Tax.getIncomeTax());
-                break;
-            case "incometax":
-                if (Objects.equals(player.getTaxSystem(), "ESTIMATE")) {
-                    player.removeMoney(Tax.getEstimateTax());
-                } else {
-                    player.removeMoney(Tax.getComputeTax(player));
-                }
-                break;
-            case "chance":
-                CommunityOrChanceCard chanceCard = Game.getRandomChanceCardAction();
-                tile.setDescription(chanceCard.toString());
-                chanceCard.cardAction(game, player);
-                break;
-            case "community":
-                CommunityOrChanceCard communityCard = Game.getRandomCommunityCardAction();
-                tile.setDescription(communityCard.toString());
-                communityCard.cardAction(game, player);
-                break;
-            default:
-        }
-        checkIfPlayerIsBankrupt(player, game);
-    }
-
-    private static void checkIfPlayerIsBankrupt(Player player, Game game) {
-        if (player.getMoney() < 0){
-            game.setPlayerBankrupt(player);
-        }
+    public void tileAction(Game game, Player player) {
     }
 }

@@ -33,11 +33,12 @@ public class Jail {
 
     public static boolean checkIfJailedByDoubleThrow(Player player, Game game) {
         int maxDoubleThrowsBeforeJail = 3;
+        int jailPos = 10;
         if (player.getAmountOfDoubleThrows() == maxDoubleThrowsBeforeJail) {
             player.setJailed(true);
-            player.setCurrentTile(new Tile("Jail", 10, "Jail", "Your are in jail", "jailed"));
+            player.setCurrentTile(Tile.getTileFromPosition(game, jailPos));
             player.resetDoubleThrows();
-            player.setPreviousTile(Tile.getTileFromPosition(game,10));
+            player.setPreviousTile(Tile.getTileFromPosition(game,jailPos));
             return true;
         }
         return false;

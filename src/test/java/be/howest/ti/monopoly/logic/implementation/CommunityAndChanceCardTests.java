@@ -1,8 +1,8 @@
 package be.howest.ti.monopoly.logic.implementation;
-import be.howest.ti.monopoly.logic.implementation.communityandchance.specific_cards.*;
+import be.howest.ti.monopoly.logic.implementation.community_and_chance.specific_community_or_chance.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
-import be.howest.ti.monopoly.logic.implementation.tiles.Street;
-import be.howest.ti.monopoly.logic.implementation.tiles.StreetHouseRent;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.Street;
+import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +21,8 @@ class CommunityAndChanceCardTests {
     Player Niels;
     Player Sibren;
     Player Robin;
-    Property Mediterranean = new Street("Mediterranean", 1, "street", 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60);
-    Property Baltic = new Street("Baltic", 3, "street", 2, "PURPLE", new StreetHouseRent(20, 60, 180, 320, 450), 50, 4, 30, 60);
+    Property Mediterranean = new Street("Mediterranean", 1, 2, "PURPLE", new StreetHouseRent(10, 30, 90, 160, 250), 50, 2, 30, 60);
+    Property Baltic = new Street("Baltic", 3, 2, "PURPLE", new StreetHouseRent(20, 60, 180, 320, 450), 50, 4, 30, 60);
 
     @BeforeEach
     void addPlayers(){

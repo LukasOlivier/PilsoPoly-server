@@ -1,5 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.ChanceTile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.CommunityTile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,8 +78,8 @@ class MoveTest {
 
     @Test
     void checkPassedGo() {
-        Game.createCommunityCards();
-        Game.createChanceCards();
+        CommunityTile.createCommunityCards();
+        ChanceTile.createChanceCards();
         Game testGame = new Game(2, "PilsoPoly", 0);
         Player alice = new Player("Alice", "dummy");
         testGame.addPlayer("Alice", "dummy");
