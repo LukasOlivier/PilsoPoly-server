@@ -16,7 +16,7 @@ public class PlainTextTokens implements TokenManager {
         String[] parts = token.split("-");
 
         if (parts.length != TOKEN_EXPECTED_PARTS) {
-            throw new InvalidTokenException();
+            throw new InvalidTokenException("Invalid Token");
         }
         return new MonopolyUser(
                 parts[TOKEN_GAME_ID_PART],
