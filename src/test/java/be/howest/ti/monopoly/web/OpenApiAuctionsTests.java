@@ -39,7 +39,7 @@ class OpenApiAuctionsTests extends OpenApiTestsBase {
         post(
                 testContext,
                 "/games/PilsoPoly/bank/auctions/some-property/bid",
-                "some-token",
+                "PilsoPoly-Alice",
                 new JsonObject()
                         .put("bidder", "Alice")
                         .put("amount", 100),

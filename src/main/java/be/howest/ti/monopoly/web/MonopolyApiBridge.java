@@ -491,16 +491,11 @@ public class MonopolyApiBridge {
 
     private void placeBidOnBankAuction(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        try {
-            authorizationCheck(request);
-            String gameId = request.getPathParameterValueString(GAME_ID);
-            String bidder = request.getBodyValueString("bidder");
-            int amount = request.getBodyValueInteger("amount");
-            service.placeBidOnBankAuction(gameId, bidder, amount);
-            Response.sendOkResponse(ctx);
-        } catch (AuthenticationException e) {
-            throw new InvalidRequestException(PROTECTED_ENDPOINT);
-        }
+        String gameId = request.getPathParameterValueString(GAME_ID);
+        String bidder = request.getBodyValueString("bidder");
+        int amount = request.getBodyValueInteger("amount");
+        service.placeBidOnBankAuction(gameId, bidder, amount);
+        Response.sendOkResponse(ctx);
     }
 
     private void getPlayerAuctions(RoutingContext ctx) {
@@ -510,8 +505,7 @@ public class MonopolyApiBridge {
             String gameId = request.getPathParameterValueString(GAME_ID);
             Response.sendJsonResponse(ctx, 200, service.getPlayerAuctions(gameId));
         } catch (AuthenticationException e) {
-            Response.sendFailure(ctx, 401, PROTECTED_ENDPOINT);
-            throw new InvalidRequestException("Authentication error in getPlayerAuctions");
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 

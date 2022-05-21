@@ -23,7 +23,7 @@ class OpenApiImprovingPropertyTests extends OpenApiTestsBase {
         post(
                 testContext,
                 "/games/PilsoPoly/players/Alice/properties/some-property/houses",
-                "some-token",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }
