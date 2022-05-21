@@ -54,6 +54,18 @@ class TurnTest {
         Sibren.setBankrupt();
         Turn.findNextPlayer(testGame, Niels);
         assertEquals(Robin.getName(), testGame.getCurrentPlayer());
+
+        Lukas.setJailed(true);
+        Turn.findNextPlayer(testGame, Robin);
+        assertEquals(Lukas.getName(), testGame.getCurrentPlayer());
+    }
+
+    @Test
+    void testSettersAndGetters() {
+        Turn turn = new Turn(Sibren.getName(), "DEFAULT");
+        Dice dice = new Dice();
+        turn.setRoll(dice);
+        assertEquals(dice, turn.getRoll());
     }
 
 
