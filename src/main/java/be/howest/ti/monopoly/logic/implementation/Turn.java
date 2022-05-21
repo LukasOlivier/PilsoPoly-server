@@ -19,6 +19,7 @@ public class Turn {
     }
 
     public static void findNextPlayer(Game game, Player currentPlayer) {
+        //Player currentPlayer = game.getCurrentPlayer();
         int indexOfNextPlayer = game.getPlayers().indexOf(currentPlayer) + 1;
         if (indexOfNextPlayer >= game.getPlayers().size()) {
             indexOfNextPlayer = 0;
