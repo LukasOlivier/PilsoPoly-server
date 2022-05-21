@@ -132,8 +132,6 @@ public class MonopolyApiBridge {
         }
     }
 
-
-
     private void getInfo(RoutingContext ctx) {
         Response.sendJsonResponse(ctx, 200, new JsonObject()
                 .put("name", "monopoly")
@@ -156,7 +154,6 @@ public class MonopolyApiBridge {
             String name = request.getPathParameterValueString(TILE_ID);
             tile = service.getTile(name);
         }
-
         Response.sendJsonResponse(ctx, 200, tile);
     }
 
@@ -197,6 +194,7 @@ public class MonopolyApiBridge {
         RequestParameter isStarted = request.getRequestParameters().queryParameter("started");
         RequestParameter numberOfPlayers = request.getRequestParameters().queryParameter("numberOfPlayers");
         RequestParameter prefix = request.getRequestParameters().queryParameter("prefix");
+
         if (isStarted != null) {
             filteredMapOfGames = filterGamesByStarted(isStarted.getBoolean(), filteredMapOfGames);
         }
@@ -263,14 +261,14 @@ public class MonopolyApiBridge {
 
     private void getGame(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        Game game = service.getGameById(gameId);
         try {
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            Game game = service.getGameById(gameId);
             authenticateGetGame(request,game, gameId);
+            Response.sendJsonResponse(ctx, 200, game);
         } catch (InvalidTokenException exception) {
             throw new InvalidTokenException();
         }
-        Response.sendJsonResponse(ctx, 200, game);
     }
 
     private void authenticateGetGame(Request request,Game game, String gameId) {
@@ -285,33 +283,44 @@ public class MonopolyApiBridge {
 
     private void useEstimateTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
         try {
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
             service.useEstimateTax(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("Something went wrong with useEstimateTax");
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
     private void useComputeTax(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
         try {
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
             service.useComputeTax(playerName,gameId);
             Response.sendOkResponse(ctx);
         } catch (IllegalArgumentException e) {
             throw new InvalidRequestException("something went wrong with useComputeTax");
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 
     private void rollDice(RoutingContext ctx) {
         Request request = Request.from(ctx);
-        String playerName = request.getPathParameterValueString(PLAYER_NAME);
-        String gameId = request.getPathParameterValueString(GAME_ID);
-        Response.sendJsonResponse(ctx, 200, service.rollDice(playerName,gameId));
+        try {
+            authorizationCheck(request);
+            String playerName = request.getPathParameterValueString(PLAYER_NAME);
+            String gameId = request.getPathParameterValueString(GAME_ID);
+            Response.sendJsonResponse(ctx, 200, service.rollDice(playerName,gameId));
+        } catch (AuthenticationException e) {
+            throw new InvalidRequestException(PROTECTED_ENDPOINT);
+        }
     }
 
     private void declareBankruptcy(RoutingContext ctx) {
