@@ -376,7 +376,6 @@ public class MonopolyApiBridge {
     private void collectDebt(RoutingContext ctx) {
         Request request = Request.from(ctx);
         try {
-            authorizationCheck(request);
             String game = request.getPathParameterValueString(GAME_ID);
             String  player = request.getPathParameterValueString(PLAYER_NAME);
             String  debtPlayer = request.getPathParameterValueString("debtorName");
@@ -385,8 +384,6 @@ public class MonopolyApiBridge {
             Response.sendOkResponse(ctx);
         }catch (IllegalArgumentException e){
             throw new IllegalStateException("Failed to pay rent");
-        } catch (AuthenticationException e) {
-            throw new InvalidRequestException(PROTECTED_ENDPOINT);
         }
     }
 

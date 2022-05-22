@@ -56,7 +56,7 @@ class GameTest {
 
     @Test
     void bankruptTest(){
-        Property property = new Street("Delhaize 365", 1, 2, Colors.PURPLE.toString(), new StreetHouseRent(10,30,90,160,250), 50, 2, 30, 60);
+        Property property = new Street("Delhaize 365", 1, 2, Colors.BROWN.toString(), new StreetHouseRent(10,30,90,160,250), 50, 2, 30, 60);
         testGame.addPlayer("Sibren", "icon");
         testGame.addPlayer("Robin", "icon");
         testGame.addPlayer("Lukas", "icon");

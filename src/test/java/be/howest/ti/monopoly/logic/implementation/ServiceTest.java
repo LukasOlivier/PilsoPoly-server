@@ -80,9 +80,9 @@ public class ServiceTest {
         MonopolyService service = new MonopolyService();
         List<Tile> tiles = List.of(
                 new Tile("Go", 0, "Go", "passes 'GO!' and receives 200 for it", "go"),
-                new Street("Delhaize 365", 1, 2, Colors.PURPLE.toString(), new StreetHouseRent(10,30,90,160,250), 50, 2, 30, 60),
+                new Street("Delhaize 365", 1, 2, Colors.BROWN.toString(), new StreetHouseRent(10,30,90,160,250), 50, 2, 30, 60),
                 new CommunityTile("Community Chest I", 2),
-                new Street("Cara", 3, 2, Colors.PURPLE.toString(), new StreetHouseRent(20, 60, 180, 320, 450), 50, 4, 30, 60),
+                new Street("Cara", 3, 2, Colors.BROWN.toString(), new StreetHouseRent(20, 60, 180, 320, 450), 50, 4, 30, 60),
                 new TaxTile("Tax Income", 4, "Tax Income", "incometax"),
                 new Railroad("Brewery Artois", 5),
                 new Street("Heineken", 6, 3, Colors.LIGHTBLUE.toString(), new StreetHouseRent(30, 90, 270, 400, 550), 50, 6, 50, 100),
