@@ -18,6 +18,7 @@ public class ChanceTile extends Tile {
     public ChanceTile(String name, int position) {
         super(name, position, "chance", "Draw a chance card!", "chance");
     }
+
     public static List<CommunityOrChanceCard> createChanceCards(){
         return List.of(
                 new GetOutOfJailFreeCard("Get Out of Jail Free"),
@@ -31,14 +32,14 @@ public class ChanceTile extends Tile {
                 new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11),
                 new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24),
                 new GoToTile("Take a trip to Reading Railroad. If you pass Go, collect $200",5),
-                new CollectOrGiveEveryPlayer("You have been elected Chairman of the Board. Pay each player $50", 50),
+                new CollectOrGiveEveryPlayer("You have been elected Chairman of the Board. Pay each player $50", -50),
                 new Repairs("Make general repairs on all your property. For each house pay $25. For each hotel pay $100", 25, 100),
                 new AdvanceToNearest("Advance to the nearest Utility. If unowned, you may buy it from the Bank", "utility"),
                 new AdvanceToNearest("Advance to the nearest Railroad. If unowned, you may buy it from the Bank", "railroad")
         );
     }
 
-    public static CommunityOrChanceCard getRandomChanceCardAction() {
+    private CommunityOrChanceCard getRandomChanceCardAction() {
         int randomNumber = random.nextInt(chanceCards.size());
         return chanceCards.get(randomNumber);
     }

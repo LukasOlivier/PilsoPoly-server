@@ -20,7 +20,7 @@ public class GoToTile extends CommunityOrChanceCard {
         int positionOfJail = 10;
         int amountOfTiles = 40;
 
-        int placesToMove = position - player.currentTile.getPosition();
+        int placesToMove = position - player.getCurrentTile().getPosition();
         if (placesToMove < 0) {
             placesToMove += amountOfTiles;
         }

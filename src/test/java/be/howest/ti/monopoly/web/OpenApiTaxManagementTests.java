@@ -18,8 +18,8 @@ class OpenApiTaxManagementTests extends OpenApiTestsBase {
 
         post(
                 testContext,
-                "/games/game-id/players/Alice/tax/estimate",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/tax/estimate",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }
@@ -45,8 +45,8 @@ class OpenApiTaxManagementTests extends OpenApiTestsBase {
 
         post(
                 testContext,
-                "/games/game-id/players/Alice/tax/compute",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/tax/compute",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }

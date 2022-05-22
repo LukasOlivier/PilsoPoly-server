@@ -20,7 +20,7 @@ public class AdvanceToNearest extends CommunityOrChanceCard {
 
     @Override
     public void cardAction(Game game, Player player){
-        int currentPos = player.currentTile.getPosition();
+        int currentPos = player.getCurrentTile().getPosition();
         List<Tile> tiles= game.getGameTiles();
         int positionOnBoard = currentPos;
         int placesToMove = 0;

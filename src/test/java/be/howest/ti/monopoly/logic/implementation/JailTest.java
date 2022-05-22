@@ -2,28 +2,41 @@ package be.howest.ti.monopoly.logic.implementation;
 
 import be.howest.ti.monopoly.logic.implementation.tiles.Property;
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
+import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.GoToJailTile;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JailTest {
+
+    Game testGame = new Game(2, "PilsoPoly", 0);
+    Player alice;
+    Player bob;
+
+    @BeforeEach
+    void createGame() {
+        testGame.addPlayer("Alice", "dummy");
+        testGame.addPlayer("Bob", "dummy");
+        alice = testGame.getSpecificPlayer("Alice");
+        bob = testGame.getSpecificPlayer("Bob");
+    }
+
     @Test
     void testJailed() {
-        Game testGame = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice", "dummy");
-        testGame.addPlayer("Alice", "dummy");
-
         alice.setJailed(true);
+        assertTrue(alice.isJailed());
+    }
 
+    @Test
+    void testGoToJailTile() {
+        Tile goToJailTile = new GoToJailTile("Go to Jail", 30);
+        goToJailTile.tileAction(testGame, alice);
         assertTrue(alice.isJailed());
     }
 
     @Test
     void testJailedByDoubleThrows() {
-        Game testGame = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice", "dummy");
-        testGame.addPlayer("Alice", "dummy");
-        testGame.addPlayer("Bob", "dummy");
         testGame.addTurn(new Turn(alice.getName(), "DEFAULT"));
         Dice diceRollDouble = new Dice(2,2);
 
@@ -33,20 +46,17 @@ class JailTest {
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Baltic
         diceRollDouble.checkIfRolledDouble(testGame, alice);
 
-        alice.addProperty(new PlayerProperty((Property) alice.currentTile));
+        alice.addProperty(new PlayerProperty((Property) alice.getCurrentTile()));
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame); //Electric Company
         diceRollDouble.checkIfRolledDouble(testGame, alice);
         Jail.checkIfJailedByDoubleThrow(alice,testGame);
 
-        assertEquals("Jail", alice.getCurrentTile());
+        assertEquals("Jail", alice.getCurrentTileName());
         assertTrue(alice.isJailed());
     }
 
     @Test
     void testFreeByDoubleThrows() {
-        Game testGame = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice", "dummy");
-        testGame.addPlayer("Alice", "dummy");
         Dice diceRollDouble = new Dice(1,1);
         alice.setJailed(true);
         alice.setCurrentTile(Tile.getTileFromPosition(testGame,10)); //Jail tile
@@ -55,14 +65,11 @@ class JailTest {
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRollDouble), testGame);
 
         assertFalse(alice.isJailed());
-        assertEquals("Electric Company",alice.getCurrentTile());
+        assertEquals("Electric Company",alice.getCurrentTileName());
     }
 
     @Test
     void testNotFreeByDiceRoll() {
-        Game testGame = new Game(2, "PilsoPoly", 0);
-        Player alice = new Player("Alice", "dummy");
-        testGame.addPlayer("Alice", "dummy");
         Dice diceRoll = new Dice(3,1);
         alice.setJailed(true);
         alice.setCurrentTile(Tile.getTileFromPosition(testGame,10)); //Jail tile
@@ -73,38 +80,35 @@ class JailTest {
         Move.makeMove(alice, Move.calculatePlacesToMove(diceRoll), testGame);
 
         assertTrue(alice.isJailed());
-        assertEquals("Jail",alice.getCurrentTile());
+        assertEquals("Jail",alice.getCurrentTileName());
     }
 
     @Test
     void fine() {
-        Player testPlayer = new Player("Sibren", "Beer");
-        testPlayer.setJailed(true);
+        alice.setJailed(true);
+        alice.fine();
 
-        testPlayer.fine();
-
-        assertEquals(1450, testPlayer.getMoney());
-        assertFalse(testPlayer.isJailed());
+        assertEquals(1450, alice.getMoney());
+        assertFalse(alice.isJailed());
     }
 
 
     @Test
     void free() {
-        Player testPlayer = new Player("Sibren", "Beer");
-        testPlayer.addGetOutOfJailFreeCard();
-        testPlayer.setJailed(true);
+        alice.addGetOutOfJailFreeCard();
+        alice.setJailed(true);
 
-        testPlayer.free();
+        alice.free();
 
-        assertEquals(0, testPlayer.getGetOutOfJailFreeCards());
-        assertFalse(testPlayer.isJailed());
+        assertEquals(0, alice.getGetOutOfJailFreeCards());
+        assertFalse(alice.isJailed());
     }
+
     @Test
     void notEnoughGetOutOfJailFreeCards() {
-        Player testPlayer = new Player("Sibren", "Beer");
-        testPlayer.setJailed(true);
+        alice.setJailed(true);
 
-        assertThrows(IllegalStateException.class, testPlayer::free);
-        assertTrue(testPlayer.isJailed());
+        assertThrows(IllegalStateException.class, alice::free);
+        assertTrue(alice.isJailed());
     }
 }

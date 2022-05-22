@@ -6,7 +6,6 @@ import be.howest.ti.monopoly.logic.implementation.tiles.properties.StreetHouseRe
 import be.howest.ti.monopoly.logic.implementation.tiles.Tile;
 import be.howest.ti.monopoly.logic.implementation.tiles.*;
 import be.howest.ti.monopoly.logic.implementation.tiles.properties.Utility;
-import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.GoToJailTile;
 import be.howest.ti.monopoly.logic.implementation.tiles.specialtiles.TaxTile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,21 +16,21 @@ class TileTest {
     int gameMapSize = 5;
     Game testGame = new Game(4, "PilsoPoly", gameMapSize);
 
-    Player Lukas;
-    Player Niels;
-    Player Sibren;
-    Player Robin;
+    Player Alice;
+    Player Bob;
+    Player Carol;
+    Player David;
 
     @BeforeEach
     void addPlayers(){
-        testGame.addPlayer("Sibren", "icon");
-        testGame.addPlayer("Robin", "icon");
-        testGame.addPlayer("Lukas", "icon");
-        testGame.addPlayer("Niels", "icon");
-        Lukas = testGame.getSpecificPlayer("Lukas");
-        Niels = testGame.getSpecificPlayer("Niels");
-        Sibren = testGame.getSpecificPlayer("Sibren");
-        Robin = testGame.getSpecificPlayer("Robin");
+        testGame.addPlayer("Alice", "icon");
+        testGame.addPlayer("Bob", "icon");
+        testGame.addPlayer("Carol", "icon");
+        testGame.addPlayer("David", "icon");
+        Alice = testGame.getSpecificPlayer("Alice");
+        Bob = testGame.getSpecificPlayer("Bob");
+        Carol = testGame.getSpecificPlayer("Carol");
+        David = testGame.getSpecificPlayer("David");
     }
 
     @Test
@@ -110,14 +109,14 @@ class TileTest {
     void takeTileAction(){
         System.out.println(testGame.getCurrentPlayer());
         Tile jail = new Tile("Jail", 10, "Jail", "Just visiting.", "visiting");
-        jail.tileAction(testGame, Sibren);
-        assertFalse(Sibren.isJailed());
+        jail.tileAction(testGame, Carol);
+        assertFalse(Carol.isJailed());
         Tile tax = new TaxTile("Luxury Tax", 38, "Luxury Tax", "luxtax");
-        tax.tileAction(testGame, Sibren);
-        assertEquals(1300, Sibren.getMoney());
+        tax.tileAction(testGame, Carol);
+        assertEquals(1300, Carol.getMoney());
         Tile incomTax = new TaxTile("Tax Income", 4, "Tax Income", "incometax");
-        incomTax.tileAction(testGame, Sibren);
-        assertEquals(1100, Sibren.getMoney());
+        incomTax.tileAction(testGame, Carol);
+        assertEquals(1100, Carol.getMoney());
     }
 
     @Test
@@ -139,10 +138,10 @@ class TileTest {
         Utility utilityTwo = new Utility("Water Works", 28);
         PlayerProperty playerProperty = new PlayerProperty(utilityTwo);
         PlayerProperty playerPropertyTwo = new PlayerProperty(uitlity);
-        Sibren.addProperty(playerProperty);
-        Sibren.addProperty(playerPropertyTwo);
-        Robin.payRent(playerProperty, testGame, Sibren);
-        assertEquals(1510, Robin.getMoney());
+        Carol.addProperty(playerProperty);
+        Carol.addProperty(playerPropertyTwo);
+        David.payRent(playerProperty, testGame, Carol);
+        assertEquals(1510, David.getMoney());
     }
 }
 

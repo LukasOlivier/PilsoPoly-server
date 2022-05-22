@@ -7,6 +7,7 @@ import be.howest.ti.monopoly.logic.exceptions.MonopolyResourceNotFoundException;
 import be.howest.ti.monopoly.web.exceptions.ForbiddenAccessException;
 import be.howest.ti.monopoly.web.exceptions.InvalidRequestException;
 import be.howest.ti.monopoly.web.exceptions.NotYetImplementedException;
+import be.howest.ti.monopoly.web.tokens.InvalidTokenException;
 import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.Test;
 

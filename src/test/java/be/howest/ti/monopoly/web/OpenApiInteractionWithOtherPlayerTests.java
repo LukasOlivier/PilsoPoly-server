@@ -19,8 +19,8 @@ class OpenApiInteractionWithOtherPlayerTests extends OpenApiTestsBase {
         });
         delete(
                 testContext,
-                "/games/game-id/players/Alice/properties/some-property/visitors/Bob/rent",
-                "some-token",
+                "/games/PilsoPoly/players/Alice/properties/some-property/visitors/Bob/rent",
+                "PilsoPoly-Alice",
                 this::assertOkResponse
         );
     }
