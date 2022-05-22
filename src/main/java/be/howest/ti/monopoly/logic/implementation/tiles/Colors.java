@@ -1,7 +1,7 @@
 package be.howest.ti.monopoly.logic.implementation.tiles;
 
 public enum Colors {
-    PURPLE,
+    BROWN,
     BLACK,
     LIGHTBLUE,
     VIOLET,
