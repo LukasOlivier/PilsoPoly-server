@@ -21,12 +21,13 @@ public class ChanceTile extends Tile {
 
     public static List<CommunityOrChanceCard> createChanceCards(){
         return List.of(
-                new GetOutOfJailFreeCard("Get Out of Jail Free"),
-                new PayOrReceive("Your building loan matures. Collect $150", 150),
-                new PayOrReceive("Speeding fine $15", -15),
-                new PayOrReceive("Bank pays you dividend of $50", 50),
-                new PayOrReceive("Your building loan matures. Collect $150", 150),
-                new GoToTile("Go to Jail. Go directly to Jail, do not pass Go, do not collect $200", 10),
+                new GetOutOfJailFreeCard("You received a get out of jail free card!"),
+                new PayOrReceive("Your building loan matures. Collect 150M.", 150),
+                new PayOrReceive("You drove 40 in a 30 zone, you were fined 15M. ", -15),
+                new PayOrReceive("You were caught drunk driving, 50M fine.", -50),
+                new PayOrReceive("Bank pays you dividend of 50M", 50),
+                new PayOrReceive("Your building loan matures. Collect 150M.", 150),
+                new GoToTile("Go to Jail. Go directly to Jail, do not pass Go, do not collect 200M", 10),
                 new GoToTile("Advance to Go (Collect $200)", 0),
                 new GoToTile("Advance to Boardwalk", 39),
                 new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11),
