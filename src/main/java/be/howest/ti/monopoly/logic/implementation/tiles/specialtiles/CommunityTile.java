@@ -21,22 +21,22 @@ public class CommunityTile extends Tile {
 
     public static List<CommunityOrChanceCard> createCommunityCards(){
         return List.of(
-                new PayOrReceive("Doctor's fee. Pay $50", -50),
-                new PayOrReceive("Pay hospital fees of $100", -100),
-                new PayOrReceive("Pay school fees of $50", -50),
-                new PayOrReceive("Bank error in your favor. Collect $200", 200),
-                new PayOrReceive("From sale of stock you get $50", 50),
-                new PayOrReceive("Holiday fund matures. Receive $100", 100),
-                new PayOrReceive("Income tax refund. Collect $20", 20),
-                new PayOrReceive("Life insurance matures. Collect $100", 100),
-                new PayOrReceive("Receive $25 consultancy fee", 25),
-                new PayOrReceive("You inherit $100", 100),
-                new PayOrReceive("You have won second prize in a beauty contest. Collect $10", 10),
-                new GoToTile("Go to Jail. Go directly to jail, do not pass Go, do not collect $200", 0),
-                new GoToTile("Advance to Go (Collect $200)", 0),
-                new GetOutOfJailFreeCard("Get Out of Jail Free"),
-                new CollectOrGiveEveryPlayer("It is your birthday. Collect $10 from every player", 10),
-                new Repairs("You are assessed for street repair. $40 per house. $115 per hotel", 40, 115)
+                new PayOrReceive("Doctor's fee. Pay M50", -50),
+                new PayOrReceive("Pay hospital fees of M100", -100),
+                new PayOrReceive("Pay school fees of M50", -50),
+                new PayOrReceive("Bank error in your favor. You received M200", 200),
+                new PayOrReceive("Uou got M50 from sale of stock.", 50),
+                new PayOrReceive("Holiday fund matures. You received M100", 100),
+                new PayOrReceive("Income tax refund. You got M20", 20),
+                new PayOrReceive("Life insurance matures. You got M100", 100),
+                new PayOrReceive("Receive M25 consultancy fee", 25),
+                new PayOrReceive("You inherit M100", 100),
+                new PayOrReceive("You have won second prize in a beauty contest. Collect M10", 10),
+                new GoToTile("Go to Jail. Go directly to jail, do not pass Go, do not collect M200", 0),
+                new GoToTile("Advance to Go (Collect M200)", 0),
+                new GetOutOfJailFreeCard("You received a get out of jail free card!"),
+                new CollectOrGiveEveryPlayer("It is your birthday. Collect M10 from every player", 10),
+                new Repairs("You are assessed for street repair. M40 per house. M115 per hotel", 40, 115)
         );
     }
 
