@@ -67,6 +67,4 @@ class TurnTest {
         turn.setRoll(dice);
         assertEquals(dice, turn.getRoll());
     }
-
-
 }
