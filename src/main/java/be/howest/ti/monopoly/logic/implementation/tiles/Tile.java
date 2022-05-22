@@ -79,5 +79,6 @@ public class Tile {
     }
 
     public void tileAction(Game game, Player player) {
+        // nothing happens on this tile
     }
 }
