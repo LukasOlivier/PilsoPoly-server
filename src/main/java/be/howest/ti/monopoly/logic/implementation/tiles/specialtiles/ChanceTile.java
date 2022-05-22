@@ -21,21 +21,22 @@ public class ChanceTile extends Tile {
 
     public static List<CommunityOrChanceCard> createChanceCards(){
         return List.of(
-                new GetOutOfJailFreeCard("Get Out of Jail Free"),
-                new PayOrReceive("Your building loan matures. Collect $150", 150),
-                new PayOrReceive("Speeding fine $15", -15),
-                new PayOrReceive("Bank pays you dividend of $50", 50),
-                new PayOrReceive("Your building loan matures. Collect $150", 150),
-                new GoToTile("Go to Jail. Go directly to Jail, do not pass Go, do not collect $200", 10),
-                new GoToTile("Advance to Go (Collect $200)", 0),
-                new GoToTile("Advance to Boardwalk", 39),
-                new GoToTile("Advance to St. Charles Place. If you pass Go, collect $200", 11),
-                new GoToTile("Advance to Illinois Avenue. If you pass Go, collect $200", 24),
-                new GoToTile("Take a trip to Reading Railroad. If you pass Go, collect $200",5),
-                new CollectOrGiveEveryPlayer("You have been elected Chairman of the Board. Pay each player $50", -50),
-                new Repairs("Make general repairs on all your property. For each house pay $25. For each hotel pay $100", 25, 100),
+                new GetOutOfJailFreeCard("You received a get out of jail free card!"),
+                new PayOrReceive("Your building loan matures. Collect M150.", 150),
+                new PayOrReceive("You drove 40 in a 30 zone, you were fined M15. ", -15),
+                new PayOrReceive("You were caught drunk driving, M50 fine.", -50),
+                new PayOrReceive("Bank pays you dividend of M50", 50),
+                new PayOrReceive("Your building loan matures. Collect M150.", 150),
+                new GoToTile("Go to Jail. Go directly to Jail, do not pass Go, do not collect M200", 10),
+                new GoToTile("Advance to Go (Collect M200).", 0),
+                new GoToTile("Advance to Bush12. If you pass Go, you will receive M200.", 39),
+                new GoToTile("Advance to Primus. If you pass Go, you will receive M200.", 11),
+                new GoToTile("Advance to Kasteel Rouge. If you pass Go, you will receive M200.", 24),
+                new GoToTile("Take a trip to Brewery Artois. If you pass Go, you will receive M200.",5),
+                new CollectOrGiveEveryPlayer("You have been elected Chairman of the Board. Pay each player M50", -50),
+                new Repairs("Make general repairs on all your property. For each house pay M25. For each hotel pay M100", 25, 100),
                 new AdvanceToNearest("Advance to the nearest Utility. If unowned, you may buy it from the Bank", "utility"),
-                new AdvanceToNearest("Advance to the nearest Railroad. If unowned, you may buy it from the Bank", "railroad")
+                new AdvanceToNearest("Advance to the nearest Brewery. If unowned, you may buy it from the Bank", "railroad")
         );
     }
 
