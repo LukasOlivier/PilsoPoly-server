@@ -114,6 +114,7 @@ class PlayerPropertyTest {
     @Test
     void addHotel() {
         Player player = new Player("niels", "beer");
+        player.addMoney(1000);
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
         parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
@@ -133,6 +134,7 @@ class PlayerPropertyTest {
     @Test
      void sellHotel() {
         Player player = new Player("niels", "beer");
+        player.addMoney(1000);
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
         parkPlace.addHouse(player, List.of(boardwalk, parkPlace));
         boardwalk.addHouse(player, List.of(boardwalk, parkPlace));
