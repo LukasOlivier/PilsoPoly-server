@@ -151,21 +151,27 @@ public class PlayerProperty {
     }
 
     public boolean houseCountIsCorrect(List<PlayerProperty> playerProperties, boolean buy) {
-        int maxHouseDifference = 1;
-        int currentHousesAfterAction = getHouseCount();
+        int newHouseCount = getHouseCount();
         if (buy) {
-            currentHousesAfterAction += 1;
+            newHouseCount += 1;
         } else {
-            currentHousesAfterAction -= 1;
+            newHouseCount -= 1;
         }
         for (PlayerProperty prop : playerProperties) {
-            if (property.getColor().equals(prop.property.getColor())) {
-                if (Math.abs(currentHousesAfterAction - prop.getHouseCount()) > maxHouseDifference) {
+            if (matchColor(prop) && maxHouseDifferenceCorrect(newHouseCount, prop)) {
                     return false;
-                }
             }
         }
         return true;
+    }
+
+    private boolean matchColor(PlayerProperty prop) {
+        return property.getColor().equals(prop.property.getColor());
+    }
+
+    private boolean maxHouseDifferenceCorrect(int newHouseCount, PlayerProperty prop) {
+        int maxHouseDifference = 1;
+        return Math.abs(newHouseCount - prop.getHouseCount()) > maxHouseDifference;
     }
 
     public void mortgageTheProperty(Property property, Player player) {
