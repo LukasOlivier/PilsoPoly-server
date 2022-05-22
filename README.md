@@ -4,12 +4,13 @@
 
 ## Known Bugs
 
-| Bug behaviour                                                                                                                  | How to reproduce                                                            | Why it hasn't been fixed                                |
-|--------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|---------------------------------------------------------|
-| 2x Go in turn when drawing "Go to start" card                                                                                  | Land on a community or chance tile and draw a "Go To Start" card.           | Minor issue, no consequences for gameplay. Only visual. |
-| When a chance / community chest - card redirects you to another tile, the description of the last tile is added twice in "Turn" | Get redirected to another tile by drawing a chance / community chest - card | No consequences for gameplay. Lack of time              |
-| When landing on the "Go to jail" tile, only the second move (in jail) is added                                                 | Land on "Go to jail" tile.                                                  | No consequences for gameplay. Lack of time              |
-
+| Bug behaviour                                                                                                                   | How to reproduce                                                            | Why it hasn't been fixed                                |
+|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|---------------------------------------------------------|
+| 2x Go in turn when drawing "Go to start" card                                                                                   | Land on a community or chance tile and draw a "Go To Start" card.           | Minor issue, no consequences for gameplay. Only visual. |
+| When a chance / community chest - card redirects you to another tile, the description of the last tile is added twice in "Turn" | Get redirected to another tile by drawing a chance / community chest - card | No consequences for gameplay. Lack of time.             |
+| When landing on the "Go to jail" tile, only the second move (in jail) is added                                                  | Land on "Go to jail" tile.                                                  | No consequences for gameplay. Lack of time.             |
+| You can still mortgage tiles with houses on the tile.                                                                           | Buy a tile, buy a house on the tile, then mortgage the tile.                | Lack of time.                                           |
+| You can still buy/sell houses on mortgaged tiles.                                                                               | Mortgage your tile and then buy/sell houses                                 | Lack of time.                                           |
 ### token scheme
 ```Prefix``` + ```_``` + ```unique identifier``` + ```-``` + ```playerName```
 
