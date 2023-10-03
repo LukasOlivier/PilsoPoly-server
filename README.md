@@ -1,6 +1,10 @@
-# Monopoly group 29
+PilsoPoly is a project I made for school. It is a fully functional, beer themed Monopoly game
+in the browser
 
-## By Sibren, Lukas, Niels and Robin
+This is the Java server that is responsible to handle all the connections and game logic.
+You can find the client repo [here](https://github.com/LukasOlivier/PilsoPoly-client)
+
+## By [Sibren Eeckhout](), [Niels Soete](https://github.com/EeneeS) [Robin Monsere](https://github.com/robinmonsere) and Myself
 
 ## Known Bugs
 
